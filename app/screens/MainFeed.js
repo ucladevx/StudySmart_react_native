@@ -19,6 +19,12 @@ const Posts = [
 
 
 export default class MainFeed extends Component {
+  static navigationOptions = {
+    title: 'Main Feed',
+    headerStyle: {
+      backgroundColor: '#1DB8F0'
+    }
+  };
   constructor(props) {
     super(props)
    

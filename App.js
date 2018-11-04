@@ -18,7 +18,7 @@ const MainStack = StackNavigator({
   Notes: {screen: Notes},
 });
 const AppTabNavigator = createBottomTabNavigator({
-  MainStack: { screen: MainFeed },
+  MainStack: MainStack,
   Locations: { screen: Locations },
   Profile: { screen: Profile },
 },
@@ -26,7 +26,7 @@ const AppTabNavigator = createBottomTabNavigator({
     initialRouteName: 'MainStack',
     activeColor: '#f0edf6',
     inactiveColor: '#3e2465',
-    barStyle: { backgroundColor: '#694fad' },
+    barStyle: { backgroundColor: 'blue' },
 });
 
 
@@ -39,8 +39,6 @@ export default class App extends Component<Props> {
   render() {
     return ( 
       <AppTabNavigator>  
-        <MainStack style = {styles.navigator}
-            />
             </AppTabNavigator>
     )
   }
