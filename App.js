@@ -12,18 +12,20 @@ import Profile from './app/screens/Profile'
 import { StackNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation';
 
+// this is for MainFeed Stack Navigation 
 const MainStack = StackNavigator({
   MainFeed: { screen: MainFeed },
   Tests: {screen: Tests},
   Notes: {screen: Notes},
 });
+//this is the tab bar navigator for the entire App 
 const AppTabNavigator = createBottomTabNavigator({
-  MainStack: MainStack,
+  Main: MainStack,
   Locations: { screen: Locations },
   Profile: { screen: Profile },
 },
 {
-    initialRouteName: 'MainStack',
+    initialRouteName: 'Main',
     activeColor: '#f0edf6',
     inactiveColor: '#3e2465',
     barStyle: { backgroundColor: 'blue' },

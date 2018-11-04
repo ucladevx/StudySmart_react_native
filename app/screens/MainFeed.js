@@ -5,6 +5,7 @@ import StatusBarBackground from '../components/StatusBarBackground'
 import ViewContainer from '../components/ViewContainer'
 import MainFeedList from '../components/MainFeedList'
 
+// sample information for the 'posts' 
 const Posts = [
   {courseName: "CS31", professor: "Smallberg", roomNumber: 3400},
   {courseName: "CS32",  professor: "Nachenberg", roomNumber: 289},
@@ -19,6 +20,7 @@ const Posts = [
 
 
 export default class MainFeed extends Component {
+  // customizes the header for the nav bar for the MainFeed 
   static navigationOptions = {
     title: 'Main Feed',
     headerStyle: {
@@ -38,7 +40,7 @@ export default class MainFeed extends Component {
         placeholder='Search                                         '
         inputStyle={{backgroundColor: 'white'}}
         containerStyle={{backgroundColor: 'white', borderWidth: 1, borderRadius: 5}} />
-        <View style = {styles.buttonsContainer}>
+        <View style = {styles.buttonsContainer}> 
         <TouchableOpacity>
             <Button
               onPress = {() =>

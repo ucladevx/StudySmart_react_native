@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
-import StatusBarBackground from '../components/StatusBarBackground'
 import ViewContainer from '../components/ViewContainer'
 
 export default class Profile extends Component {
