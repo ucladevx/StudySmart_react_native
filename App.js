@@ -4,13 +4,17 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, FlatList} from 'react-native';
 import StatusBarBackground from './app/components/StatusBarBackground'
 import ViewContainer from './app/components/ViewContainer'
-import MainFeedList from './app/components/MainFeedList'
+import MainFeed from './app/screens/MainFeed'
+import Tests from './app/screens/Tests'
+import Notes from './app/screens/Notes'
+import { StackNavigator } from 'react-navigation';
 
-const Posts = [
-  {courseName: "CS31", professor: "Smallberg", roomNumber: 3400},
-  {courseName: "CS32",  professor: "Nachenberg", roomNumber: 289},
-  {courseName: "CS33",  professor: "Eggert", roomNumber: 4000}
-]
+const AppNavigator = StackNavigator({
+  MainFeed: { screen: MainFeed },
+  Tests: {screen: Tests},
+  Notes: {screen: Notes},
+});
+
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -20,31 +24,15 @@ export default class App extends Component<Props> {
   }
   render() {
     return (
-      <ViewContainer>
-        <StatusBarBackground style={{backgroundColor: "mistyrose"}} />
-        <MainFeedList
-        items={Posts}
-        />
-      </ViewContainer>
+          <AppNavigator style = {styles.navigator}
+            />
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  navigator: {
+    backgroundColor: '#1DB8F0',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  
 });

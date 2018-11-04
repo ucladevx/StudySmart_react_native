@@ -5,10 +5,17 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
 
 
 const Posts = [
-  {courseName: "CS31", professor: "Smallberg", roomNumber: 3400},
-  {courseName: "CS32",  professor: "Nachenberg", roomNumber: 289},
-  {courseName: "CS33",  professor: "Eggert", roomNumber: 4000}
-]
+    {courseName: "CS31", professor: "Smallberg", roomNumber: 3400},
+    {courseName: "CS32",  professor: "Nachenberg", roomNumber: 289},
+    {courseName: "CS33",  professor: "Eggert", roomNumber: 4000},  
+    {courseName: "CS131", professor: "Smallberg", roomNumber: 3400},
+    {courseName: "CS132",  professor: "Nachenberg", roomNumber: 289},
+    {courseName: "CS133",  professor: "Eggert", roomNumber: 4000},
+    {courseName: "EE 3",  professor: "Potkonjak", roomNumber: 4000},
+    {courseName: "M51A",  professor: "Potkonjak", roomNumber: 4000},
+    {courseName: "EE 3",  professor: "Potkonjak", roomNumber: 4000}
+  ]
+  
   export default class MainFeedList extends Component {
       constructor(props){
         super(props);
@@ -42,13 +49,11 @@ const Posts = [
 
   
   const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#CCC'
-    },
+
     container2: {
       flex: 1,
       flexDirection: 'row',
+      height: '20%',
       padding: 10,
       marginLeft:16,
       marginRight:16,
