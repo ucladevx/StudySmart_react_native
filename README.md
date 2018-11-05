@@ -1,7 +1,7 @@
 # To run the program in xcode: 
 
 * navigate to react_native
-* run the following
+* run the following:
 
 ```
 $ npm install 
