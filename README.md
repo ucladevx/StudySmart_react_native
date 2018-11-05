@@ -10,7 +10,7 @@ Kill any active metro bundler:
 ```
 $ kill $(lsof -t -i:8081)
 ```
-Reset watchman
+Reset watchman:
 ```
 $ watchman watch-del-all
 ```
