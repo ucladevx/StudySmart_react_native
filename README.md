@@ -4,13 +4,15 @@
 * run the following
 
 ```
-$ npm install in directory
+$ npm install 
 ```
+Kill any active metro bundler:
 ```
-$ kill $(lsof -t -i:8081) ==>kill any active metro bundler
+$ kill $(lsof -t -i:8081)
 ```
+Reset watchman
 ```
-$ watchman watch-del-all ==>reset watchman
+$ watchman watch-del-all
 ```
 * double tap on the Xcode project
 * build
