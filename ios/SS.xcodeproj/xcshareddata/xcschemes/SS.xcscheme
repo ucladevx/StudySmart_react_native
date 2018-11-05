@@ -62,6 +62,20 @@
                ReferencedContainer = "container:SS.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5DBEB14F1B18CEA900B34395"
+               BuildableName = "libRNVectorIcons.a"
+               BlueprintName = "RNVectorIcons"
+               ReferencedContainer = "container:../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
