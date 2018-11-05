@@ -44,6 +44,15 @@ export default class MainFeed extends Component {
         <TouchableOpacity>
             <Button
               onPress = {() =>
+                navigate('MainFeed')
+              }
+              title = "Main"
+              color = "white"
+              />
+          </TouchableOpacity>
+        <TouchableOpacity>
+            <Button
+              onPress = {() =>
                 navigate('Tests')
               }
               title = "Tests"
@@ -59,6 +68,7 @@ export default class MainFeed extends Component {
               color = "white"
               />
           </TouchableOpacity>
+          
           </View>
          </View>
         <MainFeedList

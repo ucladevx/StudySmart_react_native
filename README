@@ -1,0 +1,13 @@
+To run the program in xcode: 
+
+1. npm install in directory
+2. Make React a target dependency in the XCode Project. 
+3. For MaterialFonts error, run 'react-native link react-native-vector-icons'
+
+An alternative to step 2, possibly, is to run 
+'
+cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../
+$ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh 
+&& cd ../../../../*
+'
+
