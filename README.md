@@ -19,7 +19,7 @@ $ watchman watch-del-all ==>reset watchman
 * Save your file
 * Pres cmd+r to reload javascript
 
-# worst case to run(if dependacnies are messed up)
+# Worst case to run(if dependacnies are messed up)
 1. npm install in directory
 2. Make React a target dependency in the XCode Project. 
 3. For MaterialFonts error, run 'react-native link react-native-vector-icons'
