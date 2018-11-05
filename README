@@ -1,5 +1,25 @@
-To run the program in xcode: 
+# To run the program in xcode: 
 
+* navigate to react_native
+* run the following
+
+```
+$ npm install in directory
+```
+```
+$ kill $(lsof -t -i:8081) ==>kill any active metro bundler
+```
+```
+$ watchman watch-del-all ==>reset watchman
+```
+* double tap on the Xcode project
+* build
+
+# Hot relaoding
+* Save your file
+* Pres cmd+r to reload javascript
+
+//worst case
 1. npm install in directory
 2. Make React a target dependency in the XCode Project. 
 3. For MaterialFonts error, run 'react-native link react-native-vector-icons'
