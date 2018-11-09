@@ -1,9 +1,5 @@
-
-
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, FlatList} from 'react-native';
-import StatusBarBackground from './app/components/StatusBarBackground'
-import ViewContainer from './app/components/ViewContainer'
 import MainFeed from './app/screens/MainFeed'
 import Tests from './app/screens/Tests'
 import Notes from './app/screens/Notes'
@@ -17,6 +13,9 @@ const MainStack = StackNavigator({
   MainFeed: { screen: MainFeed },
   Tests: {screen: Tests},
   Notes: {screen: Notes},
+},{
+  initialRouteName: 'MainFeed'
+  
 });
 //this is the tab bar navigator for the entire App 
 const AppTabNavigator = createBottomTabNavigator({

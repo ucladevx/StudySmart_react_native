@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
 import {SearchBar} from 'react-native-elements'
-import StatusBarBackground from '../components/StatusBarBackground'
 import ViewContainer from '../components/ViewContainer'
 import MainFeedList from '../components/MainFeedList'
+import MainTopBar from '../components/MainTopBar'
 
 // sample information for the 'posts' 
 const Posts = [
@@ -35,44 +35,9 @@ export default class MainFeed extends Component {
     const { navigate } = this.props.navigation;
     return (
       <ViewContainer>
-        <View style={styles.topBar}>
-        <SearchBar
-        placeholder='Search                                         '
-        inputStyle={{backgroundColor: 'white'}}
-        containerStyle={{backgroundColor: 'white', borderWidth: 1, borderRadius: 5}} />
-        <View style = {styles.buttonsContainer}> 
-        <TouchableOpacity>
-            <Button
-              onPress = {() =>
-                navigate('MainFeed')
-              }
-              title = "Main"
-              color = "white"
-              />
-          </TouchableOpacity>
-        <TouchableOpacity>
-            <Button
-              onPress = {() =>
-                navigate('Tests')
-              }
-              title = "Tests"
-              color = "white"
-              />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Button
-              onPress = {() =>
-                navigate('Notes')
-              }
-              title = "Notes"
-              color = "white"
-              />
-          </TouchableOpacity>
-          
-          </View>
-         </View>
+       <MainTopBar/>
         <MainFeedList
-        items={Posts}
+        data={Posts}
         />
       </ViewContainer>
     )

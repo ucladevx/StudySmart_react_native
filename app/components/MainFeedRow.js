@@ -6,21 +6,21 @@ import { View, Text, StyleSheet } from 'react-native';
 export default class MainFeedRow extends Component {
     constructor(props){
         super(props);
+        
         this.courseName = this.props.courseName;
         this.professor = this.props.professor;
       }
-    render() {
+    render(){
     return
     (<View style={styles.container}>
         <View style={styles.container_text}>
             <Text style={styles.courseName}>
-                {this.courseName}
+                {this.props.courseName}
             </Text>
             <Text style={styles.professor}>
-                {this.professor}
+                {this.props.professor}
             </Text>
         </View>
-
     </View>
     )
 }
