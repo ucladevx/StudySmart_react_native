@@ -1,45 +1,48 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
 import ViewContainer from '../components/ViewContainer'
-import {SearchBar} from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
 import MainFeed from '../screens/MainFeed';
 
 class MainTopBar extends Component {
     constructor(props) {
         super(props)
-       
+        const page = this.props.navigation.getParam('categorySelected', 'MainFeed');
+        this.state = {
+          categorySelected: page
+        }
       }
+
 render () { 
+  const { navigate } = this.props.navigation;
    return ( 
 <View style={styles.topBar}>
-<SearchBar
-placeholder='Search                                         '
-inputStyle={{backgroundColor: 'white'}}
-containerStyle={{backgroundColor: 'white', borderWidth: 1, borderRadius: 5}} />
-<View style = {styles.buttonsContainer}> 
-<TouchableOpacity>
-    <Button
+<View style={styles.buttonsContainer}> 
+<TouchableOpacity
+style = {this.state.categorySelected == 'MainFeed' ? styles.categorySelected: styles.category}>
+    <Button 
       onPress = {() =>
-        this.props.navigation.navigate('MainFeed')
+        navigate('MainFeed',{categorySelected:'MainFeed'})
       }
       title = "Main"
       color = "white"
       />
   </TouchableOpacity>
-<TouchableOpacity>
+<TouchableOpacity
+style = {this.state.categorySelected == 'Tests' ? styles.categorySelected: styles.category}>
     <Button
       onPress = {() =>
-        this.props.navigation.navigate('Tests')
+        navigate('Tests',{categorySelected:'Tests'})
       }
       title = "Tests"
       color = "white"
       />
   </TouchableOpacity>
-  <TouchableOpacity>
+  <TouchableOpacity
+  style = {this.state.categorySelected == 'Notes' ? styles.categorySelected: styles.category}>
     <Button
       onPress = {() => 
-        this.props.navigation.navigate('Notes')
+        navigate('Notes',{categorySelected:'Notes'})
       }
       title = "Notes"
       color = "white"
@@ -61,11 +64,9 @@ containerStyle={{backgroundColor: 'white', borderWidth: 1, borderRadius: 5}} />
       },
       topBar: {
         width: '100%',
-        height: '20%', 
+        height: '8%', 
         alignItems: 'center',
-        backgroundColor: "#1DB8F0",
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
+        backgroundColor: 'transparent',
         
       },
       buttonsContainer: {
@@ -73,6 +74,24 @@ containerStyle={{backgroundColor: 'white', borderWidth: 1, borderRadius: 5}} />
         flexDirection: 'row',
         justifyContent: 'space-between'
       },
+      category: {
+        backgroundColor: '#CAC9C8',
+        borderRadius: 25,
+        marginLeft: 4,
+        marginRight: 4, 
+        width: 80,
+        marginTop: 8,
+        marginBottom: -6,
+      },
+      categorySelected: {
+        backgroundColor: '#0539C4',
+        borderRadius: 25,
+        marginLeft: 4,
+        marginRight: 4, 
+        width: 80,
+        marginTop: 8,
+        marginBottom: -6,
+      }
     
 
  })

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, FlatList} from 'react-native';
 import MainFeed from './app/screens/MainFeed'
 import Tests from './app/screens/Tests'
+import SelectedTest from './app/screens/SelectedTest'
 import Notes from './app/screens/Notes'
 import Locations from './app/screens/Locations'
 import Profile from './app/screens/Profile'
@@ -13,6 +14,7 @@ const MainStack = StackNavigator({
   MainFeed: { screen: MainFeed },
   Tests: {screen: Tests},
   Notes: {screen: Notes},
+  SelectedTest: {screen: SelectedTest},
 },{
   initialRouteName: 'MainFeed'
   

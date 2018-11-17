@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
-import {SearchBar} from 'react-native-elements'
 import ViewContainer from '../components/ViewContainer'
 import MainFeedList from '../components/MainFeedList'
 import MainTopBar from '../components/MainTopBar'
-
+import GlobalSearchBar from '../components/GlobalSearchBar';
 // sample information for the 'posts' 
 const Posts = [
   {courseName: "CS31", professor: "Smallberg", roomNumber: 3400},
@@ -22,15 +21,17 @@ const Posts = [
 export default class MainFeed extends Component {
   // customizes the header for the nav bar for the MainFeed 
   static navigationOptions = {
-    title: 'Main Feed',
-    headerStyle: {
-      backgroundColor: '#1DB8F0'
-    }
+    header: <GlobalSearchBar/>
+    
   };
   constructor(props) {
     super(props)
-   
+    this.state = {
+      Class : ' '
+    }
   }
+
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -52,19 +53,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  topBar: {
-    width: '100%',
-    height: '20%', 
-    alignItems: 'center',
-    backgroundColor: "#1DB8F0",
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
+  search: {
+    width : '80%',
+    marginTop: 10,
     
-  },
-  buttonsContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
+
+  }
+  
+
 
 });
