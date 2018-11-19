@@ -4,6 +4,9 @@
 * run the following:
 
 ```
+$ react-native upgrade
+```
+```
 $ npm install 
 ```
 Kill any active metro bundler:
