@@ -7,13 +7,6 @@ export default class Notes extends Component {
   static navigationOptions = {
     header:
     <GlobalSearchBar/>,
-    transitionConfig : () => ({
-      transitionSpec: {
-        duration: 0,
-        timing: Animated.timing,
-        easing: Easing.step0,
-      },
-    }),
   };
   constructor(props) {
     super(props)

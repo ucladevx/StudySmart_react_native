@@ -12,7 +12,7 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
       }
     render() {
       return (
-          <FlatList style = {{marginTop: 10}}
+          <FlatList
                   data={this.data}
                   renderItem={({item}) =>{return this._renderRow(item) }}
                   keyExtractor={(item, index) => index.toString()}

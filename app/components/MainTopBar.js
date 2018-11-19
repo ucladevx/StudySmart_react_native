@@ -1,60 +1,51 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
-import ViewContainer from '../components/ViewContainer'
+import ViewContainer from './ViewContainer'
 import { withNavigation } from 'react-navigation';
-import MainFeed from '../screens/MainFeed';
 
+const categories = [{name:'Main'}, {name:'Tests'} , {name:'Notes'},{name:'Guides'},{name: 'Papers'}]
 class MainTopBar extends Component {
     constructor(props) {
         super(props)
-        const page = this.props.navigation.getParam('categorySelected', 'MainFeed');
+        const page = this.props.navigation.getParam('categorySelected', 'Main');
         this.state = {
           categorySelected: page
         }
+
       }
 
 render () { 
-  const { navigate } = this.props.navigation;
    return ( 
-<View style={styles.topBar}>
-<View style={styles.buttonsContainer}> 
-<TouchableOpacity
-style = {this.state.categorySelected == 'MainFeed' ? styles.categorySelected: styles.category}>
-    <Button 
-      onPress = {() =>
-        navigate('MainFeed',{categorySelected:'MainFeed'})
-      }
-      title = "Main"
-      color = "white"
-      />
-  </TouchableOpacity>
-<TouchableOpacity
-style = {this.state.categorySelected == 'Tests' ? styles.categorySelected: styles.category}>
-    <Button
-      onPress = {() =>
-        navigate('Tests',{categorySelected:'Tests'})
-      }
-      title = "Tests"
-      color = "white"
-      />
-  </TouchableOpacity>
-  <TouchableOpacity
-  style = {this.state.categorySelected == 'Notes' ? styles.categorySelected: styles.category}>
-    <Button
-      onPress = {() => 
-        navigate('Notes',{categorySelected:'Notes'})
-      }
-      title = "Notes"
-      color = "white"
-      />
-  </TouchableOpacity>
-  
-  </View>
+  <View style={styles.topBar}>
+    <FlatList 
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        data={categories}
+        renderItem={({item}) =>{return this._renderRow(item) }}
+        keyExtractor={(item, index) => index.toString()}
+    />
  </View>
    )}
+  _renderRow(item) {
+    console.log(item.name)
+    return (
+      <TouchableOpacity
+      onPress ={() => this.handleSelectCategory(item.name)}
+      style = {this.state.categorySelected == item.name ? styles.categorySelected: styles.category}>
+      <Text
+      style = {styles.text}>
+      {item.name}
+      </Text>
+    </TouchableOpacity>
+    )
+  }
+  handleSelectCategory(item){
+    const { navigate } = this.props.navigation;
+    navigate(item, {categorySelected: item} )
+
+  }
 }
  const styles = StyleSheet.create({
-
 
     container: {
         flex: 1,
@@ -64,10 +55,9 @@ style = {this.state.categorySelected == 'Tests' ? styles.categorySelected: style
       },
       topBar: {
         width: '100%',
-        height: '8%', 
+        height: '10%', 
         alignItems: 'center',
         backgroundColor: 'transparent',
-        
       },
       buttonsContainer: {
         flex: 1,
@@ -75,22 +65,34 @@ style = {this.state.categorySelected == 'Tests' ? styles.categorySelected: style
         justifyContent: 'space-between'
       },
       category: {
-        backgroundColor: '#CAC9C8',
-        borderRadius: 25,
+        borderRadius: 15,
+        backgroundColor: "#e0e0e0",
         marginLeft: 4,
         marginRight: 4, 
-        width: 80,
-        marginTop: 8,
-        marginBottom: -6,
+        width: 70,
+        marginTop: 10,
+        height: 35,
+        justifyContent: 'center',
+        alignItems: 'center'
       },
       categorySelected: {
-        backgroundColor: '#0539C4',
-        borderRadius: 25,
+        backgroundColor: '#4F87EC',
+        borderRadius: 15,
         marginLeft: 4,
         marginRight: 4, 
-        width: 80,
-        marginTop: 8,
-        marginBottom: -6,
+        width: 70,
+        marginTop: 10,
+        height: 35,
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      text: {
+        fontFamily: "System",
+        fontSize: 14,
+        fontWeight: "500",
+        fontStyle: "normal",
+        letterSpacing: 1.92,
+        color: '#9B9B9B'
       }
     
 

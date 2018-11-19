@@ -21,7 +21,14 @@ const Posts = [
 export default class MainFeed extends Component {
   // customizes the header for the nav bar for the MainFeed 
   static navigationOptions = {
-    header: <GlobalSearchBar/>
+    header: <GlobalSearchBar/>,
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 0,
+        timing: Animated.timing,
+        easing: Easing.step0,
+      },
+    }),
     
   };
   constructor(props) {
@@ -30,8 +37,6 @@ export default class MainFeed extends Component {
       Class : ' '
     }
   }
-
-
   render() {
     const { navigate } = this.props.navigation;
     return (

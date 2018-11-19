@@ -11,12 +11,12 @@ import { createBottomTabNavigator } from 'react-navigation';
 
 // this is for MainFeed Stack Navigation 
 const MainStack = StackNavigator({
-  MainFeed: { screen: MainFeed },
+  Main: { screen: MainFeed },
   Tests: {screen: Tests},
   Notes: {screen: Notes},
   SelectedTest: {screen: SelectedTest},
 },{
-  initialRouteName: 'MainFeed'
+  initialRouteName: 'Main'
   
 });
 //this is the tab bar navigator for the entire App 
