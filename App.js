@@ -5,12 +5,12 @@ import Tests from './app/screens/Tests'
 import SelectedTest from './app/screens/SelectedTest'
 import Notes from './app/screens/Notes'
 import Locations from './app/screens/Locations'
-import LocationList from './app/components/LocationsList'
+import LocationList from './app/screens/LocationsList'
 import LocationsDetailed from './app/screens/LocationsDetailed'
 import Profile from './app/screens/Profile'
 import { StackNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation';
-import LocationsList from './app/components/LocationsList';
+import LocationsList from './app/screens/LocationsList';
 
 // this is for MainFeed Stack Navigation 
 const MainStack = StackNavigator({

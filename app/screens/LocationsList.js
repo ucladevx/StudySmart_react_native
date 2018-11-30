@@ -1,8 +1,8 @@
 'use strict'
 import React, {Component} from 'react';
-import {Text, View, Dimensions, TouchableOpacity, StyleSheet, FlatList, SectionList, Image, Alert, Button} from 'react-native'
+import {Text, View, Dimensions, TouchableOpacity, StyleSheet, FlatList, SectionList, Image, Button} from 'react-native'
 import { ListItem } from 'react-native-elements';
-import LocationsDetailed from '../screens/LocationsDetailed';
+import LocationsDetailed from './LocationsDetailed';
 import GlobalSearchBar from '../components/GlobalSearchBar';
 import { StackNavigator } from 'react-navigation';
 
@@ -10,7 +10,7 @@ const Library_Data = [
     {Name: "Arts", Activity_Level: 4, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
     {Name: "Powell", Activity_Level: 95, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
     {Name: "Charles E Young Research", Activity_Level: 88, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Science and Engineering (Boelter Location)", Activity_Level: 62, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
+    {Name: "Science and Engineering - Boelter", Activity_Level: 62, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
     {Name: "Law", Activity_Level: 12, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
   ]
   
@@ -56,6 +56,7 @@ const Library_Data = [
                             source={{uri: item.Image_URI}}
                             />
                             <Text style={styles.Name}>{item.Name}</Text>
+                                {/* NEED TO CHANGE TO A PROGRESS BAR  */}
                                 <Text style={styles.Activity_Level}>{item.Activity_Level}%</Text>
                                 <Button
                                 onPress={()=> 
