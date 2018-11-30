@@ -10,13 +10,14 @@ import { StackNavigator } from 'react-navigation';
 export default class LocationsDetailed extends Component {
   constructor(props) {
     super(props)
-    // this.params = this.props.navigation.state.params;
+    this.params = this.props.navigation.state.params;
   }
   render() {
     // const { navigate } = this.params.navigation;
+    const {item} = this.props.navigation.state.params;
     return (
       <ViewContainer style={styles.container}>
-        <Text>test</Text>
+        <Text>{item.Name}</Text>
       </ViewContainer>
     )
   }
