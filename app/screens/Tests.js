@@ -10,8 +10,9 @@ var data = [["Professor","Smallberg", "Eggert"], ["Term","Fall", "Spring"], ["Ye
 export default class Tests extends Component {
   
   static navigationOptions = {
-    header:
-    <GlobalSearchBar/>,
+    header: () => {
+     visible: false  
+    },
     transitionConfig: () => ({
       transitionSpec: {
         duration: 0,
@@ -43,6 +44,19 @@ export default class Tests extends Component {
   setInputState(event){
     this.setState({ Class: event.target.value });
   } 
+  processPosts(e) {
+    var i;
+   searchedPosts = []
+    if (this.state.Class == ' ') {
+      searchedPosts = Posts.slice();
+    }
+    for (i =0 ; i<Posts.length; i++) {
+          if (Posts[i]['courseName'] == e){
+            searchedPosts.push(Posts[i]);
+          }
+    }
+    return searchedPosts
+  }
 
   render() {
     const { navigate } = this.props.navigation;

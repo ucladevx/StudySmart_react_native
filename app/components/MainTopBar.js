@@ -27,13 +27,12 @@ render () {
  </View>
    )}
   _renderRow(item) {
-    console.log(item.name)
     return (
       <TouchableOpacity
       onPress ={() => this.handleSelectCategory(item.name)}
-      style = {this.state.categorySelected == item.name ? styles.categorySelected: styles.category}>
+      style = {this.state.categorySelected == item.name ? styles.categorySelected : styles.category}>
       <Text
-      style = {styles.text}>
+      style = {this.state.categorySelected == item.name ? styles.textSelected : styles.text}>
       {item.name}
       </Text>
     </TouchableOpacity>
@@ -93,7 +92,22 @@ render () {
         fontStyle: "normal",
         letterSpacing: 1.92,
         color: '#9B9B9B'
-      }
+      },
+      textSelected: {
+        fontFamily: "System",
+        fontSize: 14,
+        fontWeight: "500",
+        fontStyle: "normal",
+        letterSpacing: 1.92,
+        color: 'white'
+      },
+      boxWithShadow: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,  
+        elevation: 5
+    }
     
 
  })

@@ -8,19 +8,20 @@ import Autocomplete from 'react-native-autocomplete-input';
 
 const classes = [
     {name: "CS31"}, {name: "CS32"}, {name: "CS33"}, {name: "Computer Science 31"}, {name: "Computer Science 32"}, {name: "CS111"},
-    {name: "MATH61"}, {name: "MATH32B"}, {name: "PHYSICS 1A"}, 
+    {name: "MATH61"}, {name: "MATH33"}, {name: "PHYSICS 1A"}, 
 ]
   
 class GlobalSearchBar extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             Class: '',
-            Result: []
+            Result: [],
+            searching: false
         }
         this.setInputState = this.setInputState.bind(this);
-        this.handleSearchSuggestions = this.handleSearchSuggestions.bind(this)
-
+        this.handleSearchSuggestions = this.handleSearchSuggestions.bind(this);
+        this.refreshClassSearch = this.props.refreshClassSearch.bind(this)
       }
       
       setInputState(e){
@@ -42,7 +43,13 @@ class GlobalSearchBar extends Component {
         }
         return result
       }
-
+      handleClick(e) {
+          this.props.refreshClassSearch(e)
+          this.setState({
+              searching:true
+          })
+          
+      }
       render() {
           const classesData = this.handleSearchSuggestions(this.state.Class)
         return (
@@ -52,13 +59,14 @@ class GlobalSearchBar extends Component {
                 </Icon>
                 </TouchableOpacity>   
                 <Autocomplete
+                style = {styles.autocompleteContainer}
                 data = {classesData} // this should be an API call or huge list eventually 
                 defaultValue={this.state.Class}
                 onChangeText={(e) => this.setInputState(e)}
-                containerStyle={{backgroundColor: 'white', marginTop: 20, }} 
-                inputContainerStyle = {{width: 250 }}
+                inputContainerStyle = {{width: 250, height: 30, backgroundColor: 'white', borderRadius: 10}}
+                hideResults = {this.state.searching}
                 renderItem={item => (
-                    <TouchableOpacity onPress={() => this.setState({Class: item})}>
+                    <TouchableOpacity onPress={() => this.handleClick(item)}>
                       <Text>{item}</Text>
                     </TouchableOpacity>
                   )}
@@ -80,24 +88,26 @@ class GlobalSearchBar extends Component {
 
 const styles = StyleSheet.create({
     buttonLeft: {
-        marginTop: 15,
-        marginLeft:10
+        marginLeft: 10
 
     },
     buttonRight: {
-        marginTop: 15,
         marginRight:10
 
     },
     bar: {
-        height: 80, 
+        height: 50, 
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#4F87EC', 
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
-    }
+    },
+    autocompleteContainer: {
+        flex: 1,
+        zIndex: 5
+      }
 
 
   })

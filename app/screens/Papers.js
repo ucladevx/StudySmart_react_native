@@ -5,9 +5,10 @@ import GlobalSearchBar from '../components/GlobalSearchBar';
 export default class Notes extends Component {
 
   static navigationOptions = {
-    header:
-    <GlobalSearchBar/>,
-  };
+    header: () => {
+      visible: false
+  },
+}
   constructor(props) {
     super(props)
     this.state = {
