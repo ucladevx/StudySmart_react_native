@@ -26,9 +26,15 @@ const MainStack = StackNavigator({
 const LocationStack = StackNavigator({
   List: {screen: LocationsList},
   Detailed: {screen: LocationsDetailed},
-  // Map: 
+  // Map:
+
+
+  Map: {screen: Locations}
+
+
 }, {
-  initialRouteName: "List"
+  //initialRouteName: "List"
+  initialRouteName: "Map"
 })
 
 //this is the tab bar navigator for the entire App 

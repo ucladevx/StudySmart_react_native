@@ -4,18 +4,28 @@ import StatusBarBackground from '../components/StatusBarBackground'
 import ViewContainer from '../components/ViewContainer'
 import GlobalSearchBar from '../components/GlobalSearchBar';
 
+import MapView, { ProviderPropType, Marker, AnimatedRegion } from 'react-native-maps';
+
+//just going to put the data here for now. Eventually we'll have it in one array that we can access
+//for both views
 
 export default class Locations extends Component {
   constructor(props) {
     super(props)
-   
   }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View>
-
-      </View>
+       <MapView
+         style={{ flex: 1 }}
+         region={{
+         latitude: 34.068921,
+         longitude: -118.445181,
+         latitudeDelta: 0.0322,
+         longitudeDelta: 0.001,
+       }}
+     />
     )
   }
 
