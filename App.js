@@ -26,13 +26,11 @@ const MainStack = StackNavigator({
 const LocationStack = StackNavigator({
   List: {screen: LocationsList},
   Detailed: {screen: LocationsDetailed},
-  // Map:
-
-
   Map: {screen: Locations}
 
 
 }, {
+  //For now, use this to toggle between List view and Map view. We will eventually add a toggle button
   //initialRouteName: "List"
   initialRouteName: "Map"
 })

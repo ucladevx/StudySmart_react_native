@@ -7,23 +7,23 @@ import GlobalSearchBar from '../components/GlobalSearchBar';
 import { StackNavigator } from 'react-navigation';
 
 const Library_Data = [
-    {Name: "Arts", Activity_Level: 4, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Powell", Activity_Level: 95, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Charles E Young Research", Activity_Level: 88, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Science and Engineering - Boelter", Activity_Level: 62, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Law", Activity_Level: 12, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
+    {Name: "Arts", Activity_Level: 4, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.07432", Longitude: "-118.4413624"},
+    {Name: "Powell", Activity_Level: 95, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.071613", Longitude: "-118.442181"},
+    {Name: "Charles E Young Research", Activity_Level: 88, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.074969", Longitude: "-118.441466"},
+    {Name: "Science and Engineering - Boelter", Activity_Level: 62, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.068987", Longitude: "-118.442659"},
+    {Name: "Law", Activity_Level: 12, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0729138", Longitude: "-118.4384435"},
   ]
   
   const StudyRoom_Data = [
-    {Name: "Rieber", Activity_Level: 4, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Hedrick", Activity_Level: 95, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Hedrick Study", Activity_Level: 88, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Sproul", Activity_Level: 62, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
+    {Name: "Rieber", Activity_Level: 4, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0716799", Longitude: "-118.4536875"},
+    {Name: "Hedrick", Activity_Level: 95, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0731836", Longitude: "-118.4545039"},
+    {Name: "Hedrick Study", Activity_Level: 88, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0730785", Longitude: "-118.4542834"},
+    {Name: "Sproul", Activity_Level: 62, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0724491", Longitude: "-118.4523096"},
   ]
   
   const InterestingLocations_Data = [
-    {Name: "Boelter Roof", Activity_Level: 1, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
-    {Name: "Botanical Gardens", Activity_Level: 7, Image_URI: "https://facebook.github.io/react-native/docs/assets/favicon.png"},
+    {Name: "Boelter Roof", Activity_Level: 1, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0692143", Longitude: "-118.445385"},
+    {Name: "Botanical Gardens", Activity_Level: 7, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.066584", Longitude: "-118.4437107"},
   ]
   
   let Locations_Data = {Libraries: Library_Data, StudyRooms: StudyRoom_Data, InterestingLocations: InterestingLocations_Data}
@@ -53,7 +53,7 @@ const Library_Data = [
                         <View style={styles.card}>
                             <Image
                             style={{width: 120, height: 90, marginBottom:15}}
-                            source={{uri: item.Image_URI}}
+                            source={{uri: item.Image_URL}}
                             />
                             <Text style={styles.Name}>{item.Name}</Text>
                                 {/* NEED TO CHANGE TO A PROGRESS BAR  */}
