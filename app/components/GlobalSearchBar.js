@@ -96,11 +96,10 @@ const styles = StyleSheet.create({
 
     },
     bar: {
-        height: 50, 
+        height: 80, 
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#4F87EC', 
-        flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },

@@ -72,7 +72,8 @@ export default class MainFeed extends Component {
         <GlobalSearchBar
         style = {styles.search}
       refreshClassSearch = {this.refreshClassSearch}/>
-       <MainTopBar/>
+       <MainTopBar
+       showOptionsForClass={this.processPosts(this.state.Class)}/>
         <MainFeedList
         data={this.processPosts(this.state.Class)}
         />
