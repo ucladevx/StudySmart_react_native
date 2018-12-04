@@ -6,7 +6,7 @@ import LocationsDetailed from './LocationsDetailed';
 import { StackNavigator } from 'react-navigation';
 
 const Library_Data = [
-    {Name: "Arts", Activity_Level: 4, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.07432", Longitude: "-118.4413624", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
+    {Name: "Arts", Activity_Level: 4, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.07432", Longitude: "-118.4413624", MondayOpen: 8, MondayClosed: 23, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Powell", Activity_Level: 95, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.071613", Longitude: "-118.442181", MondayOpen: -1, MondayClosed: -1, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Charles E Young Research", Activity_Level: 88, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.074969", Longitude: "-118.441466", MondayOpen: 4, MondayClosed: 19, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Science and Engineering - Boelter", Activity_Level: 62, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.068987", Longitude: "-118.442659", MondayOpen: 8, MondayClosed: 10, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
@@ -78,14 +78,13 @@ const Library_Data = [
                             style={{width: 120, height: 90, marginBottom:15}}
                             source={{uri: item.Image_URL}}
                             />
-                            <Text>{this._currentOpenorClose(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"], hour_only)}</Text>
-                            <Text>
-                                {this._determineHours(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"])}                            
-                            </Text>
-                            <Text style={styles.Name}>{item.Name}</Text>
+                            <View style={styles.information}>
+                                <Text style={styles.Name}>{item.Name}</Text>
                                 {/* NEED TO CHANGE TO A PROGRESS BAR  */}
-                                <Text style={styles.Activity_Level}>{item.Activity_Level}%</Text>               
+                                <Text style={styles.Activity_Level}>{item.Activity_Level}%</Text>  
+                                <Text style={this._currentOpenorClose(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"], hour_only) === "CLOSED" ? styles.Closed : styles.Open}>{this._determineHours(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"], hour_only)}</Text>       
                             </View>
+                        </View>
                     </TouchableOpacity>
                      }
                     keyExtractor={(item, index) => index.toString()}
@@ -96,23 +95,49 @@ const Library_Data = [
 
       // determine if library is currently open or closed 
       _currentOpenorClose(openTime, closeTime, currentHour){
-        if (parseInt(openTime) == -1 || parseInt(closeTime) == -1){
-            return "CLOSED"
-        }
-        else if (parseInt(openTime) == 0 && parseInt(closeTime) == 0){
-            return "OPEN"
-        }
-        if (parseInt(openTime) <= currentHour && currentHour < parseInt(closeTime)){
-            return "OPEN"
-        }
-        return "CLOSED"
+         // if not open today
+         let status = "";
+         if (parseInt(openTime) == -1 || parseInt(closeTime) == -1){
+             status = "CLOSED"
+         }
+         // 24 hours
+         else if (parseInt(openTime) == 0 && parseInt(closeTime) == 0){
+             status =  "OPEN"
+         }
+         // normal
+         else if (parseInt(openTime) <= currentHour && currentHour < parseInt(closeTime)){
+             status =  "OPEN"
+         }
+         // closed
+         else {
+             status =  "CLOSED"
+         }
+         return status
       }
 
       // uses the open and close time of library to print the hour string
-      _determineHours(openTime, closeTime) {
+      _determineHours(openTime, closeTime, currentHour) {
+          // if not open today
+        let status = "";
+        if (parseInt(openTime) == -1 || parseInt(closeTime) == -1){
+            status = "CLOSED"
+        }
+        // 24 hours
+        else if (parseInt(openTime) == 0 && parseInt(closeTime) == 0){
+            status =  "OPEN"
+        }
+        // normal
+        else if (parseInt(openTime) <= currentHour && currentHour < parseInt(closeTime)){
+            status =  "OPEN"
+        }
+        // closed
+        else {
+            status =  "CLOSED"
+        }
+
         let hour_string = ""
         if (openTime == 0 && closeTime == 0){
-            return "24 Hours";
+            return "OPEN: 24 Hours";
         }
         if (openTime >= 0 && openTime < 11){
             hour_string += openTime
@@ -147,7 +172,13 @@ const Library_Data = [
             hour_string += closeTime
             hour_string += " pm"
         }
-        return hour_string
+
+        // if closed just say closed 
+        if (status === "CLOSED"){
+            return "NOW CLOSED"
+        }
+        // return OPEN: hours
+        return "OPEN: " + hour_string
       }
     }
 
@@ -175,14 +206,29 @@ const Library_Data = [
         paddingBottom: 10,
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'row',
+    },
+    information:{
+        flexDirection: 'column',
+        width: width/2-15,
     },
     Name: {
         fontSize: 16,
         color: '#000',
         textAlign: 'center',
     },
+    Closed:{
+        fontSize: 13,
+        color: 'red',
+        textAlign: 'center'
+    },
+    Open: {
+        fontSize: 13,
+        color: 'green',
+        textAlign: 'center'
+    },
     Activity_Level: {
-        fontSize: 11,
+        fontSize: 13,
         fontStyle: 'italic',
         textAlign: 'center',
     },
