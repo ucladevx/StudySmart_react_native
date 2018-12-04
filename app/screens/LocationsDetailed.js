@@ -28,13 +28,13 @@ export default class LocationsDetailed extends Component {
           
           <Text style={styles.Section_Header}>Hours:</Text>
           {/* Store hours in item like item.Monday, item.Tuesday, etc. */}
-          <Text>Monday: 8 am to 8pm </Text>
-          <Text>Tuesday: 8 am to 8pm </Text>
-          <Text>Wednesday: 8 am to 8pm </Text>
-          <Text>Thursday: 8 am to 8pm </Text>
-          <Text>Friday: 8 am to 8pm </Text>
-          <Text>Saturday: 8 am to 8pm </Text>
-          <Text>Sunday: 8 am to 8pm </Text>
+          <Text>Monday: 8 am to 8 pm </Text>
+          <Text>Tuesday: 8 am to 8 pm </Text>
+          <Text>Wednesday: 8 am to 8 pm </Text>
+          <Text>Thursday: 8 am to 8 pm </Text>
+          <Text>Friday: 8 am to 8 pm </Text>
+          <Text>Saturday: 8 am to 8 pm </Text>
+          <Text>Sunday: 8 am to 8 pm </Text>
         </View>
       </ScrollView>
     )
