@@ -51,6 +51,9 @@ export default class LocationsDetailed extends Component {
         return "24 Hours";
     }
     if (openTime >= 0 && openTime < 11){
+        if (openTime == 0){
+            openTime = 12;
+        }
         hour_string += openTime
         hour_string += " am - "
     }
@@ -60,11 +63,15 @@ export default class LocationsDetailed extends Component {
     }
     else {
         // convert 24 hour time to 12 hour
-        if (openTime > 12){
+        if (openTime > 12 && openTime < 24){
             openTime -= 12
+            hour_string += openTime
+            hour_string += " pm - "
         }
-        hour_string += openTime
-        hour_string += " pm - "
+        else if (openTime == 24){
+            hour_string += "12 am - "
+        }
+        
     }
 
     if (closeTime >= 0 && closeTime < 11){
@@ -77,13 +84,16 @@ export default class LocationsDetailed extends Component {
     }
     else {
         // convert 24 hour time to 12 hour
-        if (closeTime > 12){
+        if (closeTime > 12 && closeTime < 24){
             closeTime -= 12
+            hour_string += closeTime
+            hour_string += " pm"
         }
-        hour_string += closeTime
-        hour_string += " pm"
+        else if (closeTime == 24){
+            hour_string += "12 am"
+        }
     }
-    return hour_string
+    return hour_string;
   }
 }
 
