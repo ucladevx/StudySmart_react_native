@@ -126,7 +126,7 @@ render () {
    setProfessor(e) {
      console.log(e)
     this.setState({
-      Professor: e
+      professor: e
     })
   }
 

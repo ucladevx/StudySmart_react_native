@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Autocomplete from 'react-native-autocomplete-input';
-
+import Search from '../components/Search'
 const classes = [
     {name: "CS31"}, {name: "CS32"}, {name: "CS33"}, {name: "Computer Science 31"}, {name: "Computer Science 32"}, {name: "CS111"},
     {name: "MATH61"}, {name: "MATH33"}, {name: "PHYSICS 1A"}, 
@@ -26,6 +26,9 @@ class GlobalSearchBar extends Component {
       
       setInputState(e){
         this.setState({ Class: e });
+        this.setState({
+            searching: false
+        })
       }
       handleSearchSuggestions(e) {
         const { Class } = this.state; 
@@ -38,7 +41,7 @@ class GlobalSearchBar extends Component {
         value = classes[index].name.toUpperCase();
         var currentClass = Class.toUpperCase();
         if (value.substring(0, Class.length) == currentClass) {
-                result.push(value)
+                result.push(classes[index])
             }
         }
         return result
@@ -58,16 +61,16 @@ class GlobalSearchBar extends Component {
                 <Icon color ="white"name="upload" size={25} backgroundColor="#4F87EC">
                 </Icon>
                 </TouchableOpacity>   
-                <Autocomplete
-                style = {styles.autocompleteContainer}
-                data = {classesData} // this should be an API call or huge list eventually 
+                <Search
+                style={styles.autocompleteContainer}
+                data={classesData} // this should be an API call or huge list eventually 
                 defaultValue={this.state.Class}
                 onChangeText={(e) => this.setInputState(e)}
-                inputContainerStyle = {{width: 250, height: 30, backgroundColor: 'white', borderRadius: 10}}
-                hideResults = {this.state.searching}
-                renderItem={item => (
-                    <TouchableOpacity onPress={() => this.handleClick(item)}>
-                      <Text>{item}</Text>
+                inputContainerStyle={{width: 250, height: 30, backgroundColor: 'white', borderRadius: 10}}
+                hideResults={this.state.searching}
+                renderItem={({item}) => (
+                    <TouchableOpacity onPress={() => this.handleClick(item.name)}>
+                      <Text>{item.name}</Text>
                     </TouchableOpacity>
                   )}
                 />
