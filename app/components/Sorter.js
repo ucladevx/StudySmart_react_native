@@ -3,41 +3,109 @@ import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity, Dimensions, 
 import MainTopBar from '../components/MainTopBar'
 import ViewContainer from '../components/ViewContainer'
 import GlobalSearchBar from '../components/GlobalSearchBar'; 
+
 class Sorter extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            visible: false 
-        }
     }
 
+  _renderProfessors(item) {
+    return (
+   <TouchableOpacity
+   onPress = { () => this.props.setProfessor(item.name)}
+   > 
+     <Text> {item.name} </Text> 
+     </TouchableOpacity>
+    )
+}
     render() {
-
+    return (
+    <Modal 
+        style={styles.modal}
+        transparent={true}
+    >
+        <View style={[styles.modalContainer, styles.boxWithShadow]}>
+        <Text style = {styles.sort_text}> Sort </Text>
+        <View style={styles.divider}/>
+        <View style ={styles.left_text} >
+        <Text style ={styles.title_text}> Exams </Text>
+        <View style ={styles.container_row}>
+        <TouchableOpacity
+        onPress = { () => this.props.setTest('Midterm 1')}
+        > 
+            <Text> Midterm 1 </Text> 
+       </TouchableOpacity>
+       <TouchableOpacity
+        onPress = { () => this.props.setTest('Midterm 2')}
+        > 
+            <Text> Midterm 2 </Text> 
+       </TouchableOpacity>
+       </View>
+       <View style ={styles.container_row}>
+       <TouchableOpacity
+        onPress = { () => this.props.setTest('Final')}
+        > 
+             <Text> Final </Text> 
+       </TouchableOpacity>
+       <TouchableOpacity
+        onPress = { () => this.props.setTest('Quiz')}
+        > 
+            <Text> Quiz </Text> 
+       </TouchableOpacity>
+       </View>
+            <Text style ={styles.title_text}> Professors </Text>
+       <FlatList
+                    data={this.props.availableProfessors}
+                    renderItem={({item}) =>{return this._renderProfessors(item) }}
+                    keyExtractor={(item, index) => index.toString()}
+        />
+         </View>
+           <TouchableOpacity
+            onPress = { () => this.props.showResults()}
+            > 
+       <Text> Show Results </Text> 
+       </TouchableOpacity>
+     
+                  </View>
+              </Modal>
+        )
     }
+
 }
 
 const styles = StyleSheet.create({
     modalContainer: {
-        height: 250,
-        width: 200,
-        backgroundColor:'gray',
-        justifyContent: 'center'
+        height: '70%',
+        width: '90%',
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop:50,
+        marginLeft:20,
+        marginRight: 30,
+        borderRadius: 10,
+        flex: 0,
     },
-    container2: {
-      flex: 1,
-      flexDirection: 'row',
-      height: 100,
-      padding: 10,
-      marginLeft:16,
-      marginRight:16,
-      marginTop: 8,
-      marginBottom: 8,
-      borderRadius: 5,
-      backgroundColor: '#FFF',
-      elevation: 2,
-      width: 185,
-      height: 100
-  },
+    modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      container_row: {
+        flexDirection: 'row',
+        marginBottom: 5,
+      },
+      container_left: {
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start'
+      },
+      divider: {
+        height: 2,
+        backgroundColor: '#e0e0e0',
+        width: '95%',
+        marginTop: 10,
+        marginBottom: 10
+      },
   big_text: {
       fontSize: 16,
       color: '#000',
@@ -51,9 +119,21 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
 
   },
-  container_row: {
-    flexDirection: 'row',
-    marginBottom: 5,
+  sort_text: {
+    fontFamily: "System",
+    fontSize: 30,
+    fontWeight: "800",
+    fontStyle: "normal",
+    letterSpacing: 1.92,
+    color:  "#4a4a4a",
+  }, 
+  title_text: {
+    fontFamily: "System",
+        fontSize: 24,
+        fontWeight: "800",
+        fontStyle: "normal",
+        letterSpacing: 1.92,
+        color:  "#4a4a4a",
   },
   small_text: {
       fontSize: 11,
@@ -61,7 +141,17 @@ const styles = StyleSheet.create({
       marginLeft: 5,
       marginRight: 5
   },
-  boxWithShadow: {
+  right_text: {
+      textAlign : 'right',
+      flex: 1
+  },
+  left_text: {
+    width: '100%',
+    flex: 1,
+    justifyContent: 'flex-start',
+    paddingLeft: 5
+},
+boxWithShadow: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
@@ -79,12 +169,5 @@ rounded_button: {
     justifyContent: 'center',
     alignItems: 'center'
   },
-  right_text: {
-      textAlign : 'right',
-      flex: 1
-  },
-  left_text: {
-    textAlign : 'left',
-    flex: 0
-}
 });
+export default Sorter;

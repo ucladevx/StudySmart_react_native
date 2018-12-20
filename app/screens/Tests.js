@@ -49,6 +49,11 @@ export default class Tests extends Component {
   setInputState(event){
     this.setState({ Class: event.target.value });
   } 
+  refreshClassSearch(e){
+    this.setState({
+        Class: e
+    });
+  }
   processPosts(e) {
     var i;
    searchedPosts = []
@@ -84,31 +89,13 @@ export default class Tests extends Component {
     const { navigate } = this.props.navigation;
     return (
       <ViewContainer>
-          <Search
-                style = {styles.autocompleteContainer}
-                data = {classesData} // this should be an API call or huge list eventually 
-                defaultValue={this.state.Class}
-                onChangeText={(e) => this.setInputState(e)}
-                inputContainerStyle = {{width: 250, height: 30, backgroundColor: 'white', borderRadius: 10}}
-                hideResults = {this.state.searching}
-                renderItem={item => (
-                    <TouchableOpacity onPress={() => this.handleClick(item)}>
-                      <Text>{item}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
+        <View
+        style={styles.search}>
+        <GlobalSearchBar
+        refreshClassSearch = {this.refreshClassSearch}/>
+        </View>
+        <View style={styles.topBar}>
         <MainTopBar/>
-          <View style={styles.menu}>
-          {this.state.Class.length ?
-          <DropdownMenu
-          bgColor={'white'}
-          tintColor={'#666666'}
-          activityTintColor={'blue'}
-          handler={(selection, row) => this.handleSelection(selection,row)}
-          data={data}
-          maxHeight={150} >
-        </DropdownMenu> : <Text> Search and select a class </Text>
-        }
         </View>
         <View style={styles.list}>
         {(this.state.Test.length >0 && this.state.Class.length >0 && 
@@ -170,33 +157,27 @@ export default class Tests extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  search: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-    height: 30,
-  },
-  menu: {
-    flex: 1,
-    zIndex: 10,
     position: 'absolute',
-    top: '20%',
+    top: 20,
     width: '100%',
-    
+    zIndex: 10
+  }, 
+  topBar: {
+    zIndex: 1,
+    position: 'absolute',
+    top: '12%',
+    width: '100%',
+
   },
   list: {
     zIndex : 1,
     position: 'absolute',
-    top: '35%',
+    top: '5%',
     width: '100%',
    
   },
-  searchContainer: { 
-    marginTop: 8, 
-    marginBottom: 8,
-    justifyContent: 'center',
-  }
 
 });
 

@@ -16,6 +16,10 @@ class MainTopBar extends Component {
           test: ' ',
           professor: ' ',
         }
+        this.setTest= this.setTest.bind(this)
+        this.setProfessor= this.setProfessor.bind(this)
+      //  this.availableProfessors= this.availableProfessors.bind(this)
+        this.showResults= this.showResults.bind(this)
       }
 
       _renderRow(item) {
@@ -33,90 +37,48 @@ class MainTopBar extends Component {
       handleSelectCategory(item){
         const { navigate } = this.props.navigation;
         navigate(item, {categorySelected: item} )
-    
       }
       showSorter() {
         this.setState({
-          visible:true 
+          visible : true 
         })
        }
+       showResults() {
+        this.setState({
+          visible: false
+        })
+      }
 
 render () { 
    return ( 
   <View style={styles.topBar}>
-    <FlatList 
+    <View
+    style={{flex:1,height:50, marginBotton: 5, marginTop: 5}}>
+    <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={categories}
-        renderItem={({item}) =>{return this._renderRow(item) }}
+        renderItem={({item}) =>{ return this._renderRow(item) }}
         keyExtractor={(item, index) => index.toString()}
     />
+    </View>
     <View
     style={styles.right}>
-   <TouchableOpacity
-   style = {styles.sort}
-   onPress = { () => this.showSorter()}
-   > 
+      <TouchableOpacity
+      style = {styles.sort}
+      onPress = { () =>  this.showSorter() }> 
      <Text> Sort </Text> 
      </TouchableOpacity>
-     </View>
-     <Modal 
-      style={styles.modal}
-      visible={this.state.visible}
-      transparent={true}
-      >
-   <View style={[styles.modalContainer, styles.boxWithShadow]}>
-   <Text style ={styles.title_text}
-   > Exams </Text>
-   <View style ={styles.container_row}>
-    <TouchableOpacity
-   onPress = { () => this.setTest('Midterm 1')}
-   > 
-     <Text> Midterm 1 </Text> 
-     </TouchableOpacity>
-     <TouchableOpacity
-   onPress = { () => this.setTest('Midterm 2')}
-   > 
-     <Text> Midterm 2 </Text> 
-     </TouchableOpacity>
-     </View>
-     <View style ={styles.container_row}>
-     <TouchableOpacity
-   onPress = { () => this.setTest('Final')}
-   > 
-     <Text> Final </Text> 
-     </TouchableOpacity>
-     <TouchableOpacity
-   onPress = { () => this.setTest('Quiz')}
-   > 
-     <Text> Quiz </Text> 
-     </TouchableOpacity>
-     </View>
-     <Text style ={styles.title_text}
-     > Professors </Text>
-     <FlatList
-                  data={this.availableProfessors()}
-                  renderItem={({item}) =>{return this._renderProfessors(item) }}
-                  keyExtractor={(item, index) => index.toString()}
-      />
-         <TouchableOpacity
-   onPress = { () => this.showResults()}
-   > 
-     <Text> Show Results </Text> 
-     </TouchableOpacity>
-                </View>
-            </Modal>
+     {this.state.visible ?  <Sorter
+          setTest={this.setTest}
+          setProfessor={this.setProfessor}
+          availableProfessors={this.availableProfessors()}
+          showResults={this.showResults}
+          /> : null }
+    </View>
  </View>
    )}
-   _renderProfessors(item) {
-     return (
-    <TouchableOpacity
-    onPress = { () => this.setProfessor(item.name)}
-    > 
-      <Text> {item.name} </Text> 
-      </TouchableOpacity>
-     )
-   }
+
    setTest(e) {
      console.log(e)
      this.setState({
@@ -130,18 +92,34 @@ render () {
     })
   }
 
-  showResults() {
-    this.setState({
-      visible: false
-    })
-  }
-
   availableProfessors(){
     //API call here to fill 
     var array = [] 
     return Professors
   }
+
 }
+
+const category = {
+  borderRadius: 15,
+  backgroundColor: "#e0e0e0",
+  marginLeft: 4,
+  marginRight: 4, 
+  width: 80,
+  marginTop: 10,
+  height: 30,
+  justifyContent: 'center',
+  alignItems: 'center'
+}
+const text = {
+  fontFamily: "System",
+  fontSize: 14,
+  fontWeight: "500",
+  fontStyle: "normal",
+  letterSpacing: 1.92,
+  color: '#9B9B9B'
+}
+
  const styles = StyleSheet.create({
 
     container: {
@@ -156,48 +134,21 @@ render () {
         alignItems: 'center',
         backgroundColor: 'transparent',
         marginBottom: 20,
+        flex: 0
       },
       buttonsContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between'
       },
-      category: {
-        borderRadius: 15,
-        backgroundColor: "#e0e0e0",
-        marginLeft: 4,
-        marginRight: 4, 
-        width: 70,
-        marginTop: 10,
-        height: 35,
-        justifyContent: 'center',
-        alignItems: 'center'
-      },
+      category,
       categorySelected: {
+        ...category,
         backgroundColor: '#4F87EC',
-        borderRadius: 15,
-        marginLeft: 4,
-        marginRight: 4, 
-        width: 70,
-        marginTop: 10,
-        height: 35,
-        justifyContent: 'center',
-        alignItems: 'center'
       },
-      text: {
-        fontFamily: "System",
-        fontSize: 14,
-        fontWeight: "500",
-        fontStyle: "normal",
-        letterSpacing: 1.92,
-        color: '#9B9B9B'
-      },
+      text, 
       textSelected: {
-        fontFamily: "System",
-        fontSize: 14,
-        fontWeight: "500",
-        fontStyle: "normal",
-        letterSpacing: 1.92,
+        ...text,
         color: 'white'
       },
       boxWithShadow: {
@@ -207,22 +158,6 @@ render () {
         shadowRadius: 2,  
         elevation: 5
     },
-    modalContainer: {
-      height: '70%',
-      width: '90%',
-      backgroundColor: 'white',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop:50,
-      marginLeft:20,
-      marginRight: 30,
-      borderRadius: 10,
-  },
-    modal: {
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     container_text: {
       flex: 1,
       flexDirection: 'column',
@@ -230,28 +165,15 @@ render () {
       justifyContent: 'center',
 
   },
-  container_row: {
-    flexDirection: 'row',
-    marginBottom: 5,
-  },
-  title_text: {
-    fontFamily: "System",
-        fontSize: 24,
-        fontWeight: "800",
-        fontStyle: "normal",
-        letterSpacing: 1.92,
-        color: '#9B9B9B',
-  },
   sort: {
     borderRadius: 15,
     backgroundColor: '#4F87EC',
-    height: 30,
+    height: 25,
     justifyContent: 'center',
     marginLeft: '85%',
-    flex:1
+    flex: 1
   },
   right: {
-    flex: 1,
     flexDirection: 'row'
   }
 

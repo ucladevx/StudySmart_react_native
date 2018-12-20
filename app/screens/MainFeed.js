@@ -41,9 +41,6 @@ export default class MainFeed extends Component {
     }
     this.refreshClassSearch = this.refreshClassSearch.bind(this);
   }
-  componentDidMount() {
-    this.props.navigation.setParams({ refreshClassSearch: this.refreshClassSearch });
-  }
   refreshClassSearch(e){
     this.setState({
         Class: e
@@ -69,17 +66,24 @@ export default class MainFeed extends Component {
     const { navigate } = this.props.navigation;
     return (
       <ViewContainer>
+         <View
+        style={styles.search}>
         <GlobalSearchBar
-        style = {styles.search}
-      refreshClassSearch = {this.refreshClassSearch}/>
-       <MainTopBar
-       showOptionsForClass={this.processPosts(this.state.Class)}/>
+        refreshClassSearch = {this.refreshClassSearch}/>
+        </View>
+        <View style={styles.topBar}>
+        <MainTopBar
+          showOptionsForClass={this.processPosts(this.state.Class)}/>
+        </View>
+        <View
+        style={styles.list}>
         <MainFeedList
         data={this.processPosts(this.state.Class)}
         />
         <MainFeedList
          data={this.processPosts(this.state.Class)}
         />
+        </View>
       </ViewContainer>
     )
   }
@@ -94,12 +98,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   search: {
-      flex: 1,
-      position: 'absolute',
-      top: 50,
-      zIndex: 10
+    flex: 1,
+    position: 'absolute',
+    top: 20,
+    width: '100%',
+    zIndex: 10
   }, 
-  
-
+  topBar: {
+    zIndex: 1,
+    position: 'absolute',
+    top: '12%',
+    width: '100%',
+  },
+  list: {
+    position: 'absolute',
+    zIndex: 1,
+    top: '24%'
+  },
 
 });

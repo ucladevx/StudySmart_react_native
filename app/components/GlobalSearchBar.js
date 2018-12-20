@@ -4,7 +4,6 @@ import {SearchBar} from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import Autocomplete from 'react-native-autocomplete-input';
 import Search from '../components/Search'
 const classes = [
     {name: "CS31"}, {name: "CS32"}, {name: "CS33"}, {name: "Computer Science 31"}, {name: "Computer Science 32"}, {name: "CS111"},
