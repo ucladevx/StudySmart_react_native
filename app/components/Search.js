@@ -99,6 +99,7 @@ class Search extends Component {
   renderTextInput() {
     const { onEndEditing, renderTextInput, style } = this.props;
     const props = {
+      value: this.props.value,
       style: [styles.input, style],
       ref: ref => (this.textInput = ref),
       onEndEditing: e => onEndEditing && onEndEditing(e),

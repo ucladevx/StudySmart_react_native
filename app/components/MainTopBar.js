@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity, Modal} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity, TouchableWithoutFeedback, Modal} from 'react-native';
 import ViewContainer from './ViewContainer'
 import { withNavigation } from 'react-navigation';
 import Sorter from './Sorter'
-
+import Ionicon from 'react-native-vector-icons/Ionicons';
 const categories = [{name:'Main'}, {name:'Tests'} , {name:'Notes'},{name:'Guides'},{name: 'Papers'}]
 const Professors = [{name:'Smallberg'}, {name:'Potkonjak'}, {name: 'Liu'} ]
 class MainTopBar extends Component {
     constructor(props) {
         super(props)
         const page = this.props.navigation.getParam('categorySelected', 'Main');
+        console.log(page)
         this.state = {
           categorySelected: page,
           visible: false,
@@ -24,19 +25,23 @@ class MainTopBar extends Component {
 
       _renderRow(item) {
         return (
-          <TouchableOpacity
-          onPress ={() => this.handleSelectCategory(item.name)}
-          style = {this.state.categorySelected == item.name ? styles.categorySelected : styles.category}>
+          <TouchableWithoutFeedback
+          onPress={() => this.handleSelectCategory(item.name)}>
+          <View style = {this.state.categorySelected == item.name ? styles.categorySelected : styles.category}>
           <Text
           style = {this.state.categorySelected == item.name ? styles.textSelected : styles.text}>
           {item.name}
           </Text>
-        </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
         )
       }
       handleSelectCategory(item){
         const { navigate } = this.props.navigation;
         navigate(item, {categorySelected: item} )
+        this.setState({
+          categorySelected: item
+        })
       }
       showSorter() {
         this.setState({
@@ -58,6 +63,7 @@ render () {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={categories}
+        extraData={this.state}
         renderItem={({item}) =>{ return this._renderRow(item) }}
         keyExtractor={(item, index) => index.toString()}
     />
@@ -65,9 +71,11 @@ render () {
     <View
     style={styles.right}>
       <TouchableOpacity
-      style = {styles.sort}
+      style = {[styles.sort, styles.boxWithShadow]}
       onPress = { () =>  this.showSorter() }> 
-     <Text> Sort </Text> 
+     <Text style= {styles.sort_text}> Sort </Text> 
+     <Ionicon color ="white"name="ios-arrow-back" size={15} backgroundColor="#4F87EC">
+                </Ionicon>
      </TouchableOpacity>
      {this.state.visible ?  <Sorter
           setTest={this.setTest}
@@ -121,20 +129,16 @@ const text = {
 }
 
  const styles = StyleSheet.create({
-
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-      },
       topBar: {
         width: '100%',
-        height: '12%', 
+        height: 100, 
         alignItems: 'center',
         backgroundColor: 'transparent',
         marginBottom: 20,
-        flex: 0
+        flex: 0,
+        zIndex: 15,
+        position: 'absolute',
+        top: 85,
       },
       buttonsContainer: {
         flex: 1,
@@ -166,15 +170,23 @@ const text = {
 
   },
   sort: {
-    borderRadius: 15,
+    borderRadius: 8,
     backgroundColor: '#4F87EC',
     height: 25,
+    width: '20%',
+    marginLeft: '78%',
+    flexDirection: 'row',
     justifyContent: 'center',
-    marginLeft: '85%',
-    flex: 1
+    alignItems: 'center',
+    flex: 0
+  },
+  sort_text: {
+    ...text,
+    letterSpacing: 1.54,
+    color: 'white',
   },
   right: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   }
 
  })

@@ -1,21 +1,24 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
 import ViewContainer from '../components/ViewContainer'
-import MainFeedList from '../components/MainFeedList'
+import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
 import MainTopBar from '../components/MainTopBar'
 import GlobalSearchBar from '../components/GlobalSearchBar';
+import MainFeedSegment from './MainFeedSegment'
+import Notes from './Notes'
+import Tests from './Tests'
+import AntIcon from 'react-native-vector-icons/AntDesign';
 // sample information for the 'posts' 
 const Posts = [
-  {courseName: "CS31", professor: "Smallberg", roomNumber: 3400},
-  {courseName: "CS32",  professor: "Nachenberg", roomNumber: 289},
-  {courseName: "CS33",  professor: "Eggert", roomNumber: 4000},  
-  {courseName: "CS131", professor: "Smallberg", roomNumber: 3400},
-  {courseName: "CS13",  professor: "Nachenberg", roomNumber: 289},
-  {courseName: "CS133",  professor: "Eggert", roomNumber: 4000},
-  {courseName: "EE 3",  professor: "Potkonjak", roomNumber: 4000},
-  {courseName: "M51A",  professor: "Potkonjak", roomNumber: 4000},
-  {courseName: "CS31",  professor: "Potkonjak", roomNumber: 4000},
-  {courseName: "MATH33",  professor: "Potkonjak", roomNumber: 4000}
+  {courseName: "CS31", professor: "Smallberg", test: "Midterm 1", term:"Winter",year: 2018, rating: 4, ratingNum: 10},
+  {courseName: "CS32",  professor: "Nachenberg", test: "Midterm 1", term: "Fall", year: 2015, rating: 3.5, ratingNum: 10},
+  {courseName: "CS33",  professor: "Eggert", test: "Midterm 1", term: "Fall", year: 2016, rating: 3.5, ratingNum: 10},  
+  {courseName: "CS131", professor: "Smallberg", test: "Midterm 1", term: "Winter", year: 2015, rating: 3.5, ratingNum: 4310},
+  {courseName: "CS13",  professor: "Nachenberg", test: "Final", term: "Fall", year: 2018, rating: 5, ratingNum: 10},
+  {courseName: "CS133",  professor: "Eggert", test: "Midterm 2", term: "Fall", year: 2018, rating: 3.5, ratingNum: 1000},
+  {courseName: "EE 3",  professor: "Potkonjak", test: "Midterm 1", term: "Fall", year: 2015,rating: 2.0, ratingNum: 10},
+  {courseName: "M51A",  professor: "Potkonjak", term: "Fall", term: "Fall", year: 2018, rating: 3.5, ratingNum: 210},
+  {courseName: "CS31",  professor: "Potkonjak", test: "Midterm 1", term: "Spring", year: 2018, rating: 1, ratingNum: 10},
+  {courseName: "MATH33",  professor: "Potkonjak", test: "Midterm 1", term: "Spring", year: 2018, rating: 1, ratingNum: 10}
 ]
 var searchedPosts = []; 
 
@@ -37,52 +40,75 @@ export default class MainFeed extends Component {
   constructor(props) {
     super(props)
     this.state =  {
-      Class: ' '
+      Class: ' ',
+      categorySelected: 'Main',
+      foundPosts: [],
     }
     this.refreshClassSearch = this.refreshClassSearch.bind(this);
+    this.handleSelectCategory = this.handleSelectCategory.bind(this);
+    this.processPosts = this.processPosts.bind(this);
+  }
+  handleScroll(e){
+    this.setState({ scrollPosition: e });
   }
   refreshClassSearch(e){
     this.setState({
         Class: e
     });
   }
-  processPosts(e) {
+  loadMain(e) {
     var i;
    searchedPosts = []
-   console.log(e)
     if (this.state.Class == ' ') {
       searchedPosts = Posts.slice();
     }
     var upperClass = this.state.Class.toUpperCase()
     for (i =0 ; i<Posts.length; i++) {
-          if (Posts[i]['courseName'].toUpperCase() == upperClass){
+          if (Posts[i]['courseName'] == upperClass){
             searchedPosts.push(Posts[i]);
           }
     }
     return searchedPosts
   }
-
+  handleSelectCategory(item){
+    this.setState({
+      categorySelected: item
+    })
+  }
+  processPosts(e) {
+    var i;
+   searchedPosts = []
+   console.log(e)
+    if (this.state.Class == ' ') {
+      this.setState({
+        foundPosts: e.slice()
+      }) 
+    }
+    var upperClass = this.state.Class.toUpperCase()
+    for (i =0 ; i<e.length; i++) {
+          if (e[i]['courseName'].toUpperCase() == upperClass){
+            searchedPosts.push(e[i]);
+          }
+    }
+    this.setState({
+      foundPosts: searchedPosts
+    })
+  }
   render() {
     const { navigate } = this.props.navigation;
+    let loadMain = this.loadMain(this.state.Class)
     return (
       <ViewContainer>
-         <View
-        style={styles.search}>
-        <GlobalSearchBar
-        refreshClassSearch = {this.refreshClassSearch}/>
-        </View>
-        <View style={styles.topBar}>
-        <MainTopBar
-          showOptionsForClass={this.processPosts(this.state.Class)}/>
-        </View>
         <View
-        style={styles.list}>
-        <MainFeedList
-        data={this.processPosts(this.state.Class)}
-        />
-        <MainFeedList
-         data={this.processPosts(this.state.Class)}
-        />
+        style = {styles.list}>
+        <MainFeedSegment loadMain={loadMain}/>
+        <View style = {styles.plus}>
+        <TouchableOpacity
+        style={styles.boxWithShadow}
+        onPress = { () => console.log('hey')}>
+        <AntIcon color = '#4F87EC' name="pluscircle" size={50}/>
+        </TouchableOpacity>
+        </View>
         </View>
       </ViewContainer>
     )
@@ -97,23 +123,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  search: {
-    flex: 1,
-    position: 'absolute',
-    top: 20,
-    width: '100%',
-    zIndex: 10
-  }, 
-  topBar: {
-    zIndex: 1,
-    position: 'absolute',
-    top: '12%',
-    width: '100%',
-  },
   list: {
     position: 'absolute',
     zIndex: 1,
-    top: '24%'
+    top: '20%',
+    flex: 1,
+    bottom:0
   },
-
+  title_text: {
+    fontFamily: "System",
+    fontSize: 24,
+    fontWeight: "500",
+    fontStyle: "normal",
+    letterSpacing: 1.52,
+    color: "#4a4a4a",
+    marginLeft: 16,
+    marginTop: 16,
+  }, 
+  plus: {
+    position: 'absolute',
+    zIndex: 20,
+    bottom: 10,
+    width : '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxWithShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,  
+    elevation: 5,
+},
+createClass: {
+  position: 'absolute',
+  zIndex: 10,
+  width : '100%',
+  height: 60,
+  top: '25%',
+  backgroundColor: 'white',
+  flexDirection: 'row',
+},
+button : {
+marginTop: 15,
+ marginLeft: 40
+}
 });

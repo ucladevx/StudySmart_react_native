@@ -6,22 +6,61 @@ import SelectedTest from './app/screens/SelectedTest'
 import Notes from './app/screens/Notes'
 import Locations from './app/screens/Locations'
 import Profile from './app/screens/Profile'
+import CameraScreen from './app/components/CameraScreen'
 import { StackNavigator } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation';
+import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import Header from './app/components/Header'
+import Guides from './app/screens/Guides'
 
 // this is for MainFeed Stack Navigation 
+
 const MainStack = StackNavigator({
-  Main: { screen: MainFeed },
-  Tests: {screen: Tests},
-  Notes: {screen: Notes},
-  SelectedTest: {screen: SelectedTest},
+  Main: {screen: MainFeed},
+  CameraScreen: {screen: CameraScreen},
 },{
   initialRouteName: 'Main'
   
 });
+MainStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+  };
+};
+const TestsStack = StackNavigator({
+  Tests: {screen: Tests},
+  SelectedTest: {screen: SelectedTest},
+},
+  {
+    initialRouteName: 'Tests'
+  }
+);
+TestsStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+  };
+};
+const MainTabNavigator = createMaterialTopTabNavigator({
+  Main: MainStack,
+  Tests: TestsStack,
+  Notes: { screen: Notes },
+  Guides: { screen: Guides }
+},
+{
+    tabBarComponent: Header
+},
+);
+
 //this is the tab bar navigator for the entire App 
 const AppTabNavigator = createBottomTabNavigator({
-  Main: MainStack,
+  Main: MainTabNavigator,
   Locations: { screen: Locations },
   Profile: { screen: Profile },
 },
@@ -29,7 +68,6 @@ const AppTabNavigator = createBottomTabNavigator({
     initialRouteName: 'Main',
     activeColor: '#f0edf6',
     inactiveColor: '#3e2465',
-    barStyle: { backgroundColor: 'blue' },
 });
 
 

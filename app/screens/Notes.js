@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
-import MainTopBar from '../components/MainTopBar'
-import GlobalSearchBar from '../components/GlobalSearchBar';
+import TestsList from '../components/TestsList'
 export default class Notes extends Component {
 
   static navigationOptions = {
@@ -21,17 +20,14 @@ export default class Notes extends Component {
     this.state = {
       Class : ' '
     }
-    this.setInputState = this.setInputState.bind(this);
   }
 
-  setInputState(event){
-    this.setState({ Class: event.target.value });
-  } 
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
-        <MainTopBar/>
+        <TestsList
+          data = {this.props.processPosts}/>
+        
     )
   }
 

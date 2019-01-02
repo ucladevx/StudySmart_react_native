@@ -1,6 +1,7 @@
 'use strict'
 import React, {Component} from 'react';
 import MainFeedRow from './MainFeedRow'
+import StarRating from 'react-native-star-rating';
 import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'react-native'
 
 
@@ -18,43 +19,46 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
               extraData= {this.props.data}
               renderItem={({item}) =>{return this._renderRow(item) }}
               keyExtractor={(item, index) => index.toString()}
+              style= {{height: 120}}
         />
       )
     }
     _renderRow(item) {
       return (
-        <View style={[styles.container2, styles.boxWithShadow]}>
+        <View style={[styles.cell, styles.boxWithShadow]}>
           <View style={styles.container_text}>
           <View style={styles.container_row}>
-              <Text style={[styles.big_text, styles.left_text]}>
-                  {item.courseName}
-              </Text>
-              <Text style={[styles.big_text, styles.right_text]}>
-                  {item.professor}
-              </Text>
-            </View>
-            <View style={styles.container_row}>
-              <Text style={[styles.small_text, styles.left_text]}>
-                  Final
-              </Text>
-              <Text style={[styles.small_text, styles.right_text]}>
-                  Winter 2018 
+              <Text
+              numberOfLines={1}  
+              style={[styles.big_text, styles.left_text]}>
+                  {item.courseName} | {item.professor}
               </Text>
             </View>
             <View style={styles.container_row}>
-              <Text style={styles.small_text}>
-                  5/5
-              </Text>
-              <Text style={styles.small_text}>
-                  120
+              <Text style={[styles.text, styles.left_text]}>
+                {item.test} | {item.term} {item.year}
               </Text>
             </View>
+            <View style={styles.container_row}>
+            <StarRating
+            disabled={true}
+            maxStars={5}
+            starSize = {10}
+            fullStarColor={'#417505'}
+            rating={item.rating}
+            />
+            <Text style={[styles.text, {marginLeft: 8}]}>
+            {item.ratingNum}
+            </Text>
+            </View>
+            <View style = {styles.container_row}>
             <TouchableOpacity
              style={styles.rounded_button}>
-                <Text>
-                    Details
+                <Text style={styles.details_text}>
+                Details
                 </Text>
             </TouchableOpacity>
+            </View>
           </View>
       </View>
       )
@@ -62,46 +66,66 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
 
   }
 
+  const text = {
+    fontFamily: "System",
+    fontSize: 12,
+    fontWeight: "500",
+    fontStyle: "normal",
+    letterSpacing: 1.92,
+    color: "#4a4a4a",
+  }
   
   const styles = StyleSheet.create({
 
-    container2: {
+    cell: {
       flex: 1,
       flexDirection: 'row',
-      height: 100,
-      padding: 10,
+      padding: 15,
       marginLeft:16,
       marginRight:16,
       marginTop: 8,
       marginBottom: 8,
-      borderRadius: 5,
+      borderRadius: 12,
       backgroundColor: '#FFF',
       elevation: 2,
-      width: 185,
-      height: 100
+      width: '48%',
+      height: '92%'
   },
+  text,
   big_text: {
-      fontSize: 16,
-      color: '#000',
-      marginLeft: 5,
-      marginRight: 5
+    ...text,
+    height: 20,
+    width: 180,
+    fontSize: 17,
+    letterSpacing: 1.92,
+    color: 'black',
+  },
+  details_text: {
+    ...text, 
+    fontSize: 10,
+    letterSpacing: 1.52,
+    color: 'white',
+    
   },
   container_text: {
       flex: 1,
       flexDirection: 'column',
-      marginLeft: 12,
+      marginLeft: 4,
       justifyContent: 'center',
 
   },
+  right_text: {
+    textAlign : 'right',
+    flex: 1
+},
+left_text: {
+  textAlign : 'left',
+  flex: 0
+},
   container_row: {
     flexDirection: 'row',
-    marginBottom: 5,
-  },
-  small_text: {
-      fontSize: 11,
-      fontStyle: 'italic',
-      marginLeft: 5,
-      marginRight: 5
+    marginTop: 3,
+    marginBottom: 3,
   },
   boxWithShadow: {
     shadowColor: '#000',
@@ -111,24 +135,14 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
     elevation: 5
 },
 rounded_button: {
-    borderRadius: 10,
-    backgroundColor: "#e0e0e0",
-    marginLeft: 4,
-    marginRight: 4, 
-    width: 55,
-    marginTop: 5,
-    height: 25,
+    borderRadius: 15,
+    backgroundColor: "#4f87ec",
+    width: '38%',
+    height: '70%',
     justifyContent: 'center',
     alignItems: 'center'
   },
-  right_text: {
-      textAlign : 'right',
-      flex: 1
-  },
-  left_text: {
-    textAlign : 'left',
-    flex: 0
-}
+
 });
 
 module.exports = MainFeedList
