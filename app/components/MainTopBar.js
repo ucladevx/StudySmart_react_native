@@ -9,20 +9,21 @@ const Professors = [{name:'Smallberg'}, {name:'Potkonjak'}, {name: 'Liu'} ]
 class MainTopBar extends Component {
     constructor(props) {
         super(props)
-        const page = this.props.navigation.getParam('categorySelected', 'Main');
-        console.log(page)
         this.state = {
-          categorySelected: page,
+          categorySelected: 'Main',
           visible: false,
           test: ' ',
           professor: ' ',
         }
         this.setTest= this.setTest.bind(this)
         this.setProfessor= this.setProfessor.bind(this)
-      //  this.availableProfessors= this.availableProfessors.bind(this)
         this.showResults= this.showResults.bind(this)
       }
-
+      componentWillReceiveProps(nextProps) {
+        this.setState({
+          categorySelected: (nextProps.categorySelected != ' ' ? nextProps.categorySelected : this.state.categorySelected)
+        })
+      }
       _renderRow(item) {
         return (
           <TouchableWithoutFeedback
@@ -37,11 +38,9 @@ class MainTopBar extends Component {
         )
       }
       handleSelectCategory(item){
+        this.props.resetCategorySearch(item);
         const { navigate } = this.props.navigation;
         navigate(item, {categorySelected: item} )
-        this.setState({
-          categorySelected: item
-        })
       }
       showSorter() {
         this.setState({
@@ -52,13 +51,14 @@ class MainTopBar extends Component {
         this.setState({
           visible: false
         })
+        this.props.navigation.navigate('Tests', {test: this.state.test, professor: this.state.professor})
       }
 
 render () { 
    return ( 
   <View style={styles.topBar}>
     <View
-    style={{flex:1,height:50, marginBotton: 5, marginTop: 5}}>
+    style={{ height: '85%', width:'100%', marginTop: 10,}}>
     <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -68,7 +68,7 @@ render () {
         keyExtractor={(item, index) => index.toString()}
     />
     </View>
-    <View
+    {this.state.categorySelected == 'Main' ? null : <View
     style={styles.right}>
       <TouchableOpacity
       style = {[styles.sort, styles.boxWithShadow]}
@@ -83,7 +83,7 @@ render () {
           availableProfessors={this.availableProfessors()}
           showResults={this.showResults}
           /> : null }
-    </View>
+    </View> }
  </View>
    )}
 
@@ -113,11 +113,11 @@ const category = {
   backgroundColor: "#e0e0e0",
   marginLeft: 4,
   marginRight: 4, 
-  width: 80,
   marginTop: 10,
   height: 30,
   justifyContent: 'center',
-  alignItems: 'center'
+  alignItems: 'center',
+  width: 70
 }
 const text = {
   fontFamily: "System",
@@ -125,25 +125,20 @@ const text = {
   fontWeight: "500",
   fontStyle: "normal",
   letterSpacing: 1.92,
-  color: '#9B9B9B'
+  color: '#9B9B9B',
 }
 
  const styles = StyleSheet.create({
       topBar: {
         width: '100%',
-        height: 100, 
+        height: '42%', 
         alignItems: 'center',
         backgroundColor: 'transparent',
         marginBottom: 20,
         flex: 0,
         zIndex: 15,
         position: 'absolute',
-        top: 85,
-      },
-      buttonsContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        top: '70%',
       },
       category,
       categorySelected: {
@@ -172,13 +167,13 @@ const text = {
   sort: {
     borderRadius: 8,
     backgroundColor: '#4F87EC',
-    height: 25,
+    height: '110%',
     width: '20%',
     marginLeft: '78%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    flex: 0
+    flex: 0,
   },
   sort_text: {
     ...text,
@@ -187,6 +182,7 @@ const text = {
   },
   right: {
     flexDirection: 'row',
+    marginTop: 10
   }
 
  })

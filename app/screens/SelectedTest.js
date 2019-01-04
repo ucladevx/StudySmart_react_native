@@ -12,7 +12,7 @@ class SelectedTest extends Component {
     },
     headerLeft: (
       <TouchableOpacity
-        style={{marginLeft: 5}}
+        style={{marginLeft: 10}}
         onPress= {() => navigation.state.params.handleBack()}
       >
       <Ionicon name ='ios-arrow-back' color = 'white' size={25} />
@@ -21,6 +21,7 @@ class SelectedTest extends Component {
   });
   constructor(props) {
     super(props)
+    this.props.navigation.state.params.setSelected(true)
     this.test = this.props.navigation.getParam('test', 'lol');
     this.goBack = this.goBack.bind(this);
   }

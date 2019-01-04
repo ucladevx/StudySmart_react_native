@@ -57,36 +57,14 @@ class GlobalSearchBar extends Component {
         return result
       }
       handleClick(chosenClass) {
-          this.props.navigation.navigate('Tests', {chosenClass: chosenClass})
+          this.props.processPosts(chosenClass)
           this.setState({
-              Class: chosenClass
+              searching:true,
+              Class: chosenClass,
           })
-          this.setState({
-              searching:true
-          })
-          
       }
       handleUpload() {
           this.props.navigation.navigate('CameraScreen')
-      }
-      processPosts() {
-        var i;
-       searchedPosts = []
-       console.log(e)
-        if (this.state.Class == ' ') {
-          this.setState({
-            foundPosts: e.slice()
-          }) 
-        }
-        var upperClass = this.state.Class.toUpperCase()
-        for (i =0 ; i<e.length; i++) {
-              if (e[i]['courseName'].toUpperCase() == upperClass){
-                searchedPosts.push(e[i]);
-              }
-        }
-        this.setState({
-          foundPosts: searchedPosts
-        })
       }
       render() {
           const classesData = this.handleSearchSuggestions(this.state.Class)
@@ -99,7 +77,7 @@ class GlobalSearchBar extends Component {
                 </Icon>
                 </TouchableOpacity>   
                 <Search
-                style={styles.autocompleteContainer}
+                style={styles.searchContainer}
                 value={this.state.Class}
                 data={classesData} // this should be an API call or huge list eventually 
                 defaultValue={this.state.Class}
@@ -137,7 +115,7 @@ const styles = StyleSheet.create({
 
     },
     bar: {
-        height: 70, 
+        height: '60%', 
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#4F87EC', 
@@ -150,7 +128,7 @@ const styles = StyleSheet.create({
         zIndex: 20
 
     },
-    autocompleteContainer: {
+    searchContainer: {
         flex: 1,
         zIndex: 5
       }

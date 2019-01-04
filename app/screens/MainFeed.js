@@ -3,10 +3,11 @@ import ViewContainer from '../components/ViewContainer'
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
 import MainTopBar from '../components/MainTopBar'
 import GlobalSearchBar from '../components/GlobalSearchBar';
-import MainFeedSegment from './MainFeedSegment'
 import Notes from './Notes'
 import Tests from './Tests'
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MainFeedList from '../components/MainFeedList'
 // sample information for the 'posts' 
 const Posts = [
   {courseName: "CS31", professor: "Smallberg", test: "Midterm 1", term:"Winter",year: 2018, rating: 4, ratingNum: 10},
@@ -46,11 +47,8 @@ export default class MainFeed extends Component {
     }
     this.refreshClassSearch = this.refreshClassSearch.bind(this);
     this.handleSelectCategory = this.handleSelectCategory.bind(this);
-    this.processPosts = this.processPosts.bind(this);
   }
-  handleScroll(e){
-    this.setState({ scrollPosition: e });
-  }
+
   refreshClassSearch(e){
     this.setState({
         Class: e
@@ -75,25 +73,7 @@ export default class MainFeed extends Component {
       categorySelected: item
     })
   }
-  processPosts(e) {
-    var i;
-   searchedPosts = []
-   console.log(e)
-    if (this.state.Class == ' ') {
-      this.setState({
-        foundPosts: e.slice()
-      }) 
-    }
-    var upperClass = this.state.Class.toUpperCase()
-    for (i =0 ; i<e.length; i++) {
-          if (e[i]['courseName'].toUpperCase() == upperClass){
-            searchedPosts.push(e[i]);
-          }
-    }
-    this.setState({
-      foundPosts: searchedPosts
-    })
-  }
+
   render() {
     const { navigate } = this.props.navigation;
     let loadMain = this.loadMain(this.state.Class)
@@ -101,11 +81,35 @@ export default class MainFeed extends Component {
       <ViewContainer>
         <View
         style = {styles.list}>
-        <MainFeedSegment loadMain={loadMain}/>
+        <View style = {[styles.createClass,styles.boxWithShadow]}>
+        <Text style={styles.title_text}>
+                Create Your Classes
+                </Text>
+        <TouchableOpacity
+         style= {styles.button}
+        onPress = { () => navigate('CreateClasses')}
+        > 
+            <MaterialCommunityIcon color = 'gray' name="pencil" size={30}/>
+       </TouchableOpacity>
+        </View>
+        <View>
+          <Text style={styles.title_text}>
+                CS31
+                </Text>
+        <MainFeedList
+        data={loadMain}
+        />
+          <Text style={styles.title_text}>
+                CS32
+                </Text>
+        <MainFeedList
+         data={loadMain}
+        />
+        </View>
         <View style = {styles.plus}>
         <TouchableOpacity
         style={styles.boxWithShadow}
-        onPress = { () => console.log('hey')}>
+        onPress = { () => navigate('CreateClasses')}>
         <AntIcon color = '#4F87EC' name="pluscircle" size={50}/>
         </TouchableOpacity>
         </View>
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
   list: {
     position: 'absolute',
     zIndex: 1,
-    top: '20%',
+    top: '24%',
     flex: 1,
     bottom:0
   },
@@ -138,7 +142,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.52,
     color: "#4a4a4a",
     marginLeft: 16,
-    marginTop: 16,
+    width: '70%',
+    padding: 5
   }, 
   plus: {
     position: 'absolute',
@@ -156,16 +161,15 @@ const styles = StyleSheet.create({
     elevation: 5,
 },
 createClass: {
-  position: 'absolute',
   zIndex: 10,
   width : '100%',
-  height: 60,
-  top: '25%',
+  height: '13%',
   backgroundColor: 'white',
   flexDirection: 'row',
+  alignItems: 'center',
+  marginBottom: 10
 },
 button : {
-marginTop: 15,
- marginLeft: 40
+marginRight: '20%'
 }
 });

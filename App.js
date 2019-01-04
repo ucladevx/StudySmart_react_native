@@ -11,12 +11,14 @@ import { StackNavigator } from 'react-navigation';
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Header from './app/components/Header'
 import Guides from './app/screens/Guides'
+import CreateClasses from './app/screens/CreateClasses'
 
 // this is for MainFeed Stack Navigation 
 
 const MainStack = StackNavigator({
   Main: {screen: MainFeed},
   CameraScreen: {screen: CameraScreen},
+  CreateClasses: {screen: CreateClasses}
 },{
   initialRouteName: 'Main'
   
@@ -54,7 +56,7 @@ const MainTabNavigator = createMaterialTopTabNavigator({
   Guides: { screen: Guides }
 },
 {
-    tabBarComponent: Header
+    tabBarComponent:  (props) => <Header {...props} />
 },
 );
 

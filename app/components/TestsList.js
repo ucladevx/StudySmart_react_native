@@ -7,9 +7,6 @@ import StarRating from 'react-native-star-rating';
  class TestsList extends Component {
       constructor(props){
         super(props);
-        this.state = {
-          scrollOffset: this.props.offset 
-        }
       }
     render() {
       return (
@@ -24,10 +21,7 @@ import StarRating from 'react-native-star-rating';
       )
              
     }
-    componentDidMount(){
-      this._flatList.scrollToOffset({animated:true, offset: this.state.scrollOffset})
-      
-    }
+
     _renderRow(item) {
       return (
           <TouchableOpacity
@@ -70,7 +64,7 @@ import StarRating from 'react-native-star-rating';
       )
     }
     handleSelectTest(item) {
-     this.props.navigation.navigate('SelectedTest', {test: item})
+     this.props.navigation.navigate('SelectedTest', {test: item, setSelected: this.props.setSelected})
 
     }
   }
@@ -88,9 +82,10 @@ import StarRating from 'react-native-star-rating';
     list: {
     position: 'absolute',
     zIndex: 1,
-    top: '20%',
+    top: '22%',
     flex: 1,
     bottom: 0,
+    backgroundColor: 'transparent'
     },
     cell: {
       flex: 1,

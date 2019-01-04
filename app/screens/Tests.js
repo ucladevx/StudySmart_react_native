@@ -42,65 +42,27 @@ export default class Tests extends Component {
     this.state = {
       text: 'Nothing',
       Class: ' ',
-      Professor: '',
-      Term: '',
-      Year: '',
-      Test: '', 
-      singleTest: {class: 'CS33',
-      professor: 'Eggert',
-      term: 'Fall',
-      year: '2018',
-      test: 'Midterm 1',},
     };
-    this.refreshClassSearch = this.refreshClassSearch.bind(this);
-    this.processPosts= this.processPosts.bind(this)
   }
 
-  refreshClassSearch(e){
-    this.setState({
-        Class: e
-    });
-  }
   processPosts(e) {
     var i;
-   searchedPosts = []
-    if (this.state.Class == ' ') {
-      this.setState({
-        foundPosts: e.slice()
-      }) 
-      return
-    }
-    var upperClass = this.state.Class.toUpperCase()
-    for (i =0 ; i<e.length; i++) {
-          if (e[i]['courseName'].toUpperCase() == upperClass){
+    for (i =0; i<e.length; i++) {
+          if ( e[i].type == 'Tests' ){
             searchedPosts.push(e[i]);
-          }
-    }
-    this.setState({
-      foundPosts: searchedPosts
-    })
-  }
-  loadMain() {
-    var i;
-   searchedPosts = []
-   var course = this.props.navigation.getParam('chosenClass', ' ')
-    if (course == ' ' || course == undefined) {
-      searchedPosts = Posts.slice();
-    }
-    var upperClass = course.toUpperCase()
-    for (i =0 ; i<Posts.length; i++) {
-          if (Posts[i]['courseName'] == upperClass){
-            searchedPosts.push(Posts[i]);
           }
     }
     return searchedPosts
   }
   render() {
+    const classes = this.props.navigation.getParam('results', ' ')
     return (
-        <ViewContainer>
-        <TestsList
-        data = {this.loadMain()}
-        />
+        <ViewContainer >
+        {classes == ' ' ? <Text style= {{top: '24%', zIndex: 10, position: 'absolute', width:'100%'}}> Search for classes! </Text> :
+         <TestsList
+         data={this.processPosts(classes)}
+         />
+        }
         </ViewContainer>
        
     )

@@ -45,7 +45,6 @@ class Search extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = { dataSource: props.data };
     this.resultList = null;
   }
@@ -100,6 +99,7 @@ class Search extends Component {
     const { onEndEditing, renderTextInput, style } = this.props;
     const props = {
       value: this.props.value,
+      placeholder: this.props.placeholder,
       style: [styles.input, style],
       ref: ref => (this.textInput = ref),
       onEndEditing: e => onEndEditing && onEndEditing(e),
