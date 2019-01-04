@@ -6,7 +6,9 @@ import Sorter from './Sorter'
 import Ionicon from 'react-native-vector-icons/Ionicons';
 const categories = [{name:'Main'}, {name:'Tests'} , {name:'Notes'},{name:'Guides'},{name: 'Papers'}]
 const Professors = [{name:'Smallberg'}, {name:'Potkonjak'}, {name: 'Liu'} ]
-class MainTopBar extends Component {
+import { changeCategory } from '../Actions/actions';
+import {connect} from 'react-redux';
+export class MainTopBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,18 +21,18 @@ class MainTopBar extends Component {
         this.setProfessor= this.setProfessor.bind(this)
         this.showResults= this.showResults.bind(this)
       }
-      componentWillReceiveProps(nextProps) {
-        this.setState({
-          categorySelected: (nextProps.categorySelected != ' ' ? nextProps.categorySelected : this.state.categorySelected)
-        })
-      }
+
       _renderRow(item) {
+        var selected = this.props.category.category;
+        if (selected == ' ') {
+          selected= 'Main'
+        }
         return (
           <TouchableWithoutFeedback
           onPress={() => this.handleSelectCategory(item.name)}>
-          <View style = {this.state.categorySelected == item.name ? styles.categorySelected : styles.category}>
+          <View style = {selected == item.name ? styles.categorySelected : styles.category}>
           <Text
-          style = {this.state.categorySelected == item.name ? styles.textSelected : styles.text}>
+          style = {selected == item.name ? styles.textSelected : styles.text}>
           {item.name}
           </Text>
           </View>
@@ -38,9 +40,8 @@ class MainTopBar extends Component {
         )
       }
       handleSelectCategory(item){
-        this.props.resetCategorySearch(item);
-        const { navigate } = this.props.navigation;
-        navigate(item, {categorySelected: item} )
+        this.props.navigation.navigate(item)
+        this.props.changeCategory(item)
       }
       showSorter() {
         this.setState({
@@ -63,12 +64,12 @@ render () {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={categories}
-        extraData={this.state}
+        extraData={this.props.category.category}
         renderItem={({item}) =>{ return this._renderRow(item) }}
         keyExtractor={(item, index) => index.toString()}
     />
     </View>
-    {this.state.categorySelected == 'Main' ? null : <View
+    {this.props.category.category == 'Main' ? null : <View
     style={styles.right}>
       <TouchableOpacity
       style = {[styles.sort, styles.boxWithShadow]}
@@ -187,4 +188,18 @@ const text = {
 
  })
 
- export default withNavigation(MainTopBar);
+ const mapStateToProps = state => {
+  return {
+    category: state.category,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeCategory: (category) =>{
+      dispatch(changeCategory(category))
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainTopBar)

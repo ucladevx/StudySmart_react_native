@@ -12,6 +12,9 @@ import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-n
 import Header from './app/components/Header'
 import Guides from './app/screens/Guides'
 import CreateClasses from './app/screens/CreateClasses'
+import { Provider } from 'react-redux';
+import configureStore from './store';
+
 
 // this is for MainFeed Stack Navigation 
 
@@ -72,6 +75,7 @@ const AppTabNavigator = createBottomTabNavigator({
     inactiveColor: '#3e2465',
 });
 
+const store = configureStore();
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -81,8 +85,10 @@ export default class App extends Component<Props> {
   }
   render() {
     return ( 
-      <AppTabNavigator>  
-            </AppTabNavigator>
+      <Provider store={store}>
+      <AppTabNavigator/>
+      </Provider>
+     
     )
   }
 }

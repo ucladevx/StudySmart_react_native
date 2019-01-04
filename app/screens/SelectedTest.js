@@ -3,7 +3,9 @@ import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-
 import ViewContainer from '../components/ViewContainer'
 import Ionicon from 'react-native-vector-icons/Ionicons'
 import {withNavigation, NavigationActions} from 'react-navigation'
-class SelectedTest extends Component {
+import {connect} from 'react-redux';
+import {changeCategory} from '../Actions/actions';
+export class SelectedTest extends Component {
   static navigationOptions =  ({navigation}) => ({
     tabBarVisible: false,
     title: 'Your Test',
@@ -21,7 +23,6 @@ class SelectedTest extends Component {
   });
   constructor(props) {
     super(props)
-    this.props.navigation.state.params.setSelected(true)
     this.test = this.props.navigation.getParam('test', 'lol');
     this.goBack = this.goBack.bind(this);
   }
@@ -29,7 +30,8 @@ class SelectedTest extends Component {
     this.props.navigation.setParams({ handleBack: this.goBack })
   }
   goBack() {
-    this.props.navigation.navigate('Tests', {categorySelected: 'Tests',} )
+    this.props.navigation.navigate('Tests')
+    this.props.changeCategory('Tests');
   }
   render() {
     const { test } = this.props;
@@ -43,5 +45,19 @@ class SelectedTest extends Component {
   }
 
 }
+const mapStateToProps = state => {
+  return {
+    category: state.category,
+  }
+}
 
-export default withNavigation(SelectedTest)
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeCategory: (category) => {
+      dispatch(changeCategory(category))
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedTest) 
