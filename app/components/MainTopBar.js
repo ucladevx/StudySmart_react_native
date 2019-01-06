@@ -17,13 +17,11 @@ export class MainTopBar extends Component {
           test: ' ',
           professor: ' ',
         }
-        this.setTest= this.setTest.bind(this)
-        this.setProfessor= this.setProfessor.bind(this)
         this.showResults= this.showResults.bind(this)
       }
 
       _renderRow(item) {
-        var selected = this.props.category.category;
+        var selected = this.props.category;
         if (selected == ' ') {
           selected= 'Main'
         }
@@ -52,7 +50,8 @@ export class MainTopBar extends Component {
         this.setState({
           visible: false
         })
-        this.props.navigation.navigate('Tests', {test: this.state.test, professor: this.state.professor})
+
+        this.props.processPosts(this.props.class)
       }
 
 render () { 
@@ -64,12 +63,12 @@ render () {
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         data={categories}
-        extraData={this.props.category.category}
+        extraData={this.props.category}
         renderItem={({item}) =>{ return this._renderRow(item) }}
         keyExtractor={(item, index) => index.toString()}
     />
     </View>
-    {this.props.category.category == 'Main' ? null : <View
+    {this.props.category == 'Main' ? null : <View
     style={styles.right}>
       <TouchableOpacity
       style = {[styles.sort, styles.boxWithShadow]}
@@ -79,27 +78,12 @@ render () {
                 </Ionicon>
      </TouchableOpacity>
      {this.state.visible ?  <Sorter
-          setTest={this.setTest}
-          setProfessor={this.setProfessor}
           availableProfessors={this.availableProfessors()}
           showResults={this.showResults}
           /> : null }
     </View> }
  </View>
    )}
-
-   setTest(e) {
-     console.log(e)
-     this.setState({
-       test: e
-     })
-   }
-   setProfessor(e) {
-     console.log(e)
-    this.setState({
-      professor: e
-    })
-  }
 
   availableProfessors(){
     //API call here to fill 
@@ -115,10 +99,10 @@ const category = {
   marginLeft: 4,
   marginRight: 4, 
   marginTop: 10,
-  height: 30,
+  height: 35,
   justifyContent: 'center',
   alignItems: 'center',
-  width: 70
+  width: 85
 }
 const text = {
   fontFamily: "System",
@@ -132,7 +116,7 @@ const text = {
  const styles = StyleSheet.create({
       topBar: {
         width: '100%',
-        height: '42%', 
+        height: '48%', 
         alignItems: 'center',
         backgroundColor: 'transparent',
         marginBottom: 20,
@@ -190,7 +174,8 @@ const text = {
 
  const mapStateToProps = state => {
   return {
-    category: state.category,
+    category: state.resources.category,
+    class: state.resources.class
   }
 }
 

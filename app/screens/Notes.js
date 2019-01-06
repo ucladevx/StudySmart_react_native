@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
 import TestsList from '../components/TestsList'
-export default class Notes extends Component {
+import {connect} from 'react-redux';
+import ViewContainer from '../components/ViewContainer'
+import { changeCategory, storeResources} from '../Actions/actions';
+
+class Notes extends Component {
 
   static navigationOptions = {
     header: () => {
@@ -22,15 +26,36 @@ export default class Notes extends Component {
     }
   }
 
+  processPosts(e) {
+    var i;
+    var notesResources = [];
+    for (i =0; i<e.length; i++) {
+          if ( e[i].type == 'Notes' ){
+            notesResources.push(e[i]);
+          }
+    }
+    return notesResources
+  }
 
   render() {
+    const { resources } = this.props;
     return (
-        <TestsList
-          data = {this.props.processPosts}/>
+      <ViewContainer>
+       {resources.length == 0 ? <Text style= {{top: '24%', zIndex: 10, position: 'absolute', width:'100%'}}> Search for classes! </Text> :
+         <TestsList data={this.processPosts(resources)}/>
+        }
+        </ViewContainer>
         
     )
   }
 
 }
+const mapStateToProps = state => {
+  return {
+    category: state.resources.category,
+    class: state.resources.class,
+    resources: state.resources.resources
+  }
+}
 
-module.exports = Notes
+export default connect(mapStateToProps)(Notes)

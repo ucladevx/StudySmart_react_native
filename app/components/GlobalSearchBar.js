@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity} from 'react-native';
-import {SearchBar} from 'react-native-elements'
 import { withNavigation } from 'react-navigation';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from './Search'
 import CameraScreen from './CameraScreen'
+import { changeClass } from '../Actions/actions';
+import {connect} from 'react-redux';
 const classes = [
     {name: "CS31"}, {name: "CS32"}, {name: "CS33"}, {name: "Computer Science 31"}, {name: "Computer Science 32"}, {name: "CS111"},
     {name: "MATH61"}, {name: "MATH33"}, {name: "PHYSICS 1A"}, 
@@ -43,7 +44,7 @@ class GlobalSearchBar extends Component {
       handleSearchSuggestions(e) {
         const { Class } = this.state; 
         if (Class.length == 0) {
-            return []
+            return [];
         }
         var index, value;
         var result = []; 
@@ -51,38 +52,39 @@ class GlobalSearchBar extends Component {
         value = classes[index].name.toUpperCase();
         var currentClass = Class.toUpperCase();
         if (value.substring(0, Class.length) == currentClass) {
-                result.push(classes[index])
+                result.push(classes[index]);
             }
         }
         return result
       }
       handleClick(chosenClass) {
-          this.props.processPosts(chosenClass)
-          this.setState({
-              searching:true,
-              Class: chosenClass,
-          })
+        this.props.changeClass(chosenClass);
+        this.props.processPosts(chosenClass);
+        this.setState({
+            searching:true,
+            Class: chosenClass,
+          });
       }
       handleUpload() {
-          this.props.navigation.navigate('CameraScreen')
+        this.props.navigation.navigate('CameraScreen')
       }
       render() {
           const classesData = this.handleSearchSuggestions(this.state.Class)
           const { navigate } = this.props.navigation;
         return (
-            <View style = {styles.bar}>
+            <View style = {[styles.bar, styles.boxWithShadow]}>
                 <TouchableOpacity style={styles.buttonLeft}
                 onPress={() => this.handleUpload()}>
-                <Icon color ="white"name="upload" size={25} backgroundColor="#4F87EC">
+                <Icon color ="white"name="upload" size={30} backgroundColor="#4F87EC">
                 </Icon>
                 </TouchableOpacity>   
                 <Search
                 style={styles.searchContainer}
                 value={this.state.Class}
                 data={classesData} // this should be an API call or huge list eventually 
-                defaultValue={this.state.Class}
+                defaultValue={this.props.class}
                 onChangeText={(e) => this.setInputState(e)}
-                inputContainerStyle={{width: 250, height: 30, backgroundColor: 'white', borderRadius: 10}}
+                inputContainerStyle={styles.inputContainer}
                 hideResults={this.state.searching}
                 renderItem={({item}) => (
                     <TouchableOpacity onPress={() => this.handleClick(item.name)}>
@@ -91,7 +93,7 @@ class GlobalSearchBar extends Component {
                   )}
                 />
                 <TouchableOpacity style={styles.buttonRight}>
-                <Ionicon color="white" name="ios-chatbubbles" size={25} backgroundColor="#4F87EC">
+                <Ionicon color="white" name="ios-chatbubbles" size={30} backgroundColor="#4F87EC">
                 </Ionicon>
              </TouchableOpacity>   
              </View>
@@ -107,11 +109,11 @@ class GlobalSearchBar extends Component {
 
 const styles = StyleSheet.create({
     buttonLeft: {
-        marginLeft: 5
+        marginLeft: 10
 
     },
     buttonRight: {
-        marginRight: 5 
+        marginRight: 10
 
     },
     bar: {
@@ -131,8 +133,41 @@ const styles = StyleSheet.create({
     searchContainer: {
         flex: 1,
         zIndex: 5
-      }
+      },
+      boxWithShadow: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,  
+        elevation: 5
+    },
+    inputContainer: {
+        width: 250,
+        height: 30,
+        backgroundColor: 'white',
+        borderRadius: 12,
+        shadowColor: "rgba(0, 0, 0, 0.5)",
+        shadowOffset: {
+        width: 2,
+        height: 2
+        },
+        shadowRadius: 4,
+        shadowOpacity: 1
+    }
 
 
   })
-export default withNavigation(GlobalSearchBar);
+  const mapStateToProps = state => {
+    return {
+      class: state.resources.class
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+    return {
+      changeClass: (course) =>{
+        dispatch(changeClass(course))
+      }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalSearchBar)

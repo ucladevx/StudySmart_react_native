@@ -38,6 +38,7 @@ class Search extends Component {
     data: [],
     defaultValue: '',
     keyboardShouldPersistTaps: 'always',
+    clearButtonMode: 'always',
     onStartShouldSetResponderCapture: () => false,
     renderTextInput: props => <TextInput {...props} />,
     rowHasChanged: (r1, r2) => r1 !== r2

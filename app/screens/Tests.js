@@ -47,12 +47,13 @@ export default class Tests extends Component {
 
   processPosts(e) {
     var i;
+    var testsResources = [];
     for (i =0; i<e.length; i++) {
           if ( e[i].type == 'Tests' ){
-            searchedPosts.push(e[i]);
+            testsResources.push(e[i]);
           }
     }
-    return searchedPosts
+    return testsResources;
   }
   render() {
     const classes = this.props.navigation.getParam('results', ' ')

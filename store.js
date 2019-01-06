@@ -1,8 +1,8 @@
-import CategoryReducer from './app/Reducers/CategoryReducer'
+import ResourcesReducer from './app/Reducers/ResourcesReducer'
 import {combineReducers, createStore} from 'redux';
 
 const rootReducer = combineReducers({
-  category: CategoryReducer
+  resources: ResourcesReducer
 });
 
 const configureStore = () => {

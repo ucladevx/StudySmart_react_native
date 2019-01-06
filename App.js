@@ -7,8 +7,7 @@ import Notes from './app/screens/Notes'
 import Locations from './app/screens/Locations'
 import Profile from './app/screens/Profile'
 import CameraScreen from './app/components/CameraScreen'
-import { StackNavigator } from 'react-navigation';
-import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
+import { createStackNavigator, createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation';
 import Header from './app/components/Header'
 import Guides from './app/screens/Guides'
 import CreateClasses from './app/screens/CreateClasses'
@@ -18,7 +17,7 @@ import configureStore from './store';
 
 // this is for MainFeed Stack Navigation 
 
-const MainStack = StackNavigator({
+const MainStack = createStackNavigator({
   Main: {screen: MainFeed},
   CameraScreen: {screen: CameraScreen},
   CreateClasses: {screen: CreateClasses}
@@ -35,7 +34,7 @@ MainStack.navigationOptions = ({ navigation }) => {
     tabBarVisible,
   };
 };
-const TestsStack = StackNavigator({
+const TestsStack = createStackNavigator({
   Tests: {screen: Tests},
   SelectedTest: {screen: SelectedTest},
 },

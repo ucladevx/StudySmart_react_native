@@ -4,7 +4,8 @@ import MainTopBar from '../components/MainTopBar'
 import ViewContainer from '../components/ViewContainer'
 import GlobalSearchBar from '../components/GlobalSearchBar'; 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import { changeExam, changeProfessor} from '../Actions/actions';
+import {connect} from 'react-redux';
 class Sorter extends Component {
     constructor(props) {
         super(props)
@@ -29,13 +30,13 @@ setTest(e) {
     this.setState({
         selectedType: e
     })
-    this.props.setTest(e)
+    this.props.changeExam(e)
 }
 setProfessor(e) {
     this.setState({
         selectedProf: e
     })
-    this.props.setProfessor(e)
+    this.props.changeProfessor(e)
 }
     render() {
     return (
@@ -226,4 +227,25 @@ rounded_button: {
       padding: 5
   }
 });
-export default Sorter;
+const mapStateToProps = state => {
+    return {
+      category: state.resources.category,
+      class: state.resources.class,
+      resources: state.resources.resources,
+      professor: state.resources.professor,
+      exam: state.resources.exam
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      changeExam: (exam) => {
+        dispatch(changeExam(exam))
+      },
+      changeProfessor: (professor) => {
+          dispatch(changeProfessor(professor))
+      }
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sorter)
