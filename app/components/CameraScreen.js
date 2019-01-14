@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ImagePicker from 'react-native-image-crop-picker';
 import {
   View,
   Text,
@@ -12,7 +13,7 @@ import OpenCV from '../NativeModules/OpenCV';
 import { withNavigation } from 'react-navigation';
 import CircleWithinCircle from '../assets/CircleWithinCircle';
  class CameraScreen extends Component {
-  static navigationOptions = {
+  static navigationOptions  = ({navigation}) =>({
     tabBarVisible: false,
     transitionConfig: () => ({
       transitionSpec: {
@@ -21,8 +22,16 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
         easing: Easing.step0,
       },
     }),
+    headerRight: (
+      <TouchableOpacity
+      style={{marginRight: 10, marginBottom:10}}
+      onPress= {() => navigation.state.params.choosePhotos()}
+    >
+    <Text> Gallery </Text>
+    </TouchableOpacity>
+  )
     
-  };
+  });
   constructor(props) {
     super(props);
 
@@ -33,6 +42,7 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
     this.usePhoto = this.usePhoto.bind(this);
     this.proceedWithLookingForDocument = this.proceedWithLookingForDocument.bind(this);
     this.lookForDocument = this.lookForDocument.bind(this);
+    this.choosePhotos = this.choosePhotos.bind(this);
   }
 
   state = {
@@ -43,6 +53,9 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
       photoPath: '',
     },
   };
+  componentDidMount () {
+    this.props.navigation.setParams({ choosePhotos: this.choosePhotos })
+  }
 
   checkForBlurryImage(imageAsBase64) {
     return new Promise((resolve, reject) => {
@@ -103,15 +116,15 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
   }
 
   async takePicture() {
-   /* if (this.camera) {
+    if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
       this.setState({
         ...this.state,
         photoAsBase64: { content: data.base64, isPhotoPreview: false, photoPath: data.uri },
       });
-      this.proceedWithLookingForDocument();
-    } */ 
+    } 
+    this.usePhoto()
   }
 
 
@@ -127,7 +140,23 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
   }
 
   usePhoto() {
-    // do something, e.g. navigate
+    ImagePicker.openCropper({
+      path: this.state.photoAsBase64.photoPath,
+      width: 300,
+      height: 400
+    }).then(image => {
+      console.log(image);
+    });
+  }
+
+  choosePhotos() {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true
+    }).then(image => {
+      console.log(image);
+    });
   }
 
 
