@@ -21,7 +21,7 @@ class Sorter extends Component {
    style={styles.professor_cell}
    onPress = { () => this.setProfessor(item.name)}
    > 
-     <Text style = { this.state.selectedProf == item.name ? styles.category_textSelected : styles.category_text}> {item.name} </Text> 
+     <Text style = { this.props.professor == item.name ? styles.category_textSelected : styles.category_text}> {item.name} </Text> 
      </TouchableOpacity>
     )
 }
@@ -56,15 +56,15 @@ setProfessor(e) {
         style = {styles.container_row}
         onPress = { () => this.setTest('Midterm 1')}
         > 
-            <MaterialCommunityIcon color = {this.state.selectedType == 'Midterm 1' ?  '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-            <Text style = {this.state.selectedType == 'Midterm 1' ?  styles.category_textSelected : styles.category_text}> Midterm 1 </Text> 
+            <MaterialCommunityIcon color = {this.props.exam == 'Midterm 1' ?  '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+            <Text style = {this.props.exam == 'Midterm 1' ?  styles.category_textSelected : styles.category_text}> Midterm 1 </Text> 
        </TouchableOpacity>
        <TouchableOpacity
         style = {styles.container_row}
         onPress = { () => this.setTest('Quiz')}
         > 
-        <MaterialCommunityIcon color = {this.state.selectedType == 'Quiz' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-            <Text style = {this.state.selectedType == 'Quiz' ?  styles.category_textSelected : styles.category_text}> Quiz </Text> 
+        <MaterialCommunityIcon color = {this.props.exam == 'Quiz' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+            <Text style = {this.props.exam == 'Quiz' ?  styles.category_textSelected : styles.category_text}> Quiz </Text> 
        </TouchableOpacity>
          </View>
          <View style ={[styles.container_column, {marginLeft: '10%'}]}>
@@ -72,22 +72,22 @@ setProfessor(e) {
         style = {[styles.container_row]}
         onPress = { () => this.setTest('Midterm 2')}
         > 
-        <MaterialCommunityIcon color = {this.state.selectedType == 'Midterm 2' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-            <Text style = {this.state.selectedType == 'Midterm 2' ?  styles.category_textSelected : styles.category_text}> Midterm 2 </Text> 
+        <MaterialCommunityIcon color = {this.props.exam == 'Midterm 2' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+            <Text style = {this.props.exam == 'Midterm 2' ?  styles.category_textSelected : styles.category_text}> Midterm 2 </Text> 
        </TouchableOpacity>
        <TouchableOpacity
         style = {styles.container_row}
         onPress = { () => this.setTest('Final')}
         > 
-        <MaterialCommunityIcon color = {this.state.selectedType == 'Final' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-             <Text style = {this.state.selectedType == 'Final' ?  styles.category_textSelected : styles.category_text}> Final </Text> 
+        <MaterialCommunityIcon color = {this.props.exam == 'Final' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+             <Text style = {this.props.exam == 'Final' ?  styles.category_textSelected : styles.category_text}> Final </Text> 
        </TouchableOpacity>
        </View>
        </View>
             <Text style ={styles.title_text}> Professors </Text>
        <FlatList
                     data={this.props.availableProfessors}
-                    extraData={this.state}
+                    extraData={this.props.professor}
                     renderItem={({item}) =>{return this._renderProfessors(item) }}
                     keyExtractor={(item, index) => index.toString()}
         />
