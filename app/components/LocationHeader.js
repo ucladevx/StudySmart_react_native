@@ -57,11 +57,12 @@ class LocationHeader extends Component {
                     </TouchableOpacity>
                   )}
                 /> */}
+                { currentRouteKey != "Detailed" &&
                 <TouchableOpacity style={styles.buttonRight} onPress ={() => {
                         navigate(right_navigate)
                     }}>
                 {right_icon}
-                </TouchableOpacity>   
+                </TouchableOpacity>   }
              </View>
 
         )
