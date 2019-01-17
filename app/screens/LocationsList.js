@@ -24,8 +24,13 @@ const Library_Data = [
     {Name: "Boelter Roof", Activity_Level: 1, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0692143", Longitude: "-118.445385", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Botanical Gardens", Activity_Level: 7, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.066584", Longitude: "-118.4437107", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
   ]
+
+  const EatingPlaces_Data = [
+    {Name: "Panda Express", Activity_Level: 1, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0692143", Longitude: "-118.445385", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
+    {Name: "Denny's", Activity_Level: 7, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.066584", Longitude: "-118.4437107", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
+  ]
   
-  let Locations_Data = {Libraries: Library_Data, StudyRooms: StudyRoom_Data, InterestingLocations: InterestingLocations_Data}
+  let Locations_Data = {Libraries: Library_Data, StudyRooms: StudyRoom_Data, InterestingLocations: InterestingLocations_Data, EatingPlaces: EatingPlaces_Data}
 
     export default class LocationsList extends Component {
         constructor(props){
@@ -66,7 +71,8 @@ const Library_Data = [
                     sections = {[
                         {title: "Libraries", data: this.data.Libraries},
                         {title: "Study Rooms", data: this.data.StudyRooms},
-                        {title: "Interesting Locations", data: this.data.InterestingLocations}
+                        {title: "Interesting Locations", data: this.data.InterestingLocations},
+                        {title: "Eating Places", data: this.data.EatingPlaces}
                     ]}
                     renderSectionHeader={ ({section}) => <Text style={styles.Section_Header}>{section.title}</Text> }
                     renderItem={ ({item}) =>  
@@ -197,7 +203,7 @@ const Library_Data = [
 
     const styles = StyleSheet.create({
     container: {
-        
+        paddingBottom: 50,
     },
     scroll_style: {
         justifyContent: 'center',

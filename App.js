@@ -36,17 +36,17 @@ const LocationStack = StackNavigator({
 })
 
 //this is the tab bar navigator for the entire App 
-const AppTabNavigator = createBottomTabNavigator({
-  Main: MainStack,
-  Locations: LocationStack,
-  Profile: { screen: Profile },
-},
-{
-    initialRouteName: 'Main',
-    activeColor: '#f0edf6',
-    inactiveColor: '#3e2465',
-    barStyle: { backgroundColor: 'blue' },
-});
+// const AppTabNavigator = createBottomTabNavigator({
+//   Main: MainStack,
+//   Locations: LocationStack,
+//   Profile: { screen: Profile },
+// },
+// {
+//     initialRouteName: 'Main',
+//     activeColor: '#f0edf6',
+//     inactiveColor: '#3e2465',
+//     barStyle: { backgroundColor: 'blue' },
+// });
 
 
 type Props = {};
@@ -57,8 +57,9 @@ export default class App extends Component<Props> {
   }
   render() {
     return ( 
-      <AppTabNavigator>  
-            </AppTabNavigator>
+      // <AppTabNavigator>  
+      //       </AppTabNavigator>
+      <LocationStack></LocationStack>
     )
   }
 }
