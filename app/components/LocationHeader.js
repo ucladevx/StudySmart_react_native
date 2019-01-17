@@ -35,8 +35,10 @@ class LocationHeader extends Component {
         return (
             <View style = {styles.bar}>
                 <TouchableOpacity style={styles.buttonLeft}>
+                {currentRouteKey == "Detailed" && 
                 <Ionicon color ="white"name="ios-arrow-back" size={25} backgroundColor="#4F87EC">
                 </Ionicon>
+                }
                 </TouchableOpacity>   
                 {/* <Autocomplete
                 data = {classesData} // this should be an API call or huge list eventually 
