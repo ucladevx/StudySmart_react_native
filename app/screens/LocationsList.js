@@ -55,17 +55,6 @@ const Library_Data = [
         // get the hour string, determine if open or not
         return (
             <View style={styles.container}> 
-            {/* TEMPORARY BUTTON  -- TEMPORARY BUTTON */}
-            <Button
-                onPress={()=> 
-                    // Navigate to the List View Detailed screen and pass in item
-                    navigate('Map')
-                }
-                title="Switch to Map"
-                color="#4F87EC"
-                accessibilityLabel="Switch to Map"
-            />
-             {/* TEMPORARY BUTTON  -- TEMPORARY BUTTON */}
                 <SectionList  
                     contentContainerStyle = {styles.scroll_style}
                     sections = {[

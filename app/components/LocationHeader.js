@@ -21,20 +21,25 @@ class LocationHeader extends Component {
 
       render() {
         //   const classesData = this.handleSearchSuggestions(this.state.Class)
+        const {navigate} = this.props.navigation;
         const currentRouteKey = this.props.navigation.state.routes[this.props.navigation.state.index].routeName;
 
         if (currentRouteKey == "List"){
             right_icon = <Ionicon color="white" name="ios-map" size={25} backgroundColor="#4F87EC">
             </Ionicon>
+            right_navigate = "Map"
         }
         else if (currentRouteKey == "Map"){
             right_icon = <Ionicon color="white" name="md-list" size={25} backgroundColor="#4F87EC">
             </Ionicon>
+            right_navigate = "List"
         }
 
         return (
             <View style = {styles.bar}>
-                <TouchableOpacity style={styles.buttonLeft}>
+                <TouchableOpacity style={styles.buttonLeft} onPress ={() => {
+                        navigate("List")
+                    }}>
                 {currentRouteKey == "Detailed" && 
                 <Ionicon color ="white"name="ios-arrow-back" size={25} backgroundColor="#4F87EC">
                 </Ionicon>
@@ -52,10 +57,11 @@ class LocationHeader extends Component {
                     </TouchableOpacity>
                   )}
                 /> */}
-                <Text>{currentRouteKey}</Text>
-                <TouchableOpacity style={styles.buttonRight}>
+                <TouchableOpacity style={styles.buttonRight} onPress ={() => {
+                        navigate(right_navigate)
+                    }}>
                 {right_icon}
-             </TouchableOpacity>   
+                </TouchableOpacity>   
              </View>
 
         )
@@ -69,13 +75,13 @@ class LocationHeader extends Component {
 
 const styles = StyleSheet.create({
     buttonLeft: {
-        marginTop: 15,
-        marginLeft:10
+        marginTop: 25,
+        marginLeft:30
 
     },
     buttonRight: {
-        marginTop: 15,
-        marginRight:10
+        marginTop: 25,
+        marginRight:30
 
     },
     bar: {
