@@ -92,7 +92,7 @@ class LocationHeader extends Component {
                 containerStyle={{backgroundColor: 'white', marginTop: 20, }} 
                 inputContainerStyle = {{width: 250 }}
                 renderItem={item => (
-                    <TouchableOpacity onPress={() => navigate('Detailed', { item: (locationsData[locationsData.findIndex(x => x.Name.toUpperCase() === item)]) })}>
+                    <TouchableOpacity onPress={() => navigate('Detailed', { item: locationsData.find(x => x.Name.toUpperCase() === item) })}>
                       <Text>{item}</Text>
                     </TouchableOpacity>
                   )}
