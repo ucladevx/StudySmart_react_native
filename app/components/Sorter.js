@@ -18,10 +18,10 @@ class Sorter extends Component {
   _renderProfessors(item) {
     return (
    <TouchableOpacity
-   style={styles.professor_cell}
+   style={styles.professorCell}
    onPress = { () => this.setProfessor(item.name)}
    > 
-     <Text style = { this.state.selectedProf == item.name ? styles.category_textSelected : styles.category_text}> {item.name} </Text> 
+     <Text style = { this.props.prof == item.name ? styles.categoryTextSelected : styles.categoryText}> {item.name} </Text> 
      </TouchableOpacity>
     )
 }
@@ -46,48 +46,48 @@ setProfessor(e) {
         transparent={true}
     >
         <View style={[styles.modalContainer, styles.boxWithShadow]}>
-        <Text style = {styles.sort_text}> Sort </Text>
+        <Text style = {styles.sortText}> Sort </Text>
         <View style={styles.divider}/>
         <View style ={styles.left_text} >
-        <Text style ={styles.title_text}> Exams </Text>
-        <View style ={styles.container_row}>
-        <View style ={styles.container_column}>
+        <Text style ={styles.titleText}> Exams </Text>
+        <View style ={styles.containerRow}>
+        <View style ={styles.containerColumn}>
         <TouchableOpacity
-        style = {styles.container_row}
+        style = {styles.containerRow}
         onPress = { () => this.setTest('Midterm 1')}
         > 
-            <MaterialCommunityIcon color = {this.state.selectedType == 'Midterm 1' ?  '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-            <Text style = {this.state.selectedType == 'Midterm 1' ?  styles.category_textSelected : styles.category_text}> Midterm 1 </Text> 
+            <MaterialCommunityIcon color = {this.props.exam == 'Midterm 1' ?  '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+            <Text style = {this.props.exam == 'Midterm 1' ?  styles.categoryTextSelected : styles.categoryText}> Midterm 1 </Text> 
        </TouchableOpacity>
        <TouchableOpacity
-        style = {styles.container_row}
+        style = {styles.containerRow}
         onPress = { () => this.setTest('Quiz')}
         > 
-        <MaterialCommunityIcon color = {this.state.selectedType == 'Quiz' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-            <Text style = {this.state.selectedType == 'Quiz' ?  styles.category_textSelected : styles.category_text}> Quiz </Text> 
+        <MaterialCommunityIcon color = {this.props.exam == 'Quiz' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+            <Text style = {this.props.exam == 'Quiz' ?  styles.categoryTextSelected : styles.categoryText}> Quiz </Text> 
        </TouchableOpacity>
          </View>
-         <View style ={[styles.container_column, {marginLeft: '10%'}]}>
+         <View style ={[styles.containerColumn, {marginLeft: '10%'}]}>
          <TouchableOpacity
-        style = {[styles.container_row]}
+        style = {[styles.containerRow]}
         onPress = { () => this.setTest('Midterm 2')}
         > 
-        <MaterialCommunityIcon color = {this.state.selectedType == 'Midterm 2' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-            <Text style = {this.state.selectedType == 'Midterm 2' ?  styles.category_textSelected : styles.category_text}> Midterm 2 </Text> 
+        <MaterialCommunityIcon color = {this.props.exam == 'Midterm 2' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+            <Text style = {this.props.exam == 'Midterm 2' ?  styles.categoryTextSelected : styles.categoryText}> Midterm 2 </Text> 
        </TouchableOpacity>
        <TouchableOpacity
-        style = {styles.container_row}
+        style = {styles.containerRow}
         onPress = { () => this.setTest('Final')}
         > 
-        <MaterialCommunityIcon color = {this.state.selectedType == 'Final' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
-             <Text style = {this.state.selectedType == 'Final' ?  styles.category_textSelected : styles.category_text}> Final </Text> 
+        <MaterialCommunityIcon color = {this.props.exam == 'Final' ? '#4F87EC' : 'gray'}name="circle-slice-8" size={25} backgroundColor="#4F87EC"> </MaterialCommunityIcon>
+             <Text style = {this.props.exam == 'Final' ?  styles.categoryTextSelected : styles.categoryText}> Final </Text> 
        </TouchableOpacity>
        </View>
        </View>
-            <Text style ={styles.title_text}> Professors </Text>
+            <Text style ={styles.titleText}> Professors </Text>
        <FlatList
                     data={this.props.availableProfessors}
-                    extraData={this.state}
+                    extraData={this.props.prof}
                     renderItem={({item}) =>{return this._renderProfessors(item) }}
                     keyExtractor={(item, index) => index.toString()}
         />
@@ -96,7 +96,7 @@ setProfessor(e) {
            <TouchableOpacity
             onPress = { () => this.props.showResults()}
             > 
-       <Text style ={styles.title_text}> Show Results </Text> 
+       <Text style ={styles.titleText}> Show Results </Text> 
        </TouchableOpacity>
      
                   </View>
@@ -123,15 +123,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
       },
-      container_row: {
+      containerRow: {
         flexDirection: 'row',
         marginBottom: 5,
         marginTop: 5,
         alignItems: 'center',
-      },
-      container_left: {
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start'
       },
       divider: {
         height: 2,
@@ -140,13 +136,13 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 5
       },
-  big_text: {
+  bigText: {
       fontSize: 16,
       color: '#000',
       marginLeft: 5,
       marginRight: 5
   },
-  container_column: {
+  containerColumn: {
       flexDirection: 'column',
       flex: 0,
       width: '40%',
@@ -154,7 +150,7 @@ const styles = StyleSheet.create({
       marginLeft: 5,
 
   },
-  sort_text: {
+  sortText: {
     fontFamily: "System",
     fontSize: 30,
     fontWeight: "700",
@@ -163,7 +159,7 @@ const styles = StyleSheet.create({
     color:  "#4a4a4a",
     marginTop: 5,
   }, 
-  title_text: {
+  titleText: {
     fontFamily: "System",
         fontSize: 20,
         fontWeight: "600",
@@ -172,7 +168,7 @@ const styles = StyleSheet.create({
         color:  "#4a4a4a",
         padding: 5
   },
-  category_text: {
+  categoryText: {
         fontFamily: "System",
             fontSize: 18,
             fontWeight: "500",
@@ -180,29 +176,13 @@ const styles = StyleSheet.create({
             letterSpacing: 1.92,
             color:  "gray",
   },
-  category_textSelected: {
+  categoryTextSelected: {
     fontFamily: "System",
         fontSize: 18,
         fontWeight: "500",
         fontStyle: "normal",
         letterSpacing: 1.92,
         color:  '#4F87EC',
-},
-  small_text: {
-      fontSize: 11,
-      fontStyle: 'italic',
-      marginLeft: 5,
-      marginRight: 5
-  },
-  right_text: {
-      textAlign : 'right',
-      flex: 1
-  },
-  left_text: {
-    width: '100%',
-    flex: 1,
-    justifyContent: 'flex-start',
-    paddingLeft: 5
 },
 boxWithShadow: {
     shadowColor: '#000',
@@ -211,18 +191,7 @@ boxWithShadow: {
     shadowRadius: 2,  
     elevation: 5
 },
-rounded_button: {
-    borderRadius: 10,
-    backgroundColor: "#e0e0e0",
-    marginLeft: 4,
-    marginRight: 4, 
-    width: 55,
-    marginTop: 5,
-    height: 25,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  professor_cell: {
+  professorCell: {
       alignItems: 'center',
       padding: 5
   }

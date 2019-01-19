@@ -29,23 +29,23 @@ import StarRating from 'react-native-star-rating';
           >
         <View style={styles.cell}>
         <View
-        style={styles.container_row}>
+        style={styles.containerRow}>
         <View style={styles.circleIcon}>
-        <Text style = {styles.circle_text}>{item.courseName.charAt(0)}</Text>
+        <Text style = {styles.circleText}>{item.courseName.charAt(0)}</Text>
         </View>
         <View
-        style={styles.container_text}>
-        <View style={styles.container_row}>
-              <Text style={[styles.big_text, styles.left_text]}>
+        style={styles.containerText}>
+        <View style={styles.containerRow}>
+              <Text style={[styles.bigText, styles.leftText]}>
                   {item.courseName} | {item.professor}
               </Text>
             </View>
-            <View style={styles.container_row}>
-              <Text style={[styles.text, styles.left_text]}>
+            <View style={styles.containerRow}>
+              <Text style={[styles.text, styles.leftText]}>
                 {item.test} | {item.term} {item.year}
               </Text>
             </View>
-            <View style={styles.container_row}>
+            <View style={styles.containerRow}>
             <StarRating
             disabled={true}
             maxStars={5}
@@ -98,7 +98,7 @@ import StarRating from 'react-native-star-rating';
       backgroundColor: '#FFF',
       elevation: 2,
   },
-  container_text: {
+  containerText: {
       flex: 1,
       flexDirection: 'column',
       marginLeft: 15,
@@ -106,7 +106,7 @@ import StarRating from 'react-native-star-rating';
       width: '100%',
       backgroundColor: 'green'
   },
-  container_row: {
+  containerRow: {
     flexDirection: 'row',
     marginTop: 3,
     marginBottom: 3,
@@ -127,35 +127,25 @@ import StarRating from 'react-native-star-rating';
       alignItems: 'center'
   },
   text,
-  big_text: {
+  bigText: {
     ...text,
     height: 20,
     fontSize: 17,
     letterSpacing: 1.92,
     color: 'black',
   },
-  details_text: {
-    ...text, 
-    fontSize: 10,
-    letterSpacing: 1.52,
-    color: 'white', 
-  },
-  container_text: {
+  containerText: {
       flex: 1,
       flexDirection: 'column',
       marginLeft: 4,
       justifyContent: 'center',
 
   },
-  right_text: {
-    textAlign : 'right',
-    flex: 1
-},
-left_text: {
+leftText: {
   textAlign : 'left',
   flex: 0
 },
-circle_text: {
+circleText: {
     ...text,
     color: 'white',
     fontSize: 20,

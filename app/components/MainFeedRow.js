@@ -13,7 +13,7 @@ export default class MainFeedRow extends Component {
     render(){
     return
     (<View style={styles.container}>
-        <View style={styles.container_text}>
+        <View style={styles.containerText}>
             <Text style={styles.courseName}>
                 {this.props.courseName}
             </Text>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#000',
     },
-    container_text: {
+    containerText: {
         flex: 1,
         flexDirection: 'column',
         marginLeft: 12,

@@ -73,7 +73,7 @@ render () {
       <TouchableOpacity
       style = {[styles.sort, styles.boxWithShadow]}
       onPress = { () =>  this.showSorter() }> 
-     <Text style= {styles.sort_text}> Sort </Text> 
+     <Text style= {styles.sortText}> Sort </Text> 
      <Ionicon color ="white"name="ios-arrow-back" size={15} backgroundColor="#4F87EC">
                 </Ionicon>
      </TouchableOpacity>
@@ -142,7 +142,7 @@ const text = {
         shadowRadius: 2,  
         elevation: 5
     },
-    container_text: {
+    containerText: {
       flex: 1,
       flexDirection: 'column',
       marginLeft: 12,
@@ -160,7 +160,7 @@ const text = {
     alignItems: 'center',
     flex: 0,
   },
-  sort_text: {
+  sortText: {
     ...text,
     letterSpacing: 1.54,
     color: 'white',

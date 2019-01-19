@@ -82,7 +82,7 @@ export default class MainFeed extends Component {
         <View
         style = {styles.list}>
         <View style = {[styles.createClass,styles.boxWithShadow]}>
-        <Text style={styles.title_text}>
+        <Text style={styles.titleText}>
                 Create Your Classes
                 </Text>
         <TouchableOpacity
@@ -93,13 +93,13 @@ export default class MainFeed extends Component {
        </TouchableOpacity>
         </View>
         <View>
-          <Text style={styles.title_text}>
+          <Text style={styles.titleText}>
                 CS31
                 </Text>
         <MainFeedList
         data={loadMain}
         />
-          <Text style={styles.title_text}>
+          <Text style={styles.titleText}>
                 CS32
                 </Text>
         <MainFeedList
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
     bottom:0
   },
-  title_text: {
+  titleText: {
     fontFamily: "System",
     fontSize: 24,
     fontWeight: "500",

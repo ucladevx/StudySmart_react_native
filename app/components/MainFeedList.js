@@ -26,20 +26,20 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
     _renderRow(item) {
       return (
         <View style={[styles.cell, styles.boxWithShadow]}>
-          <View style={styles.container_text}>
-          <View style={styles.container_row}>
+          <View style={styles.containerText}>
+          <View style={styles.containerRow}>
               <Text
               numberOfLines={1}  
-              style={[styles.big_text, styles.left_text]}>
+              style={[styles.bigText, styles.leftText]}>
                   {item.courseName} | {item.professor}
               </Text>
             </View>
-            <View style={styles.container_row}>
-              <Text style={[styles.text, styles.left_text]}>
+            <View style={styles.containerRow}>
+              <Text style={[styles.text, styles.leftText]}>
                 {item.test} | {item.term} {item.year}
               </Text>
             </View>
-            <View style={styles.container_row}>
+            <View style={styles.containerRow}>
             <StarRating
             disabled={true}
             maxStars={5}
@@ -51,10 +51,10 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
             {item.ratingNum}
             </Text>
             </View>
-            <View style = {styles.container_row}>
+            <View style = {styles.containerRow}>
             <TouchableOpacity
-             style={styles.rounded_button}>
-                <Text style={styles.details_text}>
+             style={styles.roundedButton}>
+                <Text style={styles.detailsText}>
                 Details
                 </Text>
             </TouchableOpacity>
@@ -92,7 +92,7 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
       height: '92%'
   },
   text,
-  big_text: {
+  bigText: {
     ...text,
     height: 20,
     width: 180,
@@ -100,29 +100,29 @@ import {Text, View, ListView, TouchableOpacity, StyleSheet, FlatList} from 'reac
     letterSpacing: 1.92,
     color: 'black',
   },
-  details_text: {
+  detailsText: {
     ...text, 
     fontSize: 10,
     letterSpacing: 1.52,
     color: 'white',
     
   },
-  container_text: {
+  containerText: {
       flex: 1,
       flexDirection: 'column',
       marginLeft: 4,
       justifyContent: 'center',
 
   },
-  right_text: {
+  rightText: {
     textAlign : 'right',
     flex: 1
 },
-left_text: {
+leftText: {
   textAlign : 'left',
   flex: 0
 },
-  container_row: {
+  containerRow: {
     flexDirection: 'row',
     marginTop: 3,
     marginBottom: 3,
@@ -134,7 +134,7 @@ left_text: {
     shadowRadius: 2,  
     elevation: 5
 },
-rounded_button: {
+roundedButton: {
     borderRadius: 15,
     backgroundColor: "#4f87ec",
     width: '38%',
