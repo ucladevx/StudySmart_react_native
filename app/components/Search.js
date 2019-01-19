@@ -12,7 +12,7 @@ import {
 
 
 const ViewPropTypes = RNViewPropTypes || View.propTypes;
-const data = ['CS31', 'CS33', 'Math61']
+const data = ['CS31', 'CS33', 'Math61'];
 class Search extends Component {
   static propTypes = {
     ...TextInput.propTypes,
@@ -54,6 +54,7 @@ class Search extends Component {
     const dataSource = data;
     this.setState({ dataSource });
   }
+
   /**
    * Proxy `blur()` to search bar's text input.
    */
@@ -87,7 +88,7 @@ class Search extends Component {
         data={dataSource}
         extraData={dataSource}
         renderItem={renderItem}
-        keyboardShouldPersistTaps = {keyboardShouldPersistTaps}
+        keyboardShouldPersistTaps={keyboardShouldPersistTaps}
         onEndReached={onEndReached}
         onEndReachedThreshold={onEndReachedThreshold}
         style={[styles.list, listStyle]}

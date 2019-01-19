@@ -1,16 +1,18 @@
-import { CHANGE_CATEGORY, CHANGE_CLASS, STORE_RESOURCES, CHANGE_PROFESSOR, CHANGE_EXAM } from '../Actions/actions';
+import {
+  CHANGE_CATEGORY, CHANGE_CLASS, STORE_RESOURCES, CHANGE_PROFESSOR, CHANGE_EXAM
+} from '../Actions/actions';
 
 const initialState = {
   category: 'Main',
   class: '',
-  resources: [], 
+  resources: [],
   professor: '',
   exam: ''
 };
 
 const ResourcesReducer = (state = initialState, action) => {
- // console.log(state)
-  switch(action.type){
+// console.log(state)
+  switch (action.type) {
     case CHANGE_CATEGORY:
       return {
         ...state,
@@ -39,6 +41,6 @@ const ResourcesReducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
 
 export default ResourcesReducer;

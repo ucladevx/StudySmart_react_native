@@ -7,13 +7,14 @@ import {
   Image,
   TouchableOpacity, StyleSheet
 } from 'react-native';
-import { RNCamera as Camera } from 'react-native-camera';
-import Toast, {DURATION} from 'react-native-easy-toast'
-import OpenCV from '../NativeModules/OpenCV';
 import { withNavigation } from 'react-navigation';
+import { RNCamera as Camera } from 'react-native-camera';
+import Toast, { DURATION } from 'react-native-easy-toast';
+import OpenCV from '../NativeModules/OpenCV';
 import CircleWithinCircle from '../assets/CircleWithinCircle';
- class CameraScreen extends Component {
-  static navigationOptions  = ({navigation}) =>({
+
+class CameraScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
     tabBarVisible: false,
     transitionConfig: () => ({
       transitionSpec: {
@@ -24,14 +25,15 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
     }),
     headerRight: (
       <TouchableOpacity
-      style={{marginRight: 10, marginBottom:10}}
-      onPress= {() => navigation.state.params.choosePhotos()}
-    >
-    <Text> Gallery </Text>
-    </TouchableOpacity>
-  )
-    
+        style={{ marginRight: 10, marginBottom: 10 }}
+        onPress={() => navigation.state.params.choosePhotos()}
+      >
+        <Text> Gallery </Text>
+      </TouchableOpacity>
+    )
+
   });
+
   constructor(props) {
     super(props);
 
@@ -53,16 +55,18 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
       photoPath: '',
     },
   };
-  componentDidMount () {
+
+  componentDidMount() {
     this.props.navigation.setParams({ choosePhotos: this.choosePhotos })
   }
 
+  // eslint-disable-next-line class-methods-use-this
   checkForBlurryImage(imageAsBase64) {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
-        OpenCV.checkForBlurryImage(imageAsBase64, error => {
+        OpenCV.checkForBlurryImage(imageAsBase64, (error) => {
           // error handling
-        }, msg => {
+        }, (msg) => {
           resolve(msg);
         });
       } else {
@@ -72,12 +76,14 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
       }
     });
   }
+
+  // eslint-disable-next-line class-methods-use-this
   lookForDocument(imageAsBase64) {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
-        OpenCV.lookForDocument(imageAsBase64, error => {
+        OpenCV.lookForDocument(imageAsBase64, (error) => {
           // error handling
-        }, msg => {
+        }, (msg) => {
           resolve(msg);
         });
       } else {
@@ -91,27 +97,28 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
   proceedWithCheckingBlurryImage() {
     const { content, photoPath } = this.state.photoAsBase64;
 
-    this.checkForBlurryImage(content).then(blurryPhoto => {
+    this.checkForBlurryImage(content).then((blurryPhoto) => {
       if (blurryPhoto) {
         this.refs.toast.show('Photo is blurred!',DURATION.FOREVER);
         return this.repeatPhoto();
       }
       this.refs.toast.show('Photo is clear!', DURATION.FOREVER);
       this.setState({ photoAsBase64: { ...this.state.photoAsBase64, isPhotoPreview: true, photoPath } });
-    }).catch(err => {
-      console.log('err', err)
+    }).catch((err) => {
+      console.log('err', err);
     });
   }
+
   proceedWithLookingForDocument() {
     const { content, photoPath } = this.state.photoAsBase64;
 
-    this.lookForDocument(content).then( newImage => {
+    this.lookForDocument(content).then( (newImage) => {
       this.setState({
         ...this.state,
         photoAsBase64: { content: newImage, isPhotoPreview: true, photoPath: newImage.uri },
       });
-    }).catch(err => {
-      console.log('err', err)
+    }).catch((err) => {
+      console.log('err', err);
     });
   }
 
@@ -123,8 +130,8 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
         ...this.state,
         photoAsBase64: { content: data.base64, isPhotoPreview: false, photoPath: data.uri },
       });
-    } 
-    this.usePhoto()
+    }
+    this.usePhoto();
   }
 
 
@@ -144,17 +151,18 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
       path: this.state.photoAsBase64.photoPath,
       width: 300,
       height: 400
-    }).then(image => {
+    }).then((image) => {
       console.log(image);
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   choosePhotos() {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
       cropping: true
-    }).then(image => {
+    }).then((image) => {
       console.log(image);
     });
   }
@@ -190,15 +198,15 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
     return (
       <View style={styles.container}>
         <Camera
-          ref={cam => {
+          ref={(cam) => {
             this.camera = cam;
           }}
           style={styles.preview}
-          permissionDialogTitle={'Permission to use camera'}
-          permissionDialogMessage={'We need your permission to use your camera phone'}
+          permissionDialogTitle="Permission to use camera"
+          permissionDialogMessage="We need your permission to use your camera phone"
         >
           <View style={styles.takePictureContainer}>
-          <TouchableOpacity onPress={this.takePicture}>
+            <TouchableOpacity onPress={this.takePicture}>
               <View>
                 <CircleWithinCircle />
               </View>
@@ -210,89 +218,89 @@ import CircleWithinCircle from '../assets/CircleWithinCircle';
     );
   }
 }
-  
-    const styles = StyleSheet.create({
-    imagePreview: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      left: 0,
-      bottom: 60,
-    },
-    container: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-    repeatPhotoContainer: {
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      width: '50%',
-      height: 80,
-      backgroundColor: '#000',
-      alignItems: 'flex-start',
-      justifyContent: 'center',
-    },
-    topButtonsContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      padding: 10,
-      justifyContent: 'space-between',
-    },
-    focusFrameContainer: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      height: '100%',
-      width: '100%',
-    },
-    focusFrame: {
-      height: 90,
-      width: 90,
-      borderWidth: 1,
-      borderColor: '#fff',
-      borderStyle: 'dotted',
-      borderRadius: 5,
-    },
-    photoPreviewRepeatPhotoText: {
-      color: '#abcfff',
-      fontSize: 15,
-      marginLeft: 10,
-    },
-    usePhotoContainer: {
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      width: '50%',
-      height: 80,
-      backgroundColor: '#000',
-      alignItems: 'flex-end',
-      justifyContent: 'center',
-    },
-    photoPreviewUsePhotoText: {
-      color: '#abcfff',
-      fontSize: 15,
-      marginRight: 10,
-    },
-    preview: {
-      position: 'relative',
-      flex: 1,
-      justifyContent: 'flex-end',
-      alignItems: 'center',
-    },
-    takePictureContainer: {
-      position: 'absolute',
-      paddingVertical: 20,
-      bottom: 20,
-      left: 0,
-      right: 0,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
 
-  export default withNavigation(CameraScreen);
+const styles = StyleSheet.create({
+  imagePreview: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    left: 0,
+    bottom: 60,
+  },
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  repeatPhotoContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: '50%',
+    height: 80,
+    backgroundColor: '#000',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  topButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    padding: 10,
+    justifyContent: 'space-between',
+  },
+  focusFrameContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+  },
+  focusFrame: {
+    height: 90,
+    width: 90,
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderStyle: 'dotted',
+    borderRadius: 5,
+  },
+  photoPreviewRepeatPhotoText: {
+    color: '#abcfff',
+    fontSize: 15,
+    marginLeft: 10,
+  },
+  usePhotoContainer: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: '50%',
+    height: 80,
+    backgroundColor: '#000',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+  },
+  photoPreviewUsePhotoText: {
+    color: '#abcfff',
+    fontSize: 15,
+    marginRight: 10,
+  },
+  preview: {
+    position: 'relative',
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  takePictureContainer: {
+    position: 'absolute',
+    paddingVertical: 20,
+    bottom: 20,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default withNavigation(CameraScreen);
