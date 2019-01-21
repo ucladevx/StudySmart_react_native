@@ -55,7 +55,6 @@ export class Header extends Component {
     for (i = 0; i < Posts.length; i++) {
       if (Posts[i].courseName.toUpperCase() === upperClass) {
         if (examCheck && professorCheck) {
-          console.log('HEY', exam, professor, Posts[i]);
           if (Posts[i].test === exam && Posts[i].professor === professor) {
             searchedPosts.push(Posts[i]);
           }

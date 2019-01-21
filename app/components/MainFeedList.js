@@ -15,12 +15,22 @@ export default class MainFeedList extends Component {
               numberOfLines={1}
               style={[styles.bigText, styles.leftText]}
             >
-              {item.courseName} | {item.professor}
+              {item.courseName}
+              {' '}
+|
+              {' '}
+              {item.professor}
             </Text>
           </View>
           <View style={styles.containerRow}>
             <Text style={[styles.text, styles.leftText]}>
-              {item.test} | {item.term} {item.year}
+              {item.test}
+              {' '}
+|
+              {' '}
+              {item.term}
+              {' '}
+              {item.year}
             </Text>
           </View>
           <View style={styles.containerRow}>

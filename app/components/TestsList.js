@@ -33,7 +33,7 @@ class TestsList extends Component {
                 <Text style={[styles.bigText, styles.leftText]}>
                   {item.courseName}
                   {' '}
-|
+                  |
                   {' '}
                   {item.professor}
                 </Text>
@@ -42,7 +42,7 @@ class TestsList extends Component {
                 <Text style={[styles.text, styles.leftText]}>
                   {item.test}
                   {' '}
-|
+                  |
                   {' '}
                   {item.term}
                   {' '}

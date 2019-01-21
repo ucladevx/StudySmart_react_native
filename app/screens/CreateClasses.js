@@ -75,16 +75,10 @@ class CreateClasses extends Component {
       this.props.navigation.setParams({ handleBack: this.goBack });
     }
 
-    goBack() {
-      this.props.navigation.navigate('Main');
-    }
-
-    handleClick(chosenClass) {
+    setInputState(e) {
+      this.setState({ Class: e });
       this.setState({
-        Class: chosenClass
-      });
-      this.setState({
-        searching: true
+        searching: false
       });
     }
 
@@ -106,11 +100,17 @@ class CreateClasses extends Component {
       return result;
     }
 
-    setInputState(e) {
-      this.setState({ Class: e });
+    handleClick(chosenClass) {
       this.setState({
-        searching: false
+        Class: chosenClass
       });
+      this.setState({
+        searching: true
+      });
+    }
+
+    goBack() {
+      this.props.navigation.navigate('Main');
     }
 
     renderRow(item) {
