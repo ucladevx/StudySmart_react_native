@@ -56,11 +56,11 @@ $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-conf
 * Run the following inside the `ios` directory
 
 ```bash
-# Running these commands gives us the necessary frameworks for google sign-in
 
 # If you don't have cocoa pods installed, run the following command:
 $ sudo gem install cocoapods
-
+```
+```bash
 # Otherwise just this command should work.
 # Make sure you are in the Studysmart_react_native/ios/ directory !!!
 $ pod install 
