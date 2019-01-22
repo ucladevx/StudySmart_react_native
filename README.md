@@ -34,11 +34,11 @@ $ watchman watch-del-all
 
 You possibly might have to also do the following : 
 Add third-party and RNVectorIcons as target dependencies.
-'
+```
 cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../
 $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh 
 && cd ../../../../*
-'
+```
 
 # Setting Up Google Sign-in
 
