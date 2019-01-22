@@ -35,7 +35,7 @@ $ watchman watch-del-all
 You possibly might have to also do the following : 
 Add third-party and RNVectorIcons as target dependencies.
 ```
-cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../
+$ cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../../../
 $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh 
 && cd ../../../../*
 ```
@@ -44,16 +44,16 @@ $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-conf
 
 ### Grabbing the necessary files
 
-1. Login to the Studysmart team drive and go to the 'Important' folder
-2. Grab the `config.js` file and put it into the project's root directory
+* Login to the Studysmart team drive and go to the 'Important' folder
+* Grab the `config.js` file and put it into the project's root directory
 
 ### Adding the API_KEY
 
-1. Go into `ios` folder and open up `SS.xcworkspace` 
-2. Drag `GoogleService-Info.plist` file from team drive and put it under 'SS' folder in the XCode Project Navigator
-3. Click on SS in the XCode Project Navigator 
-4. Go to 'Info', click on 'URL Types', and in the 'URL Schemes Box' enter in the `REVERSED_CLIENT_ID` from the `GoogleService-Info.plist` file that we grabbed earlier
-5. Run the following inside the `ios` directory
+* Go into `ios` folder and open up `SS.xcworkspace` 
+* Drag `GoogleService-Info.plist` file from team drive and put it under 'SS' folder in the XCode Project Navigator
+* Click on SS in the XCode Project Navigator 
+* Go to 'Info', click on 'URL Types', and in the 'URL Schemes Box' enter in the `REVERSED_CLIENT_ID` from the `GoogleService-Info.plist` file that we grabbed earlier
+* Run the following inside the `ios` directory
 
 ```
 # Running these commands gives us the necessary frameworks for google sign-in
