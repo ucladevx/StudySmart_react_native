@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from './Search';
