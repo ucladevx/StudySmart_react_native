@@ -23,11 +23,11 @@ $ watchman watch-del-all
 * double tap on the Xcode project
 * build
 
-# Hot relaoding
+# Hot reloading
 * Save your file
 * Pres cmd+r to reload javascript
 
-# Worst case to run(if dependacnies are messed up)
+# Worst case to run(if dependencies are messed up)
 1. npm install in directory
 2. Make React a target dependency in the XCode Project. 
 3. For MaterialFonts error, run 'react-native link react-native-vector-icons'
