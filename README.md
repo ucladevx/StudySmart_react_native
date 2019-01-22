@@ -51,21 +51,21 @@ $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-conf
 
 1. Go into `ios` folder and open up `SS.xcworkspace` 
 2. Drag `GoogleService-Info.plist` file from team drive and put it under 'SS' folder in the XCode Project Navigator
-3. Click on SS in the Project Navigator 
+3. Click on SS in the XCode Project Navigator 
 4. Go to 'Info', click on 'URL Types', and in the 'URL Schemes Box' enter in the `REVERSED_CLIENT_ID` from the `GoogleService-Info.plist` file that we grabbed earlier
 5. Run the following inside the `ios` directory
 
-   ```
-   # Running these commands gives us the necessary frameworks for google sign-in
+```
+# Running these commands gives us the necessary frameworks for google sign-in
+
+# If you don't have cocoa pods installed, run the following command:
+$ sudo gem install cocoapods
+
+# Otherwise just this command should work.
+# Make sure you are in the Studysmart_react_native/ios/ directory !!!
+$ pod install 
    
-   # If you don't have cocoa pods installed, run the following command:
-   $ sudo gem install cocoapods
-   
-   # Otherwise just this command should work.
-   # Make sure you are in the Studysmart_react_native/ios/ directory !!!
-   $ pod install 
-   
-   ```
+```
 
 Now you should be able to run the project on XCode cleanly. Make sure you use SS.xcworkspace from now on instead of SS.xcodeproj because we are using cocoa pods.
 
