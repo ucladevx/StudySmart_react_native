@@ -1,3 +1,9 @@
+# Gitignore (Important)
+Please add `/config.js` and `/ios/GoogleService-Info.plist`, to your .gitignore so that we don't accidentally push our API_KEYs onto Github. Always check with git status that these 2 files are not getting added to your commit. 
+
+Also, before you push, go into SS.xcworkspace and go to SS --> Info --> URL types and replace the URL Scheme with ENTER_API_KEY_HERE
+
+
 # To run the program in xcode: 
 
 * navigate to react_native
@@ -50,7 +56,10 @@ $ npm install
 ```
 $ react-native link
 ```
-
+### Get the ESLint extension for your code editor. The errors should show up as underlined red in your editor. Always try to remove all of your errors before your push, especially the aesthetic ones. If no lines show up, run
+```
+$ npm run lint 
+```
 
 # Setting Up Google Sign-in
 
@@ -82,8 +91,3 @@ $ sudo gem update xcodeproj
 ```
 
 Now you should be able to run the project on XCode cleanly. Make sure you use SS.xcworkspace from now on instead of SS.xcodeproj because we are using cocoa pods.
-
-# Gitignore (Important)
-Please add `/config.js` and `/ios/GoogleService-Info.plist`, to your .gitignore so that we don't accidentally push our API_KEYs onto Github. Always check with git status that these 2 files are not getting added to your commit. 
-
-Also, before you push, go into SS.xcworkspace and go to SS --> Info --> URL types and replace the URL Scheme with ENTER_API_KEY_HERE
