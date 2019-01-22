@@ -9,6 +9,9 @@ $ react-native upgrade
 ```
 $ npm install 
 ```
+```
+$ react-native link
+```
 Kill any active metro bundler:
 ```
 $ kill $(lsof -t -i:8081)
@@ -39,36 +42,20 @@ $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-conf
 
 # Setting Up Google Sign-in
 
-#### Grabbing the necessary files
+### Grabbing the necessary files
 
 1. Login to the Studysmart team drive and go to the 'Important' folder
 2. Grab the `config.js` file and put it into the project's root directory
 
-####Adding the API_KEY
+### Adding the API_KEY
 
-1. Go into `ios` folder and open up`SS.xcworkspace` 
-
-***The reason we don't use SS.xcodeproj is because we use cocoa pods to help with dependencies later* 
-
-
-
+1. Go into `ios` folder and open up `SS.xcworkspace` 
 2. Drag `GoogleService-Info.plist` file from team drive and put it under 'SS' folder in the XCode Project Navigator
-
-   Should look like the following:
-
-![image-20190122002212957](/Users/m5matthew/Library/Application Support/typora-user-images/image-20190122002212957.png)
-
-
-
-
-
-3. Click on SS in the Project Navigator (The thing highlighted in blue above) 
-
+3. Click on SS in the Project Navigator 
 4. Go to 'Info', click on 'URL Types', and in the 'URL Schemes Box' enter in the `REVERSED_CLIENT_ID` from the `GoogleService-Info.plist` file that we grabbed earlier
-
 5. Run the following inside the `ios` directory
 
-   ```bash
+   ```
    # Running these commands gives us the necessary frameworks for google sign-in
    
    # If you don't have cocoa pods installed, run the following command:
@@ -80,9 +67,7 @@ $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-conf
    
    ```
 
-
-
-Now you should be able to run the project on XCode cleanly. Make sure you use SS.xcworkspace instead of SS.xcodeproj because we are using cocoa pods.
+Now you should be able to run the project on XCode cleanly. Make sure you use SS.xcworkspace from now on instead of SS.xcodeproj because we are using cocoa pods.
 
 #### Gitignore (Important)
 Please add `/config.js` and `/ios/GoogleService-Info.plist`, to your .gitignore so that we don't accidentally push our API_KEYs onto Github
