@@ -43,15 +43,48 @@ $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-conf
 
 1. Login to the Studysmart team drive and go to the 'Important' folder
 2. Grab the `config.js` file and put it into the project's root directory
-3. Grab the `GoogleService-Info.plist` file and put it into the `ios/` directory
 
-#### Adding the API_KEY
+####Adding the API_KEY
 
-1. Find the XCode StudySmart project in the `ios/` directory (currently called `SS.xcodeproj`)
-2. In the XCode Project Navigator (should be on the left side of your XCode Project), click our current XCode project (SS)
-3. A screen should pop up that has different tabs on the top (General, Capabilities, Resource Tags, Info, etc.)
+1. Go into `ios` folder and open up`SS.xcworkspace` 
+
+***The reason we don't use SS.xcodeproj is because we use cocoa pods to help with dependencies later* 
+
+
+
+2. Drag `GoogleService-Info.plist` file from team drive and put it under 'SS' folder in the XCode Project Navigator
+
+   Should look like the following:
+
+![image-20190122002212957](/Users/m5matthew/Library/Application Support/typora-user-images/image-20190122002212957.png)
+
+
+
+
+
+3. Click on SS in the Project Navigator (The thing highlighted in blue above) 
+
 4. Go to 'Info', click on 'URL Types', and in the 'URL Schemes Box' enter in the `REVERSED_CLIENT_ID` from the `GoogleService-Info.plist` file that we grabbed earlier
-5. Build & Run XCode project
 
-#### Gitignore
+5. Run the following inside the `ios` directory
+
+   ```bash
+   # Running these commands gives us the necessary frameworks for google sign-in
+   
+   # If you don't have cocoa pods installed, run the following command:
+   $ sudo gem install cocoapods
+   
+   # Otherwise just this command should work.
+   # Make sure you are in the Studysmart_react_native/ios/ directory !!!
+   $ pod install 
+   
+   ```
+
+
+
+Now you should be able to run the project on XCode cleanly. Make sure you use SS.xcworkspace instead of SS.xcodeproj because we are using cocoa pods.
+
+#### Gitignore (Important)
 Please add `/config.js` and `/ios/GoogleService-Info.plist`, to your .gitignore so that we don't accidentally push our API_KEYs onto Github
+
+Also, before you push, go into SS.xcworkspace and go to SS --> Info --> URL types and replace the URL Scheme with ENTER_API_KEY_HERE
