@@ -4,6 +4,7 @@ import {Text, View, Dimensions, TouchableOpacity, StyleSheet, Alert, SectionList
 import { ListItem } from 'react-native-elements';
 import LocationsDetailed from './LocationsDetailed';
 import { StackNavigator } from 'react-navigation';
+import LocationHeader from '../components/LocationHeader';
 
 const Library_Data = [
     {Name: "Arts", Activity_Level: 4, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.07432", Longitude: "-118.4413624", MondayOpen: 8, MondayClosed: 23, TuesdayOpen: 0, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
@@ -12,14 +13,14 @@ const Library_Data = [
     {Name: "Science and Engineering - Boelter", Activity_Level: 62, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.068987", Longitude: "-118.442659", MondayOpen: 8, MondayClosed: 10, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Law", Activity_Level: 12, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0729138", Longitude: "-118.4384435", MondayOpen: 0, MondayClosed: 0, TuesdayOpen: 0, TuesdayClosed: 0, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
   ]
-  
+
   const StudyRoom_Data = [
     {Name: "Rieber", Activity_Level: 4, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0716799", Longitude: "-118.4536875", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Hedrick", Activity_Level: 95, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0731836", Longitude: "-118.4545039", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Hedrick Study", Activity_Level: 88, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0730785", Longitude: "-118.4542834", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Sproul", Activity_Level: 62, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0724491", Longitude: "-118.4523096", MondayOpen: 13, MondayClosed: 16, TuesdayOpen: 13, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
   ]
-  
+
   const InterestingLocations_Data = [
     {Name: "Boelter Roof", Activity_Level: 1, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0692143", Longitude: "-118.445385", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Botanical Gardens", Activity_Level: 7, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.066584", Longitude: "-118.4437107", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
@@ -29,23 +30,36 @@ const Library_Data = [
     {Name: "Panda Express", Activity_Level: 1, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.0692143", Longitude: "-118.445385", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
     {Name: "Denny's", Activity_Level: 7, Image_URL: "https://facebook.github.io/react-native/docs/assets/favicon.png", Latitude: "34.066584", Longitude: "-118.4437107", MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20},
   ]
-  
+
   let Locations_Data = {Libraries: Library_Data, StudyRooms: StudyRoom_Data, InterestingLocations: InterestingLocations_Data, EatingPlaces: EatingPlaces_Data}
+
 
     export default class LocationsList extends Component {
         constructor(props){
           super(props);
           this.data = Locations_Data;
-          
+
         }
 
     // static navigation options
-    // customizes the header for the nav bar for the Locations 
+    static navigationOptions= {
+        header: props => <LocationHeader {...props} />,
+        headerStyle: {
+          backgroundColor: "transparent"
+        },
+        headerTitleStyle: {
+          fontWeight: "bold",
+          color: "#fff",
+        },
+        headerTintColor: "#fff",
+        animationEnabled: true
+      }
+    // customizes the header for the nav bar for the Locations
 
       render() {
         const {navigate} = this.props.navigation;
-        
-        // Gets the day of the week 
+
+        // Gets the day of the week
         var options = { weekday: 'long'};
         const current = new Date();
         var hour_only = current.getHours();
@@ -54,8 +68,8 @@ const Library_Data = [
 
         // get the hour string, determine if open or not
         return (
-            <View style={styles.container}> 
-                <SectionList  
+            <View style={styles.container}>
+                <SectionList
                     contentContainerStyle = {styles.scroll_style}
                     sections = {[
                         {title: "Libraries", data: this.data.Libraries},
@@ -64,7 +78,7 @@ const Library_Data = [
                         {title: "Eating Places", data: this.data.EatingPlaces}
                     ]}
                     renderSectionHeader={ ({section}) => <Text style={styles.Section_Header}>{section.title}</Text> }
-                    renderItem={ ({item}) =>  
+                    renderItem={ ({item}) =>
                     <TouchableOpacity onPress ={() => {
                         navigate('Detailed', { item: item })
                     }}>
@@ -76,8 +90,8 @@ const Library_Data = [
                             <View style={styles.information}>
                                 <Text style={styles.Name}>{item.Name}</Text>
                                 {/* NEED TO CHANGE TO A PROGRESS BAR  */}
-                                <Text style={styles.Activity_Level}>{item.Activity_Level}%</Text>  
-                                <Text style={this._currentOpenorClose(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"], hour_only) === "CLOSED" ? styles.Closed : styles.Open}>{this._determineHours(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"], hour_only)}</Text>       
+                                <Text style={styles.Activity_Level}>{item.Activity_Level}%</Text>
+                                <Text style={this._currentOpenorClose(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"], hour_only) === "CLOSED" ? styles.Closed : styles.Open}>{this._determineHours(item[DayOfTheWeek+"Open"], item[DayOfTheWeek+"Closed"], hour_only)}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -94,7 +108,7 @@ const Library_Data = [
         )
       }
 
-      // determine if library is currently open or closed 
+      // determine if library is currently open or closed
       _currentOpenorClose(openTime, closeTime, currentHour){
          // if not open today
          let status = "";
@@ -161,7 +175,7 @@ const Library_Data = [
             else if (openTime == 24){
                 hour_string += "12 am - "
             }
-            
+
         }
 
         if (closeTime >= 0 && closeTime < 11){
@@ -184,7 +198,7 @@ const Library_Data = [
             }
         }
 
-        // if closed just say closed 
+        // if closed just say closed
         if (status === "CLOSED"){
             return "NOW CLOSED"
         }
@@ -255,11 +269,10 @@ const Library_Data = [
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.8,
-        shadowRadius: 1,  
+        shadowRadius: 1,
         elevation: 5,
     },
     studyRoom: {
         backgroundColor: 'blue',
     }
   });
-
