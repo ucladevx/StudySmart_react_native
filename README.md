@@ -55,7 +55,7 @@ $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-conf
 * Go to 'Info', click on 'URL Types', and in the 'URL Schemes Box' enter in the `REVERSED_CLIENT_ID` from the `GoogleService-Info.plist` file that we grabbed earlier
 * Run the following inside the `ios` directory
 
-```
+```bash
 # Running these commands gives us the necessary frameworks for google sign-in
 
 # If you don't have cocoa pods installed, run the following command:
