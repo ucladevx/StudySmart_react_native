@@ -39,6 +39,18 @@ $ cd node_modules/react-native/scripts && ./ios-install-third-party.sh && cd ../
 $ cd node_modules/react-native/third-party/glog-0.3.5/ && ../../scripts/ios-configure-glog.sh 
 && cd ../../../../*
 ```
+ If you're ever pulling again, especially if there's a new dependency or you get an 
+ ```
+ linker command failed - ld: library not found for -lWHATEVER
+ ```
+ always run 
+ ```
+$ npm install 
+```
+```
+$ react-native link
+```
+
 
 # Setting Up Google Sign-in
 
@@ -64,10 +76,14 @@ $ sudo gem install cocoapods
 # Otherwise just this command should work. Make sure you are in the Studysmart_react_native/ios/ directory 
 $ pod install    
 ```
+```bash
+# If it tells you an error -> "Xcodeproj doesn't know about the following attributes {"inputFileListPaths"=>[], "outputFileListPaths"=>[]} for the 'PBXShellScriptBuildPhase' isa."  Run the following before pod install. 
+$ sudo gem update xcodeproj     
+```
 
 Now you should be able to run the project on XCode cleanly. Make sure you use SS.xcworkspace from now on instead of SS.xcodeproj because we are using cocoa pods.
 
 # Gitignore (Important)
-Please add `/config.js` and `/ios/GoogleService-Info.plist`, to your .gitignore so that we don't accidentally push our API_KEYs onto Github
+Please add `/config.js` and `/ios/GoogleService-Info.plist`, to your .gitignore so that we don't accidentally push our API_KEYs onto Github. Always check with git status that these 2 files are not getting added to your commit. 
 
 Also, before you push, go into SS.xcworkspace and go to SS --> Info --> URL types and replace the URL Scheme with ENTER_API_KEY_HERE
