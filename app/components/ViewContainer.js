@@ -1,6 +1,5 @@
-'use strict'
-import React, { Component } from 'react'
-import {View, StyleSheet} from 'react-native'
+import React, { Component } from 'react';
+import { View, StyleSheet } from 'react-native';
 
 export default class ViewContainer extends Component {
   render() {
@@ -8,7 +7,7 @@ export default class ViewContainer extends Component {
       <View style={[styles.viewContainer, this.props.style || {}]}>
         {this.props.children}
       </View>
-    )
+    );
   }
 }
 
@@ -16,11 +15,11 @@ const styles = StyleSheet.create({
 
   viewContainer: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "stretch",
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
   }
 
-})
+});
 
-module.exports = ViewContainer
+module.exports = ViewContainer;
