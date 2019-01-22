@@ -84,6 +84,12 @@ const Library_Data = [
                      }
                     keyExtractor={(item, index) => index.toString()}
                 />
+                 <View style = {styles.floatingButton}>
+                    <TouchableOpacity
+                     style={[styles.studyRoom,styles.boxWithShadow]}
+                    onPress = { () => console.log("HI")}>
+                </TouchableOpacity>
+                </View>
             </View>
         )
       }
@@ -192,7 +198,7 @@ const Library_Data = [
 
     const styles = StyleSheet.create({
     container: {
-        paddingBottom: 50,
+        paddingBottom: 0,
     },
     scroll_style: {
         justifyContent: 'center',
@@ -237,5 +243,23 @@ const Library_Data = [
         fontStyle: 'italic',
         textAlign: 'center',
     },
+    floatingButton: {
+        position: 'absolute',
+        zIndex: 20,
+        bottom: 10,
+        width : '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      boxWithShadow: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.8,
+        shadowRadius: 1,  
+        elevation: 5,
+    },
+    studyRoom: {
+        backgroundColor: 'blue',
+    }
   });
 

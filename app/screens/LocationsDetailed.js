@@ -18,12 +18,11 @@ export default class LocationsDetailed extends Component {
     const current = new Date();
     var prnDt = current.toLocaleTimeString('en-us', options);
     var DayOfTheWeek = prnDt.substring(0, prnDt.indexOf(" "));
-
     return (
       <ScrollView style={styles.container}>
         <Image
           style={{width: width, height: width, resizeMode: 'contain', marginBottom:15}}
-          source={{uri: item.Image_URI}}
+          source={{uri: item.Image_URL}}
         />
         <View style={styles.information}>
           <Text style={styles.Name}>{item.Name}</Text>

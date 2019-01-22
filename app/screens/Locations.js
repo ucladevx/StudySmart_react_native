@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList, Button, TouchableOpacity, createStackNavigator} from 'react-native';
 import StatusBarBackground from '../components/StatusBarBackground'
 import ViewContainer from '../components/ViewContainer'
-import GlobalSearchBar from '../components/GlobalSearchBar';
 
 import MapView, { ProviderPropType, Marker, AnimatedRegion } from 'react-native-maps';
 
