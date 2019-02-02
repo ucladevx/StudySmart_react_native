@@ -4,6 +4,7 @@ import {
   Text, View, Dimensions, TouchableOpacity, StyleSheet, SectionList, Image,
 } from 'react-native';
 import LocationHeader from '../components/LocationHeader';
+import ViewContainer from '../components/ViewContainer';
 
 const Library_Data = [
   {
@@ -184,6 +185,7 @@ export default class LocationsList extends Component {
 
       // get the hour string, determine if open or not
       return (
+        <ViewContainer>
           <View style={styles.container}>
             <SectionList
               contentContainerStyle={styles.scroll_style}
@@ -218,13 +220,20 @@ export default class LocationsList extends Component {
               )}
               keyExtractor={(item, index) => index.toString()}
             />
-            <View style={styles.floatingButton}>
-              <TouchableOpacity
-                style={[styles.studyRoom, styles.boxWithShadow]}
-                onPress={() => console.log('HI')}
-              />
-            </View>
           </View>
+          <View style={styles.floatingButton}>
+            <TouchableOpacity
+              style={[styles.boxWithShadow, styles.studyRoom]}
+              onPress={() => navigate('Booking')}
+            >
+              <Text
+                style={styles.titleText}
+              >
+              Book a study room
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ViewContainer>
       );
     }
 }
@@ -234,7 +243,12 @@ const width = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    paddingBottom: 0,
+    flex: 1,
+    top: 100,
+    bottom: 0,
+    position: 'absolute',
+    zIndex: 2
+
   },
   scroll_style: {
     justifyContent: 'center',
@@ -282,7 +296,7 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
     zIndex: 20,
-    bottom: 10,
+    bottom: 30,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -291,10 +305,25 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
-    shadowRadius: 1,
+    shadowRadius: 2,
     elevation: 5,
   },
   studyRoom: {
-    backgroundColor: 'blue',
-  }
+    backgroundColor: '#4F87EC',
+    height: 50,
+    width: '65%',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  titleText: {
+    fontFamily: 'System',
+    fontSize: 18,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    letterSpacing: 1.52,
+    color: 'white',
+    width: '80%',
+    padding: 5
+  },
 });

@@ -162,14 +162,17 @@ const styles = StyleSheet.create({
 
   },
   bar: {
-    height: 80,
+    height: 100,
     paddingTop: 20,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#4F87EC',
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    position: 'absolute',
+    width: '100%',
+    zIndex: 10
+
   }
 
 
