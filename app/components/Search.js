@@ -47,7 +47,6 @@ class Search extends Component {
     super(props);
     this.state = { dataSource: props.data };
     this.resultList = null;
-    this.onFocus = this.props.onFocus;
   }
 
   componentWillReceiveProps({ data }) {
@@ -69,7 +68,6 @@ class Search extends Component {
   focus() {
     const { textInput } = this;
     textInput && textInput.focus();
-    this.onFocus();
   }
 
   renderResultList() {
