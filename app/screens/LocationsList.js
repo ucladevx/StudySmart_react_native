@@ -183,7 +183,7 @@ export default class LocationsList extends Component {
       const prnDt = current.toLocaleTimeString('en-us', options);
       const DayOfTheWeek = prnDt.substring(0, prnDt.indexOf(' '));
 
-      // get the hour string, determine if open or not
+
       return (
         <ViewContainer>
           <View style={styles.container}>
@@ -201,19 +201,26 @@ export default class LocationsList extends Component {
                   navigate('Detailed', { item });
                 }}
                 >
-                  <View style={styles.card}>
-                    <Image
-                      style={{ width: 120, height: 90, marginBottom: 15 }}
-                      source={{ uri: item.Image_URL }}
-                    />
-                    <View style={styles.information}>
-                      <Text style={styles.Name}>{item.Name}</Text>
-                      {/* NEED TO CHANGE TO A PROGRESS BAR  */}
-                      <Text style={styles.Activity_Level}>
-                        {item.Activity_Level}
-  %
+                {/* Individual list elements */}
+                  <View style={list_element.card}>
+                    <View style={list_element.imgContainer}>
+                      <Image
+                        style={list_element.img}
+                        source={{ uri: item.Image_URL }}
+                      />
+                    </View>
+                    <View style={list_element.information}>
+                      <Text style={list_element.Name}>
+                        {item.Name}
                       </Text>
-                      <Text style={this._currentOpenorClose(item[`${DayOfTheWeek}Open`], item[`${DayOfTheWeek}Closed`], hour_only) === 'CLOSED' ? styles.Closed : styles.Open}>{this._determineHours(item[`${DayOfTheWeek}Open`], item[`${DayOfTheWeek}Closed`], hour_only)}</Text>
+                      {/* NEED TO CHANGE TO A PROGRESS BAR  */}
+                      <Text style={list_element.Activity_Level}>
+                        {item.Activity_Level}%
+                      </Text>
+                      <Text
+                      style={this._currentOpenorClose(item[`${DayOfTheWeek}Open`], item[`${DayOfTheWeek}Closed`],hour_only) === 'CLOSED' ? list_element.Closed : list_element.Open}>{this._determineHours(item[`${DayOfTheWeek}Open`],
+                          item[`${DayOfTheWeek}Closed`], hour_only)}
+                      </Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -221,15 +228,14 @@ export default class LocationsList extends Component {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
+          {/* Study room booking button */}
           <View style={styles.floatingButton}>
             <TouchableOpacity
               style={[styles.boxWithShadow, styles.studyRoom]}
               onPress={() => navigate('Booking')}
             >
-              <Text
-                style={styles.titleText}
-              >
-              Book a study room
+              <Text style={styles.titleText}>
+                Book a study room
               </Text>
             </TouchableOpacity>
           </View>
@@ -241,6 +247,14 @@ export default class LocationsList extends Component {
 /* Get width of window */
 const width = Dimensions.get('window').width;
 
+
+/* Standardized text used throughout code */
+const text = {
+  fontFamily: 'System',
+  letterSpacing: 1.92,
+}
+
+/* Styles for general screen */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -253,45 +267,6 @@ const styles = StyleSheet.create({
   scroll_style: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  Section_Header: {
-    fontSize: 24,
-    backgroundColor: '#4F87EC',
-    color: '#F5FCFF',
-    padding: 5,
-    textAlign: 'center',
-    width,
-  },
-  card: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  information: {
-    flexDirection: 'column',
-    width: width / 2 - 15,
-  },
-  Name: {
-    fontSize: 16,
-    color: '#000',
-    textAlign: 'center',
-  },
-  Closed: {
-    fontSize: 13,
-    color: 'red',
-    textAlign: 'center'
-  },
-  Open: {
-    fontSize: 13,
-    color: 'green',
-    textAlign: 'center'
-  },
-  Activity_Level: {
-    fontSize: 13,
-    fontStyle: 'italic',
-    textAlign: 'center',
   },
   floatingButton: {
     position: 'absolute',
@@ -317,6 +292,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   titleText: {
+    ...text,
     fontFamily: 'System',
     fontSize: 18,
     fontWeight: '500',
@@ -326,4 +302,67 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 5
   },
+  Section_Header: {
+    ...text,
+    fontSize: 24,
+    backgroundColor: '#4F87EC',
+    color: '#F5FCFF',
+    paddingTop: 10,
+    paddingBottom: 10,
+    textAlign: 'center',
+    width: width,
+  },
 });
+
+/* Styles for individual list elements */
+const list_element = StyleSheet.create({
+  card: {
+    marginTop: 5,
+    marginBottom: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width:width,
+    backgroundColor: 'white',
+  },
+  information: {  //child of card
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    flex:2,
+  },
+  imgContainer: { //child of card, holds image
+    flex:1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  img:{
+    width: 75,
+    height: 75,
+    borderRadius: 75/2
+  },
+  Name: { //name of location
+    ...text,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+    paddingBottom: 10,
+  },
+  Closed: {
+    ...text,
+    fontSize: 10,
+    color: 'red',
+  },
+  Open: {
+    ...text,
+    fontSize: 10,
+    color: 'green',
+  },
+  Activity_Level: {
+    fontSize: 12,
+    color: '#5e5b59',
+    paddingBottom: 3,
+  },
+
+})
