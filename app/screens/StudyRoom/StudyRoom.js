@@ -3,6 +3,8 @@ import {
   Text, View, TouchableOpacity, StyleSheet, FlatList
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
+import { changeTime, changeDate } from '../../Actions/actions';
 import StudyRoomHeader from '../../components/StudyRoomHeader';
 
 const availableRooms = [
@@ -163,4 +165,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(StudyRoomList);
+const mapStateToProps = state => ({
+  time: state.study.time,
+  date: state.study.date
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeTime: (time) => {
+    dispatch(changeTime(time));
+  },
+  changeDate: (date) => {
+    dispatch(changeDate(date));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomList);
+

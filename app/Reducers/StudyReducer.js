@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const StudyReducer = (state = initialState, action) => {
-  // console.log(state)
+  console.log(state);
   switch (action.type) {
     case CHANGE_TIME:
       return {
@@ -18,7 +18,7 @@ const StudyReducer = (state = initialState, action) => {
     case CHANGE_DATE:
       return {
         ...state,
-        day: action.day
+        date: action.date
       };
     default:
       return state;

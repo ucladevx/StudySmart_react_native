@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import { connect } from 'react-redux';
+import { changeTime, changeDate } from '../../Actions/actions';
+import { withNavigation } from 'react-navigation';
+
 
 class Booking extends Component {
   constructor(props) {
@@ -11,10 +14,11 @@ class Booking extends Component {
     this.state = {
       datePickerVisible: false,
       timePickerVisible: false,
-      date: 'Choose a date!',
-      time: 'Choose a time!',
+      date: this.props.date != '' ? this.props.date : 'Choose a date!',
+      time: this.props.time != '' ? this.props.time : 'Choose a time!',
     };
     this.date = new Date();
+    this.minDate = new Date();
     this.date.setDate(this.date.getDate() + 7);
     this.showDatePicker = this.showDatePicker.bind(this);
     this.showTimePicker = this.showTimePicker.bind(this);
@@ -44,6 +48,7 @@ class Booking extends Component {
         time: styledTime + last2ndChar + lastChar,
         timePickerVisible: !this.state.timePickerVisible
       });
+      this.props.changeTime(styledTime + last2ndChar + lastChar);
     } else {
       var chosen = setting;
       var dd = chosen.getDate();
@@ -60,11 +65,12 @@ class Booking extends Component {
         date: chosen,
         datePickerVisible: !this.state.datePickerVisible
       });
+      this.props.changeDate(chosen);
     }
   }
 
   handleSearch() {
-    this.props.navigation.navigate('StudyRoomTime', { date: this.state.date, time: this.state.time });
+    this.props.navigation.navigate('StudyRoomList');
   }
 
   render() {
@@ -84,6 +90,7 @@ class Booking extends Component {
           onConfirm={date => this.handleConfirm(date, 'date')}
           onCancel={this.showDatePicker}
           maximumDate={this.date}
+          minimumDate={this.minDate}
         />
         <Text style={styles.promptText}>What time?</Text>
         <TouchableOpacity
@@ -101,6 +108,7 @@ class Booking extends Component {
           onCancel={this.showTimePicker}
           is24Hour={false}
           minuteInterval={30}
+          titleIOS="Pick a time"
         />
         <TouchableOpacity style={styles.searchButton} onPress={() => this.handleSearch()}>
           <Text style={styles.searchText}> Search! </Text>
@@ -174,4 +182,18 @@ const styles = StyleSheet.create({
   },
 
 });
-export default withNavigation(Booking);
+const mapStateToProps = state => ({
+  time: state.study.time,
+  date: state.study.date
+});
+
+const mapDispatchToProps = dispatch => ({
+  changeTime: (time) => {
+    dispatch(changeTime(time));
+  },
+  changeDate: (date) => {
+    dispatch(changeDate(date));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Booking);
