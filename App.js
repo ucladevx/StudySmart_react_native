@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import { StackNavigator } from 'react-navigation';
+import configureStore from './store';
 import Locations from './app/screens/Locations';
 import LocationsDetailed from './app/screens/LocationsDetailed';
 import LoginPage from './app/screens/LoginPage';
@@ -25,12 +27,15 @@ const LocationStack = StackNavigator({
   initialRouteName: 'List',
 });
 
+const store = configureStore();
 
 type Props = {};
 export default class App extends Component<Props> {
   render() {
     return (
-      <LocationStack />
+      <Provider store={store}>
+        <LocationStack />
+      </Provider>
     );
   }
 }

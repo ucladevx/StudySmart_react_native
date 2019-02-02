@@ -3,8 +3,11 @@ import {
   StyleSheet, Text, View, TouchableOpacity
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import Search from './Search';
+import Sorter from './Sorter';
+
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
@@ -14,6 +17,8 @@ class StudyRoomHeader extends Component {
       Location: '',
     };
     this.setInputState = this.setInputState.bind(this);
+    this.goBack = this.goBack.bind(this);
+    this.showResults = this.showResults.bind(this);
   }
 
   // Shirly's code from GlobalSearchBar.js
@@ -22,6 +27,9 @@ class StudyRoomHeader extends Component {
   }
 
   // Shirly's code from GlobalSearchBar.js
+  goBack() {
+    this.props.navigation.navigate('Booking');
+  }
 
   handleSelection(item) {
     const { navigate } = this.props.navigation;
@@ -45,12 +53,14 @@ class StudyRoomHeader extends Component {
     this.processSelection(this.info);
   }
 
-  processPosts(e) {
-    const { exam, professor, changeCategory, storeResources, navigation } = this.props;
+  processSelection(e) {
+    /* const {
+      exam, professor, changeCategory, storeResources, navigation
+    } = this.props;
     const examCheck = exam.length > 0;
     const professorCheck = professor.length > 0;
     let i;
-    let searchedPosts = [];
+    const searchedPosts = [];
     const upperClass = e.toUpperCase();
     for (i = 0; i < Posts.length; i++) {
       if (Posts[i].courseName.toUpperCase() === upperClass) {
@@ -79,16 +89,26 @@ class StudyRoomHeader extends Component {
     navigation.dispatch(navigateAction);
     changeCategory('Tests');
     storeResources(searchedPosts);
+    */
   }
 
   render() {
     const { navigate } = this.props.navigation;
-
+    const { date, time } = this.props;
     return (
       <View style={styles.bar}>
+        <View style={styles.leftView}>
+          <TouchableOpacity
+            style={styles.buttonLeft}
+            onPress={() => navigate('List')}
+          >
+            <AntIcon name="filter" color="white" size={30} />
+          </TouchableOpacity>
+        </View>
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
-          defaultValue={this.state.Location}
+          defaultValue={date != '' || time != '' ? `${date} ${time}` : ''}
+          onFocus={this.goBack}
           onChangeText={e => this.setInputState(e)}
           style={styles.searchContainer}
           inputContainerStyle={styles.inputContainer}
@@ -96,12 +116,19 @@ class StudyRoomHeader extends Component {
             <TouchableOpacity onPress={() => this.handleSelection(item)} />
           )}
         />
-        <TouchableOpacity
-          style={styles.buttonRight}
-          onPress={() => this.showSorter()}
-        >
-          <AntIcon name="filter" color="white" size={30} />
-        </TouchableOpacity>
+        <View style={styles.rightView}>
+          <TouchableOpacity
+            style={styles.buttonRight}
+            onPress={() => this.showSorter()}
+          >
+            <AntIcon name="filter" color="white" size={30} />
+          </TouchableOpacity>
+          { this.state.visible ? (
+            <Sorter
+              showResults={this.showResults}
+            />
+          ) : null }
+        </View>
       </View>
 
     );
@@ -110,27 +137,37 @@ class StudyRoomHeader extends Component {
 
 const styles = StyleSheet.create({
   buttonLeft: {
-    marginTop: 15,
-    marginLeft: 30
+    marginLeft: 15
 
   },
   buttonRight: {
-    marginTop: 15,
-    marginRight: 30
-
+    marginRight: 15
+  },
+  rightView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: 40
+  },
+  leftView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: 40
   },
   bar: {
     height: 80,
     paddingTop: 10,
     backgroundColor: '#4F87EC',
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
     width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center'
+
   },
   searchContainer: {
     flex: 1,
-    zIndex: 5
+    zIndex: 5,
+    marginLeft: '5%'
   },
   inputContainer: {
     width: 250,
@@ -148,4 +185,10 @@ const styles = StyleSheet.create({
 
 
 });
-export default withNavigation(StudyRoomHeader);
+const mapStateToProps = state => ({
+
+  time: state.study.time,
+  date: state.study.date
+});
+
+export default connect(mapStateToProps)(StudyRoomHeader);

@@ -5,15 +5,22 @@ import {
   StyleSheet, Text, View, FlatList, TouchableOpacity, Modal
 } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { connect } from 'react-redux';
 // import { changeExam, changeProfessor } from '../Actions/actions';
 
 class Sorter extends Component {
-  constructor() {
+  constructor(props) {
     super(props);
     this.state = {
       selectedDurations: 0,
       selectedLocation: 0,
     };
+    this.availableLocations = this.availableLocations.bind(this);
+  }
+
+  availableLocations() {
+    const locations = [{ name: 'North Campus' }, { name: 'South Campus' }, { name: 'Hill' }, { name: 'Libaries Only' },];
+    return locations;
   }
 
   setDurations(e) {
@@ -30,7 +37,7 @@ class Sorter extends Component {
     // this.props.changeProfessor(e);
   }
 
-  //we can make sorter reusable for resources and locations but I am lazy rn
+  // we can make sorter reusable for resources and locations but I am lazy rn
 
   renderLocations(item) {
     return (
@@ -63,14 +70,14 @@ class Sorter extends Component {
               <View style={styles.containerColumn}>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setTest('1 hr')}
+                  onPress={() => this.setDurations('1 hr')}
                 >
                   <MaterialCommunityIcon color={this.state.selectedDurations === '1 hr' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
                   <Text style={this.state.selectedDurations === '1 hr' ? styles.categoryTextSelected : styles.categoryText}> 1 hr </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setTest('Quiz')}
+                  onPress={() => this.setDurations('2 hrs')}
                 >
                   <MaterialCommunityIcon color={this.state.selectedDurations === '2 hrs' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
                   <Text style={this.state.selectedDurations === '2 hrs' ? styles.categoryTextSelected : styles.categoryText}> 2 hrs </Text>
@@ -79,14 +86,14 @@ class Sorter extends Component {
               <View style={[styles.containerColumn, { marginLeft: '10%' }]}>
                 <TouchableOpacity
                   style={[styles.containerRow]}
-                  onPress={() => this.setTest('Midterm 2')}
+                  onPress={() => this.setDurations('3 hrs')}
                 >
                   <MaterialCommunityIcon color={this.state.selectedDurations === '3 hrs' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
                   <Text style={this.state.selectedDurations === '3 hrs' ? styles.categoryTextSelected : styles.categoryText}> 3 hrs </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setTest('Final')}
+                  onPress={() => this.setDurations('4 hrs')}
                 >
                   <MaterialCommunityIcon color={this.state.selectedDurations === '4 hrs' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
                   <Text style={this.state.selectedDurations === '4 hrs' ? styles.categoryTextSelected : styles.categoryText}> 4 hrs </Text>
@@ -94,20 +101,22 @@ class Sorter extends Component {
               </View>
             </View>
             <Text style={styles.titleText}> Locations </Text>
+            <View style={styles.list}>
             <FlatList
-              data={this.availableLocations}
-              extraData={this.availableLocations}
-              renderItem={({ item }) => this._renderLocations(item)}
+              data={this.availableLocations()}
+              extraData={this.availableLocations()}
+              renderItem={({ item }) => this.renderLocations(item)}
               keyExtractor={(item, index) => index.toString()}
+              style={{flex: 1}}
             />
+            </View>
+            <View style={styles.divider} />
+            <TouchableOpacity
+              onPress={() => this.props.showResults()}
+            >
+              <Text style={styles.titleText}> Show Results </Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.divider} />
-          <TouchableOpacity
-            onPress={() => this.props.showResults()}
-          >
-            <Text style={styles.titleText}> Show Results </Text>
-          </TouchableOpacity>
-
         </View>
       </Modal>
     );
@@ -199,26 +208,19 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5
   },
-  professorCell: {
+  locationCell: {
     alignItems: 'center',
     padding: 5
+  },
+  list: {
+    height: '45%'
   }
 });
 const mapStateToProps = state => ({
-  category: state.resources.category,
-  class: state.resources.class,
-  resources: state.resources.resources,
-  professor: state.resources.professor,
-  exam: state.resources.exam
+
+  time: state.study.time,
+  date: state.study.date
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeExam: (exam) => {
-    dispatch(changeExam(exam));
-  },
-  changeProfessor: (professor) => {
-    dispatch(changeProfessor(professor));
-  }
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sorter);
+export default connect(mapStateToProps)(Sorter);
