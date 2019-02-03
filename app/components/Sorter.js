@@ -19,7 +19,7 @@ class Sorter extends Component {
   }
 
   availableLocations() {
-    const locations = [{ name: 'North Campus' }, { name: 'South Campus' }, { name: 'Hill' }, { name: 'Libaries Only' },];
+    const locations = [{ name: 'North Campus' }, { name: 'South Campus' }, { name: 'Hill' }, { name: 'Libaries Only' }, ];
     return locations;
   }
 
@@ -64,8 +64,8 @@ class Sorter extends Component {
         <View style={[styles.modalContainer, styles.boxWithShadow]}>
           <Text style={styles.sortText}> Sort </Text>
           <View style={styles.divider} />
+          <Text style={styles.titleText}> Durations </Text>
           <View style={styles.left_text}>
-            <Text style={styles.titleText}> Exams </Text>
             <View style={styles.containerRow}>
               <View style={styles.containerColumn}>
                 <TouchableOpacity
@@ -100,23 +100,23 @@ class Sorter extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-            <Text style={styles.titleText}> Locations </Text>
-            <View style={styles.list}>
+          </View>
+          <Text style={styles.titleText}> Locations </Text>
+          <View style={styles.list}>
             <FlatList
               data={this.availableLocations()}
               extraData={this.availableLocations()}
               renderItem={({ item }) => this.renderLocations(item)}
               keyExtractor={(item, index) => index.toString()}
-              style={{flex: 1}}
+              style={{ flex: 1, backgroundColor: 'transparent' }}
             />
-            </View>
-            <View style={styles.divider} />
-            <TouchableOpacity
-              onPress={() => this.props.showResults()}
-            >
-              <Text style={styles.titleText}> Show Results </Text>
-            </TouchableOpacity>
           </View>
+          <View style={styles.divider} />
+          <TouchableOpacity
+            onPress={() => this.props.showResults()}
+          >
+            <Text style={styles.titleText}> Show Results </Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     );
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e0e0e0',
     width: '95%',
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 2
   },
   bigText: {
     fontSize: 16,

@@ -5,6 +5,7 @@ import {
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
+import Ionicon from 'react-native-vector-icons/Ionicons'
 import Search from './Search';
 import Sorter from './Sorter';
 
@@ -102,7 +103,7 @@ class StudyRoomHeader extends Component {
             style={styles.buttonLeft}
             onPress={() => navigate('List')}
           >
-            <AntIcon name="filter" color="white" size={30} />
+            <Ionicon name="ios-list" color="white" size={30} />
           </TouchableOpacity>
         </View>
         <Search
