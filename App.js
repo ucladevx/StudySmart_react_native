@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { StackNavigator } from 'react-navigation';
-import configureStore from './store';
 import Locations from './app/screens/Locations';
+import configureStore from './store';
 import LocationsDetailed from './app/screens/LocationsDetailed';
 import LoginPage from './app/screens/LoginPage';
 import LocationsList from './app/screens/LocationsList';

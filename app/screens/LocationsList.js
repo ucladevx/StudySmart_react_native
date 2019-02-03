@@ -8,52 +8,52 @@ import ViewContainer from '../components/ViewContainer';
 
 const Library_Data = [
   {
-    Name: 'Arts', Activity_Level: 4, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.07432', Longitude: '-118.4413624', MondayOpen: 8, MondayClosed: 23, TuesdayOpen: 0, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Arts', activityLevel: 4, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.07432', Longitude: '-118.4413624', MondayOpen: 8, MondayClosed: 23, TuesdayOpen: 0, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Powell', Activity_Level: 95, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.071613', Longitude: '-118.442181', MondayOpen: -1, MondayClosed: -1, TuesdayOpen: 9, TuesdayClosed: 24, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Powell', activityLevel: 95, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.071613', Longitude: '-118.442181', MondayOpen: -1, MondayClosed: -1, TuesdayOpen: 9, TuesdayClosed: 24, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Charles E Young Research', Activity_Level: 88, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.074969', Longitude: '-118.441466', MondayOpen: 4, MondayClosed: 19, TuesdayOpen: -1, TuesdayClosed: -1, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Charles E Young Research', activityLevel: 88, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.074969', Longitude: '-118.441466', MondayOpen: 4, MondayClosed: 19, TuesdayOpen: -1, TuesdayClosed: -1, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Science and Engineering - Boelter', Activity_Level: 62, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.068987', Longitude: '-118.442659', MondayOpen: 8, MondayClosed: 10, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Science and Engineering - Boelter', activityLevel: 62, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.068987', Longitude: '-118.442659', MondayOpen: 8, MondayClosed: 10, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Law', Activity_Level: 12, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0729138', Longitude: '-118.4384435', MondayOpen: 0, MondayClosed: 0, TuesdayOpen: 0, TuesdayClosed: 0, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Law', activityLevel: 12, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0729138', Longitude: '-118.4384435', MondayOpen: 0, MondayClosed: 0, TuesdayOpen: 0, TuesdayClosed: 0, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
 ];
 
 const StudyRoom_Data = [
   {
-    Name: 'Rieber', Activity_Level: 4, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0716799', Longitude: '-118.4536875', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Rieber', activityLevel: 4, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0716799', Longitude: '-118.4536875', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Hedrick', Activity_Level: 95, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0731836', Longitude: '-118.4545039', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Hedrick', activityLevel: 95, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0731836', Longitude: '-118.4545039', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Hedrick Study', Activity_Level: 88, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0730785', Longitude: '-118.4542834', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Hedrick Study', activityLevel: 88, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0730785', Longitude: '-118.4542834', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Sproul', Activity_Level: 62, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0724491', Longitude: '-118.4523096', MondayOpen: 13, MondayClosed: 16, TuesdayOpen: 13, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Sproul', activityLevel: 62, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0724491', Longitude: '-118.4523096', MondayOpen: 13, MondayClosed: 16, TuesdayOpen: 13, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
 ];
 
 const InterestingLocations_Data = [
   {
-    Name: 'Boelter Roof', Activity_Level: 1, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0692143', Longitude: '-118.445385', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Boelter Roof', activityLevel: 1, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0692143', Longitude: '-118.445385', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: 'Botanical Gardens', Activity_Level: 7, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.066584', Longitude: '-118.4437107', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Botanical Gardens', activityLevel: 7, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.066584', Longitude: '-118.4437107', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
 ];
 
 const EatingPlaces_Data = [
   {
-    Name: 'Panda Express', Activity_Level: 1, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0692143', Longitude: '-118.445385', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: 'Panda Express', activityLevel: 1, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0692143', Longitude: '-118.445385', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
   {
-    Name: "Denny's", Activity_Level: 7, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.066584', Longitude: '-118.4437107', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
+    Name: "Denny's", activityLevel: 7, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.066584', Longitude: '-118.4437107', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
   },
 ];
 
@@ -183,11 +183,12 @@ export default class LocationsList extends Component {
       const prnDt = current.toLocaleTimeString('en-us', options);
       const DayOfTheWeek = prnDt.substring(0, prnDt.indexOf(' '));
 
-      // get the hour string, determine if open or not
+
       return (
         <ViewContainer>
           <View style={styles.container}>
             <SectionList
+              bounces={false}
               contentContainerStyle={styles.scroll_style}
               sections={[
                 { title: 'Libraries', data: this.data.Libraries },
@@ -201,19 +202,29 @@ export default class LocationsList extends Component {
                   navigate('Detailed', { item });
                 }}
                 >
-                  <View style={styles.card}>
-                    <Image
-                      style={{ width: 120, height: 90, marginBottom: 15 }}
-                      source={{ uri: item.Image_URL }}
-                    />
-                    <View style={styles.information}>
-                      <Text style={styles.Name}>{item.Name}</Text>
-                      {/* NEED TO CHANGE TO A PROGRESS BAR  */}
-                      <Text style={styles.Activity_Level}>
-                        {item.Activity_Level}
-  %
+                  {/* Individual list elements */}
+                  <View style={listElement.card}>
+                    <View style={listElement.imgContainer}>
+                      <Image
+                        style={listElement.img}
+                        source={{ uri: item.Image_URL }}
+                      />
+                    </View>
+                    <View style={listElement.information}>
+                      <Text style={listElement.Name}>
+                        {item.Name}
                       </Text>
-                      <Text style={this._currentOpenorClose(item[`${DayOfTheWeek}Open`], item[`${DayOfTheWeek}Closed`], hour_only) === 'CLOSED' ? styles.Closed : styles.Open}>{this._determineHours(item[`${DayOfTheWeek}Open`], item[`${DayOfTheWeek}Closed`], hour_only)}</Text>
+                      {/* NEED TO CHANGE TO A PROGRESS BAR  */}
+                      <Text style={listElement.activityLevel}>
+                        {item.activityLevel}
+                        %
+                      </Text>
+                      <Text
+                        style={this._currentOpenorClose(item[`${DayOfTheWeek}Open`], item[`${DayOfTheWeek}Closed`], hour_only) === 'CLOSED' ? listElement.Closed : listElement.Open}
+                      >
+                        {this._determineHours(item[`${DayOfTheWeek}Open`],
+                          item[`${DayOfTheWeek}Closed`], hour_only)}
+                      </Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -221,15 +232,14 @@ export default class LocationsList extends Component {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
+          {/* Study room booking button */}
           <View style={styles.floatingButton}>
             <TouchableOpacity
               style={[styles.boxWithShadow, styles.studyRoom]}
               onPress={() => navigate('Booking')}
             >
-              <Text
-                style={styles.titleText}
-              >
-              Book a study room
+              <Text style={styles.titleText}>
+                Book a study room
               </Text>
             </TouchableOpacity>
           </View>
@@ -241,10 +251,18 @@ export default class LocationsList extends Component {
 /* Get width of window */
 const width = Dimensions.get('window').width;
 
+
+/* Standardized text used throughout code */
+const text = {
+  fontFamily: 'System',
+  letterSpacing: 1.92,
+};
+
+/* Styles for general screen */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 100,
+    top: 0,
     bottom: 0,
     position: 'absolute',
     zIndex: 2
@@ -253,45 +271,6 @@ const styles = StyleSheet.create({
   scroll_style: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  Section_Header: {
-    fontSize: 24,
-    backgroundColor: '#4F87EC',
-    color: '#F5FCFF',
-    padding: 5,
-    textAlign: 'center',
-    width,
-  },
-  card: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  information: {
-    flexDirection: 'column',
-    width: width / 2 - 15,
-  },
-  Name: {
-    fontSize: 16,
-    color: '#000',
-    textAlign: 'center',
-  },
-  Closed: {
-    fontSize: 13,
-    color: 'red',
-    textAlign: 'center'
-  },
-  Open: {
-    fontSize: 13,
-    color: 'green',
-    textAlign: 'center'
-  },
-  Activity_Level: {
-    fontSize: 13,
-    fontStyle: 'italic',
-    textAlign: 'center',
   },
   floatingButton: {
     position: 'absolute',
@@ -317,6 +296,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   titleText: {
+    ...text,
     fontFamily: 'System',
     fontSize: 18,
     fontWeight: '500',
@@ -326,4 +306,67 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 5
   },
+  Section_Header: {
+    ...text,
+    fontSize: 24,
+    backgroundColor: '#4F87EC',
+    color: '#F5FCFF',
+    paddingTop: 10,
+    paddingBottom: 10,
+    textAlign: 'center',
+    width,
+  },
+});
+
+/* Styles for individual list elements */
+const listElement = StyleSheet.create({
+  card: {
+    marginTop: 5,
+    marginBottom: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    width,
+    backgroundColor: 'white',
+  },
+  information: { // child of card
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    flex: 2,
+  },
+  imgContainer: { // child of card, holds image
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  img: {
+    width: 75,
+    height: 75,
+    borderRadius: 75 / 2
+  },
+  Name: { // name of location
+    ...text,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
+    paddingBottom: 10,
+  },
+  Closed: {
+    ...text,
+    fontSize: 10,
+    color: 'red',
+  },
+  Open: {
+    ...text,
+    fontSize: 10,
+    color: 'green',
+  },
+  activityLevel: {
+    fontSize: 12,
+    color: '#5e5b59',
+    paddingBottom: 3,
+  },
+
 });

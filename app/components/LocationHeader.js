@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet, Text, View, TouchableOpacity
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from './Search';
@@ -107,25 +109,27 @@ class LocationHeader extends Component {
 
     return (
       <View style={styles.bar}>
-        <TouchableOpacity
-          style={styles.buttonLeft}
-          onPress={() => {
-            navigate('List');
-          }}
-        >
-          {currentRouteKey == 'Detailed'
+        <View style={styles.leftView}>
+          <TouchableOpacity
+            style={styles.buttonLeft}
+            onPress={() => {
+              navigate('List');
+            }}
+          >
+            {currentRouteKey === 'Detailed'
                 && <Ionicon color="white" name="ios-arrow-back" size={25} backgroundColor="#4F87EC" />
                 }
-        </TouchableOpacity>
-        { (currentRouteKey == 'List')
+          </TouchableOpacity>
+        </View>
+        { (currentRouteKey === 'List')
                 // Code from Shirly
                 && (
                 <Search
                   data={locations} // this should be an API call or huge list eventually
                   defaultValue={this.state.Location}
                   onChangeText={e => this.setInputState(e)}
-                  containerStyle={{ backgroundColor: 'white', marginTop: 20, }}
-                  inputContainerStyle={{ width: 250 }}
+                  inputContainerStyle={styles.inputContainer}
+                  style={styles.searchContainer}
                   renderItem={item => (
                     <TouchableOpacity onPress={() => this.handleSelection(item)}>
                       <Text>{item.item.Name}</Text>
@@ -135,14 +139,16 @@ class LocationHeader extends Component {
                 ) }
         { currentRouteKey != 'Detailed'
                 && (
-                <TouchableOpacity
-                  style={styles.buttonRight}
-                  onPress={() => {
-                    navigate(right_navigate);
-                  }}
-                >
-                  {right_icon}
-                </TouchableOpacity>
+                  <View style={styles.rightView}>
+                    <TouchableOpacity
+                      style={styles.buttonRight}
+                      onPress={() => {
+                        navigate(right_navigate);
+                      }}
+                    >
+                      {right_icon}
+                    </TouchableOpacity>
+                  </View>
                 ) }
       </View>
 
@@ -152,27 +158,48 @@ class LocationHeader extends Component {
 
 const styles = StyleSheet.create({
   buttonLeft: {
-    marginTop: 15,
-    marginLeft: 30
-
+    marginLeft: 15
   },
   buttonRight: {
-    marginTop: 15,
-    marginRight: 30
-
+    marginRight: 15
+  },
+  rightView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    width: 40
+  },
+  leftView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    width: 40
   },
   bar: {
-    height: 100,
-    paddingTop: 20,
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    height: 80,
+    paddingTop: 10,
     backgroundColor: '#4F87EC',
     flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
-    position: 'absolute',
     width: '100%',
-    zIndex: 10
-
+  },
+  searchContainer: {
+    flex: 1,
+    zIndex: 5,
+    marginLeft: '5%'
+  },
+  inputContainer: {
+    width: 250,
+    height: 30,
+    backgroundColor: 'white',
+    borderRadius: 12,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: {
+      width: 2,
+      height: 2
+    },
+    shadowRadius: 4,
+    shadowOpacity: 1
   }
 
 

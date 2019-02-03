@@ -15,29 +15,16 @@ class StudyRoomHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Location: '',
+      visible: false
     };
-    this.setInputState = this.setInputState.bind(this);
     this.goBack = this.goBack.bind(this);
     this.showResults = this.showResults.bind(this);
   }
 
-  // Shirly's code from GlobalSearchBar.js
-  setInputState(e) {
-    this.setState({ Location: e });
-  }
 
   // Shirly's code from GlobalSearchBar.js
   goBack() {
     this.props.navigation.navigate('Booking');
-  }
-
-  handleSelection(item) {
-    const { navigate } = this.props.navigation;
-    this.setState({
-      Location: '',
-      visible: false
-    });
   }
 
   showSorter() {
@@ -96,6 +83,7 @@ class StudyRoomHeader extends Component {
   render() {
     const { navigate } = this.props.navigation;
     const { date, time } = this.props;
+    const { visible } = this.state;
     return (
       <View style={styles.bar}>
         <View style={styles.leftView}>
@@ -108,13 +96,13 @@ class StudyRoomHeader extends Component {
         </View>
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
-          defaultValue={date != '' || time != '' ? `${date} ${time}` : ''}
+          defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
           onFocus={this.goBack}
           onChangeText={e => this.setInputState(e)}
           style={styles.searchContainer}
           inputContainerStyle={styles.inputContainer}
           renderItem={item => (
-            <TouchableOpacity onPress={() => this.handleSelection(item)} />
+            <TouchableOpacity onPress={() => null} />
           )}
         />
         <View style={styles.rightView}>
@@ -124,7 +112,7 @@ class StudyRoomHeader extends Component {
           >
             <AntIcon name="filter" color="white" size={30} />
           </TouchableOpacity>
-          { this.state.visible ? (
+          { visible ? (
             <Sorter
               showResults={this.showResults}
             />
