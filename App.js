@@ -24,7 +24,7 @@ const LocationStack = StackNavigator({
 {
 // For now, use this to toggle between List view and Map view. We will eventually add a toggle button
   // initialRouteName: "List"
-  initialRouteName: 'List',
+  initialRouteName: 'Login',
 });
 
 const store = configureStore();
