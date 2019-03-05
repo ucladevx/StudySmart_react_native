@@ -2,20 +2,104 @@ import React, { Component } from 'react';
 import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, Modal
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { connect } from 'react-redux';
 
 
 class StudyRoomModal extends Component {
-  render() { 
-      return (
-    <Modal style={styles.modal}
-    transparent
-    animationType="fade"
-    >
-      <View style={styles.modalContainer} />
+  constructor(props) {
+    super(props);
+    this.state = {
+      room: '',
+    };
+  }
 
-    </Modal>
-      )
+  availableDurations() {
+    return [{ name: 1 }, { name: 2 }, { name: 3 }];
+  }
+
+  availableRooms() {
+    return [{ name: 310 }, { name: 210 }, { name: 331 }];
+  }
+
+  renderList(item) {
+    const { room } = this.state;
+    return (
+      <TouchableOpacity
+        style={styles.listCell}
+        onPress={() => this.setState({ room: item.name })}
+      >
+        <Text style={room === item.name ? styles.categoryTextSelected : styles.categoryText}>
+          {' '}
+          {item.name}
+          {' '}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
+  renderDurationList(item) {
+    const { duration } = this.props;
+    return (
+      <TouchableOpacity
+        style={styles.listCell}
+        onPress={() => this.setState({ room: item.name })}
+        disabled={duration > 0}
+      >
+        <Text style={duration === item.name ? styles.categoryTextSelected : styles.categoryText}>
+          {' '}
+          {item.name}
+          {' '}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+
+
+  render() {
+    const { handleModal, handleReserve } = this.props;
+    return (
+      <Modal
+        style={styles.modal}
+        transparent
+        animationType="fade"
+      >
+        <View style={[styles.modalContainer, styles.boxWithShadow]}>
+          <Text style={styles.titleText}> Available Durations </Text>
+          <View style={styles.list}>
+            <FlatList
+              data={this.availableDurations()}
+              extraData={this.availableDurations()}
+              renderItem={({ item }) => this.renderDurationList(item)}
+              keyExtractor={(item, index) => index.toString()}
+              style={{ flex: 1, backgroundColor: 'transparent' }}
+            />
+          </View>
+          <Text style={styles.titleText}> Available Rooms </Text>
+          <View style={styles.list}>
+            <FlatList
+              data={this.availableRooms()}
+              extraData={this.availableRooms()}
+              renderItem={({ item }) => this.renderList(item)}
+              keyExtractor={(item, index) => index.toString()}
+              style={{ flex: 1, backgroundColor: 'transparent' }}
+            />
+          </View>
+          <View style={styles.containerRow}>
+            <TouchableOpacity
+              onPress={() => handleReserve('Reserve')}
+            >
+              <Text style={styles.titleText}> Reserve </Text>
+            </TouchableOpacity>
+            <View style={styles.verticalDivider} />
+            <TouchableOpacity
+              onPress={() => handleModal(null)}
+            >
+              <Text style={styles.titleText}> Cancel </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    );
   }
 }
 
@@ -37,8 +121,76 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  titleText: {
+    fontFamily: 'System',
+    fontSize: 20,
+    fontWeight: '600',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: '#4a4a4a',
+    padding: 5
+  },
+  divider: {
+    height: 2,
+    backgroundColor: '#e0e0e0',
+    width: '95%',
+    marginTop: 5,
+    marginBottom: 2
+  },
+  verticalDivider: {
+    height: 30,
+    backgroundColor: '#e0e0e0',
+    width: 2,
+    marginBottom: 2,
+    marginRight: '10%',
+    marginLeft: '10%',
+  },
+  containerRow: {
+    flex: 0,
+    flexDirection: 'row',
+    marginBottom: 5,
+    marginTop: 5,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  boxWithShadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 5
+  },
+  list: {
+    height: '35%'
+  },
+  listCell: {
+    alignItems: 'center',
+    padding: 5
+  },
+  categoryText: {
+    fontFamily: 'System',
+    fontSize: 18,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: 'gray',
+  },
+  categoryTextSelected: {
+    fontFamily: 'System',
+    fontSize: 18,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: '#4F87EC',
+  },
 
 
 });
+const mapStateToProps = state => ({
+  time: state.study.time,
+  date: state.study.date,
+  duration: state.study.duration,
+});
 
-export default withNavigation(StudyRoomModal);
+
+export default connect(mapStateToProps)(StudyRoomModal);

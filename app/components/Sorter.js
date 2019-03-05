@@ -4,48 +4,44 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import {
   StyleSheet, Text, View, FlatList, TouchableOpacity, Modal
 } from 'react-native';
-import { CheckBox } from 'react-native-elements';
 import { connect } from 'react-redux';
-// import { changeExam, changeProfessor } from '../Actions/actions';
+import { changeDuration } from '../Actions/actions';
 
 class Sorter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedDurations: 0,
       selectedLocation: 0,
     };
     this.availableLocations = this.availableLocations.bind(this);
   }
 
   availableLocations() {
-    const locations = [{ name: 'North Campus' }, { name: 'South Campus' }, { name: 'Hill' }, { name: 'Libaries Only' }, ];
+    const locations = [{ name: 'North Campus' }, { name: 'South Campus' }, { name: 'Hill' }, { name: 'Libaries Only' }];
     return locations;
   }
 
-  setDurations(e) {
-    this.setState({
-      selectedDurations: e
-    });
-    // this.props.changeExam(e);
+  setDuration(e) {
+    const { changeDuration: changeDurationAction } = this.props;
+    changeDurationAction(e);
   }
 
   setLocation(e) {
     this.setState({
       selectedLocation: e
     });
-    // this.props.changeProfessor(e);
   }
 
   // we can make sorter reusable for resources and locations but I am lazy rn
 
   renderLocations(item) {
+    const { selectedLocation } = this.state;
     return (
       <TouchableOpacity
         style={styles.locationCell}
         onPress={() => this.setLocation(item.name)}
       >
-        <Text style={this.state.selectedLocation === item.name ? styles.categoryTextSelected : styles.categoryText}>
+        <Text style={selectedLocation === item.name ? styles.categoryTextSelected : styles.categoryText}>
           {' '}
           {item.name}
           {' '}
@@ -55,6 +51,7 @@ class Sorter extends Component {
   }
 
   render() {
+    const { duration, showResults } = this.props;
     return (
       <Modal
         animationType="fade"
@@ -70,33 +67,33 @@ class Sorter extends Component {
               <View style={styles.containerColumn}>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setDurations('1 hr')}
+                  onPress={() => this.setDuration(1)}
                 >
-                  <MaterialCommunityIcon color={this.state.selectedDurations === '1 hr' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={this.state.selectedDurations === '1 hr' ? styles.categoryTextSelected : styles.categoryText}> 1 hr </Text>
+                  <MaterialCommunityIcon color={duration === 1 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 1 ? styles.categoryTextSelected : styles.categoryText}> 1 hr </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setDurations('2 hrs')}
+                  onPress={() => this.setDuration(2)}
                 >
-                  <MaterialCommunityIcon color={this.state.selectedDurations === '2 hrs' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={this.state.selectedDurations === '2 hrs' ? styles.categoryTextSelected : styles.categoryText}> 2 hrs </Text>
+                  <MaterialCommunityIcon color={duration === 2 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 2 ? styles.categoryTextSelected : styles.categoryText}> 2 hrs </Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.containerColumn, { marginLeft: '10%' }]}>
                 <TouchableOpacity
                   style={[styles.containerRow]}
-                  onPress={() => this.setDurations('3 hrs')}
+                  onPress={() => this.setDuration(3)}
                 >
-                  <MaterialCommunityIcon color={this.state.selectedDurations === '3 hrs' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={this.state.selectedDurations === '3 hrs' ? styles.categoryTextSelected : styles.categoryText}> 3 hrs </Text>
+                  <MaterialCommunityIcon color={duration === 3 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 3 ? styles.categoryTextSelected : styles.categoryText}> 3 hrs </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setDurations('4 hrs')}
+                  onPress={() => this.setDuration(4)}
                 >
-                  <MaterialCommunityIcon color={this.state.selectedDurations === '4 hrs' ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={this.state.selectedDurations === '4 hrs' ? styles.categoryTextSelected : styles.categoryText}> 4 hrs </Text>
+                  <MaterialCommunityIcon color={duration === 4 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 4 ? styles.categoryTextSelected : styles.categoryText}> 4 hrs </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -113,7 +110,7 @@ class Sorter extends Component {
           </View>
           <View style={styles.divider} />
           <TouchableOpacity
-            onPress={() => this.props.showResults()}
+            onPress={() => showResults()}
           >
             <Text style={styles.titleText}> Show Results </Text>
           </TouchableOpacity>
@@ -217,10 +214,15 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = state => ({
-
   time: state.study.time,
-  date: state.study.date
+  date: state.study.date,
+  duration: state.study.duration
 });
 
+const mapDispatchToProps = dispatch => ({
+  changeDuration: (duration) => {
+    dispatch(changeDuration(duration));
+  }
+});
 
-export default connect(mapStateToProps)(Sorter);
+export default connect(mapStateToProps, mapDispatchToProps)(Sorter);

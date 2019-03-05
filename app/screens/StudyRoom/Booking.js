@@ -5,17 +5,17 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { connect } from 'react-redux';
 import { changeTime, changeDate } from '../../Actions/actions';
-import { withNavigation } from 'react-navigation';
 
 
 class Booking extends Component {
   constructor(props) {
     super(props);
+    const { date, time } = this.props;
     this.state = {
       datePickerVisible: false,
       timePickerVisible: false,
-      date: this.props.date != '' ? this.props.date : 'Choose a date!',
-      time: this.props.time != '' ? this.props.time : 'Choose a time!',
+      date: date !== '' ? date : 'Choose a date!',
+      time: time !== '' ? time : 'Choose a time!',
     };
     this.date = new Date();
     this.minDate = new Date();
@@ -26,54 +26,62 @@ class Booking extends Component {
   }
 
   showDatePicker() {
+    const { datePickerVisible } = this.state;
     this.setState({
-      datePickerVisible: !this.state.datePickerVisible
+      datePickerVisible: !datePickerVisible
     });
   }
 
   showTimePicker() {
+    const { timePickerVisible } = this.state;
     this.setState({
-      timePickerVisible: !this.state.timePickerVisible
+      timePickerVisible: !timePickerVisible
     });
   }
 
 
   handleConfirm(setting, thing) {
+    const { datePickerVisible, timePickerVisible } = this.state;
+    const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
     if (thing === 'time') {
-      var styledTime = setting.toLocaleTimeString();
-      var last2ndChar = styledTime[ styledTime.length - 2];
-      var lastChar = styledTime[ styledTime.length - 1];
+      let styledTime = setting.toLocaleTimeString();
+      const last2ndChar = styledTime[styledTime.length - 2];
+      const lastChar = styledTime[styledTime.length - 1];
       styledTime = styledTime.slice(0, -6);
       this.setState({
         time: styledTime + last2ndChar + lastChar,
-        timePickerVisible: !this.state.timePickerVisible
+        timePickerVisible: !timePickerVisible
       });
-      this.props.changeTime(styledTime + last2ndChar + lastChar);
+      changeTimeAction(styledTime + last2ndChar + lastChar);
     } else {
-      var chosen = setting;
-      var dd = chosen.getDate();
-      var mm = chosen.getMonth() + 1; //January is 0!
-      var yyyy = chosen.getFullYear();  
+      let chosen = setting;
+      let dd = chosen.getDate();
+      let mm = chosen.getMonth() + 1; // January is 0!
+      const yyyy = chosen.getFullYear();
       if (dd < 10) {
-        dd = '0' + dd;
+        dd = `0${dd}`;
       }
       if (mm < 10) {
-        mm = '0' + mm;
+        mm = `0${mm}`;
       }
-      chosen = mm + '/' + dd + '/' + yyyy;
+      chosen = `${mm}/${dd}/${yyyy}`;
       this.setState({
         date: chosen,
-        datePickerVisible: !this.state.datePickerVisible
+        datePickerVisible: !datePickerVisible
       });
-      this.props.changeDate(chosen);
+      changeDateAction(chosen);
     }
   }
 
   handleSearch() {
-    this.props.navigation.navigate('StudyRoomList');
+    const { navigation } = this.props;
+    navigation.navigate('StudyRoomList');
   }
 
   render() {
+    const {
+      date, time, datePickerVisible, timePickerVisible
+    } = this.state;
     return (
       <View style={styles.container}>
         <Text style={styles.promptText}>What day?</Text>
@@ -82,12 +90,12 @@ class Booking extends Component {
           onPress={this.showDatePicker}
         >
           <Text style={styles.titleText}>
-            {this.state.date}
+            {date}
           </Text>
         </TouchableOpacity>
         <DateTimePicker
-          isVisible={this.state.datePickerVisible}
-          onConfirm={date => this.handleConfirm(date, 'date')}
+          isVisible={datePickerVisible}
+          onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
           onCancel={this.showDatePicker}
           maximumDate={this.date}
           minimumDate={this.minDate}
@@ -98,13 +106,13 @@ class Booking extends Component {
           onPress={this.showTimePicker}
         >
           <Text style={styles.titleText}>
-            {this.state.time}
+            {time}
           </Text>
         </TouchableOpacity>
         <DateTimePicker
           mode="time"
-          isVisible={this.state.timePickerVisible}
-          onConfirm={time => this.handleConfirm(time, 'time')}
+          isVisible={timePickerVisible}
+          onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
           onCancel={this.showTimePicker}
           is24Hour={false}
           minuteInterval={30}

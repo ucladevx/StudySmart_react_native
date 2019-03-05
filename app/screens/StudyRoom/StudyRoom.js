@@ -2,22 +2,41 @@ import React, { Component } from 'react';
 import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, Linking
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { changeTime, changeDate } from '../../Actions/actions';
+import { changeTime, changeDate, changeLocation } from '../../Actions/actions';
 import StudyRoomHeader from '../../components/StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
 
+const baseResLifeURL = 'https://www.orl.ucla.edu/reserve';
+
 const availableRooms = [
-  { location: 'Hedrick', room: 7, availableDurations: [1, 2, 3] },
-  { location: 'Powell', room: 5, availableDurations: [1, 2, 3] },
-  { location: 'Sproul', room: 5, availableDurations: [1, 2, 3] },
-  { location: 'YRL', room: 5, availableDurations: [1, 2, 3] },
-  { location: 'Sproul', room: 7, availableDurations: [1] },
-  { location: 'Sproul', room: 7, availableDurations: [1] },
-  { location: 'YRL', room: 2, availableDurations: [1, 2] },
+  {
+    location: 'Hedrick Study Rooms', room: 7, availableDurations: [1, 2, 3], type: 'The Hill'
+  },
+  {
+    location: 'Rieber Music Rooms', room: 5, availableDurations: [1, 2, 3], type: 'The Hill'
+  },
+  {
+    location: 'Rieber Study Rooms', room: 5, availableDurations: [1, 2, 3], type: 'hedrickstudy'
+  },
+  {
+    location: 'De Neve Meeting Rooms', room: 5, availableDurations: [1, 2, 3], type: 'hedrickstudy'
+  },
+  {
+    location: 'Sproul Music Rooms', room: 7, availableDurations: [1], type: 'hedrickstudy'
+  },
+  {
+    location: 'Sproul Study Rooms', room: 7, availableDurations: [1], type: 'hedrickstudy'
+  },
+  {
+    location: 'The Study at Hedrick', room: 2, availableDurations: [1, 2], type: 'The Hill'
+  },
+  {
+    location: 'Powell', room: 6, availableDurations: [1, 2], type: 'Libraries Only'
+  },
 ];
+
 
 class StudyRoomList extends Component {
   static navigationOptions = {
@@ -30,16 +49,31 @@ class StudyRoomList extends Component {
     this.state = {
       visible: false,
     };
+    this.handleReserve = this.handleReserve.bind(this);
+    this.handleModal = this.handleModal.bind(this);
   }
 
   handleSelectRoom() {
     Linking.openURL('http://calendar.library.ucla.edu/spaces?lid=4394&gid=7749').catch(err => console.error('An error occurred', err));
   }
 
-  showInfo() {
+  handleReserve(option) {
+    this.handleModal();
+    const { location } = this.props;
+    if (option === 'Reserve') {
+      const totalURL = `${baseResLifeURL}?type=${location}?duration=`;
+    }
+  }
+
+  handleModal(item) {
+    const { visible } = this.state;
+    const { changeLocation: changeLocationAction } = this.props;
     this.setState({
-      visible: true,
+      visible: !visible,
     });
+    if (item != null) {
+      changeLocationAction(item.type);
+    }
   }
 
   renderRow(item) {
@@ -69,7 +103,7 @@ class StudyRoomList extends Component {
                 </Text>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => this.showInfo()}
+                  onPress={() => this.handleModal(item)}
                 >
                   <Entypo name="chevron-thin-down" size={25} />
                 </TouchableOpacity>
@@ -87,19 +121,22 @@ class StudyRoomList extends Component {
   }
 
   render() {
+    const { visible } = this.state;
     const data = availableRooms;
     return (
       <View style={styles.container}>
         <FlatList
-          ref={(ref) => { this._flatList = ref; }}
           data={data}
           extraData={data}
           renderItem={({ item }) => this.renderRow(item)}
           keyExtractor={(item, index) => index.toString()}
           style={styles.list}
         />
-        { this.state.visible ? (
-          <StudyRoomModal />
+        { visible ? (
+          <StudyRoomModal
+            handleReserve={this.handleReserve}
+            handleModal={this.handleModal}
+          />
         ) : null }
       </View>
     );
@@ -199,7 +236,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   time: state.study.time,
-  date: state.study.date
+  date: state.study.date,
+  duration: state.study.duration,
+  location: state.study.location,
+
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -208,6 +248,9 @@ const mapDispatchToProps = dispatch => ({
   },
   changeDate: (date) => {
     dispatch(changeDate(date));
+  },
+  changeLocation: (location) => {
+    dispatch(changeLocation(location));
   }
 });
 

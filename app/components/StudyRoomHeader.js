@@ -5,7 +5,7 @@ import {
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import Ionicon from 'react-native-vector-icons/Ionicons'
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from './Search';
 import Sorter from './Sorter';
 
@@ -99,8 +99,8 @@ class StudyRoomHeader extends Component {
           defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
           onFocus={this.goBack}
           onChangeText={e => this.setInputState(e)}
-          style={styles.searchContainer}
-          inputContainerStyle={styles.inputContainer}
+          style={[styles.searchContainer, styles.input]}
+          inputContainerStyle={[styles.inputContainer]}
           renderItem={item => (
             <TouchableOpacity onPress={() => null} />
           )}
@@ -123,6 +123,11 @@ class StudyRoomHeader extends Component {
     );
   }
 }
+
+const text = {
+  fontFamily: 'System',
+  letterSpacing: 1.92,
+};
 
 const styles = StyleSheet.create({
   buttonLeft: {
@@ -170,6 +175,12 @@ const styles = StyleSheet.create({
     },
     shadowRadius: 4,
     shadowOpacity: 1
+  },
+  input: {
+    ...text,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#000',
   }
 
 

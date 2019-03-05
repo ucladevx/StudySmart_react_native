@@ -103,11 +103,11 @@ class Search extends Component {
   }
 
   renderTextInput() {
-    const { onEndEditing, renderTextInput, style } = this.props;
+    const { onEndEditing, renderTextInput, style, } = this.props;
     const props = {
       value: this.props.value,
       placeholder: this.props.placeholder,
-      style: [styles.input, style],
+      style: [style],
       ref: ref => (this.textInput = ref),
       onEndEditing: e => onEndEditing && onEndEditing(e),
       ...this.props
@@ -178,11 +178,6 @@ const iosStyles = {
   inputContainer: {
     ...border
   },
-  input: {
-    backgroundColor: 'white',
-    height: 40,
-    paddingLeft: 3
-  },
   list: {
     ...border,
     backgroundColor: 'white',
@@ -194,11 +189,6 @@ const iosStyles = {
 };
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: 'white',
-    height: 40,
-    paddingLeft: 3
-  },
   ...Platform.select({
     android: { ...androidStyles },
     ios: { ...iosStyles }

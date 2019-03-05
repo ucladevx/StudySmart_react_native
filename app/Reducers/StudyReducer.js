@@ -1,14 +1,17 @@
 import {
-  CHANGE_TIME, CHANGE_DATE
+  CHANGE_TIME, CHANGE_DATE, CHANGE_DURATION, CHANGE_ROOM, CHANGE_LOCATION
 } from '../Actions/actions';
 
 const initialState = {
   time: '',
-  date: ''
+  date: '',
+  duration: 0,
+  room: '',
+  location: '',
+
 };
 
 const StudyReducer = (state = initialState, action) => {
-  console.log(state);
   switch (action.type) {
     case CHANGE_TIME:
       return {
@@ -19,6 +22,21 @@ const StudyReducer = (state = initialState, action) => {
       return {
         ...state,
         date: action.date
+      };
+    case CHANGE_DURATION:
+      return {
+        ...state,
+        duration: action.duration
+      };
+    case CHANGE_ROOM:
+      return {
+        ...state,
+        room: action.room
+      };
+    case CHANGE_LOCATION:
+      return {
+        ...state,
+        location: action.location
       };
     default:
       return state;
