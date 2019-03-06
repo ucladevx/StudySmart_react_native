@@ -6,61 +6,19 @@ import {
 import LocationHeader from '../components/LocationHeader';
 import ViewContainer from '../components/ViewContainer';
 
-const Library_Data = [
-  {
-    Name: 'Arts', activityLevel: 4, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.07432', Longitude: '-118.4413624', MondayOpen: 8, MondayClosed: 23, TuesdayOpen: 0, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Powell', activityLevel: 95, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.071613', Longitude: '-118.442181', MondayOpen: -1, MondayClosed: -1, TuesdayOpen: 9, TuesdayClosed: 24, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Charles E Young Research', activityLevel: 88, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.074969', Longitude: '-118.441466', MondayOpen: 4, MondayClosed: 19, TuesdayOpen: -1, TuesdayClosed: -1, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Science and Engineering - Boelter', activityLevel: 62, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.068987', Longitude: '-118.442659', MondayOpen: 8, MondayClosed: 10, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Law', activityLevel: 12, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0729138', Longitude: '-118.4384435', MondayOpen: 0, MondayClosed: 0, TuesdayOpen: 0, TuesdayClosed: 0, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-];
+export var IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
 
-const StudyRoom_Data = [
-  {
-    Name: 'Rieber', activityLevel: 4, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0716799', Longitude: '-118.4536875', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Hedrick', activityLevel: 95, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0731836', Longitude: '-118.4545039', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Hedrick Study', activityLevel: 88, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0730785', Longitude: '-118.4542834', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Sproul', activityLevel: 62, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0724491', Longitude: '-118.4523096', MondayOpen: 13, MondayClosed: 16, TuesdayOpen: 13, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-];
-
-const InterestingLocations_Data = [
-  {
-    Name: 'Boelter Roof', activityLevel: 1, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0692143', Longitude: '-118.445385', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: 'Botanical Gardens', activityLevel: 7, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.066584', Longitude: '-118.4437107', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-];
-
-const EatingPlaces_Data = [
-  {
-    Name: 'Panda Express', activityLevel: 1, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.0692143', Longitude: '-118.445385', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-  {
-    Name: "Denny's", activityLevel: 7, Image_URL: 'https://facebook.github.io/react-native/docs/assets/favicon.png', Latitude: '34.066584', Longitude: '-118.4437107', MondayOpen: 8, MondayClosed: 16, TuesdayOpen: 9, TuesdayClosed: 20, WednesdayOpen: 5, WednesdayClosed: 22, ThursdayOpen: 9, ThursdayClosed: 22, FridayOpen: 0, FridayClosed: 0, SaturdayOpen: 11, SaturdayClosed: 22, SundayOpen: 14, SundayClosed: 20
-  },
-];
-
-const Locations_Data = {
-  Libraries: Library_Data, StudyRooms: StudyRoom_Data, InterestingLocations: InterestingLocations_Data, EatingPlaces: EatingPlaces_Data
-};
-
+/* Returns "closed" if library is closed, otherwise returns the hours */
+export function _getHours(library, day){
+  var status = "Closed";
+  try{
+      status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
+  }
+  catch(err){
+    console.log(library.name, "does not have status")
+  }
+  return status;
+}
 
 export default class LocationsList extends Component {
     // static navigation options
@@ -79,110 +37,39 @@ export default class LocationsList extends Component {
 
     constructor(props) {
       super(props);
-      this.data = Locations_Data;
+      this.state = {
+        library_data: undefined
+      };
     }
 
-    // determine if library is currently open or closed
-    _currentOpenorClose(openTime, closeTime, currentHour) {
-      // if not open today
-      let status = '';
-      if (parseInt(openTime) == -1 || parseInt(closeTime) == -1) {
-        status = 'CLOSED';
-      }
-      // 24 hours
-      else if (parseInt(openTime) == 0 && parseInt(closeTime) == 0) {
-        status = 'OPEN';
-      }
-      // normal
-      else if (parseInt(openTime) <= currentHour && currentHour < parseInt(closeTime)) {
-        status = 'OPEN';
-      }
-      // closed
-      else {
-        status = 'CLOSED';
-      }
-      return status;
-    }
+    async componentDidMount(){
+      var temp;
+      console.log("Requesting library info...");
 
-    // uses the open and close time of library to print the hour string
-    _determineHours(openTime, closeTime, currentHour) {
-      // if not open today
-      let status = '';
-      if (parseInt(openTime) == -1 || parseInt(closeTime) == -1) {
-        status = 'CLOSED';
-      }
-      // 24 hours
-      else if (parseInt(openTime) == 0 && parseInt(closeTime) == 0) {
-        status = 'OPEN';
-      }
-      // normal
-      else if (parseInt(openTime) <= currentHour && currentHour < parseInt(closeTime)) {
-        status = 'OPEN';
-      }
-      // closed
-      else {
-        status = 'CLOSED';
-      }
+      /* Fetch library data from API, store inside this.library_data */
+      await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          console.log(data.Items);
+          temp = data;
+        });
 
-      let hour_string = '';
-      if (openTime == 0 && closeTime == 0) {
-        return 'OPEN: 24 Hours';
-      }
-      if (openTime >= 0 && openTime < 11) {
-        if (openTime == 0) {
-          openTime = 12;
-        }
-        hour_string += openTime;
-        hour_string += ' am - ';
-      } else if (openTime == -1) {
-        // closed for the day
-        return 'CLOSED TODAY';
-      } else {
-        // convert 24 hour time to 12 hour
-        if (openTime > 12 && openTime < 24) {
-          openTime -= 12;
-          hour_string += openTime;
-          hour_string += ' pm - ';
-        } else if (openTime == 24) {
-          hour_string += '12 am - ';
-        }
-      }
-
-      if (closeTime >= 0 && closeTime < 11) {
-        hour_string += closeTime;
-        hour_string += ' am';
-      } else if (closeTime == -1) {
-        // closed for the day
-        return 'CLOSED TODAY';
-      } else {
-        // convert 24 hour time to 12 hour
-        if (closeTime > 12 && closeTime < 24) {
-          closeTime -= 12;
-          hour_string += closeTime;
-          hour_string += ' pm';
-        } else if (closeTime == 24) {
-          hour_string += '12 am';
-        }
-      }
-
-      // if closed just say closed
-      if (status === 'CLOSED') {
-        return 'NOW CLOSED';
-      }
-      // return OPEN: hours
-      return `OPEN: ${hour_string}`;
+        /* Once the request is done, save library data to current state */
+        this.setState({library_data: temp.Items});
     }
 
     render() {
-      const { navigate } = this.props.navigation;
+      const millis = new Date();
+      const day = millis.getDay();
 
-      // Gets the day of the week
-      const options = { weekday: 'long' };
-      const current = new Date();
-      const hour_only = current.getHours();
-      const prnDt = current.toLocaleTimeString('en-us', options);
-      const DayOfTheWeek = prnDt.substring(0, prnDt.indexOf(' '));
-
+      /* Rendering temporary loading screen if http request is not done yet */
+      if(this.state.library_data === undefined || this.state.library_data.length == 0){
+        return (
+            <Text> Attempting to get library data . . . </Text>
+        );
+      }
 
       return (
         <ViewContainer>
@@ -191,15 +78,13 @@ export default class LocationsList extends Component {
               bounces={false}
               contentContainerStyle={styles.scroll_style}
               sections={[
-                { title: 'Libraries', data: this.data.Libraries },
-                { title: 'Study Rooms', data: this.data.StudyRooms },
-                { title: 'Interesting Locations', data: this.data.InterestingLocations },
-                { title: 'Eating Places', data: this.data.EatingPlaces }
+                { title: 'Libraries', data: this.state.library_data },
+
               ]}
               renderSectionHeader={({ section }) => <Text style={styles.Section_Header}>{section.title}</Text>}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => {
-                  navigate('Detailed', { item });
+                  this.props.navigation.navigate('Detailed', { locationClicked: item });
                 }}
                 >
                   {/* Individual list elements */}
@@ -207,23 +92,19 @@ export default class LocationsList extends Component {
                     <View style={listElement.imgContainer}>
                       <Image
                         style={listElement.img}
-                        source={{ uri: item.Image_URL }}
+                        source={{ uri: IMG_TEMP }}
                       />
                     </View>
                     <View style={listElement.information}>
                       <Text style={listElement.Name}>
-                        {item.Name}
+                        {item.name.S}
                       </Text>
-                      {/* NEED TO CHANGE TO A PROGRESS BAR  */}
-                      <Text style={listElement.activityLevel}>
-                        {item.activityLevel}
-                        %
+                      {/* NEED TO CHANGE TO A PROGRESS BAR, 0% IS TEMPORARY PLACEHOLER  */}
+                    <Text style={listElement.activityLevel}>
+                        0%
                       </Text>
-                      <Text
-                        style={this._currentOpenorClose(item[`${DayOfTheWeek}Open`], item[`${DayOfTheWeek}Closed`], hour_only) === 'CLOSED' ? listElement.Closed : listElement.Open}
-                      >
-                        {this._determineHours(item[`${DayOfTheWeek}Open`],
-                          item[`${DayOfTheWeek}Closed`], hour_only)}
+                      <Text style={_getHours(item, day) === "Closed" ? listElement.Closed : listElement.Open}>
+                            {_getHours(item, day)}
                       </Text>
                     </View>
                   </View>

@@ -3,121 +3,62 @@ import {
   StyleSheet, Text, ScrollView, Image, View, Dimensions
 } from 'react-native';
 
+import {IMG_TEMP, _getHours} from './LocationsList.js';
 
 const width = Dimensions.get('window').width;
 
 export default class LocationsDetailed extends Component {
   constructor(props) {
     super(props);
-    this.params = this.props.navigation.state.params;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  _generateHourString(openTime, closeTime) {
-    let hour_string = '';
-    if (openTime == 0 && closeTime == 0) {
-      return '24 Hours';
-    }
-    if (openTime >= 0 && openTime < 11) {
-      if (openTime == 0) {
-        openTime = 12;
-      }
-      hour_string += openTime;
-      hour_string += ' am - ';
-    } else if (openTime == -1) {
-      // closed for the day
-      return 'CLOSED TODAY';
-    } else {
-      // convert 24 hour time to 12 hour
-      if (openTime > 12 && openTime < 24) {
-        openTime -= 12;
-        hour_string += openTime;
-        hour_string += ' pm - ';
-      } else if (openTime == 24) {
-        hour_string += '12 am - ';
-      }
-    }
-
-    if (closeTime >= 0 && closeTime < 11) {
-      hour_string += closeTime;
-      hour_string += ' am';
-    } else if (closeTime == -1) {
-      // closed for the day
-      return 'CLOSED TODAY';
-    } else {
-      // convert 24 hour time to 12 hour
-      if (closeTime > 12 && closeTime < 24) {
-        closeTime -= 12;
-        hour_string += closeTime;
-        hour_string += ' pm';
-      } else if (closeTime == 24) {
-        hour_string += '12 am';
-      }
-    }
-    return hour_string;
   }
 
   render() {
-    // const { navigate } = this.params.navigation;
-    const { item } = this.props.navigation.state.params;
-    const options = { weekday: 'long' };
-    const current = new Date();
-    const prnDt = current.toLocaleTimeString('en-us', options);
-    const DayOfTheWeek = prnDt.substring(0, prnDt.indexOf(' '));
+    /* Get item that was clicked */
+    var item = this.props.navigation.getParam('locationClicked', 'NO-ITEM');
+    console.log(item);
+
+    /* Calculate time */
+    const millis = new Date();
+    const today = millis.getDay();
+
+    /* 0-6 = Sunday-Saturday */
     return (
       <ScrollView style={styles.container}>
         <Image
           style={{width:width, height:width,}}
-          source={{ uri: item.Image_URL }}
+          source={{ uri: IMG_TEMP }}
         />
         <View style={styles.information}>
-          <Text style={styles.Name}>{item.Name}</Text>
-
-          {/* NEED TO CHANGE TO A PROGRESS BAR  */}
+          <Text style={styles.Name}>
+              {item.name.S}
+          </Text>
           <Text style={styles.Activity_Level_TEMPORARY}>
-Activity Level:
-            {' '}
-            {item.Activity_Level}
-%
+              Activity Level: 0%
           </Text>
           <View style = {styles.hours}>
-            <Text style={styles.Section_Header}>Hours:</Text>
-            <Text style={DayOfTheWeek == 'Monday' ? styles.currentDay : styles.normalDay}>
-  Monday:
-              {' '}
-              {this._generateHourString(item.MondayOpen, item.MondayClosed)}
-            </Text>
-            <Text style={DayOfTheWeek == 'Tuesday' ? styles.currentDay : styles.normalDay}>
-  Tuesday:
-              {' '}
-              {this._generateHourString(item.TuesdayOpen, item.TuesdayClosed)}
-            </Text>
-            <Text style={DayOfTheWeek == 'Wednesday' ? styles.currentDay : styles.normalDay}>
-  Wednesday:
-              {' '}
-              {this._generateHourString(item.WednesdayOpen, item.WednesdayClosed)}
-            </Text>
-            <Text style={DayOfTheWeek == 'Thursday' ? styles.currentDay : styles.normalDay}>
-  Thursday:
-              {' '}
-              {this._generateHourString(item.ThursdayOpen, item.ThursdayClosed)}
-            </Text>
-            <Text style={DayOfTheWeek == 'Friday' ? styles.currentDay : styles.normalDay}>
-  Friday:
-              {' '}
-              {this._generateHourString(item.FridayOpen, item.FridayClosed)}
-            </Text>
-            <Text style={DayOfTheWeek == 'Saturday' ? styles.currentDay : styles.normalDay}>
-  Saturday:
-              {' '}
-              {this._generateHourString(item.SaturdayOpen, item.SaturdayClosed)}
-            </Text>
-            <Text style={DayOfTheWeek == 'Sunday' ? styles.currentDay : styles.normalDay}>
-  Sunday:
-              {' '}
-              {this._generateHourString(item.SundayOpen, item.SundayClosed)}
-            </Text>
-          </View>
+              <Text style={styles.Section_Header}>Hours:</Text>
+              <Text style={today == 0 ? styles.currentDay : styles.normalDay}>
+                  Sunday: {_getHours(item,0)}
+              </Text>
+              <Text style={today == 1 ? styles.currentDay : styles.normalDay}>
+                  Monday: {_getHours(item,1)}
+              </Text>
+              <Text style={today == 2 ? styles.currentDay : styles.normalDay}>
+                  Tuesday: {_getHours(item,2)}
+              </Text>
+              <Text style={today == 3 ? styles.currentDay : styles.normalDay}>
+                  Wednesday: {_getHours(item,3)}
+              </Text>
+              <Text style={today == 4 ? styles.currentDay : styles.normalDay}>
+                  Thursday: {_getHours(item,4)}
+              </Text>
+              <Text style={today == 5 ? styles.currentDay : styles.normalDay}>
+                  Friday: {_getHours(item,5)}
+              </Text>
+              <Text style={today == 6 ? styles.currentDay : styles.normalDay}>
+                  Saturday: {_getHours(item,6)}
+              </Text>
+            </View>
         </View>
       </ScrollView>
     );
