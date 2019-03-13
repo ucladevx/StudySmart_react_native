@@ -22,8 +22,7 @@ class Sorter extends Component {
   }
 
   setDuration(e) {
-    const { changeDuration: changeDurationAction } = this.props;
-    changeDurationAction(e);
+   this.props.changeDuration(e)
   }
 
   setLocation(e) {

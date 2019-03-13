@@ -14,11 +14,7 @@ class StudyRoomModal extends Component {
   }
 
   availableDurations() {
-    return [{ name: 1 }, { name: 2 }, { name: 3 }];
-  }
-
-  availableRooms() {
-    return [{ name: 310 }, { name: 210 }, { name: 331 }];
+    return [{ name: "1" }];
   }
 
   renderList(item) {
@@ -26,11 +22,11 @@ class StudyRoomModal extends Component {
     return (
       <TouchableOpacity
         style={styles.listCell}
-        onPress={() => this.setState({ room: item.name })}
+        onPress={() => this.setState({ room: item.link })}
       >
-        <Text style={room === item.name ? styles.categoryTextSelected : styles.categoryText}>
+        <Text style={room === item.link ? styles.categoryTextSelected : styles.categoryText}>
           {' '}
-          {item.name}
+          {item.details}
           {' '}
         </Text>
       </TouchableOpacity>
@@ -74,11 +70,11 @@ class StudyRoomModal extends Component {
               style={{ flex: 1, backgroundColor: 'transparent' }}
             />
           </View>
-          <Text style={styles.titleText}> Available Rooms </Text>
+          <Text style={styles.titleText}> Select a Room </Text>
           <View style={styles.list}>
             <FlatList
-              data={this.availableRooms()}
-              extraData={this.availableRooms()}
+              data={this.props.rooms.available}
+              extraData={this.props.rooms.available}
               renderItem={({ item }) => this.renderList(item)}
               keyExtractor={(item, index) => index.toString()}
               style={{ flex: 1, backgroundColor: 'transparent' }}
@@ -86,7 +82,7 @@ class StudyRoomModal extends Component {
           </View>
           <View style={styles.containerRow}>
             <TouchableOpacity
-              onPress={() => handleReserve('Reserve')}
+              onPress={() => handleReserve(this.state.room)}
             >
               <Text style={styles.titleText}> Reserve </Text>
             </TouchableOpacity>
@@ -169,7 +165,7 @@ const styles = StyleSheet.create({
   },
   categoryText: {
     fontFamily: 'System',
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: '500',
     fontStyle: 'normal',
     letterSpacing: 1.92,
@@ -177,7 +173,7 @@ const styles = StyleSheet.create({
   },
   categoryTextSelected: {
     fontFamily: 'System',
-    fontSize: 18,
+    fontSize: 12,
     fontWeight: '500',
     fontStyle: 'normal',
     letterSpacing: 1.92,
