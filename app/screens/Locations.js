@@ -51,7 +51,6 @@ export default class Locations extends Component {
                                                <Marker
                                                key={marker.title}
                                                coordinate={marker.latlng}
-                                               image={require('./bbsmall.png')}
                                                title={marker.title}
                                                description={marker.description}
                                                />
