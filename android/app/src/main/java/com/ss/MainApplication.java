@@ -27,13 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new VectorIconsPackage(),
-<<<<<<< HEAD
             new MapsPackage(),
             new RNGoogleSigninPackage()
-=======
-            new SvgPackage(),
-            new RNCameraPackage()
->>>>>>> 1d1786c54cf286100919d240035025eff74542af
       );
     }
 
