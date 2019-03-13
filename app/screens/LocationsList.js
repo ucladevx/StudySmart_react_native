@@ -6,16 +6,16 @@ import {
 import LocationHeader from '../components/LocationHeader';
 import ViewContainer from '../components/ViewContainer';
 
+
 export var IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
 
 /* Returns "closed" if library is closed, otherwise returns the hours */
-export function _getHours(library, day){
-  var status = "Closed";
-  try{
-      status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
-  }
-  catch(err){
-    console.log(library.name, "does not have status")
+export function _getHours(library, day) {
+  let status = 'Closed';
+  try {
+    status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
+  } catch (err) {
+    console.log(library.name, 'does not have status');
   }
   return status;
 }
@@ -42,22 +42,22 @@ export default class LocationsList extends Component {
       };
     }
 
-    async componentDidMount(){
-      var temp;
-      console.log("Requesting library info...");
+    async componentDidMount() {
+      let temp;
+      console.log('Requesting library info...');
 
       /* Fetch library data from API, store inside this.library_data */
       await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
-        .then(function(response) {
+        .then((response) => {
           return response.json();
         })
-        .then(function(data) {
+        .then((data) => {
           console.log(data.Items);
           temp = data;
         });
 
-        /* Once the request is done, save library data to current state */
-        this.setState({library_data: temp.Items});
+      /* Once the request is done, save library data to current state */
+      this.setState({ library_data: temp.Items });
     }
 
     render() {
@@ -65,9 +65,9 @@ export default class LocationsList extends Component {
       const day = millis.getDay();
 
       /* Rendering temporary loading screen if http request is not done yet */
-      if(this.state.library_data === undefined || this.state.library_data.length == 0){
+      if (this.state.library_data === undefined || this.state.library_data.length == 0) {
         return (
-            <Text> Attempting to get library data . . . </Text>
+          <Text> Attempting to get library data . . . </Text>
         );
       }
 
@@ -100,11 +100,11 @@ export default class LocationsList extends Component {
                         {item.name.S}
                       </Text>
                       {/* NEED TO CHANGE TO A PROGRESS BAR, 0% IS TEMPORARY PLACEHOLER  */}
-                    <Text style={listElement.activityLevel}>
+                      <Text style={listElement.activityLevel}>
                         0%
-                      </Text>
-                      <Text style={_getHours(item, day) === "Closed" ? listElement.Closed : listElement.Open}>
-                            {_getHours(item, day)}
+                    </Text>
+                      <Text style={_getHours(item, day) === 'Closed' ? listElement.Closed : listElement.Open}>
+                        {_getHours(item, day)}
                       </Text>
                     </View>
                   </View>
@@ -117,7 +117,7 @@ export default class LocationsList extends Component {
           <View style={styles.floatingButton}>
             <TouchableOpacity
               style={[styles.boxWithShadow, styles.studyRoom]}
-              onPress={() => navigate('Booking')}
+              onPress={() => this.props.navigation.navigate('Booking')}
             >
               <Text style={styles.titleText}>
                 Book a study room

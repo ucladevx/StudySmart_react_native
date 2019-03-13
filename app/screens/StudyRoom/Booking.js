@@ -44,6 +44,7 @@ class Booking extends Component {
     const { datePickerVisible, timePickerVisible } = this.state;
     const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
     if (thing === 'time') {
+      console.log(styledTime)
       let styledTime = setting.toLocaleTimeString();
       const last2ndChar = styledTime[styledTime.length - 2];
       const lastChar = styledTime[styledTime.length - 1];
@@ -114,7 +115,7 @@ class Booking extends Component {
           isVisible={timePickerVisible}
           onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
           onCancel={this.showTimePicker}
-          is24Hour={false}
+          is24Hour={true}
           minuteInterval={30}
           titleIOS="Pick a time"
         />

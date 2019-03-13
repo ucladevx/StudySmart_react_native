@@ -8,6 +8,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from './Search';
 import Sorter from './Sorter';
+import { changeDuration } from '../Actions/actions';
 
 
 const fakeVal = [];
@@ -37,8 +38,7 @@ class StudyRoomHeader extends Component {
     this.setState({
       visible: false
     });
-
-    this.processSelection(this.info);
+    //this.processSelection(this.info);
   }
 
   processSelection(e) {
@@ -188,7 +188,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
 
   time: state.study.time,
-  date: state.study.date
+  date: state.study.date,
+  duration: state.study.duration,
 });
 
-export default connect(mapStateToProps)(StudyRoomHeader);
+const mapDispatchToProps = dispatch => ({
+  changeDuration: (duration) => {
+    dispatch(changeDuration(duration));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomHeader);
