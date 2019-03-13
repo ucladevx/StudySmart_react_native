@@ -72,8 +72,12 @@ $ npm run lint
 
 * Go into `ios` folder and open up `SS.xcworkspace` 
 * Drag `GoogleService-Info.plist` file from team drive and put it under 'SS' folder in the XCode Project Navigator
+### Only do the following 2 steps if you are working on the login page specifically, otherwise bypass your initial route to 'List'
 * Click on SS in the XCode Project Navigator 
 * Go to 'Info', click on 'URL Types', and in the 'URL Schemes Box' enter in the `REVERSED_CLIENT_ID` from the `GoogleService-Info.plist` file that we grabbed earlier
+
+
+Finally,
 * Run the following inside the `ios` directory
 
 ```bash
