@@ -48,7 +48,9 @@ class StudyRoomList extends Component {
       month = date.substring(0, 2);
       day = date.substring(3, 5);
       year = date.substring(date.length - 4);
-      //appendedURL = `?date=${year}-${month}-${day}`;
+      if (time.length === 0) {
+        appendedURL = `?date=${year}-${month}-${day}`;
+      }
     }
     if (time.length > 0) {
       const splitTime = time.split(':');
@@ -72,7 +74,6 @@ class StudyRoomList extends Component {
       });
     /* Once the request is done, save library data to current state */
     this.props.loadData(temp.Items);
-    console.log(this.props.data)
     this.sortData(this.props.data);
   }
 
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
   circleText: {
     ...text,
     color: 'white',
-    fontSize: 20,
+    fontSize: 14,
     textAlign: 'center'
   },
   name: { // name of location

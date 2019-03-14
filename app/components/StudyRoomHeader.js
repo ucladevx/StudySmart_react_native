@@ -98,7 +98,7 @@ class StudyRoomHeader extends Component {
           data={fakeVal} // this should be an API call or huge list eventually
           defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
           onFocus={this.goBack}
-          onChangeText={e => this.setInputState(e)}
+          onChangeText={e => null}
           style={[styles.searchContainer, styles.input]}
           inputContainerStyle={[styles.inputContainer]}
           renderItem={item => (

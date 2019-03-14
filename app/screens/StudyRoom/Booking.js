@@ -44,7 +44,6 @@ class Booking extends Component {
     const { datePickerVisible, timePickerVisible } = this.state;
     const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
     if (thing === 'time') {
-      console.log(styledTime)
       let styledTime = setting.toLocaleTimeString();
       const last2ndChar = styledTime[styledTime.length - 2];
       const lastChar = styledTime[styledTime.length - 1];
@@ -119,7 +118,7 @@ class Booking extends Component {
           minuteInterval={30}
           titleIOS="Pick a time"
         />
-        <TouchableOpacity style={styles.searchButton} onPress={() => this.handleSearch()}>
+        <TouchableOpacity style={this.props.date.length === 0 ? styles.searchButtonDisabled: styles.searchButton} disabled={this.props.date.length === 0} onPress={() => this.handleSearch()}>
           <Text style={styles.searchText}> Search! </Text>
         </TouchableOpacity>
       </View>
@@ -168,6 +167,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40
+  },
+  searchButtonDisabled: {
+    flex: 0,
+    borderWidth: 2,
+    borderColor: '#4F87EC',
+    width: '65%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+    opacity: 0.3
   },
   searchText: {
     fontFamily: 'System',
