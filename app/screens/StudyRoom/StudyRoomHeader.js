@@ -6,9 +6,9 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import Search from './Search';
-import Sorter from './Sorter';
-import { changeDuration } from '../Actions/actions';
+import Search from '../../components/Search';
+import Sorter from '../../components/Sorter';
+import { changeDuration } from '../../Actions/actions';
 
 
 const fakeVal = [];
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   bar: {
     height: 80,
-    top: 0,
+    paddingTop: 10,
     backgroundColor: '#4F87EC',
     justifyContent: 'space-between',
     alignItems: 'center',

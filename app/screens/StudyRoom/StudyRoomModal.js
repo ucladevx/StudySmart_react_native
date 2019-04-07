@@ -9,15 +9,21 @@ class StudyRoomModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      room: '',
+      duration: '',
     };
   }
 
   availableDurations() {
-    return [{ name: "1" }];
+    return [{ name: '1' }, { name: '2' }];
   }
 
   renderList(item) {
+    const durations = { 1: '60', 2: '120' };
+    if (this.state.duration.length !== 0 && durations[this.state.duration] !== item.duration) {
+      return;
+    }
+    let details = item.details.replace(/\n/g, '');
+    details = details.trim();
     const { room } = this.state;
     return (
       <TouchableOpacity
@@ -25,21 +31,18 @@ class StudyRoomModal extends Component {
         onPress={() => this.setState({ room: item.link })}
       >
         <Text style={room === item.link ? styles.categoryTextSelected : styles.categoryText}>
-          {' '}
-          {item.details}
-          {' '}
+          {details}
         </Text>
       </TouchableOpacity>
     );
   }
 
   renderDurationList(item) {
-    const { duration } = this.props;
+    const { duration } = this.state;
     return (
       <TouchableOpacity
         style={styles.listCell}
-        onPress={() => this.setState({ room: item.name })}
-        disabled={duration > 0}
+        onPress={() => this.setState({ duration: item.name })}
       >
         <Text style={duration === item.name ? styles.categoryTextSelected : styles.categoryText}>
           {' '}
@@ -60,7 +63,7 @@ class StudyRoomModal extends Component {
         animationType="fade"
       >
         <View style={[styles.modalContainer, styles.boxWithShadow]}>
-          <Text style={styles.titleText}> Available Durations </Text>
+          <Text style={styles.titleText}> Choose a Duration </Text>
           <View style={styles.list}>
             <FlatList
               data={this.availableDurations()}
@@ -74,7 +77,7 @@ class StudyRoomModal extends Component {
           <View style={styles.list}>
             <FlatList
               data={this.props.rooms.available}
-              extraData={this.props.rooms.available}
+              extraData={this.state}
               renderItem={({ item }) => this.renderList(item)}
               keyExtractor={(item, index) => index.toString()}
               style={{ flex: 1, backgroundColor: 'transparent' }}
@@ -157,27 +160,31 @@ const styles = StyleSheet.create({
     elevation: 5
   },
   list: {
-    height: '35%'
+    height: '35%',
+    width: '100%',
+    alignItems: 'center'
   },
   listCell: {
     alignItems: 'center',
-    padding: 5
+    padding: 10,
   },
   categoryText: {
     fontFamily: 'System',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '500',
     fontStyle: 'normal',
     letterSpacing: 1.92,
     color: 'gray',
+    textAlign: 'center'
   },
   categoryTextSelected: {
     fontFamily: 'System',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '500',
     fontStyle: 'normal',
     letterSpacing: 1.92,
     color: '#4F87EC',
+    textAlign: 'center'
   },
 
 

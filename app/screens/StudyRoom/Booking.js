@@ -187,7 +187,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.92,
     color: '#4F87EC',
     width: '80%',
-    padding: 5
+    padding: 5,
+    textAlign: 'center'
   },
   titleText: {
     fontFamily: 'System',
@@ -197,7 +198,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.92,
     color: 'white',
     width: '80%',
-    padding: 5
+    padding: 5,
+    textAlign: 'center'
   },
 
 });

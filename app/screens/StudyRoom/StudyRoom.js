@@ -7,7 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import {
   changeTime, changeDate, changeLocation, loadData
 } from '../../Actions/actions';
-import StudyRoomHeader from '../../components/StudyRoomHeader';
+import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
 
 const namePairs = {

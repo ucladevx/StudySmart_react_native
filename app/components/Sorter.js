@@ -22,10 +22,18 @@ class Sorter extends Component {
   }
 
   setDuration(e) {
+    if (this.props.duration === e) {
+      this.props.changeDuration(0);
+      return;
+    }
     this.props.changeDuration(e);
   }
 
   setLocation(e) {
+    if (this.props.location === e) {
+      this.props.changeLocation('');
+      return;
+    }
     this.props.changeLocation(e);
   }
 
@@ -59,22 +67,21 @@ class Sorter extends Component {
           <Text style={styles.sortText}> Sort </Text>
           <View style={styles.divider} />
           <Text style={styles.titleText}> Durations </Text>
-          <View style={styles.left_text}>
-            <View style={styles.containerRow}>
+          <View style={styles.containerRow}>
               <View style={styles.containerColumn}>
                 <TouchableOpacity
                   style={styles.containerRow}
                   onPress={() => this.setDuration(60)}
                 >
                   <MaterialCommunityIcon color={duration === 60 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 60 ? styles.categoryTextSelected : styles.categoryText}> 1 hr </Text>
+                  <Text style={duration === 60 ? styles.categoryTextSelectedShort : styles.categoryTextShort}> 1 hr </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
                   onPress={() => this.setDuration(120)}
                 >
                   <MaterialCommunityIcon color={duration === 120 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 120 ? styles.categoryTextSelected : styles.categoryText}> 2 hrs </Text>
+                  <Text style={duration === 120 ? styles.categoryTextSelectedShort : styles.categoryTextShort}> 2 hrs </Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.containerColumn, { marginLeft: '10%' }]}>
@@ -83,18 +90,17 @@ class Sorter extends Component {
                   onPress={() => this.setDuration(180)}
                 >
                   <MaterialCommunityIcon color={duration === 180 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 180 ? styles.categoryTextSelected : styles.categoryText}> 3 hrs </Text>
+                  <Text style={duration === 180 ? styles.categoryTextSelectedShort : styles.categoryTextShort}> 3 hrs </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
                   onPress={() => this.setDuration(240)}
                 >
                   <MaterialCommunityIcon color={duration === 240 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 240 ? styles.categoryTextSelected : styles.categoryText}> 4 hrs </Text>
+                  <Text style={duration === 240 ? styles.categoryTextSelectedShort : styles.categoryTextShort}> 4 hrs </Text>
                 </TouchableOpacity>
               </View>
             </View>
-          </View>
           <Text style={styles.titleText}> Locations </Text>
           <View style={styles.list}>
             <FlatList
@@ -138,13 +144,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 5,
     marginTop: 5,
-    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%'
   },
   divider: {
     height: 2,
     backgroundColor: '#e0e0e0',
     width: '95%',
-    marginTop: 5,
     marginBottom: 2
   },
   bigText: {
@@ -194,6 +200,24 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     letterSpacing: 1.92,
     color: '#4F87EC',
+  },
+  categoryTextShort: {
+    fontFamily: 'System',
+    fontSize: 18,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: 'gray',
+    width: '65%',
+  },
+  categoryTextSelectedShort: {
+    fontFamily: 'System',
+    fontSize: 18,
+    fontWeight: '500',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: '#4F87EC',
+    width: '65%',
   },
   boxWithShadow: {
     shadowColor: '#000',
