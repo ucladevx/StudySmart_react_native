@@ -23,20 +23,22 @@ const namePairs = {
 };
 
 class StudyRoomList extends Component {
-  static navigationOptions = {
-    // headerTitle instead of title
-    header: props => <StudyRoomHeader {...props} />,
-  };
+  static navigationOptions={
+    header: () => {
+      false;
+    }
+  }
 
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
       currentData: [],
-      item: null,
+      room: null,
     };
     this.handleReserve = this.handleReserve.bind(this);
     this.handleModal = this.handleModal.bind(this);
+    this.sortData = this.sortData.bind(this);
   }
 
   async componentDidMount() {
@@ -74,18 +76,24 @@ class StudyRoomList extends Component {
       });
     /* Once the request is done, save library data to current state */
     this.props.loadData(temp.Items);
-    this.sortData(this.props.data);
+    this.sortData();
   }
 
   sortData() {
     const locationDict = {};
     const array = [];
+    const duration = this.props.duration.toString();
+    const location = this.props.location;
     const { data } = this.props;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].name in locationDict) {
-        locationDict[data[i].name].push(data[i]);
-      } else {
-        locationDict[data[i].name] = [data[i]];
+    for (let i = 0; i < data.length; i += 1) {
+      if (duration === '0' || data[i].duration === duration) {
+        if (location.length === 0 || data[i].location === location) {
+          if (data[i].name in locationDict) {
+            locationDict[data[i].name].push(data[i]);
+          } else {
+            locationDict[data[i].name] = [data[i]];
+          }
+        }
       }
     }
     Object.keys(locationDict).forEach((key) => {
@@ -109,20 +117,16 @@ class StudyRoomList extends Component {
 
   handleModal(item) {
     const { visible } = this.state;
-    const { changeLocation: changeLocationAction } = this.props;
     this.setState({
       visible: !visible,
-      item,
+      room: item,
     });
-    if (item != null) {
-      changeLocationAction(item.type);
-    }
   }
 
   renderRow(item) {
     return (
       <TouchableOpacity
-        onPress={() => this.handleSelectRoom(item)}
+        onPress={() => this.handleModal(item)}
       >
         <View style={styles.cell}>
           <View
@@ -146,7 +150,7 @@ class StudyRoomList extends Component {
                 </Text>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => this.handleModal(item)}
+                  onPress={() => this.handleSelectRoom(item)}
                 >
                   <Entypo name="chevron-thin-down" size={25} />
                 </TouchableOpacity>
@@ -164,12 +168,16 @@ class StudyRoomList extends Component {
   }
 
   render() {
-    const { visible, currentData } = this.state;
+    const { visible, room } = this.state;
     return (
       <View style={styles.container}>
+        <StudyRoomHeader
+          navigation={this.props.navigation}
+          sortData={this.sortData}
+        />
         <FlatList
-          data={currentData}
-          extraData={currentData}
+          data={this.state.currentData}
+          extraData={this.state.currentData}
           renderItem={({ item }) => this.renderRow(item)}
           keyExtractor={(item, index) => index.toString()}
           style={styles.list}
@@ -178,7 +186,7 @@ class StudyRoomList extends Component {
           <StudyRoomModal
             handleReserve={this.handleReserve}
             handleModal={this.handleModal}
-            rooms={this.state.item}
+            rooms={this.state.room}
           />
         ) : null }
       </View>
@@ -233,7 +241,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginBottom: 3,
     alignItems: 'center',
-    width: '100%'
+    width: '100%',
   },
   category: {
     fontSize: 11,
@@ -273,7 +281,8 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   icon: {
-    marginLeft: '35%'
+    position: 'absolute',
+    right: 20
   }
 });
 

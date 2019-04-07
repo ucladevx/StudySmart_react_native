@@ -5,7 +5,7 @@ import {
   StyleSheet, Text, View, FlatList, TouchableOpacity, Modal
 } from 'react-native';
 import { connect } from 'react-redux';
-import { changeDuration } from '../Actions/actions';
+import { changeDuration, changeLocation } from '../Actions/actions';
 
 class Sorter extends Component {
   constructor(props) {
@@ -17,30 +17,28 @@ class Sorter extends Component {
   }
 
   availableLocations() {
-    const locations = [{ name: 'North Campus' }, { name: 'South Campus' }, { name: 'Hill' }, { name: 'Libaries Only' }];
+    const locations = [{ name: 'North Campus' }, { name: 'South Campus' }, { name: 'Hill' }];
     return locations;
   }
 
   setDuration(e) {
-   this.props.changeDuration(e)
+    this.props.changeDuration(e);
   }
 
   setLocation(e) {
-    this.setState({
-      selectedLocation: e
-    });
+    this.props.changeLocation(e);
   }
 
   // we can make sorter reusable for resources and locations but I am lazy rn
 
   renderLocations(item) {
-    const { selectedLocation } = this.state;
+    const { location } = this.props;
     return (
       <TouchableOpacity
         style={styles.locationCell}
         onPress={() => this.setLocation(item.name)}
       >
-        <Text style={selectedLocation === item.name ? styles.categoryTextSelected : styles.categoryText}>
+        <Text style={location === item.name ? styles.categoryTextSelected : styles.categoryText}>
           {' '}
           {item.name}
           {' '}
@@ -66,33 +64,33 @@ class Sorter extends Component {
               <View style={styles.containerColumn}>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setDuration(1)}
+                  onPress={() => this.setDuration(60)}
                 >
-                  <MaterialCommunityIcon color={duration === 1 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 1 ? styles.categoryTextSelected : styles.categoryText}> 1 hr </Text>
+                  <MaterialCommunityIcon color={duration === 60 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 60 ? styles.categoryTextSelected : styles.categoryText}> 1 hr </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setDuration(2)}
+                  onPress={() => this.setDuration(120)}
                 >
-                  <MaterialCommunityIcon color={duration === 2 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 2 ? styles.categoryTextSelected : styles.categoryText}> 2 hrs </Text>
+                  <MaterialCommunityIcon color={duration === 120 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 120 ? styles.categoryTextSelected : styles.categoryText}> 2 hrs </Text>
                 </TouchableOpacity>
               </View>
               <View style={[styles.containerColumn, { marginLeft: '10%' }]}>
                 <TouchableOpacity
                   style={[styles.containerRow]}
-                  onPress={() => this.setDuration(3)}
+                  onPress={() => this.setDuration(180)}
                 >
-                  <MaterialCommunityIcon color={duration === 3 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 3 ? styles.categoryTextSelected : styles.categoryText}> 3 hrs </Text>
+                  <MaterialCommunityIcon color={duration === 180 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 180 ? styles.categoryTextSelected : styles.categoryText}> 3 hrs </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.containerRow}
-                  onPress={() => this.setDuration(4)}
+                  onPress={() => this.setDuration(240)}
                 >
-                  <MaterialCommunityIcon color={duration === 4 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
-                  <Text style={duration === 4 ? styles.categoryTextSelected : styles.categoryText}> 4 hrs </Text>
+                  <MaterialCommunityIcon color={duration === 240 ? '#4F87EC' : 'gray'} name="circle-slice-8" size={25} backgroundColor="#4F87EC" />
+                  <Text style={duration === 240 ? styles.categoryTextSelected : styles.categoryText}> 4 hrs </Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -213,14 +211,16 @@ const styles = StyleSheet.create({
   }
 });
 const mapStateToProps = state => ({
-  time: state.study.time,
-  date: state.study.date,
-  duration: state.study.duration
+  duration: state.study.duration,
+  location: state.study.location
 });
 
 const mapDispatchToProps = dispatch => ({
   changeDuration: (duration) => {
     dispatch(changeDuration(duration));
+  },
+  changeLocation: (location) => {
+    dispatch(changeLocation(location));
   }
 });
 
