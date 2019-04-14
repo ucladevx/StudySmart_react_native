@@ -6,8 +6,9 @@ import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import Search from './Search';
-import Sorter from './Sorter';
+import Search from '../../components/Search';
+import Sorter from '../../components/Sorter';
+import { changeDuration } from '../../Actions/actions';
 
 
 const fakeVal = [];
@@ -37,47 +38,7 @@ class StudyRoomHeader extends Component {
     this.setState({
       visible: false
     });
-
-    this.processSelection(this.info);
-  }
-
-  processSelection(e) {
-    /* const {
-      exam, professor, changeCategory, storeResources, navigation
-    } = this.props;
-    const examCheck = exam.length > 0;
-    const professorCheck = professor.length > 0;
-    let i;
-    const searchedPosts = [];
-    const upperClass = e.toUpperCase();
-    for (i = 0; i < Posts.length; i++) {
-      if (Posts[i].courseName.toUpperCase() === upperClass) {
-        if (examCheck && professorCheck) {
-          if (Posts[i].test === exam && Posts[i].professor === professor) {
-            searchedPosts.push(Posts[i]);
-          }
-        } else if (examCheck && !professorCheck) {
-          if (Posts[i].test === exam) {
-            searchedPosts.push(Posts[i]);
-          }
-        } else if (professorCheck && !examCheck) {
-          if (Posts[i].professor === professor) {
-            searchedPosts.push(Posts[i]);
-          }
-        } else {
-          searchedPosts.push(Posts[i]);
-        }
-      }
-    }
-    const navigateAction = NavigationActions.navigate({
-      routeName: 'Tests',
-      params: { results: searchedPosts, reset: this.resetCategorySearch },
-      action: NavigationActions.navigate({ routeName: 'Tests', params: { results: searchedPosts, } })
-    });
-    navigation.dispatch(navigateAction);
-    changeCategory('Tests');
-    storeResources(searchedPosts);
-    */
+    this.props.sortData();
   }
 
   render() {
@@ -98,10 +59,10 @@ class StudyRoomHeader extends Component {
           data={fakeVal} // this should be an API call or huge list eventually
           defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
           onFocus={this.goBack}
-          onChangeText={e => this.setInputState(e)}
+          onChangeText={() => null}
           style={[styles.searchContainer, styles.input]}
           inputContainerStyle={[styles.inputContainer]}
-          renderItem={item => (
+          renderItem={() => (
             <TouchableOpacity onPress={() => null} />
           )}
         />
@@ -151,7 +112,6 @@ const styles = StyleSheet.create({
     height: 80,
     paddingTop: 10,
     backgroundColor: '#4F87EC',
-    flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
@@ -188,7 +148,14 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
 
   time: state.study.time,
-  date: state.study.date
+  date: state.study.date,
+  duration: state.study.duration,
 });
 
-export default connect(mapStateToProps)(StudyRoomHeader);
+const mapDispatchToProps = dispatch => ({
+  changeDuration: (duration) => {
+    dispatch(changeDuration(duration));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomHeader);

@@ -3,19 +3,22 @@ import {
   StyleSheet, Text, ScrollView, Image, View, Dimensions
 } from 'react-native';
 
-import {IMG_TEMP, _getHours} from './LocationsList.js';
+import { IMG_TEMP, _getHours } from './LocationsList.js';
 
 const width = Dimensions.get('window').width;
 
 export default class LocationsDetailed extends Component {
+<<<<<<< HEAD
   constructor(props) {
     super(props);
 
   }
 
+=======
+>>>>>>> 82622dc5604d7b7503b465c444e9a1e7cb2f3734
   render() {
     /* Get item that was clicked */
-    var item = this.props.navigation.getParam('locationClicked', 'NO-ITEM');
+    const item = this.props.navigation.getParam('locationClicked', 'NO-ITEM');
     console.log(item);
 
     /* Calculate time */
@@ -26,40 +29,54 @@ export default class LocationsDetailed extends Component {
     return (
       <ScrollView style={styles.container}>
         <Image
-          style={{width:width, height:width,}}
+          style={{ width, height: width, }}
           source={{ uri: IMG_TEMP }}
         />
         <View style={styles.information}>
           <Text style={styles.Name}>
-              {item.name.S}
+            {item.name.S}
           </Text>
           <Text style={styles.Activity_Level_TEMPORARY}>
               Activity Level: 0%
           </Text>
-          <View style = {styles.hours}>
-              <Text style={styles.Section_Header}>Hours:</Text>
-              <Text style={today == 0 ? styles.currentDay : styles.normalDay}>
-                  Sunday: {_getHours(item,0)}
-              </Text>
-              <Text style={today == 1 ? styles.currentDay : styles.normalDay}>
-                  Monday: {_getHours(item,1)}
-              </Text>
-              <Text style={today == 2 ? styles.currentDay : styles.normalDay}>
-                  Tuesday: {_getHours(item,2)}
-              </Text>
-              <Text style={today == 3 ? styles.currentDay : styles.normalDay}>
-                  Wednesday: {_getHours(item,3)}
-              </Text>
-              <Text style={today == 4 ? styles.currentDay : styles.normalDay}>
-                  Thursday: {_getHours(item,4)}
-              </Text>
-              <Text style={today == 5 ? styles.currentDay : styles.normalDay}>
-                  Friday: {_getHours(item,5)}
-              </Text>
-              <Text style={today == 6 ? styles.currentDay : styles.normalDay}>
-                  Saturday: {_getHours(item,6)}
-              </Text>
-            </View>
+          <View style={styles.hours}>
+            <Text style={styles.Section_Header}>Hours:</Text>
+            <Text style={today == 0 ? styles.currentDay : styles.normalDay}>
+                  Sunday:
+              {' '}
+              {_getHours(item, 0)}
+            </Text>
+            <Text style={today == 1 ? styles.currentDay : styles.normalDay}>
+                  Monday:
+              {' '}
+              {_getHours(item, 1)}
+            </Text>
+            <Text style={today == 2 ? styles.currentDay : styles.normalDay}>
+                  Tuesday:
+              {' '}
+              {_getHours(item, 2)}
+            </Text>
+            <Text style={today == 3 ? styles.currentDay : styles.normalDay}>
+                  Wednesday:
+              {' '}
+              {_getHours(item, 3)}
+            </Text>
+            <Text style={today == 4 ? styles.currentDay : styles.normalDay}>
+                  Thursday:
+              {' '}
+              {_getHours(item, 4)}
+            </Text>
+            <Text style={today == 5 ? styles.currentDay : styles.normalDay}>
+                  Friday:
+              {' '}
+              {_getHours(item, 5)}
+            </Text>
+            <Text style={today == 6 ? styles.currentDay : styles.normalDay}>
+                  Saturday:
+              {' '}
+              {_getHours(item, 6)}
+            </Text>
+          </View>
         </View>
       </ScrollView>
     );
@@ -70,17 +87,17 @@ export default class LocationsDetailed extends Component {
 const text = {
   fontFamily: 'System',
   letterSpacing: 1.92,
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    flexDirection:'column',
+    flexDirection: 'column',
   },
   information: {
-    padding:20,
+    padding: 20,
     flexDirection: 'column',
-    justifyContent:'flex-end',
+    justifyContent: 'flex-end',
   },
   Name: {
     ...text,
@@ -88,22 +105,22 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#000',
     textAlign: 'left',
-    flex:1,
+    flex: 1,
   },
   Activity_Level_TEMPORARY: {
-    color:'#5e5b59',
+    color: '#5e5b59',
     textAlign: 'left',
     paddingTop: 10,
-    paddingBottom:30,
+    paddingBottom: 30,
     fontSize: 15,
-    flex:1,
+    flex: 1,
   },
-  hours:{
-    flex:1,
+  hours: {
+    flex: 1,
   },
   Section_Header: {
     ...text,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     fontSize: 20,
     color: '#000',
     textAlign: 'left',

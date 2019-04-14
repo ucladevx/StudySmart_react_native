@@ -114,11 +114,11 @@ class Booking extends Component {
           isVisible={timePickerVisible}
           onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
           onCancel={this.showTimePicker}
-          is24Hour={false}
+          is24Hour={true}
           minuteInterval={30}
           titleIOS="Pick a time"
         />
-        <TouchableOpacity style={styles.searchButton} onPress={() => this.handleSearch()}>
+        <TouchableOpacity style={this.props.date.length === 0 ? styles.searchButtonDisabled: styles.searchButton} disabled={this.props.date.length === 0} onPress={() => this.handleSearch()}>
           <Text style={styles.searchText}> Search! </Text>
         </TouchableOpacity>
       </View>
@@ -168,6 +168,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 40
   },
+  searchButtonDisabled: {
+    flex: 0,
+    borderWidth: 2,
+    borderColor: '#4F87EC',
+    width: '65%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 40,
+    opacity: 0.3
+  },
   searchText: {
     fontFamily: 'System',
     fontSize: 18,
@@ -176,7 +187,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.92,
     color: '#4F87EC',
     width: '80%',
-    padding: 5
+    padding: 5,
+    textAlign: 'center'
   },
   titleText: {
     fontFamily: 'System',
@@ -186,7 +198,8 @@ const styles = StyleSheet.create({
     letterSpacing: 1.92,
     color: 'white',
     width: '80%',
-    padding: 5
+    padding: 5,
+    textAlign: 'center'
   },
 
 });
