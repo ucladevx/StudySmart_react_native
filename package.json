@@ -22,16 +22,33 @@
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "babel-jest": "23.6.0",
-    "eslint": "^5.12.1",
+    "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.15.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.1",
     "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-standard": "^4.0.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.49.0",
     "react-test-renderer": "16.6.0-alpha.8af6728"
   },
   "jest": {
     "preset": "react-native"
-  }
+  },
+  "description": "Please add `/config.js` and `/ios/GoogleService-Info.plist`, to your .gitignore so that we don't accidentally push our API_KEYs onto Github. Always check with git status that these 2 files are not getting added to your commit.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ucladevx/StudySmart_react_native.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ucladevx/StudySmart_react_native/issues"
+  },
+  "homepage": "https://github.com/ucladevx/StudySmart_react_native#readme"
 }

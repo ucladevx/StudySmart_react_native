@@ -3,19 +3,11 @@ import {
   StyleSheet, Text, ScrollView, Image, View, Dimensions
 } from 'react-native';
 
-import { IMG_TEMP, _getHours } from './LocationsList.js';
+import { IMG_TEMP, _getHours } from './LocationsList';
 
 const width = Dimensions.get('window').width;
 
 export default class LocationsDetailed extends Component {
-<<<<<<< HEAD
-  constructor(props) {
-    super(props);
-
-  }
-
-=======
->>>>>>> 82622dc5604d7b7503b465c444e9a1e7cb2f3734
   render() {
     /* Get item that was clicked */
     const item = this.props.navigation.getParam('locationClicked', 'NO-ITEM');
