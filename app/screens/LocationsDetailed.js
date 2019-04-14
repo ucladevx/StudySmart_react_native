@@ -10,6 +10,7 @@ const width = Dimensions.get('window').width;
 export default class LocationsDetailed extends Component {
   constructor(props) {
     super(props);
+
   }
 
   render() {
