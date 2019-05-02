@@ -3,82 +3,114 @@ import React, { Component } from 'react';
 import {
   Text, View, Dimensions, TouchableOpacity, StyleSheet, SectionList, Image,
 } from 'react-native';
-import LocationHeader from '../components/LocationHeader';
+// import LocationHeader from '../components/LocationHeader';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import ViewContainer from '../components/ViewContainer';
 
 
-export var IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
+export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
 
 /* Returns "closed" if library is closed, otherwise returns the hours */
-export function _getHours(library, day) {
+export function getLibraryHours(library, day) {
   let status = 'Closed';
   try {
     status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
   } catch (err) {
     console.log(library.name, 'does not have status');
   }
+
+  // If valid status that begins with a number, check close time
+  // if (status.match(/^\d/)){
+  //   // replace colon with nothing
+  //   var times = status.split(' - ');
+  //   if ((times.length) != 2) {
+  //     return status;
+  //   }
+  //   var open_time = times[0];
+  //   var close_time = times[1];
+  //   var close_hour = close_time.match(/\d+/g);
+  //   var close_ampm = close_time.match(/\D+/g);
+  //   if (close_hour.length != 1 || close_ampm.length != 1){
+  //     return status;
+  //   }
+  //   if (close_ampm == "pm"){
+  //     close_24 = close_time + 12;
+  //   }
+  //   else {
+  //     close_24 = close_time;
+  //   }
+  //   // Special case for 12 am and 12 pm
+  //   // Special case if it closes next day (am)
+  //   var d = new Date();
+  //   var current_hour = d.getHours();
+  //   if (current_hour >= close_24) {
+  //     return "Closed";
+  //   }
+  //   return "Closed";
+  // }
   return status;
 }
 
 export default class LocationsList extends Component {
-    // static navigation options
-    static navigationOptions= {
-      header: props => <LocationHeader {...props} />,
-      headerStyle: {
-        backgroundColor: 'transparent'
-      },
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        color: '#fff',
-      },
-      headerTintColor: '#fff',
-      animationEnabled: true
-    }
+    
+  // static navigationOptions= {
+  //   header: props => <LocationHeader {...props}/>,
+  //   headerStyle: {
+  //     backgroundColor: 'transparent'
+  //   },
+  //   headerTitleStyle: {
+  //     fontWeight: 'bold',
+  //     color: '#fff',
+  //   },
+  //   headerTintColor: '#fff',
+  //   animationEnabled: true
+  // }
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        library_data: undefined
-      };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      // library_data: undefined
+    };
+  }
 
-    async componentDidMount() {
-      let temp;
-      console.log('Requesting library info...');
+  // async componentDidMount() {
+  //   let temp;
+  //   console.log('Requesting library info...');
 
-      /* Fetch library data from API, store inside this.library_data */
-      await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          console.log(data.Items);
-          temp = data;
-        });
+  //   /* Fetch library data from API, store inside this.library_data */
+  //   await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
+  //     .then((response) => { return response.json(); })
+  //     .then((data) => {
+  //       console.log(data.Items);
+  //       temp = data;
+  //     });
+    
+  //   /* Once the request is done, save library data to current state */
+  //   this.setState({ library_data: temp.Items });
+  // }
 
-      /* Once the request is done, save library data to current state */
-      this.setState({ library_data: temp.Items });
-    }
+  render() {
+    const millis = new Date();
+    const day = millis.getDay();
 
-    render() {
-      const millis = new Date();
-      const day = millis.getDay();
+    // const { library_data } = this.state;
+    const { library_data } = this.props;
 
-      /* Rendering temporary loading screen if http request is not done yet */
-      if (this.state.library_data === undefined || this.state.library_data.length == 0) {
-        return (
-          <Text> Attempting to get library data . . . </Text>
-        );
-      }
-
+    /* Rendering temporary loading screen if http request is not done yet */
+    if (library_data === undefined || library_data.length === 0) {
       return (
+          <Text> Attempting to get library data . . . </Text>
+      );
+    }
+
+    return (
         <ViewContainer>
           <View style={styles.container}>
             <SectionList
               bounces={false}
               contentContainerStyle={styles.scroll_style}
               sections={[
-                { title: 'Libraries', data: this.state.library_data },
+                { title: 'Libraries', data: library_data },
 
               ]}
               renderSectionHeader={({ section }) => <Text style={styles.Section_Header}>{section.title}</Text>}
@@ -100,12 +132,23 @@ export default class LocationsList extends Component {
                         {item.name.S}
                       </Text>
                       {/* NEED TO CHANGE TO A PROGRESS BAR, 0% IS TEMPORARY PLACEHOLER  */}
-                      <Text style={listElement.activityLevel}>
+                      {/* <Text style={listElement.activityLevel}>
                         0%
-                    </Text>
-                      <Text style={_getHours(item, day) === 'Closed' ? listElement.Closed : listElement.Open}>
-                        {_getHours(item, day)}
+                    </Text> */}
+                      <Text style={getLibraryHours(item, day) === 'Closed' ? listElement.Closed : listElement.Open}>
+                        Hours: {getLibraryHours(item, day)}
                       </Text>
+                      <View style={listElement.buttonRow}>
+                        <TouchableOpacity>
+                          {/* Need to fix logo later  */}
+                          <Ionicon color="black" name="ios-locate" size={25} style={{marginRight: 10}}/>
+                        </TouchableOpacity>
+                          {/* Check the state, if state is non-expanded use down */}
+                          {/* NO touchable opacity around the arrow since the whole card should trigger expansion */}
+                          <Ionicon color="black" name="ios-arrow-down" size={25}/>
+                          {/*Else, use down */}
+                          {/* <Ionicon color="black" name="ios-arrow-up" size={25}/> */}
+                      </View>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -113,7 +156,7 @@ export default class LocationsList extends Component {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
-          {/* Study room booking button */}
+          {/* Study room booking button
           <View style={styles.floatingButton}>
             <TouchableOpacity
               style={[styles.boxWithShadow, styles.studyRoom]}
@@ -123,15 +166,15 @@ export default class LocationsList extends Component {
                 Book a study room
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </ViewContainer>
-      );
-    }
+    );
+  }
 }
 
 /* Get width of window */
-const width = Dimensions.get('window').width;
-
+const { width, height } = Dimensions.get('window');
+const headerHeight = 80;
 
 /* Standardized text used throughout code */
 const text = {
@@ -146,8 +189,8 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     position: 'absolute',
-    zIndex: 2
-
+    zIndex: 2,
+    height: height-headerHeight,
   },
   scroll_style: {
     justifyContent: 'center',
@@ -156,7 +199,8 @@ const styles = StyleSheet.create({
   floatingButton: {
     position: 'absolute',
     zIndex: 20,
-    bottom: 30,
+    // TODO: NEED TO FIX THIS:
+    bottom: -400,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -182,6 +226,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
     fontStyle: 'normal',
+    textAlign: 'center',
     letterSpacing: 1.52,
     color: 'white',
     width: '80%',
@@ -210,6 +255,7 @@ const listElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     width,
+    height: height / 5,
     backgroundColor: 'white',
   },
   information: { // child of card
@@ -223,29 +269,38 @@ const listElement = StyleSheet.create({
     justifyContent: 'center',
   },
   img: {
-    width: 75,
-    height: 75,
-    borderRadius: 75 / 2
+    width: height / 10,
+    height: height / 10,
+    borderRadius: 0,
+  },
+  // this styling could be better!!! contains the map icon and the arrow of card
+  buttonRow: {
+    flexDirection: 'row',
+    marginLeft: 'auto',
+    paddingRight: 25,
+    alignItems: 'flex-end',
+    justifyContent: 'center'
   },
   Name: { // name of location
     ...text,
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 20,
+    // fontWeight: 'bold',
     color: '#000',
     paddingBottom: 10,
+    paddingRight: 25,
   },
   Closed: {
     ...text,
-    fontSize: 10,
+    fontSize: 14,
     color: 'red',
   },
   Open: {
     ...text,
-    fontSize: 10,
+    fontSize: 14,
     color: 'green',
   },
   activityLevel: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#5e5b59',
     paddingBottom: 3,
   },

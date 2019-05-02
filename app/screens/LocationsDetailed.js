@@ -1,11 +1,12 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, ScrollView, Image, View, Dimensions
+  StyleSheet, Text, ScrollView, Image, View, Dimensions, 
 } from 'react-native';
 
-import { IMG_TEMP, _getHours } from './LocationsList.js';
+import { IMG_TEMP, getLibraryHours } from './LocationsList';
 
-const width = Dimensions.get('window').width;
+const { width } = Dimensions.get('window');
 
 export default class LocationsDetailed extends Component {
   render() {
@@ -28,45 +29,45 @@ export default class LocationsDetailed extends Component {
           <Text style={styles.Name}>
             {item.name.S}
           </Text>
-          <Text style={styles.Activity_Level_TEMPORARY}>
+          {/* <Text style={styles.Activity_Level_TEMPORARY}>
               Activity Level: 0%
-          </Text>
+          </Text> */}
           <View style={styles.hours}>
             <Text style={styles.Section_Header}>Hours:</Text>
             <Text style={today == 0 ? styles.currentDay : styles.normalDay}>
                   Sunday:
               {' '}
-              {_getHours(item, 0)}
+              {getLibraryHours(item, 0)}
             </Text>
             <Text style={today == 1 ? styles.currentDay : styles.normalDay}>
                   Monday:
               {' '}
-              {_getHours(item, 1)}
+              {getLibraryHours(item, 1)}
             </Text>
             <Text style={today == 2 ? styles.currentDay : styles.normalDay}>
                   Tuesday:
               {' '}
-              {_getHours(item, 2)}
+              {getLibraryHours(item, 2)}
             </Text>
             <Text style={today == 3 ? styles.currentDay : styles.normalDay}>
                   Wednesday:
               {' '}
-              {_getHours(item, 3)}
+              {getLibraryHours(item, 3)}
             </Text>
             <Text style={today == 4 ? styles.currentDay : styles.normalDay}>
                   Thursday:
               {' '}
-              {_getHours(item, 4)}
+              {getLibraryHours(item, 4)}
             </Text>
             <Text style={today == 5 ? styles.currentDay : styles.normalDay}>
                   Friday:
               {' '}
-              {_getHours(item, 5)}
+              {getLibraryHours(item, 5)}
             </Text>
             <Text style={today == 6 ? styles.currentDay : styles.normalDay}>
                   Saturday:
               {' '}
-              {_getHours(item, 6)}
+              {getLibraryHours(item, 6)}
             </Text>
           </View>
         </View>
