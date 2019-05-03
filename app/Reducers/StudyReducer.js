@@ -7,7 +7,7 @@ const initialState = {
   date: '',
   duration: 0,
   room: '',
-  location: '',
+  location: ['Any'],
   data: []
 
 };
@@ -40,10 +40,10 @@ const StudyReducer = (state = initialState, action) => {
         location: action.location
       };
     case LOAD_DATA:
-    return {
-      ...state,
-      data: action.data
-    };
+      return {
+        ...state,
+        data: action.data
+      };
     default:
       return state;
   }

@@ -113,17 +113,6 @@ export default class LocationsList extends Component {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
-          {/* Study room booking button */}
-          <View style={styles.floatingButton}>
-            <TouchableOpacity
-              style={[styles.boxWithShadow, styles.studyRoom]}
-              onPress={() => this.props.navigation.navigate('Booking')}
-            >
-              <Text style={styles.titleText}>
-                Book a study room
-              </Text>
-            </TouchableOpacity>
-          </View>
         </ViewContainer>
       );
     }

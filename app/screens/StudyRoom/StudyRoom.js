@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Linking
+  Text, View, TouchableOpacity, StyleSheet, FlatList, Linking, SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -66,7 +66,7 @@ class StudyRoomList extends Component {
       }
       const newDate = new Date(yearInt, monthInt - 1, dayInt, hourInt, minuteInt, 0, 0);
       const seconds = newDate.getTime() / 1000;
-      appendedURL += `?time=${seconds}`;
+      appendedURL += `?time=${seconds}`; 
     }
     /* Fetch library data from API, store inside this.library_data */
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/studyinfo${appendedURL}`)
@@ -87,7 +87,7 @@ class StudyRoomList extends Component {
     const { data } = this.props;
     for (let i = 0; i < data.length; i += 1) {
       if (duration === '0' || data[i].duration === duration) {
-        if (location.length === 0 || data[i].location === location) {
+        if (location.includes('Any') || location.includes(data[i].location)) {
           if (data[i].name in locationDict) {
             locationDict[data[i].name].push(data[i]);
           } else {
@@ -132,8 +132,7 @@ class StudyRoomList extends Component {
           <View
             style={styles.containerRow}
           >
-            <View style={styles.circleIcon}>
-              <Text style={styles.circleText}>UCLA</Text>
+            <View style={styles.imageIcon}>
             </View>
             <View
               style={styles.containerText}
@@ -152,7 +151,7 @@ class StudyRoomList extends Component {
                   style={styles.icon}
                   onPress={() => this.handleSelectRoom(item)}
                 >
-                  <Entypo name="chevron-thin-down" size={25} />
+                  <Entypo name="chevron-thin-right" size={25} color="#108BF8" />
                 </TouchableOpacity>
               </View>
               <View style={styles.containerRow}>
@@ -170,7 +169,7 @@ class StudyRoomList extends Component {
   render() {
     const { visible, room } = this.state;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <StudyRoomHeader
           navigation={this.props.navigation}
           sortData={this.sortData}
@@ -189,7 +188,7 @@ class StudyRoomList extends Component {
             rooms={this.state.room}
           />
         ) : null }
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -197,23 +196,17 @@ class StudyRoomList extends Component {
 const text = {
   fontFamily: 'System',
   fontSize: 12,
-  fontWeight: '500',
+  fontWeight: '300',
   fontStyle: 'normal',
   letterSpacing: 1.92,
-  color: '#5e5b59',
+  color: 'black',
   paddingBottom: 3,
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  header: {
-    height: 50,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#4F87EC',
-    width: '100%',
+    flex: 1,
+    backgroundColor: 'white'
   },
   list: {
     backgroundColor: 'transparent',
@@ -222,12 +215,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     height: 100,
+    width: '95%',
     padding: 10,
     marginTop: 8,
     marginBottom: 8,
     borderRadius: 5,
+    alignSelf: 'center',
     backgroundColor: '#FFF',
     elevation: 2,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: {
+      width: 0.5,
+      height: 0.5
+    },
+    shadowRadius: 1,
+    shadowOpacity: 0.8,
   },
   containerText: {
     flex: 1,
@@ -247,10 +249,10 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontStyle: 'italic',
   },
-  circleIcon: {
-    borderRadius: 25,
-    height: 50,
-    width: 50,
+  imageIcon: {
+    borderRadius: 10,
+    height: 80,
+    width: 80,
     backgroundColor: 'green',
     marginRight: 10,
     justifyContent: 'center',
@@ -268,17 +270,11 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     flex: 0
   },
-  circleText: {
-    ...text,
-    color: 'white',
-    fontSize: 14,
-    textAlign: 'center'
-  },
   name: { // name of location
     ...text,
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
+    fontSize: 18,
+    fontWeight: '300',
+    color: 'black',
   },
   icon: {
     position: 'absolute',

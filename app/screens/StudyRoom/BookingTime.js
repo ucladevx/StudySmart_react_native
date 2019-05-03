@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity
+  StyleSheet, Text, View, TouchableOpacity, Image
 } from 'react-native';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { connect } from 'react-redux';
 import { changeTime, changeDate } from '../../Actions/actions';
 
+class BookingTime extends Component {
+  static navigationOptions={
+    header: () => {
+      false;
+    }
+  }
 
-class Booking extends Component {
   constructor(props) {
     super(props);
     const { date, time } = this.props;
     this.state = {
       datePickerVisible: false,
       timePickerVisible: false,
-      date: date !== '' ? date : 'Choose a date!',
-      time: time !== '' ? time : 'Choose a time!',
+      date: date !== '' ? date : 'Today',
+      time: time !== '' ? time : 'Now',
     };
     this.date = new Date();
     this.minDate = new Date();
@@ -84,13 +90,21 @@ class Booking extends Component {
     } = this.state;
     return (
       <View style={styles.container}>
-        <Text style={styles.promptText}>What day?</Text>
+        <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('BookingLocation')}>
+          <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
+        </TouchableOpacity>
+        <Text style={styles.promptText}>When do you want to study?</Text>
+        <Text style={styles.largeText}>
+          {' '}
+          {date}
+          {' '}
+        </Text>
         <TouchableOpacity
-          style={styles.studyRoom}
+          style={[styles.whiteButton, styles.boxWithShadow]}
           onPress={this.showDatePicker}
         >
           <Text style={styles.titleText}>
-            {date}
+            Change
           </Text>
         </TouchableOpacity>
         <DateTimePicker
@@ -100,13 +114,17 @@ class Booking extends Component {
           maximumDate={this.date}
           minimumDate={this.minDate}
         />
-        <Text style={styles.promptText}>What time?</Text>
+        <Text style={styles.largeText}>
+          {' '}
+          {time}
+          {' '}
+        </Text>
         <TouchableOpacity
-          style={styles.studyRoom}
+          style={[styles.whiteButton, styles.boxWithShadow]}
           onPress={this.showTimePicker}
         >
           <Text style={styles.titleText}>
-            {time}
+            Change
           </Text>
         </TouchableOpacity>
         <DateTimePicker
@@ -114,35 +132,54 @@ class Booking extends Component {
           isVisible={timePickerVisible}
           onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
           onCancel={this.showTimePicker}
-          is24Hour={true}
+          is24Hour
           minuteInterval={30}
           titleIOS="Pick a time"
         />
-        <TouchableOpacity style={this.props.date.length === 0 ? styles.searchButtonDisabled: styles.searchButton} disabled={this.props.date.length === 0} onPress={() => this.handleSearch()}>
-          <Text style={styles.searchText}> Search! </Text>
+        <TouchableOpacity style={styles.searchButton} onPress={() => this.handleSearch()}>
+          <Text style={styles.searchText}> Search </Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
 const promptText = {
-  height: 65,
   fontFamily: 'System',
   fontSize: 30,
-  fontWeight: 'bold',
+  fontWeight: '200',
   fontStyle: 'normal',
   letterSpacing: 1.92,
-  color: 'black',
-  marginTop: '12%',
+  color: '#108BF8',
+  marginTop: '25%',
   marginBottom: '5%',
+  width: '80%',
+  textAlign: 'center',
 };
-
+const searchButton = {
+  flex: 0,
+  borderWidth: 2,
+  borderColor: '#108BF8',
+  backgroundColor: '#108BF8',
+  width: '65%',
+  height: 50,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: 20,
+  position: 'absolute',
+  bottom: '10%',
+};
 const styles = StyleSheet.create({
   promptText,
+  largeText: {
+    ...promptText,
+    marginTop: '15%',
+    fontSize: 40,
+  },
   container: {
-    backgroundColor: 'white',
     flex: 1,
-    alignItems: 'center'
+    position: 'relative',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   boxWithShadow: {
     shadowColor: '#000',
@@ -151,41 +188,28 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
   },
-  studyRoom: {
-    backgroundColor: '#4F87EC',
+  whiteButton: {
+    backgroundColor: 'white',
     height: 50,
     width: '65%',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  searchButton: {
-    flex: 0,
-    borderWidth: 2,
-    borderColor: '#4F87EC',
-    width: '65%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40
+  leftButtonAbs: {
+    width: 30,
+    height: 30,
+    position: 'absolute',
+    left: 20,
+    top: '5%'
   },
-  searchButtonDisabled: {
-    flex: 0,
-    borderWidth: 2,
-    borderColor: '#4F87EC',
-    width: '65%',
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-    opacity: 0.3
-  },
+  searchButton,
   searchText: {
     fontFamily: 'System',
     fontSize: 18,
     fontWeight: '300',
     fontStyle: 'normal',
     letterSpacing: 1.92,
-    color: '#4F87EC',
+    color: 'white',
     width: '80%',
     padding: 5,
     textAlign: 'center'
@@ -196,7 +220,7 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     fontStyle: 'normal',
     letterSpacing: 1.92,
-    color: 'white',
+    color: '#108BF8',
     width: '80%',
     padding: 5,
     textAlign: 'center'
@@ -217,4 +241,4 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Booking);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingTime);

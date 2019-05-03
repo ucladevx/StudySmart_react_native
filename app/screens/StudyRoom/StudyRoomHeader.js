@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity
+  StyleSheet, Text, View, TouchableOpacity, SafeAreaView
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
@@ -25,7 +25,7 @@ class StudyRoomHeader extends Component {
 
   // Shirly's code from GlobalSearchBar.js
   goBack() {
-    this.props.navigation.navigate('Booking');
+    this.props.navigation.navigate('BookingTime');
   }
 
   showSorter() {
@@ -46,15 +46,8 @@ class StudyRoomHeader extends Component {
     const { date, time } = this.props;
     const { visible } = this.state;
     return (
-      <View style={styles.bar}>
-        <View style={styles.leftView}>
-          <TouchableOpacity
-            style={styles.buttonLeft}
-            onPress={() => navigate('List')}
-          >
-            <Ionicon name="ios-list" color="white" size={30} />
-          </TouchableOpacity>
-        </View>
+      <View style={styles.topBar}>
+        <View style={styles.bar} />
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
           defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
@@ -66,19 +59,6 @@ class StudyRoomHeader extends Component {
             <TouchableOpacity onPress={() => null} />
           )}
         />
-        <View style={styles.rightView}>
-          <TouchableOpacity
-            style={styles.buttonRight}
-            onPress={() => this.showSorter()}
-          >
-            <AntIcon name="filter" color="white" size={30} />
-          </TouchableOpacity>
-          { visible ? (
-            <Sorter
-              showResults={this.showResults}
-            />
-          ) : null }
-        </View>
       </View>
 
     );
@@ -91,9 +71,13 @@ const text = {
 };
 
 const styles = StyleSheet.create({
+  topBar: {
+    alignItems: 'center',
+    width: '100%',
+    height: 100,
+  },
   buttonLeft: {
     marginLeft: 15
-
   },
   buttonRight: {
     marginRight: 15
@@ -109,37 +93,41 @@ const styles = StyleSheet.create({
     width: 40
   },
   bar: {
-    height: 80,
-    paddingTop: 10,
-    backgroundColor: '#4F87EC',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    height: 50,
+    backgroundColor: '#108BF8',
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
 
   },
   searchContainer: {
-    flex: 1,
     zIndex: 5,
-    marginLeft: '5%'
+    flexDirection: 'row',
+    width: '98%',
+    height: 35,
+    marginTop: 10,
   },
   inputContainer: {
-    width: 250,
-    height: 30,
+    marginTop: 10,
+    flexDirection: 'row',
     backgroundColor: 'white',
+    zIndex: 5,
+    height: 40,
+    width: '98%',
     borderRadius: 12,
     shadowColor: 'rgba(0, 0, 0, 0.5)',
     shadowOffset: {
-      width: 2,
-      height: 2
+      width: 1,
+      height: 1
     },
-    shadowRadius: 4,
-    shadowOpacity: 1
+    shadowRadius: 2,
+    shadowOpacity: 0.8,
   },
   input: {
     ...text,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '300',
     color: '#000',
   }
 
@@ -159,3 +147,18 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomHeader);
+
+/*
+ <SafeAreaView style={styles.rightView}>
+          <TouchableOpacity
+            style={styles.buttonRight}
+            onPress={() => this.showSorter()}
+          >
+            <AntIcon name="filter" color="white" size={30} />
+          </TouchableOpacity>
+          { visible ? (
+            <Sorter
+              showResults={this.showResults}
+            />
+          ) : null }
+        </SafeAreaView> */
