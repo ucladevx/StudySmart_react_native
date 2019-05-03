@@ -36,8 +36,6 @@ class StudyRoomList extends Component {
       currentData: [],
       room: null,
     };
-    this.handleReserve = this.handleReserve.bind(this);
-    this.handleModal = this.handleModal.bind(this);
     this.sortData = this.sortData.bind(this);
   }
 
@@ -104,29 +102,16 @@ class StudyRoomList extends Component {
     });
   }
 
-  handleSelectRoom() {
-    Linking.openURL('https://reslife.ucla.edu/reserve/');
-  }
-
-  handleReserve(room) {
-    this.handleModal();
-    if (room !== null) {
-      Linking.openURL(room);
-    }
-  }
-
-  handleModal(item) {
-    const { visible } = this.state;
-    this.setState({
-      visible: !visible,
-      room: item,
+  handleSelectRoom(item) {
+    this.props.navigation.navigate('StudyRoomReserve', {
+      rooms: item
     });
   }
 
   renderRow(item) {
     return (
       <TouchableOpacity
-        onPress={() => this.handleModal(item)}
+        onPress={() => this.handleSelectRoom(item)}
       >
         <View style={styles.cell}>
           <View
@@ -214,11 +199,11 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     flexDirection: 'row',
-    height: 100,
+    height: 120,
     width: '95%',
     padding: 10,
-    marginTop: 8,
-    marginBottom: 8,
+    marginTop: 4,
+    marginBottom: 4,
     borderRadius: 5,
     alignSelf: 'center',
     backgroundColor: '#FFF',
@@ -250,9 +235,9 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
   imageIcon: {
-    borderRadius: 10,
-    height: 80,
-    width: 80,
+    borderRadius: 5,
+    height: 100,
+    width: 100,
     backgroundColor: 'green',
     marginRight: 10,
     justifyContent: 'center',
@@ -278,7 +263,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     position: 'absolute',
-    right: 20
+    right: 5
   }
 });
 

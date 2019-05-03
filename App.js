@@ -12,12 +12,14 @@ import LocationsList from './app/screens/LocationsList';
 import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
+import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
 
 const StudyRoomStack = StackNavigator({
   Login: { screen: LoginPage },
   BookingLocation: { screen: BookingLocation },
   BookingTime: { screen: BookingTime },
-  StudyRoomList: { screen: StudyRoomList }
+  StudyRoomList: { screen: StudyRoomList },
+  StudyRoomReserve: { screen: StudyRoomReserve }
 
 
 },

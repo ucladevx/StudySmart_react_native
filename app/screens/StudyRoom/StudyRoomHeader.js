@@ -104,17 +104,18 @@ const styles = StyleSheet.create({
   searchContainer: {
     zIndex: 5,
     flexDirection: 'row',
-    width: '98%',
+    width: '95%',
     height: 35,
-    marginTop: 10,
+    marginLeft: '5%',
+    alignItems: 'center',
   },
   inputContainer: {
-    marginTop: 10,
+    marginTop: 5,
     flexDirection: 'row',
     backgroundColor: 'white',
     zIndex: 5,
     height: 40,
-    width: '98%',
+    width: '95%',
     borderRadius: 12,
     shadowColor: 'rgba(0, 0, 0, 0.5)',
     shadowOffset: {
