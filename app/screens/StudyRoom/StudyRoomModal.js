@@ -16,6 +16,9 @@ class StudyRoomModal extends Component {
       datePickerVisible: false,
       timePickerVisible: false,
     };
+    this.date = new Date();
+    this.minDate = new Date();
+    this.date.setDate(this.date.getDate() + 7);
   }
 
   showDatePicker = () => {
@@ -32,6 +35,10 @@ class StudyRoomModal extends Component {
     });
   }
 
+  changeSearch = () => {
+    this.props.handleModal();
+    this.props.getStudyRooms();
+  }
 
   handleConfirm = (setting, thing) => {
     const { datePickerVisible, timePickerVisible } = this.state;
@@ -107,7 +114,7 @@ render() {
             />
             <TouchableOpacity
               style={[styles.whiteButton, styles.boxWithShadow]}
-              onPress={this.showTimePicker}
+              onPress={this.showDatePicker}
             >
               <Text style={styles.titleText}>
             Change
@@ -145,7 +152,7 @@ render() {
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.whiteButton, styles.boxWithShadow]}
-              onPress={() => this.props.handleModal()}
+              onPress={() => this.changeSearch()}
             >
               <Text style={styles.titleText}>
             Ok

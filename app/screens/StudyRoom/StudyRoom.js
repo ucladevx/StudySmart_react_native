@@ -38,9 +38,14 @@ class StudyRoomList extends Component {
       room: null,
     };
     this.sortData = this.sortData.bind(this);
+    this.getStudyRooms = this.getStudyRooms.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getStudyRooms();
+  }
+
+  async getStudyRooms() {
     let temp; let month; let day; let
       year;
     let appendedURL = '';
@@ -60,8 +65,14 @@ class StudyRoomList extends Component {
       const dayInt = parseInt(day, 10);
       let hourInt = parseInt(splitTime[0], 10);
       const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
-      if (splitTime[1].substring(splitTime[1].length - 2) === 'PM') {
-        hourInt += 12;
+      const amPm = splitTime[1].substring(splitTime[1].length - 2);
+      if (amPm === 'PM') {
+        if (hourInt !== 12) {
+          hourInt += 12;
+        }
+      }
+      if (hourInt === 12 && amPm === 'AM') {
+        hourInt = 0;
       }
       const newDate = new Date(yearInt, monthInt - 1, dayInt, hourInt, minuteInt, 0, 0);
       const seconds = newDate.getTime() / 1000;
@@ -179,7 +190,7 @@ class StudyRoomList extends Component {
           style={styles.list}
         />
         { visible ? (
-          <StudyRoomModal handleModal={this.handleModal} />
+          <StudyRoomModal handleModal={this.handleModal} getStudyRooms={this.getStudyRooms} />
         ) : null }
       </SafeAreaView>
     );

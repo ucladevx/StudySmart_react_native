@@ -3,8 +3,8 @@ import {
 } from '../Actions/actions';
 
 const initialState = {
-  time: '',
-  date: '',
+  time: 'Now',
+  date: 'Today',
   duration: 0,
   room: '',
   location: ['Anywhere'],

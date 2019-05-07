@@ -20,8 +20,6 @@ class BookingTime extends Component {
     this.state = {
       datePickerVisible: false,
       timePickerVisible: false,
-      date: date !== '' ? date : 'Today',
-      time: time !== '' ? time : 'Now',
     };
     this.date = new Date();
     this.minDate = new Date();
@@ -55,7 +53,6 @@ class BookingTime extends Component {
       const lastChar = styledTime[styledTime.length - 1];
       styledTime = styledTime.slice(0, -6);
       this.setState({
-        time: styledTime + last2ndChar + lastChar,
         timePickerVisible: !timePickerVisible
       });
       changeTimeAction(styledTime + last2ndChar + lastChar);
@@ -72,7 +69,6 @@ class BookingTime extends Component {
       }
       chosen = `${mm}/${dd}/${yyyy}`;
       this.setState({
-        date: chosen,
         datePickerVisible: !datePickerVisible
       });
       changeDateAction(chosen);
@@ -85,8 +81,7 @@ class BookingTime extends Component {
   }
 
   render() {
-    const {
-      date, time, datePickerVisible, timePickerVisible
+    const { datePickerVisible, timePickerVisible
     } = this.state;
     return (
       <View style={styles.container}>
@@ -96,7 +91,7 @@ class BookingTime extends Component {
         <Text style={styles.promptText}>When do you want to study?</Text>
         <Text style={styles.largeText}>
           {' '}
-          {date}
+          {this.props.date}
           {' '}
         </Text>
         <TouchableOpacity
@@ -116,7 +111,7 @@ class BookingTime extends Component {
         />
         <Text style={styles.largeText}>
           {' '}
-          {time}
+          {this.props.time}
           {' '}
         </Text>
         <TouchableOpacity
