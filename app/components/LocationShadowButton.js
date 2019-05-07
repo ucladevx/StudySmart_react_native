@@ -4,7 +4,7 @@ import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
 
-export default class ShadowButton extends Component {
+export default class LocationShadowButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,8 +16,7 @@ export default class ShadowButton extends Component {
     const { selected } = this.state;
     this.setState({
       selected: !selected
-    });
-    this.props.changeLoc(this.props.title, this.state.selected)
+    }, () => { this.props.changeLoc(this.props.title, this.state.selected) });
   }
 
   render() {
@@ -42,11 +41,11 @@ const whiteButton = {
   width: '65%',
   alignItems: 'center',
   justifyContent: 'center',
-  marginTop: 30,
+  marginTop: 20,
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.8,
-  shadowRadius: 2,
+  shadowOpacity: 0.5,
+  shadowRadius: 1,
   elevation: 5,
 };
 
@@ -65,7 +64,6 @@ const titleText = {
 const styles = StyleSheet.create({
   whiteButton,
   titleText,
-
   whiteButtonSelected: {
     ...whiteButton,
     backgroundColor: '#108BF8',

@@ -7,7 +7,7 @@ const initialState = {
   date: '',
   duration: 0,
   room: '',
-  location: ['Any'],
+  location: ['Anywhere'],
   data: []
 
 };

@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import ShadowButton from '../../components/ShadowButton';
+import LocationShadowButton from '../../components/LocationShadowButton';
 import { changeLocation } from '../../Actions/actions';
 
 class BookingLocation extends Component {
@@ -18,9 +18,9 @@ class BookingLocation extends Component {
     if (!selected) {
       const index = currentLocations.indexOf(location);
       if (index > -1) {
-        currentLocations.splice(location, 1);
+        currentLocations.splice(index, 1);
       }
-    } else if (!currentLocations.includes(location)) {
+    } else if (selected && !currentLocations.includes(location)) {
       currentLocations.push(location);
     }
     this.props.changeLocation(currentLocations);
@@ -30,10 +30,10 @@ class BookingLocation extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.promptText}>Where do you want to study?</Text>
-        <ShadowButton title="Any" selected changeLoc={this.changeLoc} />
-        <ShadowButton title="Hill" selected={false} changeLoc={this.changeLoc} />
-        <ShadowButton title="Libraries" selected={false} changeLoc={this.changeLoc} />
-        <ShadowButton title="Classrooms" selected={false} changeLoc={this.changeLoc} />
+        <LocationShadowButton title="Anywhere" selected changeLoc={this.changeLoc} />
+        <LocationShadowButton title="Hill" selected={false} changeLoc={this.changeLoc} />
+        <LocationShadowButton title="Libraries" selected={false} changeLoc={this.changeLoc} />
+        <LocationShadowButton title="Classrooms" selected={false} changeLoc={this.changeLoc} />
         <TouchableOpacity style={styles.searchButton} onPress={() => this.props.navigation.navigate('BookingTime')}>
           <Text style={styles.searchText}> Next </Text>
         </TouchableOpacity>
@@ -48,7 +48,7 @@ const promptText = {
   fontStyle: 'normal',
   letterSpacing: 1.92,
   color: '#108BF8',
-  marginTop: '30%',
+  marginTop: '25%',
   marginBottom: '5%',
   width: '80%',
   textAlign: 'center',
@@ -73,6 +73,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     position: 'absolute',
     bottom: '10%',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
+    elevation: 5,
   },
   searchText: {
     fontFamily: 'System',

@@ -43,11 +43,17 @@ class StudyRoomHeader extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const { date, time } = this.props;
+    const { date, time, location } = this.props;
     const { visible } = this.state;
     return (
       <View style={styles.topBar}>
-        <View style={styles.bar} />
+        <View style={styles.bar}>
+          <Text style={styles.titleText}>
+            {' '}
+            {this.props.location.toString()}
+            {' '}
+          </Text>
+        </View>
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
           defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
@@ -60,7 +66,6 @@ class StudyRoomHeader extends Component {
           )}
         />
       </View>
-
     );
   }
 }
@@ -69,8 +74,20 @@ const text = {
   fontFamily: 'System',
   letterSpacing: 1.92,
 };
+const titleText = {
+  fontFamily: 'System',
+  fontSize: 18,
+  fontWeight: '300',
+  fontStyle: 'normal',
+  letterSpacing: 1.92,
+  color: '#108BF8',
+  width: '80%',
+  padding: 5,
+  textAlign: 'center'
+};
 
 const styles = StyleSheet.create({
+  titleText,
   topBar: {
     alignItems: 'center',
     width: '100%',
@@ -94,7 +111,7 @@ const styles = StyleSheet.create({
   },
   bar: {
     height: 50,
-    backgroundColor: '#108BF8',
+    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -119,10 +136,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     shadowColor: 'rgba(0, 0, 0, 0.5)',
     shadowOffset: {
-      width: 1,
-      height: 1
+      width: 0.5,
+      height: 0.5
     },
-    shadowRadius: 2,
+    shadowRadius: 1,
     shadowOpacity: 0.8,
   },
   input: {
@@ -130,12 +147,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '300',
     color: '#000',
-  }
+  },
 
 
 });
 const mapStateToProps = state => ({
-
+  location: state.study.location,
   time: state.study.time,
   date: state.study.date,
   duration: state.study.duration,

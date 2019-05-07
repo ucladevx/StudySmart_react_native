@@ -52,7 +52,6 @@ export default class LocationsList extends Component {
           return response.json();
         })
         .then((data) => {
-          console.log(data.Items);
           temp = data;
         });
 

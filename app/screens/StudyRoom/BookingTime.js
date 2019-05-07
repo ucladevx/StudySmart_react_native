@@ -167,12 +167,16 @@ const searchButton = {
   borderRadius: 20,
   position: 'absolute',
   bottom: '10%',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.5,
+  shadowRadius: 1,
+  elevation: 5,
 };
 const styles = StyleSheet.create({
   promptText,
   largeText: {
     ...promptText,
-    marginTop: '15%',
+    marginTop: '5%',
     fontSize: 40,
   },
   container: {
@@ -184,8 +188,8 @@ const styles = StyleSheet.create({
   boxWithShadow: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
     elevation: 5,
   },
   whiteButton: {
@@ -200,7 +204,7 @@ const styles = StyleSheet.create({
     height: 30,
     position: 'absolute',
     left: 20,
-    top: '5%'
+    top: '6%'
   },
   searchButton,
   searchText: {

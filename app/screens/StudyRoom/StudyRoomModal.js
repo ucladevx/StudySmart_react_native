@@ -3,118 +3,185 @@ import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, Modal
 } from 'react-native';
 import { connect } from 'react-redux';
-
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import {
+  changeTime, changeDate, changeLocation, loadData
+} from '../../Actions/actions';
+import SmallShadowButton from '../../components/SmallShadowButton';
 
 class StudyRoomModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      duration: '',
+      datePickerVisible: false,
+      timePickerVisible: false,
     };
   }
 
-  availableDurations() {
-    return [{ name: '1' }, { name: '2' }];
+  showDatePicker = () => {
+    const { datePickerVisible } = this.state;
+    this.setState({
+      datePickerVisible: !datePickerVisible
+    });
   }
 
-  renderList(item) {
-    const durations = { 1: '60', 2: '120' };
-    if (this.state.duration.length !== 0 && durations[this.state.duration] !== item.duration) {
-      return;
+  showTimePicker = () => {
+    const { timePickerVisible } = this.state;
+    this.setState({
+      timePickerVisible: !timePickerVisible
+    });
+  }
+
+
+  handleConfirm = (setting, thing) => {
+    const { datePickerVisible, timePickerVisible } = this.state;
+    const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
+    if (thing === 'time') {
+      let styledTime = setting.toLocaleTimeString();
+      const last2ndChar = styledTime[styledTime.length - 2];
+      const lastChar = styledTime[styledTime.length - 1];
+      styledTime = styledTime.slice(0, -6);
+      this.setState({
+        time: styledTime + last2ndChar + lastChar,
+        timePickerVisible: !timePickerVisible
+      });
+      changeTimeAction(styledTime + last2ndChar + lastChar);
+    } else {
+      let chosen = setting;
+      let dd = chosen.getDate();
+      let mm = chosen.getMonth() + 1; // January is 0!
+      const yyyy = chosen.getFullYear();
+      if (dd < 10) {
+        dd = `0${dd}`;
+      }
+      if (mm < 10) {
+        mm = `0${mm}`;
+      }
+      chosen = `${mm}/${dd}/${yyyy}`;
+      this.setState({
+        date: chosen,
+        datePickerVisible: !datePickerVisible
+      });
+      changeDateAction(chosen);
     }
-    let details = item.details.replace(/\n/g, '');
-    details = details.trim();
-    const { room } = this.state;
-    return (
-      <TouchableOpacity
-        style={styles.listCell}
-        onPress={() => this.setState({ room: item.link })}
-      >
-        <Text style={room === item.link ? styles.categoryTextSelected : styles.categoryText}>
-          {details}
-        </Text>
-      </TouchableOpacity>
-    );
   }
 
-  renderDurationList(item) {
-    const { duration } = this.state;
-    return (
-      <TouchableOpacity
-        style={styles.listCell}
-        onPress={() => this.setState({ duration: item.name })}
-      >
-        <Text style={duration === item.name ? styles.categoryTextSelected : styles.categoryText}>
-          {' '}
-          {item.name}
-          {' '}
-        </Text>
-      </TouchableOpacity>
-    );
+changeLoc = (location, selected) => {
+  const currentLocations = this.props.location;
+  if (!selected) {
+    const index = currentLocations.indexOf(location);
+    if (index > -1) {
+      currentLocations.splice(index, 1);
+    }
+  } else if (selected && !currentLocations.includes(location)) {
+    currentLocations.push(location);
   }
+  this.props.changeLocation(currentLocations);
+}
 
-
-  render() {
-    const { handleModal, handleReserve } = this.props;
-    return (
-      <Modal
-        style={styles.modal}
-        transparent
-        animationType="fade"
-      >
-        <View style={[styles.modalContainer, styles.boxWithShadow]}>
-          <Text style={styles.titleText}> Choose a Duration </Text>
-          <View style={styles.list}>
-            <FlatList
-              data={this.availableDurations()}
-              extraData={this.availableDurations()}
-              renderItem={({ item }) => this.renderDurationList(item)}
-              keyExtractor={(item, index) => index.toString()}
-              style={{ flex: 1, backgroundColor: 'transparent' }}
+render() {
+  const { datePickerVisible, timePickerVisible } = this.state;
+  return (
+    <Modal
+      style={styles.modal}
+      transparent
+      animationType="fade"
+    >
+      <View style={[styles.modalContainer, styles.boxWithShadow]}>
+        <Text style={styles.promptText}> Study Preferences </Text>
+        <SmallShadowButton title="Anywhere" selected changeThing={this.changeLoc} />
+        <SmallShadowButton title="Hill" selected={false} changeThing={this.changeLoc} />
+        <SmallShadowButton title="Libraries" selected={false} changeThing={this.changeLoc} />
+        <SmallShadowButton title="Classrooms" selected={false} changeThing={this.changeLoc} />
+        <View style={styles.containerRow}>
+          <View style={styles.containerCol}>
+            <Text style={styles.promptText}>
+              {this.props.date}
+            </Text>
+            <DateTimePicker
+              isVisible={datePickerVisible}
+              onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
+              onCancel={this.showDatePicker}
+              maximumDate={this.date}
+              minimumDate={this.minDate}
             />
-          </View>
-          <Text style={styles.titleText}> Select a Room </Text>
-          <View style={styles.list}>
-            <FlatList
-              data={this.props.rooms.available}
-              extraData={this.state}
-              renderItem={({ item }) => this.renderList(item)}
-              keyExtractor={(item, index) => index.toString()}
-              style={{ flex: 1, backgroundColor: 'transparent' }}
-            />
-          </View>
-          <View style={styles.containerRow}>
             <TouchableOpacity
-              onPress={() => handleReserve(this.state.room)}
+              style={[styles.whiteButton, styles.boxWithShadow]}
+              onPress={this.showTimePicker}
             >
-              <Text style={styles.titleText}> Reserve </Text>
+              <Text style={styles.titleText}>
+            Change
+              </Text>
             </TouchableOpacity>
-            <View style={styles.verticalDivider} />
             <TouchableOpacity
-              onPress={() => handleModal(null)}
+              style={[styles.whiteButton, styles.boxWithShadow]}
+              onPress={() => this.props.handleModal()}
             >
-              <Text style={styles.titleText}> Cancel </Text>
+              <Text style={styles.titleText}>
+           Cancel
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.containerCol}>
+            <Text style={styles.promptText}>
+              {this.props.time}
+            </Text>
+            <DateTimePicker
+              mode="time"
+              isVisible={timePickerVisible}
+              onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
+              onCancel={this.showTimePicker}
+              is24Hour
+              minuteInterval={30}
+              titleIOS="Pick a time"
+            />
+            <TouchableOpacity
+              style={[styles.whiteButton, styles.boxWithShadow]}
+              onPress={this.showTimePicker}
+            >
+              <Text style={styles.titleText}>
+           Change
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.whiteButton, styles.boxWithShadow]}
+              onPress={() => this.props.handleModal()}
+            >
+              <Text style={styles.titleText}>
+            Ok
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
-    );
-  }
+      </View>
+    </Modal>
+  );
+}
 }
 
-const styles = StyleSheet.create({
+const promptText = {
+  fontFamily: 'System',
+  fontSize: 24,
+  fontWeight: '200',
+  fontStyle: 'normal',
+  letterSpacing: 1.92,
+  color: '#108BF8',
+  width: '80%',
+  textAlign: 'center',
+};
 
+const styles = StyleSheet.create({
+  promptText,
   modalContainer: {
-    height: '70%',
+    height: '50%',
     width: '90%',
     backgroundColor: 'white',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 50,
     marginLeft: 20,
     marginRight: 30,
-    flex: 0,
+    flex: 0
   },
   modal: {
     justifyContent: 'center',
@@ -126,15 +193,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontStyle: 'normal',
     letterSpacing: 1.92,
-    color: '#4a4a4a',
+    color: '#108BF8',
     padding: 5
-  },
-  divider: {
-    height: 2,
-    backgroundColor: '#e0e0e0',
-    width: '95%',
-    marginTop: 5,
-    marginBottom: 2
   },
   verticalDivider: {
     height: 30,
@@ -152,6 +212,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  containerCol: {
+    flex: 1,
+    flexDirection: 'column',
+    marginLeft: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+
+  },
+  whiteButton: {
+    backgroundColor: 'white',
+    height: 30,
+    width: '65%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 5,
+    marginBottom: 5,
+
+  },
   boxWithShadow: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -159,41 +238,31 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 5
   },
-  list: {
-    height: '35%',
-    width: '100%',
-    alignItems: 'center'
-  },
-  listCell: {
-    alignItems: 'center',
-    padding: 10,
-  },
-  categoryText: {
-    fontFamily: 'System',
-    fontSize: 14,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    letterSpacing: 1.92,
-    color: 'gray',
-    textAlign: 'center'
-  },
-  categoryTextSelected: {
-    fontFamily: 'System',
-    fontSize: 14,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    letterSpacing: 1.92,
-    color: '#4F87EC',
-    textAlign: 'center'
-  },
-
-
 });
+
 const mapStateToProps = state => ({
   time: state.study.time,
   date: state.study.date,
   duration: state.study.duration,
+  location: state.study.location,
+  data: state.study.data,
+  unstyledTime: state.study.unstyledTime
+
 });
 
+const mapDispatchToProps = dispatch => ({
+  changeTime: (time) => {
+    dispatch(changeTime(time));
+  },
+  changeDate: (date) => {
+    dispatch(changeDate(date));
+  },
+  changeLocation: (location) => {
+    dispatch(changeLocation(location));
+  },
+  loadData: (data) => {
+    dispatch(loadData(data));
+  }
+});
 
-export default connect(mapStateToProps)(StudyRoomModal);
+export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomModal);

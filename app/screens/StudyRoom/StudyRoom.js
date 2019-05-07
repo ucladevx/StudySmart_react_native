@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Linking, SafeAreaView
+  Text, View, TouchableOpacity, StyleSheet, FlatList, Image, SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {
   changeTime, changeDate, changeLocation, loadData
@@ -64,7 +65,7 @@ class StudyRoomList extends Component {
       }
       const newDate = new Date(yearInt, monthInt - 1, dayInt, hourInt, minuteInt, 0, 0);
       const seconds = newDate.getTime() / 1000;
-      appendedURL += `?time=${seconds}`; 
+      appendedURL += `?time=${seconds}`;
     }
     /* Fetch library data from API, store inside this.library_data */
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/studyinfo${appendedURL}`)
@@ -85,7 +86,7 @@ class StudyRoomList extends Component {
     const { data } = this.props;
     for (let i = 0; i < data.length; i += 1) {
       if (duration === '0' || data[i].duration === duration) {
-        if (location.includes('Any') || location.includes(data[i].location)) {
+        if (location.includes('Anywhere') || location.includes(data[i].location)) {
           if (data[i].name in locationDict) {
             locationDict[data[i].name].push(data[i]);
           } else {
@@ -108,7 +109,14 @@ class StudyRoomList extends Component {
     });
   }
 
+  handleModal = () => {
+    this.setState({
+      visible: !this.state.visible
+    });
+  }
+
   renderRow(item) {
+    const icon = require('../../../assets/studyTab.png');
     return (
       <TouchableOpacity
         onPress={() => this.handleSelectRoom(item)}
@@ -118,9 +126,10 @@ class StudyRoomList extends Component {
             style={styles.containerRow}
           >
             <View style={styles.imageIcon}>
+              <Image source={icon} style={{ height: 50, width: 60 }} />
             </View>
             <View
-              style={styles.containerText}
+              style={styles.containerCol}
             >
               <View style={styles.containerRow}>
                 <Text style={[styles.name, styles.leftText]}>
@@ -155,6 +164,9 @@ class StudyRoomList extends Component {
     const { visible, room } = this.state;
     return (
       <SafeAreaView style={styles.container}>
+        <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.handleModal()}>
+          <MaterialCommunityIcons name="filter-variant" color="#108BF8" size={35} />
+        </TouchableOpacity>
         <StudyRoomHeader
           navigation={this.props.navigation}
           sortData={this.sortData}
@@ -167,11 +179,7 @@ class StudyRoomList extends Component {
           style={styles.list}
         />
         { visible ? (
-          <StudyRoomModal
-            handleReserve={this.handleReserve}
-            handleModal={this.handleModal}
-            rooms={this.state.room}
-          />
+          <StudyRoomModal handleModal={this.handleModal} />
         ) : null }
       </SafeAreaView>
     );
@@ -216,7 +224,7 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     shadowOpacity: 0.8,
   },
-  containerText: {
+  containerCol: {
     flex: 1,
     flexDirection: 'column',
     marginLeft: 15,
@@ -264,7 +272,15 @@ const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     right: 5
-  }
+  },
+  rightButtonAbs: {
+    width: 40,
+    height: 40,
+    position: 'absolute',
+    right: 20,
+    top: '6%',
+    zIndex: 5,
+  },
 });
 
 const mapStateToProps = state => ({

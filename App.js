@@ -34,6 +34,45 @@ const LocationsStack = StackNavigator({
   Map: { screen: Locations },
 });
 
+StudyRoomStack.navigationOptions = {
+  tabBarIcon: ({ focused }) => {
+    const image = focused
+      ? require('./assets/studyTabSelected.png')
+      : require('./assets/studyTab.png');
+    return (
+      <Image
+        source={image}
+      />
+    );
+  },
+  tabBarOptions: {
+    showIcon: true,
+    activeTintColor: '#108BF8',
+    inactiveTintColor: 'gray',
+    showLabel: false
+  }
+};
+
+LocationsStack.navigationOptions = {
+  tabBarIcon: ({ focused }) => {
+    const image = focused
+      ? require('./assets/locationTabSelected.png')
+      : require('./assets/locationTab.png');
+    return (
+      <Image
+        source={image}
+      />
+    );
+  },
+  tabBarOptions: {
+    showIcon: true,
+    activeTintColor: '#108BF8',
+    inactiveTintColor: 'gray',
+    showLabel: false
+  }
+};
+
+
 const StudySmartTabNavigator = createBottomTabNavigator(
   {
     Study: StudyRoomStack,
@@ -50,7 +89,7 @@ const StudySmartTabNavigator = createBottomTabNavigator(
           icon = focused ? require('./assets/locationTabSelected.png') : require('./assets/locationTab.png');
         }
         // You can return any component that you like here!
-        return <Image source={icon} style={{height: 25, width: 25}}/>;
+        return <Image source={icon} />;
       },
     }),
   },
