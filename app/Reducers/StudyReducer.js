@@ -3,11 +3,11 @@ import {
 } from '../Actions/actions';
 
 const initialState = {
-  time: '',
-  date: '',
+  time: 'Now',
+  date: 'Today',
   duration: 0,
   room: '',
-  location: '',
+  location: ['Anywhere'],
   data: []
 
 };
@@ -40,10 +40,10 @@ const StudyReducer = (state = initialState, action) => {
         location: action.location
       };
     case LOAD_DATA:
-    return {
-      ...state,
-      data: action.data
-    };
+      return {
+        ...state,
+        data: action.data
+      };
     default:
       return state;
   }
