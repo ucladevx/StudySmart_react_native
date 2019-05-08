@@ -45,19 +45,14 @@ class StudyRoomReserve extends Component {
     this.setState({
       duration: hour
     });
-    console.log(this.state.duration)
   }
 
   handleReserve = (room) => {
-    if (room !== null) {
-      Linking.openURL(room);
-    }
-    this.props.navigation.navigate('StudyRoomList');
+    this.props.navigation.navigate('BookingWebView', { url: room });
   }
 
   renderList(item) {
     const { duration } = this.state;
-    console.log(this.state.duration, item.duration)
     if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
       return;
     }

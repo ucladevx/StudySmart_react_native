@@ -37,7 +37,6 @@ class StudyRoomList extends Component {
       currentData: [],
       room: null,
     };
-    this.sortData = this.sortData.bind(this);
     this.getStudyRooms = this.getStudyRooms.bind(this);
   }
 
@@ -85,11 +84,14 @@ class StudyRoomList extends Component {
         temp = data;
       });
     /* Once the request is done, save library data to current state */
+    for (let k = 0; k < temp.Items.length; k += 1) {
+      temp.Items[k].area = 'Hill';
+    }
     this.props.loadData(temp.Items);
     this.sortData();
   }
 
-  sortData() {
+  sortData = () => {
     const locationDict = {};
     const array = [];
     const duration = this.props.duration.toString();
@@ -97,7 +99,7 @@ class StudyRoomList extends Component {
     const { data } = this.props;
     for (let i = 0; i < data.length; i += 1) {
       if (duration === '0' || data[i].duration === duration) {
-        if (location.includes('Anywhere') || location.includes(data[i].location)) {
+        if (location.includes('Anywhere') || location.includes(data[i].area)) {
           if (data[i].name in locationDict) {
             locationDict[data[i].name].push(data[i]);
           } else {
@@ -114,7 +116,7 @@ class StudyRoomList extends Component {
     });
   }
 
-  handleSelectRoom(item) {
+  handleSelectRoom = (item) => {
     this.props.navigation.navigate('StudyRoomReserve', {
       rooms: item
     });
@@ -172,7 +174,7 @@ class StudyRoomList extends Component {
   }
 
   render() {
-    const { visible, room } = this.state;
+    const { visible, room, currentData } = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.handleModal()}>
@@ -183,8 +185,8 @@ class StudyRoomList extends Component {
           sortData={this.sortData}
         />
         <FlatList
-          data={this.state.currentData}
-          extraData={this.state.currentData}
+          data={currentData}
+          extraData={currentData}
           renderItem={({ item }) => this.renderRow(item)}
           keyExtractor={(item, index) => index.toString()}
           style={styles.list}
@@ -257,7 +259,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 100,
     width: 100,
-    backgroundColor: 'green',
+
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center'

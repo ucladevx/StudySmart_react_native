@@ -4,8 +4,6 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { connect } from 'react-redux';
-import AntIcon from 'react-native-vector-icons/AntDesign';
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from '../../components/Search';
 import Sorter from '../../components/Sorter';
 import { changeDuration } from '../../Actions/actions';

@@ -13,13 +13,16 @@ import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
+import Feedback from './app/screens/Feedback/Feedback';
+import BookingWebView from './app/screens/StudyRoom/BookingWebView';
 
 const StudyRoomStack = StackNavigator({
   Login: { screen: LoginPage },
   BookingLocation: { screen: BookingLocation },
   BookingTime: { screen: BookingTime },
   StudyRoomList: { screen: StudyRoomList },
-  StudyRoomReserve: { screen: StudyRoomReserve }
+  StudyRoomReserve: { screen: StudyRoomReserve },
+  BookingWebView: { screen: BookingWebView },
 
 
 },
@@ -32,6 +35,9 @@ const LocationsStack = StackNavigator({
   List: { screen: LocationsList },
   Detailed: { screen: LocationsDetailed },
   Map: { screen: Locations },
+});
+const FeedbackStack = StackNavigator({
+  Feedback: { screen: Feedback },
 });
 
 StudyRoomStack.navigationOptions = {
@@ -72,26 +78,31 @@ LocationsStack.navigationOptions = {
   }
 };
 
+FeedbackStack.navigationOptions = {
+  tabBarIcon: ({ focused }) => {
+    const image = focused
+      ? require('./assets/feedbackSelected.png')
+      : require('./assets/feedback.png');
+    return (
+      <Image
+        source={image}
+      />
+    );
+  },
+  tabBarOptions: {
+    showIcon: true,
+    activeTintColor: '#108BF8',
+    inactiveTintColor: 'gray',
+    showLabel: false
+  }
+};
+
 
 const StudySmartTabNavigator = createBottomTabNavigator(
   {
     Study: StudyRoomStack,
     Locations: LocationsStack,
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused }) => {
-        const { routeName } = navigation.state;
-        let icon = require('./assets/studyTab.png');
-        if (routeName === 'Study') {
-          icon = focused ? require('./assets/studyTabSelected.png') : require('./assets/studyTab.png');
-        } else if (routeName === 'Locations') {
-          icon = focused ? require('./assets/locationTabSelected.png') : require('./assets/locationTab.png');
-        }
-        // You can return any component that you like here!
-        return <Image source={icon} />;
-      },
-    }),
+    Feedback: FeedbackStack
   },
 );
 

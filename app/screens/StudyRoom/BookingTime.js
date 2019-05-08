@@ -48,6 +48,18 @@ class BookingTime extends Component {
     const { datePickerVisible, timePickerVisible } = this.state;
     const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
     if (thing === 'time') {
+      const minutes = setting.getMinutes();
+      if (minutes !== 30 && minutes !== 0) {
+        if (minutes > 30) {
+          setting.setMinutes(0);
+          setting.setHours(setting.getHours() + 1);
+          if (setting.getHours() === 0) {
+            setting.setDate(setting.getDate() + 1);
+          }
+        } else {
+          setting.setMinutes(30);
+        }
+      }
       let styledTime = setting.toLocaleTimeString();
       const last2ndChar = styledTime[styledTime.length - 2];
       const lastChar = styledTime[styledTime.length - 1];
@@ -77,12 +89,21 @@ class BookingTime extends Component {
 
   handleSearch() {
     const { navigation } = this.props;
+    const { datePickerVisible, timePickerVisible } = this.state;
+    if (this.props.date === 'Today') {
+      const rightNow = new Date();
+      this.handleConfirm(rightNow, 'date');
+      this.handleConfirm(rightNow, 'time');
+      this.setState({
+        timePickerVisible: false,
+        datePickerVisible: false,
+      });
+    }
     navigation.navigate('StudyRoomList');
   }
 
   render() {
-    const { datePickerVisible, timePickerVisible
-    } = this.state;
+    const { datePickerVisible, timePickerVisible } = this.state;
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('BookingLocation')}>

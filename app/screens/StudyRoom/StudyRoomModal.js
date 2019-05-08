@@ -120,14 +120,6 @@ render() {
             Change
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.whiteButton, styles.boxWithShadow]}
-              onPress={() => this.props.handleModal()}
-            >
-              <Text style={styles.titleText}>
-           Cancel
-              </Text>
-            </TouchableOpacity>
           </View>
           <View style={styles.containerCol}>
             <Text style={styles.promptText}>
@@ -150,16 +142,26 @@ render() {
            Change
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.whiteButton, styles.boxWithShadow]}
+          </View>
+        </View>
+        <View style={styles.containerRow}>
+        <TouchableOpacity
+              style={[styles.whiteButtonAbs, styles.boxWithShadow]}
+              onPress={() => this.props.handleModal()}
+            >
+              <Text style={styles.titleText}>
+           Cancel
+              </Text>
+            </TouchableOpacity>
+        <TouchableOpacity
+              style={[styles.whiteButtonAbs, styles.boxWithShadow]}
               onPress={() => this.changeSearch()}
             >
               <Text style={styles.titleText}>
             Ok
               </Text>
             </TouchableOpacity>
-          </View>
-        </View>
+            </View>
       </View>
     </Modal>
   );
@@ -168,7 +170,7 @@ render() {
 
 const promptText = {
   fontFamily: 'System',
-  fontSize: 24,
+  fontSize: 22,
   fontWeight: '200',
   fontStyle: 'normal',
   letterSpacing: 1.92,
@@ -188,7 +190,8 @@ const styles = StyleSheet.create({
     marginTop: 50,
     marginLeft: 20,
     marginRight: 30,
-    flex: 0
+    flex: 0,
+    borderRadius: 10
   },
   modal: {
     justifyContent: 'center',
@@ -217,16 +220,15 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginTop: 5,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   containerCol: {
     flex: 1,
     flexDirection: 'column',
-    marginLeft: 15,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-
+    height: '55%'
   },
   whiteButton: {
     backgroundColor: 'white',
@@ -238,11 +240,21 @@ const styles = StyleSheet.create({
     marginBottom: 5,
 
   },
+  whiteButtonAbs: {
+    backgroundColor: 'white',
+    height: 30,
+    width: '35%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 30,
+    marginLeft: 35
+
+  },
   boxWithShadow: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    shadowOpacity: 0.5,
+    shadowRadius: 1,
     elevation: 5
   },
 });
