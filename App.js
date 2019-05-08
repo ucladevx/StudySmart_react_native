@@ -6,6 +6,7 @@ import configureStore from './store';
 import LocationsDetailed from './app/screens/LocationsDetailed';
 import LoginPage from './app/screens/LoginPage';
 import LocationsList from './app/screens/LocationsList';
+import LocationContainer from './app/screens/LocationContainer';
 import Booking from './app/screens/StudyRoom/Booking';
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
 
@@ -15,13 +16,13 @@ const LocationStack = StackNavigator({
   Detailed: { screen: LocationsDetailed },
   Map: { screen: Locations },
   Booking: { screen: Booking },
-  StudyRoomList: { screen: StudyRoomList }
-
+  StudyRoomList: { screen: StudyRoomList },
+  LocationContainer: { screen: LocationContainer },
 
 },
 {
 // For now, use this to toggle between List view and Map view. We will eventually add a toggle button
-  initialRouteName: 'List',
+  initialRouteName: 'LocationContainer',
 });
 
 const store = configureStore();
