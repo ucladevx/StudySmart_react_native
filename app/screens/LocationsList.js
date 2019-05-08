@@ -1,12 +1,12 @@
 
 import React, { Component } from 'react';
 import {
-  Text, View, Dimensions, TouchableOpacity, StyleSheet, SectionList, Image,
+  Text, View, Dimensions, TouchableOpacity, StyleSheet, SectionList, Image, ActivityIndicator,
 } from 'react-native';
 // import LocationHeader from '../components/LocationHeader';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import ViewContainer from '../components/ViewContainer';
-
+import LibraryCard from '../components/LibraryCard';
 
 export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
 
@@ -18,53 +18,10 @@ export function getLibraryHours(library, day) {
   } catch (err) {
     console.log(library.name, 'does not have status');
   }
-
-  // If valid status that begins with a number, check close time
-  // if (status.match(/^\d/)){
-  //   // replace colon with nothing
-  //   var times = status.split(' - ');
-  //   if ((times.length) != 2) {
-  //     return status;
-  //   }
-  //   var open_time = times[0];
-  //   var close_time = times[1];
-  //   var close_hour = close_time.match(/\d+/g);
-  //   var close_ampm = close_time.match(/\D+/g);
-  //   if (close_hour.length != 1 || close_ampm.length != 1){
-  //     return status;
-  //   }
-  //   if (close_ampm == "pm"){
-  //     close_24 = close_time + 12;
-  //   }
-  //   else {
-  //     close_24 = close_time;
-  //   }
-  //   // Special case for 12 am and 12 pm
-  //   // Special case if it closes next day (am)
-  //   var d = new Date();
-  //   var current_hour = d.getHours();
-  //   if (current_hour >= close_24) {
-  //     return "Closed";
-  //   }
-  //   return "Closed";
-  // }
   return status;
 }
 
 export default class LocationsList extends Component {
-    
-  // static navigationOptions= {
-  //   header: props => <LocationHeader {...props}/>,
-  //   headerStyle: {
-  //     backgroundColor: 'transparent'
-  //   },
-  //   headerTitleStyle: {
-  //     fontWeight: 'bold',
-  //     color: '#fff',
-  //   },
-  //   headerTintColor: '#fff',
-  //   animationEnabled: true
-  // }
 
   constructor(props) {
     super(props);
@@ -72,22 +29,6 @@ export default class LocationsList extends Component {
       // library_data: undefined
     };
   }
-
-  // async componentDidMount() {
-  //   let temp;
-  //   console.log('Requesting library info...');
-
-  //   /* Fetch library data from API, store inside this.library_data */
-  //   await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
-  //     .then((response) => { return response.json(); })
-  //     .then((data) => {
-  //       console.log(data.Items);
-  //       temp = data;
-  //     });
-    
-  //   /* Once the request is done, save library data to current state */
-  //   this.setState({ library_data: temp.Items });
-  // }
 
   render() {
     const millis = new Date();
@@ -99,75 +40,32 @@ export default class LocationsList extends Component {
     /* Rendering temporary loading screen if http request is not done yet */
     if (library_data === undefined || library_data.length === 0) {
       return (
+        <View styles={styles.container}>
           <Text> Attempting to get library data . . . </Text>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       );
     }
 
     return (
-        <ViewContainer>
-          <View style={styles.container}>
-            <SectionList
-              bounces={false}
-              contentContainerStyle={styles.scroll_style}
-              sections={[
-                { title: 'Libraries', data: library_data },
+      <ViewContainer>
+        <View style={styles.container}>
+          <SectionList
+            bounces={false}
+            contentContainerStyle={styles.scroll_style}
+            sections={[
+              { title: 'Libraries', data: library_data },
 
-              ]}
-              renderSectionHeader={({ section }) => <Text style={styles.Section_Header}>{section.title}</Text>}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => {
-                  this.props.navigation.navigate('Detailed', { locationClicked: item });
-                }}
-                >
-                  {/* Individual list elements */}
-                  <View style={listElement.card}>
-                    <View style={listElement.imgContainer}>
-                      <Image
-                        style={listElement.img}
-                        source={{ uri: IMG_TEMP }}
-                      />
-                    </View>
-                    <View style={listElement.information}>
-                      <Text style={listElement.Name}>
-                        {item.name.S}
-                      </Text>
-                      {/* NEED TO CHANGE TO A PROGRESS BAR, 0% IS TEMPORARY PLACEHOLER  */}
-                      {/* <Text style={listElement.activityLevel}>
-                        0%
-                    </Text> */}
-                      <Text style={getLibraryHours(item, day) === 'Closed' ? listElement.Closed : listElement.Open}>
-                        Hours: {getLibraryHours(item, day)}
-                      </Text>
-                      <View style={listElement.buttonRow}>
-                        <TouchableOpacity>
-                          {/* Need to fix logo later  */}
-                          <Ionicon color="black" name="ios-locate" size={25} style={{marginRight: 10}}/>
-                        </TouchableOpacity>
-                          {/* Check the state, if state is non-expanded use down */}
-                          {/* NO touchable opacity around the arrow since the whole card should trigger expansion */}
-                          <Ionicon color="black" name="ios-arrow-down" size={25}/>
-                          {/*Else, use down */}
-                          {/* <Ionicon color="black" name="ios-arrow-up" size={25}/> */}
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
-          {/* Study room booking button
-          <View style={styles.floatingButton}>
-            <TouchableOpacity
-              style={[styles.boxWithShadow, styles.studyRoom]}
-              onPress={() => this.props.navigation.navigate('Booking')}
-            >
-              <Text style={styles.titleText}>
-                Book a study room
-              </Text>
-            </TouchableOpacity>
-          </View> */}
-        </ViewContainer>
+            ]}
+            renderSectionHeader={({ section }) => <Text style={styles.Section_Header}>{section.title}</Text>}
+            renderItem={({ item }) => (
+              // Individual list elements 
+              <LibraryCard item={item} day={day} />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </ViewContainer>
     );
   }
 }
@@ -190,7 +88,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: 'absolute',
     zIndex: 2,
-    height: height-headerHeight,
+    height: height - headerHeight,
   },
   scroll_style: {
     justifyContent: 'center',
