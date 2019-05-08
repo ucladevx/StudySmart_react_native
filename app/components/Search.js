@@ -173,7 +173,7 @@ const androidStyles = {
 
 const iosStyles = {
   container: {
-    zIndex: 1
+    zIndex: 1,
   },
   inputContainer: {
     ...border

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Linking
+  Text, View, TouchableOpacity, StyleSheet, FlatList, Image, SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {
   changeTime, changeDate, changeLocation, loadData
@@ -36,12 +37,14 @@ class StudyRoomList extends Component {
       currentData: [],
       room: null,
     };
-    this.handleReserve = this.handleReserve.bind(this);
-    this.handleModal = this.handleModal.bind(this);
-    this.sortData = this.sortData.bind(this);
+    this.getStudyRooms = this.getStudyRooms.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getStudyRooms();
+  }
+
+  async getStudyRooms() {
     let temp; let month; let day; let
       year;
     let appendedURL = '';
@@ -61,8 +64,14 @@ class StudyRoomList extends Component {
       const dayInt = parseInt(day, 10);
       let hourInt = parseInt(splitTime[0], 10);
       const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
-      if (splitTime[1].substring(splitTime[1].length - 2) === 'PM') {
-        hourInt += 12;
+      const amPm = splitTime[1].substring(splitTime[1].length - 2);
+      if (amPm === 'PM') {
+        if (hourInt !== 12) {
+          hourInt += 12;
+        }
+      }
+      if (hourInt === 12 && amPm === 'AM') {
+        hourInt = 0;
       }
       const newDate = new Date(yearInt, monthInt - 1, dayInt, hourInt, minuteInt, 0, 0);
       const seconds = newDate.getTime() / 1000;
@@ -75,11 +84,14 @@ class StudyRoomList extends Component {
         temp = data;
       });
     /* Once the request is done, save library data to current state */
+    for (let k = 0; k < temp.Items.length; k += 1) {
+      temp.Items[k].area = 'Hill';
+    }
     this.props.loadData(temp.Items);
     this.sortData();
   }
 
-  sortData() {
+  sortData = () => {
     const locationDict = {};
     const array = [];
     const duration = this.props.duration.toString();
@@ -87,7 +99,7 @@ class StudyRoomList extends Component {
     const { data } = this.props;
     for (let i = 0; i < data.length; i += 1) {
       if (duration === '0' || data[i].duration === duration) {
-        if (location.length === 0 || data[i].location === location) {
+        if (location.includes('Anywhere') || location.includes(data[i].area)) {
           if (data[i].name in locationDict) {
             locationDict[data[i].name].push(data[i]);
           } else {
@@ -104,39 +116,33 @@ class StudyRoomList extends Component {
     });
   }
 
-  handleSelectRoom() {
-    Linking.openURL('https://reslife.ucla.edu/reserve/');
+  handleSelectRoom = (item) => {
+    this.props.navigation.navigate('StudyRoomReserve', {
+      rooms: item
+    });
   }
 
-  handleReserve(room) {
-    this.handleModal();
-    if (room !== null) {
-      Linking.openURL(room);
-    }
-  }
-
-  handleModal(item) {
-    const { visible } = this.state;
+  handleModal = () => {
     this.setState({
-      visible: !visible,
-      room: item,
+      visible: !this.state.visible
     });
   }
 
   renderRow(item) {
+    const icon = require('../../../assets/studyTab.png');
     return (
       <TouchableOpacity
-        onPress={() => this.handleModal(item)}
+        onPress={() => this.handleSelectRoom(item)}
       >
         <View style={styles.cell}>
           <View
             style={styles.containerRow}
           >
-            <View style={styles.circleIcon}>
-              <Text style={styles.circleText}>UCLA</Text>
+            <View style={styles.imageIcon}>
+              <Image source={icon} style={{ height: 50, width: 60 }} />
             </View>
             <View
-              style={styles.containerText}
+              style={styles.containerCol}
             >
               <View style={styles.containerRow}>
                 <Text style={[styles.name, styles.leftText]}>
@@ -152,7 +158,7 @@ class StudyRoomList extends Component {
                   style={styles.icon}
                   onPress={() => this.handleSelectRoom(item)}
                 >
-                  <Entypo name="chevron-thin-down" size={25} />
+                  <Entypo name="chevron-thin-right" size={25} color="#108BF8" />
                 </TouchableOpacity>
               </View>
               <View style={styles.containerRow}>
@@ -168,28 +174,27 @@ class StudyRoomList extends Component {
   }
 
   render() {
-    const { visible, room } = this.state;
+    const { visible, room, currentData } = this.state;
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.handleModal()}>
+          <MaterialCommunityIcons name="filter-variant" color="#108BF8" size={35} />
+        </TouchableOpacity>
         <StudyRoomHeader
           navigation={this.props.navigation}
           sortData={this.sortData}
         />
         <FlatList
-          data={this.state.currentData}
-          extraData={this.state.currentData}
+          data={currentData}
+          extraData={currentData}
           renderItem={({ item }) => this.renderRow(item)}
           keyExtractor={(item, index) => index.toString()}
           style={styles.list}
         />
         { visible ? (
-          <StudyRoomModal
-            handleReserve={this.handleReserve}
-            handleModal={this.handleModal}
-            rooms={this.state.room}
-          />
+          <StudyRoomModal handleModal={this.handleModal} getStudyRooms={this.getStudyRooms} />
         ) : null }
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -197,23 +202,17 @@ class StudyRoomList extends Component {
 const text = {
   fontFamily: 'System',
   fontSize: 12,
-  fontWeight: '500',
+  fontWeight: '300',
   fontStyle: 'normal',
   letterSpacing: 1.92,
-  color: '#5e5b59',
+  color: 'black',
   paddingBottom: 3,
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  header: {
-    height: 50,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#4F87EC',
-    width: '100%',
+    flex: 1,
+    backgroundColor: 'white'
   },
   list: {
     backgroundColor: 'transparent',
@@ -221,15 +220,24 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     flexDirection: 'row',
-    height: 100,
+    height: 120,
+    width: '95%',
     padding: 10,
-    marginTop: 8,
-    marginBottom: 8,
+    marginTop: 4,
+    marginBottom: 4,
     borderRadius: 5,
+    alignSelf: 'center',
     backgroundColor: '#FFF',
     elevation: 2,
+    shadowColor: 'rgba(0, 0, 0, 0.5)',
+    shadowOffset: {
+      width: 0.5,
+      height: 0.5
+    },
+    shadowRadius: 1,
+    shadowOpacity: 0.8,
   },
-  containerText: {
+  containerCol: {
     flex: 1,
     flexDirection: 'column',
     marginLeft: 15,
@@ -247,11 +255,11 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontStyle: 'italic',
   },
-  circleIcon: {
-    borderRadius: 25,
-    height: 50,
-    width: 50,
-    backgroundColor: 'green',
+  imageIcon: {
+    borderRadius: 5,
+    height: 100,
+    width: 100,
+
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center'
@@ -268,22 +276,24 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     flex: 0
   },
-  circleText: {
-    ...text,
-    color: 'white',
-    fontSize: 14,
-    textAlign: 'center'
-  },
   name: { // name of location
     ...text,
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#000',
+    fontSize: 18,
+    fontWeight: '300',
+    color: 'black',
   },
   icon: {
     position: 'absolute',
-    right: 20
-  }
+    right: 5
+  },
+  rightButtonAbs: {
+    width: 40,
+    height: 40,
+    position: 'absolute',
+    right: 20,
+    top: '6%',
+    zIndex: 5,
+  },
 });
 
 const mapStateToProps = state => ({

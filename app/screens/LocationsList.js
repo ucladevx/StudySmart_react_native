@@ -73,9 +73,23 @@ export default class LocationsList extends Component {
     };
   }
 
-  // async componentDidMount() {
-  //   let temp;
-  //   console.log('Requesting library info...');
+
+    async componentDidMount() {
+      let temp;
+      console.log('Requesting library info...');
+
+      /* Fetch library data from API, store inside this.library_data */
+      await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          temp = data;
+        });
+
+      /* Once the request is done, save library data to current state */
+      this.setState({ library_data: temp.Items });
+    }
 
   //   /* Fetch library data from API, store inside this.library_data */
   //   await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
@@ -156,17 +170,6 @@ export default class LocationsList extends Component {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
-          {/* Study room booking button
-          <View style={styles.floatingButton}>
-            <TouchableOpacity
-              style={[styles.boxWithShadow, styles.studyRoom]}
-              onPress={() => this.props.navigation.navigate('Booking')}
-            >
-              <Text style={styles.titleText}>
-                Book a study room
-              </Text>
-            </TouchableOpacity>
-          </View> */}
         </ViewContainer>
     );
   }
