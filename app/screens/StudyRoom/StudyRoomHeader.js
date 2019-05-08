@@ -9,7 +9,7 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from '../../components/Search';
 import Sorter from '../../components/Sorter';
 import { changeDuration } from '../../Actions/actions';
-
+import LocationContainer from '../LocationContainer';
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
@@ -50,7 +50,7 @@ class StudyRoomHeader extends Component {
         <View style={styles.leftView}>
           <TouchableOpacity
             style={styles.buttonLeft}
-            onPress={() => navigate('List')}
+            onPress={() => navigate('LocationContainer')}
           >
             <Ionicon name="ios-list" color="white" size={30} />
           </TouchableOpacity>
