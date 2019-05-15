@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import {
-  Text, View, Dimensions, TouchableOpacity, StyleSheet, SectionList, Image, ActivityIndicator,
+  Text, View, Dimensions, TouchableOpacity, StyleSheet, SectionList, Image, ActivityIndicator, FlatList,
 } from 'react-native';
 // import LocationHeader from '../components/LocationHeader';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -38,7 +38,27 @@ export default class LocationsList extends Component {
 
   render() {
     // const { library_data } = this.state;
-    const { library_data, goToMap } = this.props;
+    const { library_data, goToMap, busyness_data } = this.props;
+
+    // // Process activity levels
+    // // dictionary from name to name 
+    // const libraryToBusynessTranslation = {
+    //   'Science and Engineering Library': 'UCLA Science and Engineering Library',
+    //   'Music Library': 'UCLA Music Library',
+    //   'Powell Library': 'Powell Library',
+    //   'Research Library (Charles E. Young)': 'Charles E. Young Research Library',
+    //   'Management Library (Eugene and Maxine Rosenfeld)': 'Rosenfeld Library',
+    // };
+    // // loop through library data items, if in dictionary, add the busyness
+    // for (let i = 0; i < library_data.length; i++) {
+    //   let item = library_data[i];
+    //   // This is the name from the library_data API
+    //   let libraryName = item.name;
+    //   console.log('lib_data', libraryName);
+    // }
+    // // console.log('Music Library' in libraryToBusynessTranslation);
+
+    // // if not in the library to busyness then add activity level N/A
 
     /* Rendering temporary loading screen if http request is not done yet */
     if (library_data === undefined || library_data.length === 0) {
@@ -51,24 +71,17 @@ export default class LocationsList extends Component {
     }
 
     return (
-      <ViewContainer>
-        <View style={styles.container}>
-          <SectionList
-            bounces={false}
-            contentContainerStyle={styles.scroll_style}
-            sections={[
-              { title: 'Libraries', data: library_data },
-
-            ]}
-            renderSectionHeader={({ section }) => <Text style={styles.Section_Header}>{section.title}</Text>}
-            renderItem={({ item }) => (
-              // Individual list elements
-              <LibraryCard item={item} goToMap={goToMap} />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      </ViewContainer>
+      <FlatList
+        bounces={false}
+        style={styles.list}
+        data={library_data}
+        contentContainerStyle={styles.scroll_style}
+        renderItem={({ item }) => (
+          // Individual list elements 
+          <LibraryCard item={item} goToMap={goToMap} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
     );
   }
 }
@@ -89,9 +102,8 @@ const styles = StyleSheet.create({
     flex: 1,
     top: 0,
     bottom: 0,
-    position: 'absolute',
     zIndex: 2,
-    height: height - headerHeight,
+    backgroundColor: 'white',
   },
   scroll_style: {
     justifyContent: 'center',
@@ -143,6 +155,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     width,
   },
+  list: {
+    backgroundColor: 'white'
+  }
 });
 
 /* Styles for individual list elements */

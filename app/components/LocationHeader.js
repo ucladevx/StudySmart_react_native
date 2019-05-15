@@ -56,74 +56,124 @@ class LocationHeader extends Component {
 
   render() {
     const locations = this.handleSearchSuggestions(this.state.Location);
-    console.log(locations)
+    // console.log(locations)
     const { currentRouteKey } = this.state;
     // const { navigate } = this.props.navigation;
     // const currentRouteKey = this.props.navigation.state.routes[this.props.navigation.state.index].routeName;
-    let right_navigate = '';
-    let right_icon = '';
-    if (currentRouteKey == 'List') {
-      right_icon = (
-        <Ionicon color="white" name="ios-map" size={25} backgroundColor="#4F87EC" />
-      );
-      right_navigate = 'Map';
-    } else if (currentRouteKey == 'Map') {
-      right_icon = (
-        <Ionicon color="white" name="md-list" size={25} backgroundColor="#4F87EC" />
-      );
-      right_navigate = 'List';
-    }
+    // let right_navigate = '';
+    // let right_icon = '';
+    // if (currentRouteKey == 'List') {
+    //   right_icon = (
+    //     <Ionicon color="white" name="ios-map" size={25} backgroundColor="#4F87EC" />
+    //   );
+    //   right_navigate = 'Map';
+    // } else if (currentRouteKey == 'Map') {
+    //   right_icon = (
+    //     <Ionicon color="white" name="md-list" size={25} backgroundColor="#4F87EC" />
+    //   );
+    //   right_navigate = 'List';
+    // }
+    // return (
+    //   <View style={styles.bar}>
+    //     <View style={styles.leftView}>
+    //       <TouchableOpacity
+    //         style={styles.buttonLeft}
+    //         // onPress={() => {
+    //         //   navigate('List');
+    //         // }}
+    //         onPress={() => this.props.onPress()}
+    //       >
+    //         {currentRouteKey === 'Detailed'
+    //             && <Ionicon color="white" name="ios-arrow-back" size={25} backgroundColor="#4F87EC" />
+    //             }
+    //       </TouchableOpacity>
+    //     </View>
+    //     { (currentRouteKey === 'List')
+    //             // Code from Shirly
+    //             && (
+    // <Search
+    //   data={locations} // this should be an API call or huge list eventually
+    //   defaultValue={this.state.Location}
+    //   onChangeText={e => this.setInputState(e)}
+    //   inputContainerStyle={styles.inputContainer}
+    //   style={styles.searchContainer}
+    //   renderItem={item => ( 
+    //     <TouchableOpacity onPress={() => this.handleSelection(item)}>
+    //       <Text>{item.item.name.S}</Text>
+    //     </TouchableOpacity>
+    //   )}
+    // />
+    //             ) }
+    //     { currentRouteKey != 'Detailed'
+    //             && (
+    //               <View style={styles.rightView}>
+    //                 <TouchableOpacity
+    //                   style={styles.buttonRight}
+    //                   // onPress={() => {
+    //                   //   navigate(right_navigate);
+    //                   // }}
+    //                   onPress={() => this.props.onPress()}
+    //                 >
+    //                   {right_icon}
+    //                 </TouchableOpacity>
+    //               </View>
+    //             ) }
+    //   </View>
+    // );
+
+    const { navigate } = this.props.navigation;
     return (
-      <View style={styles.bar}>
-        <View style={styles.leftView}>
-          <TouchableOpacity
-            style={styles.buttonLeft}
-            // onPress={() => {
-            //   navigate('List');
-            // }}
-            onPress={() => this.props.onPress()}
-          >
-            {currentRouteKey === 'Detailed'
-                && <Ionicon color="white" name="ios-arrow-back" size={25} backgroundColor="#4F87EC" />
-                }
+      <View style={styles.topBar}>
+        <View style={styles.bar}>
+          <Text style={styles.titleText}>
+            {' '}
+            Libraries
+            {' '}
+          </Text>
+          <TouchableOpacity onPress={ () => this.props.onPress() }>
+            <Ionicon color="#108BF8" name="ios-map" size={25} backgroundColor="#4F87EC" />
           </TouchableOpacity>
         </View>
-        { (currentRouteKey === 'List')
-                // Code from Shirly
-                && (
-                <Search
-                  data={locations} // this should be an API call or huge list eventually
-                  defaultValue={this.state.Location}
-                  onChangeText={e => this.setInputState(e)}
-                  inputContainerStyle={styles.inputContainer}
-                  style={styles.searchContainer}
-                  renderItem={item => ( 
-                    <TouchableOpacity onPress={() => this.handleSelection(item)}>
-                      <Text>{item.item.name.S}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
-                ) }
-        { currentRouteKey != 'Detailed'
-                && (
-                  <View style={styles.rightView}>
-                    <TouchableOpacity
-                      style={styles.buttonRight}
-                      // onPress={() => {
-                      //   navigate(right_navigate);
-                      // }}
-                      onPress={() => this.props.onPress()}
-                    >
-                      {right_icon}
-                    </TouchableOpacity>
-                  </View>
-                ) }
+        <Search
+          data={locations} // this should be an API call or huge list eventually
+          defaultValue={this.state.Location}
+          onChangeText={e => this.setInputState(e)}
+          inputContainerStyle={styles.inputContainer}
+          style={styles.searchContainer}
+          renderItem={item => (
+            <TouchableOpacity onPress={() => this.handleSelection(item)}>
+              <Text>{item.item.name.S}</Text>
+            </TouchableOpacity>
+          )}
+        />
       </View>
     );
   }
 }
 
+const text = {
+  fontFamily: 'System',
+  letterSpacing: 1.92,
+};
+const titleText = {
+  fontFamily: 'System',
+  fontSize: 18,
+  fontWeight: '300',
+  fontStyle: 'normal',
+  letterSpacing: 1.92,
+  color: '#108BF8',
+  width: '80%',
+  padding: 5,
+  textAlign: 'center'
+};
+
 const styles = StyleSheet.create({
+  titleText,
+  topBar: {
+    alignItems: 'center',
+    width: '100%',
+    height: 100,
+  },
   buttonLeft: {
     marginLeft: 15
   },
@@ -141,41 +191,46 @@ const styles = StyleSheet.create({
     width: 40
   },
   bar: {
-    // height: 80,
-    // paddingTop: 10,
-    // backgroundColor: '#4F87EC',
-    // flex: 1,
-    // justifyContent: 'space-between',
-    // alignItems: 'center',
-    // flexDirection: 'row',
-    // width: '100%',
-    height: 80,
-    paddingTop: 10,
-    backgroundColor: '#4F87EC',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    height: 50,
+    backgroundColor: 'white',
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
+
   },
   searchContainer: {
-    flex: 1,
     zIndex: 5,
-    marginLeft: '5%'
+    flexDirection: 'row',
+    width: '95%',
+    height: 35,
+    marginLeft: '5%',
+    alignItems: 'center',
   },
   inputContainer: {
-    width: 250,
-    height: 30,
+    marginTop: 5,
+    flexDirection: 'row',
     backgroundColor: 'white',
+    zIndex: 5,
+    height: 40,
+    width: '95%',
     borderRadius: 12,
     shadowColor: 'rgba(0, 0, 0, 0.5)',
     shadowOffset: {
-      width: 2,
-      height: 2
+      width: 0.5,
+      height: 0.5
     },
-    shadowRadius: 4,
-    shadowOpacity: 1
-  }
+    shadowRadius: 1,
+    shadowOpacity: 0.8,
+  },
+  input: {
+    ...text,
+    fontSize: 14,
+    fontWeight: '300',
+    color: '#000',
+  },
 
 
 });
+
 export default withNavigation(LocationHeader);
