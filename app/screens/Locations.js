@@ -9,15 +9,15 @@ const selectedMarker = require('../../assets/librarySelected.png');
 
 export default class Locations extends Component {
   // NOTE: hardcoding the markers for now - still checking accuracy of locations
-  // currentLibrary = name of current selected library
-  // currentItem = dictionary that holds library data for currentLibrary
+  // selectedLibrary = name of current selected library
+  // selectedLibraryData = dictionary that holds library data for selectedLibrary
   constructor(props) {
     super(props);
-
+    const { library } = this.props;
     this.state = {
       markers: [],
-      currentLibrary: 'NO-LIBRARY',
-      currentItem: 'NO-ITEM'
+      selectedLibrary: library.name.S,
+      selectedLibraryData: library
     };
   }
 
@@ -37,28 +37,25 @@ export default class Locations extends Component {
     this.setState({ markers: markerList });
   }
 
-  /* Sets currentLibrary to hold name of current selected marker */
+  /* Sets selectedLibrary to hold name of current selected marker */
   updateSelectedMarker(title) {
     const { libraryData } = this.props;
-    const { currentLibrary } = this.state;
-    if (title === currentLibrary) {
+    const { selectedLibrary } = this.state;
+    if (title === selectedLibrary) {
       this.setState({
-        currentLibrary: 'NO-LIBRARY',
-        currentItem: 'NO-ITEM'
+        selectedLibrary: 'NO-LIBRARY',
+        selectedLibraryData: 'NO-ITEM'
       });
     } else {
       this.setState({
-        currentLibrary: title,
-        currentItem: libraryData.find(element => element.name.S === title)
+        selectedLibrary: title,
+        selectedLibraryData: libraryData.find(element => element.name.S === title)
       });
     }
   }
 
   render() {
-    const { navigation } = this.props;
-    const { currentLibrary, currentItem, markers } = this.state;
-
-    const item = navigation.getParam('item', { name: { S: 'NO-ITEM' } });
+    const { selectedLibrary, markers, selectedLibraryData } = this.state;
 
     return (
       <View style={styles.mapContainer}>
@@ -79,12 +76,12 @@ export default class Locations extends Component {
               key={marker.title}
               coordinate={marker.latlng}
               description={marker.description}
-              image={currentLibrary === marker.title ? selectedMarker : unselectedMarker}
+              image={selectedLibrary === marker.title ? selectedMarker : unselectedMarker}
               onPress={(e) => { e.stopPropagation(); this.updateSelectedMarker(marker.title); }}
             />
           ))}
         </MapView>
-        {currentLibrary === 'NO-LIBRARY' ? <View /> : <LibraryCard item={currentItem} />}
+        {selectedLibrary === 'NO-LIBRARY' ? <View /> : <LibraryCard item={selectedLibraryData} />}
       </View>
     );
   }
@@ -101,11 +98,7 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     justifyContent: 'flex-end',
-    position: 'absolute',
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
+    flex: 1,
     zIndex: -1
   },
 });

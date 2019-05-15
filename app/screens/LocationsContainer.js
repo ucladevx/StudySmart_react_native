@@ -19,6 +19,7 @@ class LocationContainer extends Component {
     this.state = {
       library_data: undefined,
       currentPage: 'List',
+      currentLibrary: 'NO-LIBRARY'
     };
   }
 
@@ -36,11 +37,15 @@ class LocationContainer extends Component {
     this.setState({ library_data: temp.Items });
   }
 
-  goToMap() {
-    this.setState({ currentPage: 'Map' });
+  goToMap = (library) => {
+    this.setState({
+      currentPage: 'Map',
+      currentLibrary: library
+    });
   }
 
   handlePress() {
+    this.goToMap('NO-LIBRARY');
     const { currentPage } = this.state;
     if (currentPage === 'List') {
       this.setState({ currentPage: 'Map' });
@@ -51,7 +56,7 @@ class LocationContainer extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { currentPage, library_data } = this.state;
+    const { currentPage, library_data, currentLibrary } = this.state;
 
     // Loading animation screen should go here
     if (library_data === undefined) {
@@ -62,9 +67,9 @@ class LocationContainer extends Component {
     // Choose to display list or map depending on state
     let body;
     if (currentPage === 'List') {
-      body = <LocationsList library_data={library_data} navigation={navigation} goToMap={() => this.goToMap()} />;
+      body = <LocationsList library_data={library_data} navigation={navigation} goToMap={this.goToMap} />;
     } else if (currentPage === 'Map') {
-      body = <Locations libraryData={library_data} navigation={navigation} />;
+      body = <Locations libraryData={library_data} navigation={navigation} library={currentLibrary} />;
     }
 
     return (

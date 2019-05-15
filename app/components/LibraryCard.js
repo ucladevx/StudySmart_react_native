@@ -19,7 +19,7 @@ class LibraryCard extends Component {
     if (collapsed) {
       this.setState({ collapsed: false });
     }
-    else {  
+    else {
       this.setState({ collapsed: true });
     }
   }
@@ -69,14 +69,16 @@ class LibraryCard extends Component {
               <Text>This is temporary to test the expansion. No styling yet :(</Text>
             }
             <View style={listElement.buttonRow}>
-              <TouchableOpacity onPress={() => {
-                goToMap();
-                navigate('LocationsContainer', { item, day });
-              }}
-              >
-                {/* Need to fix map logo later  */}
-                <Ionicon color="black" name="ios-locate" size={25} style={{ marginRight: 10 }} />
-              </TouchableOpacity>
+              {goToMap !== undefined && (
+                <TouchableOpacity onPress={() => {
+                  goToMap(item);
+                  navigate('LocationsContainer');
+                }}
+                >
+                  {/* Need to fix map logo later  */}
+                  <Ionicon color="black" name="ios-locate" size={25} style={{ marginRight: 10 }} />
+                </TouchableOpacity>
+              )}
               {/* Check the state, if state is non-expanded use down */}
 
               {/* Arrow can also expand the cell  */}

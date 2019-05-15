@@ -62,8 +62,8 @@ export default class LocationsList extends Component {
             ]}
             renderSectionHeader={({ section }) => <Text style={styles.Section_Header}>{section.title}</Text>}
             renderItem={({ item }) => (
-              // Individual list elements 
-              <LibraryCard item={item} goToMap={() => goToMap()} />
+              // Individual list elements
+              <LibraryCard item={item} goToMap={goToMap} />
             )}
             keyExtractor={(item, index) => index.toString()}
           />
