@@ -8,19 +8,19 @@ const unselectedMarker = require('../../assets/library.png');
 const selectedMarker = require('../../assets/librarySelected.png');
 
 export default class Locations extends Component {
-  // NOTE: hardcoding the markers for now - still checking accuracy of locations
   // selectedLibrary = name of current selected library
   // selectedLibraryData = dictionary that holds library data for selectedLibrary
   constructor(props) {
     super(props);
-    const { library } = this.props;
+    const { initialLibrary } = this.props;
     this.state = {
       markers: [],
-      selectedLibrary: library.name.S,
-      selectedLibraryData: library
+      selectedLibrary: initialLibrary === 'NO-LIBRARY' ? 'NO-LIBRARY' : initialLibrary.name.S,
+      selectedLibraryData: initialLibrary
     };
   }
 
+  // NOTE: hardcoding the markers for now - still checking accuracy of locations
   componentDidMount() {
     const markerList = [
       { title: 'Powell Library', latlng: { latitude: 34.071613, longitude: -118.442181 } },
@@ -37,14 +37,14 @@ export default class Locations extends Component {
     this.setState({ markers: markerList });
   }
 
-  /* Sets selectedLibrary to hold name of current selected marker */
+  // Updates the selected marker on the Map
   updateSelectedMarker(title) {
     const { libraryData } = this.props;
     const { selectedLibrary } = this.state;
     if (title === selectedLibrary) {
       this.setState({
         selectedLibrary: 'NO-LIBRARY',
-        selectedLibraryData: 'NO-ITEM'
+        selectedLibraryData: 'NO-DATA'
       });
     } else {
       this.setState({
@@ -87,7 +87,7 @@ export default class Locations extends Component {
   }
 }
 
-/* mapContainer has a zIndex: -1 so that it renders behind header */
+// mapContainer has a zIndex: -1 so that it renders behind LocationHeader
 const styles = StyleSheet.create({
   map: {
     position: 'absolute',

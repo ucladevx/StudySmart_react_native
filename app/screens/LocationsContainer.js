@@ -19,33 +19,37 @@ class LocationContainer extends Component {
     this.state = {
       library_data: undefined,
       currentPage: 'List',
-      currentLibrary: 'NO-LIBRARY'
+      initialSelectedLibrary: 'NO-LIBRARY'
     };
   }
 
   async componentWillMount() {
     let temp;
     console.log('Requesting library info...');
-    /* Fetch library data from API, store inside this.library_data */
+    // Fetch library data from API, store inside this.library_data
     await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
       .then((response) => response.json())
       .then((data) => {
         console.log(data.Items);
         temp = data;
       });
-    /* Once the request is done, save library data to current state */
+    // Once the request is done, save library data to current state
     this.setState({ library_data: temp.Items });
   }
 
   goToMap = (library) => {
     this.setState({
       currentPage: 'Map',
-      currentLibrary: library
+      initialSelectedLibrary: library
     });
   }
 
   handlePress() {
-    this.goToMap('NO-LIBRARY');
+    // When moving to map, make sure there is no selected marker
+    this.setState({
+      initialSelectedLibrary: 'NO-LIBRARY'
+    });
+    // Switch page types
     const { currentPage } = this.state;
     if (currentPage === 'List') {
       this.setState({ currentPage: 'Map' });
@@ -56,7 +60,7 @@ class LocationContainer extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { currentPage, library_data, currentLibrary } = this.state;
+    const { currentPage, library_data, initialSelectedLibrary } = this.state;
 
     // Loading animation screen should go here
     if (library_data === undefined) {
@@ -69,7 +73,7 @@ class LocationContainer extends Component {
     if (currentPage === 'List') {
       body = <LocationsList library_data={library_data} navigation={navigation} goToMap={this.goToMap} />;
     } else if (currentPage === 'Map') {
-      body = <Locations libraryData={library_data} navigation={navigation} library={currentLibrary} />;
+      body = <Locations libraryData={library_data} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
     }
 
     return (
