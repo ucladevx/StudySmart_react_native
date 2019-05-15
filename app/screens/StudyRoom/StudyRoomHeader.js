@@ -3,18 +3,20 @@ import {
   StyleSheet, Text, View, TouchableOpacity, SafeAreaView
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import Search from '../../components/Search';
 import Sorter from '../../components/Sorter';
 import { changeDuration } from '../../Actions/actions';
 import LocationContainer from '../LocationsContainer';
 
+
 const fakeVal = [];
 class StudyRoomHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: false,
     };
     this.goBack = this.goBack.bind(this);
     this.showResults = this.showResults.bind(this);
@@ -46,9 +48,12 @@ class StudyRoomHeader extends Component {
     return (
       <View style={styles.topBar}>
         <View style={styles.bar}>
+          <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.props.handleModal()}>
+            <MaterialCommunityIcons name="filter-variant" color="#108BF8" size={35} />
+          </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {this.props.location.toString()}
+            {location.toString()}
             {' '}
           </Text>
         </View>
@@ -145,6 +150,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '300',
     color: '#000',
+  },
+  rightButtonAbs: {
+    width: 30,
+    height: 30,
+    position: 'absolute',
+    right: 20,
+    top: '15%',
+    zIndex: 5,
   },
 
 

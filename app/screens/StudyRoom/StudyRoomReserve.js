@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Linking, SafeAreaView
+  Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -92,23 +92,23 @@ class StudyRoomReserve extends Component {
     const { rooms } = this.state;
     return (
       <SafeAreaView style={styles.container}>
+        <View style={styles.bar}>
         <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
           <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
         </TouchableOpacity>
-        <FloatingSegment setDuration={this.setDuration} />
-        <View style={styles.bar}>
           <Text style={styles.titleText}>
             {' '}
             {namePairs[rooms.location]}
             {' '}
           </Text>
         </View>
+        <FloatingSegment setDuration={this.setDuration} />
         <FlatList
           data={rooms.available}
           extraData={this.state}
           renderItem={({ item }) => this.renderList(item)}
           keyExtractor={(item, index) => index.toString()}
-          style={{ flex: 1, backgroundColor: 'transparent', marginTop: 10 }}
+          style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
         />
       </SafeAreaView>
     );
@@ -117,7 +117,7 @@ class StudyRoomReserve extends Component {
 
 const text = {
   fontFamily: 'System',
-  fontSize: 16,
+  fontSize: 14,
   fontWeight: '300',
   fontStyle: 'normal',
   letterSpacing: 1.92,
@@ -207,7 +207,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 100,
     width: 100,
-    backgroundColor: 'green',
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center'
@@ -217,7 +216,7 @@ const styles = StyleSheet.create({
     height: 30,
     position: 'absolute',
     left: 20,
-    top: '6%',
+    top: '15%',
     zIndex: 5
   },
   icon: {
@@ -226,12 +225,10 @@ const styles = StyleSheet.create({
   },
   bar: {
     height: 50,
-    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-
   },
 });
 

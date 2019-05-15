@@ -7,14 +7,14 @@ import LocationShadowButton from '../../components/LocationShadowButton';
 import { changeLocation } from '../../Actions/actions';
 
 class BookingLocation extends Component {
-  static navigationOptions={
+  static navigationOptions = {
     header: () => {
       false;
     }
   }
 
   changeLoc = (location, selected) => {
-    let currentLocations = this.props.location; 
+    const currentLocations = this.props.location.slice();
     if (!selected) {
       const index = currentLocations.indexOf(location);
       if (index > -1) {
@@ -26,14 +26,25 @@ class BookingLocation extends Component {
     this.props.changeLocation(currentLocations);
   }
 
+  isSelected = (location) => {
+    const currentLocations = this.props.location;
+    const index = currentLocations.indexOf(location);
+    if (index > -1) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.promptText}>Where do you want to study?</Text>
-        <LocationShadowButton title="Anywhere" selected changeLoc={this.changeLoc} />
-        <LocationShadowButton title="Hill" selected={false} changeLoc={this.changeLoc} />
-        <LocationShadowButton title="Libraries" selected={false} changeLoc={this.changeLoc} />
-        <LocationShadowButton title="Classrooms" selected={false} changeLoc={this.changeLoc} />
+        <View style={styles.centeredView}>
+          <LocationShadowButton title="Anywhere" selected={this.isSelected('Anywhere')} changeLoc={this.changeLoc} />
+          <LocationShadowButton title="Hill" selected={this.isSelected('Hill')} changeLoc={this.changeLoc} />
+          <LocationShadowButton title="Libraries" selected={this.isSelected('Libraries')} changeLoc={this.changeLoc} />
+          <LocationShadowButton title="Classrooms" selected={this.isSelected('Classrooms')} changeLoc={this.changeLoc} />
+        </View>
         <TouchableOpacity style={styles.searchButton} onPress={() => this.props.navigation.navigate('BookingTime')}>
           <Text style={styles.searchText}> Next </Text>
         </TouchableOpacity>
@@ -51,7 +62,7 @@ const promptText = {
   marginTop: '25%',
   marginBottom: '5%',
   width: '80%',
-  textAlign: 'center',
+  textAlign: 'center'
 };
 
 const styles = StyleSheet.create({
@@ -62,17 +73,17 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   searchButton: {
-    flex: 0,
     borderWidth: 2,
     borderColor: '#108BF8',
     backgroundColor: '#108BF8',
+    position: 'absolute',
     width: '65%',
-    height: 50,
+    height: '8%',
+    flex: 0,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
-    position: 'absolute',
-    bottom: '10%',
+    bottom: '8%',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.5,
     shadowRadius: 1,
@@ -87,8 +98,15 @@ const styles = StyleSheet.create({
     color: 'white',
     width: '80%',
     padding: 5,
-    textAlign: 'center'
+    textAlign: 'center',
   },
+  centeredView: {
+    width: '100%',
+    height: '56%',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }
 
 });
 const mapStateToProps = state => ({

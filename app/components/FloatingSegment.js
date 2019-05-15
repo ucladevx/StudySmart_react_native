@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, SafeAreaView
 } from 'react-native';
 
 export default class FloatingSegment extends Component {
@@ -22,7 +22,7 @@ export default class FloatingSegment extends Component {
   render() {
     const { selected } = this.state;
     return (
-      <View style={styles.rightButtonAbs}>
+      <SafeAreaView style={styles.rightButtonAbs}>
         <TouchableOpacity
           onPress={() => this.select('1 hour')}
         >
@@ -39,7 +39,7 @@ export default class FloatingSegment extends Component {
           </Text>
           <View style={selected === '2 hours' ? styles.line : styles.lineTransparent} />
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     );
   }
 }
@@ -65,12 +65,11 @@ const styles = StyleSheet.create({
 
   },
   rightButtonAbs: {
-    width: 110,
+    width: '100%',
     height: 20,
-    position: 'absolute',
-    right: 5,
-    top: 80,
+    flex: 0,
     flexDirection: 'row',
+    justifyContent: 'flex-end',
     zIndex: 5,
   },
   line: {

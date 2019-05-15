@@ -3,7 +3,6 @@ import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, Image, SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {
   changeTime, changeDate, changeLocation, loadData
@@ -135,6 +134,12 @@ class StudyRoomList extends Component {
         onPress={() => this.handleSelectRoom(item)}
       >
         <View style={styles.cell}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => this.handleSelectRoom(item)}
+          >
+            <Entypo name="chevron-thin-right" size={25} color="#108BF8" />
+          </TouchableOpacity>
           <View
             style={styles.containerRow}
           >
@@ -154,12 +159,6 @@ class StudyRoomList extends Component {
                   Rooms Available:
                   {item.available.length}
                 </Text>
-                <TouchableOpacity
-                  style={styles.icon}
-                  onPress={() => this.handleSelectRoom(item)}
-                >
-                  <Entypo name="chevron-thin-right" size={25} color="#108BF8" />
-                </TouchableOpacity>
               </View>
               <View style={styles.containerRow}>
                 <Text style={[styles.text, styles.leftText]}>
@@ -177,12 +176,10 @@ class StudyRoomList extends Component {
     const { visible, room, currentData } = this.state;
     return (
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.handleModal()}>
-          <MaterialCommunityIcons name="filter-variant" color="#108BF8" size={35} />
-        </TouchableOpacity>
         <StudyRoomHeader
           navigation={this.props.navigation}
           sortData={this.sortData}
+          handleModal={this.handleModal}
         />
         <FlatList
           data={currentData}
@@ -278,21 +275,14 @@ const styles = StyleSheet.create({
   },
   name: { // name of location
     ...text,
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: '300',
     color: 'black',
   },
   icon: {
     position: 'absolute',
-    right: 5
-  },
-  rightButtonAbs: {
-    width: 40,
-    height: 40,
-    position: 'absolute',
-    right: 20,
-    top: '6%',
-    zIndex: 5,
+    right: 5,
+    top: '45%'
   },
 });
 

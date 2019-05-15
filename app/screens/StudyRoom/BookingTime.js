@@ -110,48 +110,50 @@ class BookingTime extends Component {
           <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
         </TouchableOpacity>
         <Text style={styles.promptText}>When do you want to study?</Text>
-        <Text style={styles.largeText}>
-          {' '}
-          {this.props.date}
-          {' '}
-        </Text>
-        <TouchableOpacity
-          style={[styles.whiteButton, styles.boxWithShadow]}
-          onPress={this.showDatePicker}
-        >
-          <Text style={styles.titleText}>
+        <View style={styles.centeredView}>
+          <Text style={styles.largeText}>
+            {' '}
+            {this.props.date}
+            {' '}
+          </Text>
+          <TouchableOpacity
+            style={[styles.whiteButton, styles.boxWithShadow]}
+            onPress={this.showDatePicker}
+          >
+            <Text style={styles.titleText}>
             Change
           </Text>
-        </TouchableOpacity>
-        <DateTimePicker
-          isVisible={datePickerVisible}
-          onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
-          onCancel={this.showDatePicker}
-          maximumDate={this.date}
-          minimumDate={this.minDate}
-        />
-        <Text style={styles.largeText}>
-          {' '}
-          {this.props.time}
-          {' '}
-        </Text>
-        <TouchableOpacity
-          style={[styles.whiteButton, styles.boxWithShadow]}
-          onPress={this.showTimePicker}
-        >
-          <Text style={styles.titleText}>
+          </TouchableOpacity>
+          <DateTimePicker
+            isVisible={datePickerVisible}
+            onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
+            onCancel={this.showDatePicker}
+            maximumDate={this.date}
+            minimumDate={this.minDate}
+          />
+          <Text style={styles.largeText}>
+            {' '}
+            {this.props.time}
+            {' '}
+          </Text>
+          <TouchableOpacity
+            style={[styles.whiteButton, styles.boxWithShadow]}
+            onPress={this.showTimePicker}
+          >
+            <Text style={styles.titleText}>
             Change
           </Text>
-        </TouchableOpacity>
-        <DateTimePicker
-          mode="time"
-          isVisible={timePickerVisible}
-          onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
-          onCancel={this.showTimePicker}
-          is24Hour
-          minuteInterval={30}
-          titleIOS="Pick a time"
-        />
+          </TouchableOpacity>
+          <DateTimePicker
+            mode="time"
+            isVisible={timePickerVisible}
+            onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
+            onCancel={this.showTimePicker}
+            is24Hour
+            minuteInterval={30}
+            titleIOS="Pick a time"
+          />
+        </View>
         <TouchableOpacity style={styles.searchButton} onPress={() => this.handleSearch()}>
           <Text style={styles.searchText}> Search </Text>
         </TouchableOpacity>
@@ -177,12 +179,12 @@ const searchButton = {
   borderColor: '#108BF8',
   backgroundColor: '#108BF8',
   width: '65%',
-  height: 50,
+  height: '8%',
   justifyContent: 'center',
   alignItems: 'center',
   borderRadius: 20,
   position: 'absolute',
-  bottom: '10%',
+  bottom: '8%',
   shadowOffset: { width: 0, height: 1 },
   shadowOpacity: 0.5,
   shadowRadius: 1,
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
   },
   whiteButton: {
     backgroundColor: 'white',
-    height: 50,
+    height: '14%',
     width: '65%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -245,6 +247,13 @@ const styles = StyleSheet.create({
     padding: 5,
     textAlign: 'center'
   },
+  centeredView: {
+    width: '100%',
+    height: '54%',
+    justifyContent: 'flex-start',
+    flexDirection: 'column',
+    alignItems: 'center'
+  }
 
 });
 const mapStateToProps = state => ({

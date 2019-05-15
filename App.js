@@ -53,6 +53,7 @@ StudyRoomStack.navigationOptions = {
     return (
       <Image
         source={image}
+        style={{ width: 25, height: 25 }}
       />
     );
   },
@@ -67,11 +68,12 @@ StudyRoomStack.navigationOptions = {
 LocationsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => {
     const image = focused
-      ? require('./assets/locationTabSelected.png')
-      : require('./assets/locationTab.png');
+      ? require('./assets/locationsTabSelected.png')
+      : require('./assets/locationsTab.png');
     return (
       <Image
         source={image}
+        style={{ width: 25, height: 25 }}
       />
     );
   },
@@ -86,11 +88,12 @@ LocationsStack.navigationOptions = {
 FeedbackStack.navigationOptions = {
   tabBarIcon: ({ focused }) => {
     const image = focused
-      ? require('./assets/feedbackSelected.png')
-      : require('./assets/feedback.png');
+      ? require('./assets/feedbackTabSelected.png')
+      : require('./assets/feedbackTab.png');
     return (
       <Image
         source={image}
+        style={{ width: 25, height: 25 }}
       />
     );
   },

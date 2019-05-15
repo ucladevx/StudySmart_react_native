@@ -14,10 +14,11 @@ export default class BookingWebView extends Component {
     render() {
       return (
         <SafeAreaView style={styles.container}>
-          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
-            <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
-          </TouchableOpacity>
-          <View style={styles.bar} />
+          <View style={styles.bar}>
+            <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
+              <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
+            </TouchableOpacity>
+          </View>
           <WebView
             source={{ uri: this.props.navigation.getParam('url', 'https://reslife.ucla.edu/reserve/') }}
           />
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     height: 30,
     position: 'absolute',
     left: 20,
-    top: '6%',
+    top: '15%',
     zIndex: 5
   },
   container: {
