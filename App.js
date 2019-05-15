@@ -8,7 +8,7 @@ import Locations from './app/screens/Locations';
 import configureStore from './store';
 import LocationsDetailed from './app/screens/LocationsDetailed';
 import LocationsList from './app/screens/LocationsList';
-import LocationContainer from './app/screens/LocationsContainer';
+import LocationsContainer from './app/screens/LocationsContainer';
 import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
 
@@ -33,7 +33,7 @@ const StudyRoomStack = StackNavigator({
 });
 
 const LocationsStack = StackNavigator({
-  LocationContainer: { screen: LocationContainer },
+  LocationsContainer: { screen: LocationsContainer },
   List: { screen: LocationsList },
   Detailed: { screen: LocationsDetailed },
   Map: { screen: Locations },

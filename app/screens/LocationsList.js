@@ -21,6 +21,7 @@ export function getLibraryHours(library, day) {
   return status;
 }
 
+
 export default class LocationsList extends Component {
 
   constructor(props) {
@@ -30,12 +31,14 @@ export default class LocationsList extends Component {
     };
   }
 
-  render() {
-    const millis = new Date();
-    const day = millis.getDay();
+  // setPage(pageType) {
+  //   const { setPage } = this.props;
+  //   setPage(pageType);
+  // }
 
+  render() {
     // const { library_data } = this.state;
-    const { library_data } = this.props;
+    const { library_data, goToMap } = this.props;
 
     /* Rendering temporary loading screen if http request is not done yet */
     if (library_data === undefined || library_data.length === 0) {
@@ -60,7 +63,7 @@ export default class LocationsList extends Component {
             renderSectionHeader={({ section }) => <Text style={styles.Section_Header}>{section.title}</Text>}
             renderItem={({ item }) => (
               // Individual list elements 
-              <LibraryCard item={item} day={day} />
+              <LibraryCard item={item} goToMap={() => goToMap()} />
             )}
             keyExtractor={(item, index) => index.toString()}
           />

@@ -22,16 +22,7 @@ class LocationContainer extends Component {
     };
   }
 
-  handlePress() {
-    const { currentPage } = this.state;
-    if (currentPage === 'List') {
-      this.setState({ currentPage: 'Map' });
-    } else if (currentPage === 'Map') {
-      this.setState({ currentPage: 'List' });
-    }
-  }
-
-  async componentDidMount() {
+  async componentWillMount() {
     let temp;
     console.log('Requesting library info...');
     /* Fetch library data from API, store inside this.library_data */
@@ -45,55 +36,45 @@ class LocationContainer extends Component {
     this.setState({ library_data: temp.Items });
   }
 
+  goToMap() {
+    this.setState({ currentPage: 'Map' });
+  }
+
+  handlePress() {
+    const { currentPage } = this.state;
+    if (currentPage === 'List') {
+      this.setState({ currentPage: 'Map' });
+    } else if (currentPage === 'Map') {
+      this.setState({ currentPage: 'List' });
+    }
+  }
 
   render() {
+    const { navigation } = this.props;
+    const { currentPage, library_data } = this.state;
+
     // Loading animation screen should go here
-    if (this.state.library_data === undefined) {
+    if (library_data === undefined) {
       return (
         <Text> Attempting to get library data . . . </Text>);
     }
 
+    // Choose to display list or map depending on state
     let body;
-
-    if (this.state.currentPage === 'List') {
-      body = <LocationsList library_data={this.state.library_data} navigation={this.props.navigation} />;
-    } else if (this.state.currentPage === 'Map') {
-      body = <Locations library_data={this.state.library_data} navigation={this.props.navigation} />;
+    if (currentPage === 'List') {
+      body = <LocationsList library_data={library_data} navigation={navigation} goToMap={() => this.goToMap()} />;
+    } else if (currentPage === 'Map') {
+      body = <Locations libraryData={library_data} navigation={navigation} />;
     }
 
     return (
-      <View styles={styles.container}>
-        <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey={this.state.currentPage} onPress={() => this.handlePress()} />
+      <View style={styles.container}>
+        <LocationHeader library_data={library_data} navigation={navigation} currentRouteKey={currentPage} onPress={() => this.handlePress()} />
         {body}
       </View>
-
-    // After we get the data generate the list view and everything else
-    // if (this.state.currentPage === 'List') {
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="List"/>
-    //     <LocationsList library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
-    // else if (this.state.currentPage === 'Map'){
-    //   console.log("In map")
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="Map"/>
-    //         <Locations library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
     );
   }
 }
-
-/* Standardized text used throughout code */
-const text = {
-  fontFamily: 'System',
-  letterSpacing: 1.92,
-};
 
 const styles = StyleSheet.create({
   container: {

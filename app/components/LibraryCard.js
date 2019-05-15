@@ -3,8 +3,10 @@ import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Alert } fr
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import ViewContainer from './ViewContainer';
 import { IMG_TEMP, getLibraryHours } from '../screens/LocationsList';
+import { withNavigation } from 'react-navigation';
 
-export default class LibraryCard extends Component {
+class LibraryCard extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,14 +19,17 @@ export default class LibraryCard extends Component {
     if (collapsed) {
       this.setState({ collapsed: false });
     }
-    else {
+    else {  
       this.setState({ collapsed: true });
     }
   }
 
   render() {
-    const { item, day } = this.props;
+    const { item, goToMap } = this.props;
     const { collapsed } = this.state;
+    const { navigate } = this.props.navigation;
+    const millis = new Date();
+    const day = millis.getDay();
 
     let arrowIcon;
 
@@ -64,7 +69,11 @@ export default class LibraryCard extends Component {
               <Text>This is temporary to test the expansion. No styling yet :(</Text>
             }
             <View style={listElement.buttonRow}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {
+                goToMap();
+                navigate('LocationsContainer', { item, day });
+              }}
+              >
                 {/* Need to fix map logo later  */}
                 <Ionicon color="black" name="ios-locate" size={25} style={{ marginRight: 10 }} />
               </TouchableOpacity>
@@ -73,7 +82,8 @@ export default class LibraryCard extends Component {
               {/* Arrow can also expand the cell  */}
               <TouchableOpacity onPress={() => {
                 this.handleExpandPress();
-              }}>
+              }}
+              >
                 {arrowIcon}
               </TouchableOpacity>
             </View>
@@ -178,5 +188,4 @@ const expandedElement = StyleSheet.create({
   },
 });
 
-
-module.exports = LibraryCard;
+export default withNavigation(LibraryCard);
