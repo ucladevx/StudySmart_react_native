@@ -81,32 +81,35 @@ class LibraryCard extends Component {
               <Text style={listElement.activityLevel}>Activity Level: {item.currentBusyness}</Text>
             </View>
           </View>
+
+          {/* Absolutely positioned bottom button row */}
+          <View style={listElement.buttonRow}>
+            {goToMap !== undefined && (
+              <TouchableOpacity onPress={() => {
+                goToMap(item);
+                navigate('LocationsContainer');
+              }}
+              >
+                {/* Need to fix map logo later  */}
+                <Ionicon color="black" name="ios-locate" size={25} style={{ marginRight: 10 }} />
+              </TouchableOpacity>
+            )}
+            {/* Check the state, if state is non-expanded use down */}
+
+            {/* Arrow can also expand the cell  */}
+            <TouchableOpacity onPress={() => {
+              this.handleExpandPress();
+            }}
+            >
+              {arrowIcon}
+            </TouchableOpacity>
+          </View>
+
+          {/* Conditional rendering of expanded data  */}
           <View>
-            {/* Conditional rendering of expanded data  */}
             {!collapsed &&
               <Hours item={item} />
             }
-            <View style={listElement.buttonRow}>
-              {goToMap !== undefined && (
-                <TouchableOpacity onPress={() => {
-                  goToMap(item);
-                  navigate('LocationsContainer');
-                }}
-                >
-                  {/* Need to fix map logo later  */}
-                  <Ionicon color="black" name="ios-locate" size={25} style={{ marginRight: 10 }} />
-                </TouchableOpacity>
-              )}
-              {/* Check the state, if state is non-expanded use down */}
-
-              {/* Arrow can also expand the cell  */}
-              <TouchableOpacity onPress={() => {
-                this.handleExpandPress();
-              }}
-              >
-                {arrowIcon}
-              </TouchableOpacity>
-            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -181,12 +184,11 @@ const listElement = StyleSheet.create({
     borderRadius: 5,
   },
   buttonRow: {
+    position: 'absolute',
     flexDirection: 'row',
     marginLeft: 'auto',
-    // paddingRight: ,
     alignItems: 'flex-end',
     justifyContent: 'center',
-    position: 'absolute',
     bottom: 5,
     right: 15,
   },

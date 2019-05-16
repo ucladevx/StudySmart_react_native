@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   information: {
     // padding: 20,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-start',
   },
   Activity_Level_TEMPORARY: {
     color: '#5e5b59',
@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   hours: {
     // flex: 1,
     width,
-    paddingLeft: 25,
-    paddingRight: 25,
+    paddingLeft: 18,
+    // paddingRight: 25,
     paddingTop: 10,
   },
   currentDay: {
