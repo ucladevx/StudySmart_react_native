@@ -7,38 +7,33 @@ import {
 export default class FloatingSegment extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selected: '1 hour'
-    };
   }
 
   select(duration) {
-    this.setState({
-      selected: duration
-    });
     this.props.setDuration(duration);
   }
 
+  renderDuration(title) {
+    const { selected } = this.props;
+    return(
+      <TouchableOpacity
+      style={selected === title ? styles.durationSelected : styles.duration}
+      onPress={() => this.select(title)}
+    >
+      <Text style={selected === title ? styles.titleTextSelected : styles.titleText}>
+        {title}
+      </Text>
+      <View style={selected === title ? styles.line : styles.lineTransparent} />
+    </TouchableOpacity>
+    )
+  }
+
   render() {
-    const { selected } = this.state;
+    const { selected } = this.props;
     return (
       <SafeAreaView style={styles.rightButtonAbs}>
-        <TouchableOpacity
-          onPress={() => this.select('1 hour')}
-        >
-          <Text style={selected === '1 hour' ? styles.titleTextSelected : styles.titleText}>
-            {'1 hour'}
-          </Text>
-          <View style={selected === '1 hour' ? styles.line : styles.lineTransparent} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.select('2 hours')}
-        >
-          <Text style={selected === '2 hours' ? styles.titleTextSelected : styles.titleText}>
-            {'2 hours'}
-          </Text>
-          <View style={selected === '2 hours' ? styles.line : styles.lineTransparent} />
-        </TouchableOpacity>
+       { this.renderDuration('1 hour')}
+       { this.renderDuration('2 hours')}
       </SafeAreaView>
     );
   }
@@ -55,18 +50,26 @@ const titleText = {
   textAlign: 'center',
   padding: 1
 };
+const duration = {
+  backgroundColor: 'white',
+  borderRadius: 7,
+  justifyContent: 'center',
+  marginRight: 4,
+  width: 60,
+  alignItems: 'center'
+};
 
 const styles = StyleSheet.create({
   titleText,
-
+  duration,
   titleTextSelected: {
     ...titleText,
-    color: '#108BF8',
+    color: 'white',
 
   },
   rightButtonAbs: {
     width: '100%',
-    height: 20,
+    height: 25,
     flex: 0,
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -81,6 +84,11 @@ const styles = StyleSheet.create({
     height: 1,
     width: '95%',
     backgroundColor: 'transparent'
+  },
+
+  durationSelected: {
+    ...duration,
+    backgroundColor: '#108BF8',
   }
 
 });

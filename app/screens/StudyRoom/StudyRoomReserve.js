@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import {
   changeTime, changeDate, changeLocation, loadData
 } from '../../Actions/actions';
@@ -27,7 +28,7 @@ const durationPairs = {
 };
 
 class StudyRoomReserve extends Component {
-  static navigationOptions={
+  static navigationOptions = {
     header: () => {
       false;
     }
@@ -37,8 +38,32 @@ class StudyRoomReserve extends Component {
     super(props);
     this.state = {
       rooms: this.props.navigation.getParam('rooms', 'NA'),
-      duration: '1 hour'
+      duration: '1 hour',
     };
+  }
+
+
+  onSwipeLeft(gestureState) {
+    this.setState({ duration: '1 hour' });
+  }
+
+  onSwipeRight(gestureState) {
+    this.setState({ duration: '2 hours' });
+  }
+
+  onSwipe(gestureName, gestureState) {
+    console.log(gestureName, gestureState)
+    const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
+    switch (gestureName) {
+      case SWIPE_LEFT:
+        this.setState({ duration: '1 hour' });
+        break;
+      case SWIPE_RIGHT:
+        this.setState({ duration: '2 hours' });
+        break; 
+      default:
+        break;
+    }
   }
 
   setDuration = (hour) => {
@@ -60,7 +85,6 @@ class StudyRoomReserve extends Component {
     details = details.trim();
     details = details.slice(0, -1);
     const detailsArray = details.split('(');
-    const { room } = this.state;
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
@@ -78,7 +102,7 @@ class StudyRoomReserve extends Component {
               onPress={() => this.handleReserve(item.link)}
             >
               <Text style={styles.whiteText}>
-          Reserve
+                Reserve
               </Text>
             </TouchableOpacity>
           </View>
@@ -90,27 +114,43 @@ class StudyRoomReserve extends Component {
 
   render() {
     const { rooms } = this.state;
+    const config = {
+      velocityThreshold: 0.1,
+      directionalOffsetThreshold: 200
+    };
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>
-        <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
-          <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
+            <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
+          </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
             {namePairs[rooms.location]}
             {' '}
           </Text>
         </View>
-        <FloatingSegment setDuration={this.setDuration} />
-        <FlatList
-          data={rooms.available}
-          extraData={this.state}
-          renderItem={({ item }) => this.renderList(item)}
-          keyExtractor={(item, index) => index.toString()}
-          style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
-        />
+        <FloatingSegment setDuration={this.setDuration} selected={this.state.duration} />
+        <GestureRecognizer
+          onSwipe={(direction, state) => this.onSwipe(direction, state)}
+          onSwipeLeft={state => this.onSwipeLeft(state)}
+          onSwipeRight={state => this.onSwipeRight(state)}
+          config={config}
+          style={{
+            flex: 1,
+            backgroundColor: 'white'
+          }}
+        >
+          <FlatList
+            data={rooms.available}
+            extraData={this.state}
+            renderItem={({ item }) => this.renderList(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
+          />
+        </GestureRecognizer>
       </SafeAreaView>
+
     );
   }
 }
