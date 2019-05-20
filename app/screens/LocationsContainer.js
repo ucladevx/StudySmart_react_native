@@ -6,7 +6,7 @@ import { withNavigation } from 'react-navigation';
 import LocationHeader from '../components/LocationHeader';
 // import StudyRoomHeader from '../screens/StudyRoom/StudyRoomHeader';
 import LocationsList from './LocationsList';
-import Locations from './Locations';
+import LocationsMap from './LocationsMap';
 
 class LocationContainer extends Component {
   static navigationOptions = {
@@ -120,7 +120,7 @@ class LocationContainer extends Component {
     if (currentPage === 'List') {
       body = <LocationsList library_data={library_data} busyness_data={this.state.busyness_data} navigation={navigation} goToMap={this.goToMap} />;
     } else if (currentPage === 'Map') {
-      body = <Locations libraryData={library_data} busyness_data={this.state.busyness_data} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
+      body = <LocationsMap libraryData={library_data} busyness_data={this.state.busyness_data} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
     }
 
     return (

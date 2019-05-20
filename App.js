@@ -4,7 +4,7 @@ import {
   Image
 } from 'react-native';
 import { StackNavigator, createBottomTabNavigator } from 'react-navigation';
-import Locations from './app/screens/Locations';
+import LocationsMap from './app/screens/LocationsMap';
 import configureStore from './store';
 import LocationsDetailed from './app/screens/LocationsDetailed';
 import LocationsList from './app/screens/LocationsList';
@@ -36,7 +36,7 @@ const LocationsStack = StackNavigator({
   LocationsContainer: { screen: LocationsContainer },
   List: { screen: LocationsList },
   Detailed: { screen: LocationsDetailed },
-  Map: { screen: Locations },
+  Map: { screen: LocationsMap },
 
   initialRouteName: 'LocationContainer',
 });

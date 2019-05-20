@@ -7,7 +7,7 @@ import LibraryCard from '../components/LibraryCard';
 const unselectedMarker = require('../../assets/library.png');
 const selectedMarker = require('../../assets/librarySelected.png');
 
-export default class Locations extends Component {
+export default class LocationsMap extends Component {
   // selectedLibrary = name of current selected library
   // selectedLibraryData = dictionary that holds library data for selectedLibrary
   constructor(props) {
@@ -103,4 +103,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Locations;
+module.exports = LocationsMap;
