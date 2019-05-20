@@ -44,23 +44,22 @@ class StudyRoomReserve extends Component {
 
 
   onSwipeLeft(gestureState) {
-    this.setState({ duration: '1 hour' });
-  }
-
-  onSwipeRight(gestureState) {
     this.setState({ duration: '2 hours' });
   }
 
+  onSwipeRight(gestureState) {
+    this.setState({ duration: '1 hour' });
+  }
+
   onSwipe(gestureName, gestureState) {
-    console.log(gestureName, gestureState)
     const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
     switch (gestureName) {
       case SWIPE_LEFT:
-        this.setState({ duration: '1 hour' });
+        this.setState({ duration: '2 hours' });
         break;
       case SWIPE_RIGHT:
-        this.setState({ duration: '2 hours' });
-        break; 
+        this.setState({ duration: '1 hour' });
+        break;
       default:
         break;
     }

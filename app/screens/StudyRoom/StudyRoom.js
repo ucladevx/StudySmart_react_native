@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Image, SafeAreaView
+  Text, View, TouchableOpacity, StyleSheet, FlatList, Image, SafeAreaView, SectionList
 } from 'react-native';
 import { connect } from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {
-  changeTime, changeDate, changeLocation, loadData
+  changeTime, changeDate, changeLocation, loadHillData, loadLibraryData
 } from '../../Actions/actions';
 import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
@@ -22,8 +22,23 @@ const namePairs = {
   movement: 'Hedrick Movement Studio',
 };
 
+const monthPairs = {
+  '01': 'January',
+  '02': 'February',
+  '03': 'March',
+  '04': 'April',
+  '05': 'May',
+  '06': 'June',
+  '07': 'July',
+  '08': 'August',
+  '09': 'September',
+  10: 'October',
+  11: 'November',
+  12: 'December',
+};
+
 class StudyRoomList extends Component {
-  static navigationOptions={
+  static navigationOptions = {
     header: () => {
       false;
     }
@@ -33,8 +48,8 @@ class StudyRoomList extends Component {
     super(props);
     this.state = {
       visible: false,
-      currentData: [],
-      room: null,
+      hillData: [],
+      libraryData: [],
     };
     this.getStudyRooms = this.getStudyRooms.bind(this);
   }
@@ -43,7 +58,12 @@ class StudyRoomList extends Component {
     this.getStudyRooms();
   }
 
-  async getStudyRooms() {
+  getStudyRooms() {
+    this.getHillStudyRooms();
+    //this.getLibraryStudyRooms();
+  }
+
+  async getHillStudyRooms() {
     let temp; let month; let day; let
       year;
     let appendedURL = '';
@@ -86,32 +106,64 @@ class StudyRoomList extends Component {
     for (let k = 0; k < temp.Items.length; k += 1) {
       temp.Items[k].area = 'Hill';
     }
-    this.props.loadData(temp.Items);
+    this.props.loadHillData(temp.Items);
+    this.sortData();
+  }
+
+  async getLibraryStudyRooms() {
+    let temp;
+    const { date } = this.props;
+    const month = date.substring(0, 2);
+    const day = date.substring(3, 5);
+    const year = date.substring(date.length - 4);
+    const monthName = monthPairs[month];
+    const appendedURL = `?date=${monthName} ${day} ${year}`;
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        temp = data;
+      });
+    for (let k = 0; k < temp.Items.length; k += 1) {
+      temp.Items[k].area = 'Libraries';
+    }
+    this.props.loadLibraryData(temp.Items);
     this.sortData();
   }
 
   sortData = () => {
-    const locationDict = {};
-    const array = [];
-    const duration = this.props.duration.toString();
-    const location = this.props.location;
-    const { data } = this.props;
-    for (let i = 0; i < data.length; i += 1) {
-      if (duration === '0' || data[i].duration === duration) {
-        if (location.includes('Anywhere') || location.includes(data[i].area)) {
-          if (data[i].name in locationDict) {
-            locationDict[data[i].name].push(data[i]);
-          } else {
-            locationDict[data[i].name] = [data[i]];
-          }
+    const hillDict = {};
+    const libDict = {};
+    const hillArray = [];
+    const libArray = [];
+    const { location } = this.props;
+    const { hillData, libraryData } = this.props;
+    if (location.includes('Anywhere') || location.includes('Hill')) {
+      for (let i = 0; i < hillData.length; i += 1) {
+        if (hillData[i].name in hillDict) {
+          hillDict[hillData[i].name].push(hillData[i]);
+        } else {
+          hillDict[hillData[i].name] = [hillData[i]];
         }
       }
+      Object.keys(hillDict).forEach((key) => {
+        hillArray.push({ location: key, available: hillDict[key], area: 'Hill' });
+      });
     }
-    Object.keys(locationDict).forEach((key) => {
-      array.push({ location: key, available: locationDict[key] });
-    });
+  /*  if (location.includes('Anywhere') || location.includes('Libraries')) {
+      for (let i = 0; i < libraryData.length; i += 1) {
+        if (libraryData[i].building in libDict) {
+          libDict[libraryData[i].building].push(libraryData[i]);
+        } else {
+          libDict[libraryData[i].building] = [libraryData[i]];
+        }
+      }
+      Object.keys(libDict).forEach((key) => {
+        libArray.push({ location: key, available: libDict[key] });
+      });
+    } */
     this.setState({
-      currentData: array
+      hillData: hillArray,
+      //libraryData: libArray,
     });
   }
 
@@ -151,7 +203,7 @@ class StudyRoomList extends Component {
             >
               <View style={styles.containerRow}>
                 <Text style={[styles.name, styles.leftText]}>
-                  {namePairs[item.location]}
+                  {item.area === 'Hill' ? namePairs[item.location] : item.location}
                 </Text>
               </View>
               <View style={styles.containerRow}>
@@ -173,7 +225,9 @@ class StudyRoomList extends Component {
   }
 
   render() {
-    const { visible, room, currentData } = this.state;
+    const {
+      visible, hillData, libraryData
+    } = this.state;
     return (
       <SafeAreaView style={styles.container}>
         <StudyRoomHeader
@@ -181,16 +235,22 @@ class StudyRoomList extends Component {
           sortData={this.sortData}
           handleModal={this.handleModal}
         />
-        <FlatList
-          data={currentData}
-          extraData={currentData}
-          renderItem={({ item }) => this.renderRow(item)}
-          keyExtractor={(item, index) => index.toString()}
+        <SectionList
           style={styles.list}
+          renderItem={({ item }) => this.renderRow(item)}
+          renderSectionHeader={({ section: { title } }) => (
+            <View style={styles.sectionHeader}>
+              <Text style={styles.titleText}>{title}</Text>
+            </View>
+          )}
+          sections={[
+            { title: 'Hill', data: hillData },
+            { title: 'Libraries', data: libraryData }]}
+          keyExtractor={(item, index) => item + index}
         />
-        { visible ? (
+        {visible ? (
           <StudyRoomModal handleModal={this.handleModal} getStudyRooms={this.getStudyRooms} />
-        ) : null }
+        ) : null}
       </SafeAreaView>
     );
   }
@@ -205,8 +265,20 @@ const text = {
   color: 'black',
   paddingBottom: 3,
 };
+const titleText = {
+  fontFamily: 'System',
+  fontSize: 18,
+  fontWeight: '300',
+  fontStyle: 'normal',
+  letterSpacing: 1.92,
+  color: '#108BF8',
+  width: '80%',
+  padding: 5,
+  textAlign: 'center'
+};
 
 const styles = StyleSheet.create({
+  titleText,
   container: {
     flex: 1,
     backgroundColor: 'white'
@@ -284,6 +356,13 @@ const styles = StyleSheet.create({
     right: 5,
     top: '45%'
   },
+  sectionHeader: {
+    height: 30,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  }
 });
 
 const mapStateToProps = state => ({
@@ -291,7 +370,8 @@ const mapStateToProps = state => ({
   date: state.study.date,
   duration: state.study.duration,
   location: state.study.location,
-  data: state.study.data,
+  hillData: state.study.hillData,
+  libraryData: state.study.libraryData,
   unstyledTime: state.study.unstyledTime
 
 });
@@ -306,8 +386,11 @@ const mapDispatchToProps = dispatch => ({
   changeLocation: (location) => {
     dispatch(changeLocation(location));
   },
-  loadData: (data) => {
-    dispatch(loadData(data));
+  loadHillData: (hillData) => {
+    dispatch(loadHillData(hillData));
+  },
+  loadLibraryData: (libraryData) => {
+    dispatch(loadLibraryData(libraryData));
   }
 });
 

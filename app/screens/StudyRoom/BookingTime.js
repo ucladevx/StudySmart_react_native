@@ -90,7 +90,7 @@ class BookingTime extends Component {
   handleSearch() {
     const { navigation } = this.props;
     const { datePickerVisible, timePickerVisible } = this.state;
-    if (this.props.date === 'Today') {
+    if (this.props.date === 'Today' || this.props.time === 'Now') {
       const rightNow = new Date();
       this.handleConfirm(rightNow, 'date');
       this.handleConfirm(rightNow, 'time');
@@ -129,7 +129,7 @@ class BookingTime extends Component {
             onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
             onCancel={this.showDatePicker}
             maximumDate={this.date}
-            minimumDate={this.minDate}
+            //minimumDate={this.minDate}
           />
           <Text style={styles.largeText}>
             {' '}
