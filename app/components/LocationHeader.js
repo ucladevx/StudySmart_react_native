@@ -10,53 +10,13 @@ class LocationHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // Location: '',
-      // library_data: this.props.library_data,
       currentRouteKey: this.props.currentRouteKey,
     };
-    // this.setInputState = this.setInputState.bind(this);
-    // this.handleSearchSuggestions = this.handleSearchSuggestions.bind(this);
   }
-
-  // Shirly's code from GlobalSearchBar.js
-  // setInputState(e) {
-  // this.setState({ Location: e });
-  // }
-
-  // // Shirly's code from GlobalSearchBar.js
-  // handleSearchSuggestions(e) {
-  // const { Location, library_data } = this.state;
-  // if (Location.length === 0 || library_data.length === 0) {
-  //   return [];
-  // }
-  // let index; let
-  //   value;
-  // const result = [];
-
-  // for (index = 0; index < library_data.length; ++index) {
-  //   // fix API .name.touppercase stuff
-  //   value = library_data[index].name.S.toUpperCase();
-  //   const currentLocation = Location.toUpperCase();
-  //   if (value.substring(0, Location.length) == currentLocation) {
-  //     result.push(library_data[index]);
-  //   }
-  // }
-  // return result;
-  // }
-
-  // handleSelection(item) {
-  // const { navigate } = this.props.navigation;
-  // const { library_data } = this.state;
-  // // TODO: Fix api .Name.toUpperCase()
-  // navigate('Detailed', { locationClicked: library_data.find(x => x.name.S.toUpperCase() === item.item.name.S.toUpperCase()) });
-  // this.setState({
-  //   Location: '',
-  // });
-  // }
 
   render() {
     // const locations = this.props.handleSearchSuggestions(this.state.Location);
-    const locations = this.props.library_data;
+    const locations = this.props.libraryData;
     // console.log(locations)
     const { currentRouteKey } = this.state;
 
@@ -74,9 +34,10 @@ class LocationHeader extends Component {
           </TouchableOpacity>
         </View>
         <Search
-          data={locations} // this should be an API call or huge list eventually
+          // Searchbar itself does not actually show any data so pass in nothing
+          data={[]}
           defaultValue={this.state.Location}
-          onChangeText={(e) => this.props.setInputState(e)}
+          onChangeText={(e) => this.props.getSearchQuery(e)}
           inputContainerStyle={styles.inputContainer}
           style={styles.searchContainer}
           renderItem={() => (

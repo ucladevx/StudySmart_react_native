@@ -26,22 +26,22 @@ class LocationContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      library_data: undefined,
+      libraryData: undefined,
       currentPage: 'List',
       initialSelectedLibrary: 'NO-LIBRARY',
-      busyness_data: undefined,
+      busynessData: undefined,
 
       // Search bar state
       Location: '',
       // This one NEVER changes after fetched
-      full_library_data: undefined,
+      fullLibraryData: undefined,
     };
   }
 
   async componentWillMount() {
     let temp;
     console.log('Requesting library info...');
-    // Fetch library data from API, store inside this.library_data
+    // Fetch library data from API, store inside this.libraryData
     await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
       .then(response => response.json())
       .then((data) => {
@@ -57,20 +57,20 @@ class LocationContainer extends Component {
       });
     // Process activity levels - dictionary from name to name
 
-    const lib_data = temp.Items;
-    const busy_data = temp2.Items;
+    const libData = temp.Items;
+    const busyData = temp2.Items;
 
     // loop through library data items, if in dictionary, add the busyness
-    for (let i = 0; i < lib_data.length; i++) {
-      const item = lib_data[i];
-      // This is the name from the library_data API
+    for (let i = 0; i < libData.length; i++) {
+      const item = libData[i];
+      // This is the name from the libraryData API
       const libraryName = item.name.S;
       // Found a valid translation, valid busyness data
       if (libraryName in libraryToBusynessTranslation) {
         // Get the name translation
         const busyName = libraryToBusynessTranslation[libraryName];
         // Find the item in API matching name
-        const busyItem = busy_data.find(element => busyName === element.name.S);
+        const busyItem = busyData.find(element => busyName === element.name.S);
         // Add the busyness data to the item
         const currentBusyness = busyItem.current_busyness.N;
         item.currentBusyness = `${currentBusyness}%`;
@@ -83,9 +83,9 @@ class LocationContainer extends Component {
 
     /* Once the request is done, save library data to current state */
     this.setState({
-      library_data: lib_data,
-      busyness_data: busy_data.Items,
-      full_library_data: lib_data,
+      libraryData: libData,
+      busynessData: busyData.Items,
+      fullLibraryData: libData,
     });
   }
 
@@ -111,35 +111,34 @@ class LocationContainer extends Component {
   }
 
   // Shirly's code from GlobalSearchBar.js
-  setInputState = (e) => {
-    this.handleSearchSuggestions(e);
-    console.log(e);
+  getSearchQuery = (e) => {
+    this.filterData(e);
   }
 
   // Shirly's code from GlobalSearchBar.js
-  handleSearchSuggestions = (search) => {
-    const { full_library_data } = this.state;
+  filterData = (search) => {
+    const { fullLibraryData } = this.state;
     let index; let
       value;
     const result = [];
-    for (index = 0; index < full_library_data.length; index += 1) {
-      value = full_library_data[index].name.S.toUpperCase();
+    for (index = 0; index < fullLibraryData.length; index += 1) {
+      value = fullLibraryData[index].name.S.toUpperCase();
       const currentLocation = search.toUpperCase();
       if (value.includes(currentLocation)) {
-        result.push(full_library_data[index]);
+        result.push(fullLibraryData[index]);
       }
     }
     // return result;
-    this.setState({ library_data: result });
+    this.setState({ libraryData: result });
   }
 
 
   render() {
     const { navigation } = this.props;
-    const { currentPage, library_data, initialSelectedLibrary } = this.state;
+    const { currentPage, libraryData, initialSelectedLibrary } = this.state;
 
     // Loading animation screen should go here
-    if (library_data === undefined) {
+    if (libraryData === undefined) {
       return (
         <SafeAreaView style={styles.loading}>
           <Text style={{ textAlign: 'center', paddingBottom: 20, }}>Attemping to fetch library data...</Text>
@@ -151,41 +150,41 @@ class LocationContainer extends Component {
     // Choose to display list or map depending on state
     let body;
     if (currentPage === 'List') {
-      body = <LocationsList library_data={library_data} busyness_data={this.state.busyness_data} navigation={navigation} goToMap={this.goToMap} />;
+      body = <LocationsList libraryData={libraryData} busynessData={this.state.busynessData} navigation={navigation} goToMap={this.goToMap} />;
     } else if (currentPage === 'Map') {
-      body = <Locations libraryData={library_data} busyness_data={this.state.busyness_data} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
+      body = <Locations libraryData={libraryData} busynessData={this.state.busynessData} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
     }
 
     return (
       <SafeAreaView style={styles.container}>
         <LocationHeader
-          library_data={library_data}
+          libraryData={libraryData}
           navigation={navigation}
           currentRouteKey={currentPage}
           onPress={() => this.handlePress()}
-          setInputState={this.setInputState}
+          getSearchQuery={this.getSearchQuery}
         />
         {body}
       </SafeAreaView>
 
-    // After we get the data generate the list view and everything else
-    // if (this.state.currentPage === 'List') {
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="List"/>
-    //     <LocationsList library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
-    // else if (this.state.currentPage === 'Map'){
-    //   console.log("In map")
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="Map"/>
-    //         <Locations library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
+      // After we get the data generate the list view and everything else
+      // if (this.state.currentPage === 'List') {
+      //   return (
+      //     <View styles={styles.container}>
+      //       <LocationHeader libraryData={this.state.libraryData} navigation={this.props.navigation} currentRouteKey="List"/>
+      //     <LocationsList libraryData={this.state.libraryData} navigation={this.props.navigation}/>
+      //     </View>
+      //   )
+      // }
+      // else if (this.state.currentPage === 'Map'){
+      //   console.log("In map")
+      //   return (
+      //     <View styles={styles.container}>
+      //       <LocationHeader libraryData={this.state.libraryData} navigation={this.props.navigation} currentRouteKey="Map"/>
+      //         <Locations libraryData={this.state.libraryData} navigation={this.props.navigation}/>
+      //     </View>
+      //   )
+      // }
     );
   }
 }
@@ -202,13 +201,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
   }
-  // header: {
-  //   height: 50,
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  //   backgroundColor: '#4F87EC',
-  //   width: '100%',
-  // },
 });
 
 export default withNavigation(LocationContainer);

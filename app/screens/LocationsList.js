@@ -27,7 +27,7 @@ export default class LocationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // library_data: undefined
+      // libraryData: undefined
     };
   }
 
@@ -37,31 +37,10 @@ export default class LocationsList extends Component {
   // }
 
   render() {
-    // const { library_data } = this.state;
-    const { library_data, goToMap, busyness_data } = this.props;
-
-    // // Process activity levels
-    // // dictionary from name to name 
-    // const libraryToBusynessTranslation = {
-    //   'Science and Engineering Library': 'UCLA Science and Engineering Library',
-    //   'Music Library': 'UCLA Music Library',
-    //   'Powell Library': 'Powell Library',
-    //   'Research Library (Charles E. Young)': 'Charles E. Young Research Library',
-    //   'Management Library (Eugene and Maxine Rosenfeld)': 'Rosenfeld Library',
-    // };
-    // // loop through library data items, if in dictionary, add the busyness
-    // for (let i = 0; i < library_data.length; i++) {
-    //   let item = library_data[i];
-    //   // This is the name from the library_data API
-    //   let libraryName = item.name;
-    //   console.log('lib_data', libraryName);
-    // }
-    // // console.log('Music Library' in libraryToBusynessTranslation);
-
-    // // if not in the library to busyness then add activity level N/A
+    const { libraryData, goToMap, busynessData } = this.props;
 
     /* Rendering temporary loading screen if http request is not done yet */
-    if (library_data === undefined) {
+    if (libraryData === undefined) {
       return (
         <View styles={styles.loading}>
           <Text> Attempting to get library data . . . </Text>
@@ -69,11 +48,11 @@ export default class LocationsList extends Component {
         </View>
       );
     }
-    else if (library_data.length === 0) {
+    else if (libraryData.length === 0) {
       return (
         <View styles={styles.loading}>
-        <Text> No libraries to display . . . </Text>
-      </View>
+          <Text> No libraries to display . . . </Text>
+        </View>
       );
     }
 
@@ -81,7 +60,7 @@ export default class LocationsList extends Component {
       <FlatList
         bounces={false}
         style={styles.list}
-        data={library_data}
+        data={libraryData}
         extraData={this.props}
         contentContainerStyle={styles.scroll_style}
         renderItem={({ item }) => (
