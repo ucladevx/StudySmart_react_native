@@ -8,6 +8,14 @@ import LocationHeader from '../components/LocationHeader';
 import LocationsList from './LocationsList';
 import Locations from './Locations';
 
+const libraryToBusynessTranslation = {
+  'Science and Engineering Library': 'UCLA Science and Engineering Library',
+  'Music Library': 'UCLA Music Library',
+  'Powell Library': 'Powell Library',
+  'Research Library (Charles E. Young)': 'Charles E. Young Research Library',
+  'Management Library (Eugene and Maxine Rosenfeld)': 'Rosenfeld Library',
+};
+
 class LocationContainer extends Component {
   static navigationOptions = {
     header: () => {
@@ -40,7 +48,6 @@ class LocationContainer extends Component {
         console.log(data.Items);
         temp = data;
       });
-
     let temp2;
     await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/busyness_graphs')
       .then(response => response.json())
@@ -48,15 +55,8 @@ class LocationContainer extends Component {
         console.log(data.Items);
         temp2 = data;
       });
-
     // Process activity levels - dictionary from name to name
-    const libraryToBusynessTranslation = {
-      'Science and Engineering Library': 'UCLA Science and Engineering Library',
-      'Music Library': 'UCLA Music Library',
-      'Powell Library': 'Powell Library',
-      'Research Library (Charles E. Young)': 'Charles E. Young Research Library',
-      'Management Library (Eugene and Maxine Rosenfeld)': 'Rosenfeld Library',
-    };
+
     const lib_data = temp.Items;
     const busy_data = temp2.Items;
 
@@ -70,7 +70,7 @@ class LocationContainer extends Component {
         // Get the name translation
         const busyName = libraryToBusynessTranslation[libraryName];
         // Find the item in API matching name
-        const busyItem = busy_data.find((element) => busyName === element.name['S']);
+        const busyItem = busy_data.find(element => busyName === element.name.S);
         // Add the busyness data to the item
         const currentBusyness = busyItem.current_busyness.N;
         item.currentBusyness = `${currentBusyness}%`;
@@ -112,32 +112,20 @@ class LocationContainer extends Component {
 
   // Shirly's code from GlobalSearchBar.js
   setInputState = (e) => {
-    this.setState({ Location: e });
-    console.log('location ', this.state.Location);
-
-    const { full_library_data, Location } = this.state;
-    // Redisplay whole list if search query cleared
-    if (this.state.Location === '') {
-      this.setState({ library_data: this.state.full_library_data });
-    }
-    this.handleSearchSuggestions();
+    this.handleSearchSuggestions(e);
+    console.log(e);
   }
 
   // Shirly's code from GlobalSearchBar.js
-  handleSearchSuggestions = () => {
-    const { Location, full_library_data } = this.state;
-    if (Location.length === 0 || full_library_data.length === 0) {
-      return [];
-    }
+  handleSearchSuggestions = (search) => {
+    const { full_library_data } = this.state;
     let index; let
       value;
     const result = [];
-
-    for (index = 0; index < full_library_data.length; ++index) {
-      // fix API .name.touppercase stuff
+    for (index = 0; index < full_library_data.length; index += 1) {
       value = full_library_data[index].name.S.toUpperCase();
-      const currentLocation = Location.toUpperCase();
-      if (value.substring(0, Location.length) == currentLocation) {
+      const currentLocation = search.toUpperCase();
+      if (value.includes(currentLocation)) {
         result.push(full_library_data[index]);
       }
     }
@@ -180,24 +168,24 @@ class LocationContainer extends Component {
         {body}
       </SafeAreaView>
 
-      // After we get the data generate the list view and everything else
-      // if (this.state.currentPage === 'List') {
-      //   return (
-      //     <View styles={styles.container}>
-      //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="List"/>
-      //     <LocationsList library_data={this.state.library_data} navigation={this.props.navigation}/>
-      //     </View>
-      //   )
-      // }
-      // else if (this.state.currentPage === 'Map'){
-      //   console.log("In map")
-      //   return (
-      //     <View styles={styles.container}>
-      //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="Map"/>
-      //         <Locations library_data={this.state.library_data} navigation={this.props.navigation}/>
-      //     </View>
-      //   )
-      // }
+    // After we get the data generate the list view and everything else
+    // if (this.state.currentPage === 'List') {
+    //   return (
+    //     <View styles={styles.container}>
+    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="List"/>
+    //     <LocationsList library_data={this.state.library_data} navigation={this.props.navigation}/>
+    //     </View>
+    //   )
+    // }
+    // else if (this.state.currentPage === 'Map'){
+    //   console.log("In map")
+    //   return (
+    //     <View styles={styles.container}>
+    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="Map"/>
+    //         <Locations library_data={this.state.library_data} navigation={this.props.navigation}/>
+    //     </View>
+    //   )
+    // }
     );
   }
 }

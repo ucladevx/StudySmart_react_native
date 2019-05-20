@@ -82,6 +82,7 @@ export default class LocationsList extends Component {
         bounces={false}
         style={styles.list}
         data={library_data}
+        extraData={this.props}
         contentContainerStyle={styles.scroll_style}
         renderItem={({ item }) => (
           // Individual list elements 
