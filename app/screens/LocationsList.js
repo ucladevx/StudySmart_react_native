@@ -61,12 +61,19 @@ export default class LocationsList extends Component {
     // // if not in the library to busyness then add activity level N/A
 
     /* Rendering temporary loading screen if http request is not done yet */
-    if (library_data === undefined || library_data.length === 0) {
+    if (library_data === undefined) {
       return (
-        <View styles={styles.container}>
+        <View styles={styles.loading}>
           <Text> Attempting to get library data . . . </Text>
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#4F87EC" />
         </View>
+      );
+    }
+    else if (library_data.length === 0) {
+      return (
+        <View styles={styles.loading}>
+        <Text> No libraries to display . . . </Text>
+      </View>
       );
     }
 
@@ -104,6 +111,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     zIndex: 2,
     backgroundColor: 'white',
+  },
+  loading: {
+    flex: 1,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   scroll_style: {
     justifyContent: 'center',

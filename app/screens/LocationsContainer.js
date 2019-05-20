@@ -21,7 +21,12 @@ class LocationContainer extends Component {
       library_data: undefined,
       currentPage: 'List',
       initialSelectedLibrary: 'NO-LIBRARY',
-      busyness_data: undefined
+      busyness_data: undefined,
+
+      // Search bar state
+      Location: '',
+      // This one NEVER changes after fetched
+      full_library_data: undefined,
     };
   }
 
@@ -68,7 +73,7 @@ class LocationContainer extends Component {
         const busyItem = busy_data.find((element) => busyName === element.name['S']);
         // Add the busyness data to the item
         const currentBusyness = busyItem.current_busyness.N;
-        item.currentBusyness = `${currentBusyness  }%`;
+        item.currentBusyness = `${currentBusyness}%`;
       }
       // Not in the translation, no busyness data, append N/A.
       else {
@@ -77,7 +82,11 @@ class LocationContainer extends Component {
     }
 
     /* Once the request is done, save library data to current state */
-    this.setState({ library_data: lib_data, busyness_data: busy_data.Items });
+    this.setState({
+      library_data: lib_data,
+      busyness_data: busy_data.Items,
+      full_library_data: lib_data,
+    });
   }
 
   goToMap = (library) => {
@@ -100,6 +109,42 @@ class LocationContainer extends Component {
       this.setState({ currentPage: 'List' });
     }
   }
+
+  // Shirly's code from GlobalSearchBar.js
+  setInputState = (e) => {
+    this.setState({ Location: e });
+    console.log('location ', this.state.Location);
+
+    const { full_library_data, Location } = this.state;
+    // Redisplay whole list if search query cleared
+    if (this.state.Location === '') {
+      this.setState({ library_data: this.state.full_library_data });
+    }
+    this.handleSearchSuggestions();
+  }
+
+  // Shirly's code from GlobalSearchBar.js
+  handleSearchSuggestions = () => {
+    const { Location, full_library_data } = this.state;
+    if (Location.length === 0 || full_library_data.length === 0) {
+      return [];
+    }
+    let index; let
+      value;
+    const result = [];
+
+    for (index = 0; index < full_library_data.length; ++index) {
+      // fix API .name.touppercase stuff
+      value = full_library_data[index].name.S.toUpperCase();
+      const currentLocation = Location.toUpperCase();
+      if (value.substring(0, Location.length) == currentLocation) {
+        result.push(full_library_data[index]);
+      }
+    }
+    // return result;
+    this.setState({ library_data: result });
+  }
+
 
   render() {
     const { navigation } = this.props;
@@ -125,28 +170,34 @@ class LocationContainer extends Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <LocationHeader library_data={library_data} navigation={navigation} currentRouteKey={currentPage} onPress={() => this.handlePress()} />
+        <LocationHeader
+          library_data={library_data}
+          navigation={navigation}
+          currentRouteKey={currentPage}
+          onPress={() => this.handlePress()}
+          setInputState={this.setInputState}
+        />
         {body}
       </SafeAreaView>
 
-    // After we get the data generate the list view and everything else
-    // if (this.state.currentPage === 'List') {
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="List"/>
-    //     <LocationsList library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
-    // else if (this.state.currentPage === 'Map'){
-    //   console.log("In map")
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="Map"/>
-    //         <Locations library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
+      // After we get the data generate the list view and everything else
+      // if (this.state.currentPage === 'List') {
+      //   return (
+      //     <View styles={styles.container}>
+      //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="List"/>
+      //     <LocationsList library_data={this.state.library_data} navigation={this.props.navigation}/>
+      //     </View>
+      //   )
+      // }
+      // else if (this.state.currentPage === 'Map'){
+      //   console.log("In map")
+      //   return (
+      //     <View styles={styles.container}>
+      //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="Map"/>
+      //         <Locations library_data={this.state.library_data} navigation={this.props.navigation}/>
+      //     </View>
+      //   )
+      // }
     );
   }
 }
