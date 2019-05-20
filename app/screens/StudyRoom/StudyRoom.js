@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Image, SafeAreaView, SectionList
+  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, SectionList
 } from 'react-native';
 import { connect } from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -60,7 +60,7 @@ class StudyRoomList extends Component {
 
   getStudyRooms() {
     this.getHillStudyRooms();
-    //this.getLibraryStudyRooms();
+    // this.getLibraryStudyRooms();
   }
 
   async getHillStudyRooms() {
@@ -149,7 +149,7 @@ class StudyRoomList extends Component {
         hillArray.push({ location: key, available: hillDict[key], area: 'Hill' });
       });
     }
-  /*  if (location.includes('Anywhere') || location.includes('Libraries')) {
+    /*  if (location.includes('Anywhere') || location.includes('Libraries')) {
       for (let i = 0; i < libraryData.length; i += 1) {
         if (libraryData[i].building in libDict) {
           libDict[libraryData[i].building].push(libraryData[i]);
@@ -163,7 +163,32 @@ class StudyRoomList extends Component {
     } */
     this.setState({
       hillData: hillArray,
-      //libraryData: libArray,
+      // libraryData: libArray,
+    });
+  }
+
+
+  filterData = (search) => {
+    const rooms = this.props.hillData.slice();
+    console.log(this.props.hillData)
+    const hillArray = [];
+    const hillDict = {};
+    const upperSearch = search.toUpperCase();
+    for (let i = 0; i < rooms.length; i += 1) {
+      const name = namePairs[rooms[i].name].toUpperCase();
+      if (name.includes(upperSearch)) {
+        if (rooms[i].name in hillDict) {
+          hillDict[rooms[i].name].push(rooms[i]);
+        } else {
+          hillDict[rooms[i].name] = [rooms[i]];
+        }
+      }
+    }
+    Object.keys(hillDict).forEach((key) => {
+      hillArray.push({ location: key, available: hillDict[key], area: 'Hill' });
+    });
+    this.setState({
+      hillData: hillArray
     });
   }
 
@@ -234,6 +259,7 @@ class StudyRoomList extends Component {
           navigation={this.props.navigation}
           sortData={this.sortData}
           handleModal={this.handleModal}
+          filterData={this.filterData}
         />
         <SectionList
           style={styles.list}
@@ -247,6 +273,7 @@ class StudyRoomList extends Component {
             { title: 'Hill', data: hillData },
             { title: 'Libraries', data: libraryData }]}
           keyExtractor={(item, index) => item + index}
+          extraData={this.state}
         />
         {visible ? (
           <StudyRoomModal handleModal={this.handleModal} getStudyRooms={this.getStudyRooms} />

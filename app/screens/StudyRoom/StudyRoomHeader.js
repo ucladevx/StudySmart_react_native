@@ -18,27 +18,10 @@ class StudyRoomHeader extends Component {
     this.state = {
       visible: false,
     };
-    this.goBack = this.goBack.bind(this);
-    this.showResults = this.showResults.bind(this);
   }
 
-
-  // Shirly's code from GlobalSearchBar.js
-  goBack() {
-    this.props.navigation.navigate('BookingTime');
-  }
-
-  showSorter() {
-    this.setState({
-      visible: true
-    });
-  }
-
-  showResults() {
-    this.setState({
-      visible: false
-    });
-    this.props.sortData();
+  handleInput = (input) => {
+    this.props.filterData(input);
   }
 
   render() {
@@ -60,8 +43,7 @@ class StudyRoomHeader extends Component {
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
           defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
-          onFocus={this.goBack}
-          onChangeText={() => null}
+          onChangeText={(text) => this.handleInput(text)}
           style={[styles.searchContainer, styles.input]}
           inputContainerStyle={[styles.inputContainer]}
           renderItem={() => (
@@ -176,18 +158,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomHeader);
-
-/*
- <SafeAreaView style={styles.rightView}>
-          <TouchableOpacity
-            style={styles.buttonRight}
-            onPress={() => this.showSorter()}
-          >
-            <AntIcon name="filter" color="white" size={30} />
-          </TouchableOpacity>
-          { visible ? (
-            <Sorter
-              showResults={this.showResults}
-            />
-          ) : null }
-        </SafeAreaView> */
