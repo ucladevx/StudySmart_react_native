@@ -54,7 +54,7 @@ export default class LocationsList extends Component {
         style={styles.list}
         data={libraryData}
         extraData={this.props}
-        contentContainerStyle={styles.scrollStylele}
+        contentContainerStyle={styles.scrollStyle}
         renderItem={({ item }) => (
           <LibraryCard item={item} goToMap={goToMap} />
         )}
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  scrollStylele: {
+  scrollStyle: {
     justifyContent: 'center',
     alignItems: 'center',
   },
