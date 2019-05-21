@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, TouchableOpacity
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import Search from './Search';
+import Search from '../../components/Search';
 
 export default function LocationHeader(props) {
   const { onPress, getSearchQuery } = props;

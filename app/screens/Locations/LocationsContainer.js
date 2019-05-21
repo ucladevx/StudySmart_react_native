@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, ActivityIndicator, SafeAreaView,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import LocationHeader from '../components/LocationHeader';
+import LocationHeader from './LocationHeader';
 import LocationsList from './LocationsList';
 import LocationsMap from './LocationsMap';
 

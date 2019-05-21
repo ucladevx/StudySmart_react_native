@@ -37,6 +37,8 @@ const monthPairs = {
   12: 'December',
 };
 
+const icon = require('../../../assets/studyTab.png');
+
 class StudyRoomList extends Component {
   static navigationOptions = {
     header: () => {
@@ -170,7 +172,6 @@ class StudyRoomList extends Component {
 
   filterData = (search) => {
     const rooms = this.props.hillData.slice();
-    console.log(this.props.hillData)
     const hillArray = [];
     const hillDict = {};
     const upperSearch = search.toUpperCase();
@@ -205,7 +206,6 @@ class StudyRoomList extends Component {
   }
 
   renderRow(item) {
-    const icon = require('../../../assets/studyTab.png');
     return (
       <TouchableOpacity
         onPress={() => this.handleSelectRoom(item)}

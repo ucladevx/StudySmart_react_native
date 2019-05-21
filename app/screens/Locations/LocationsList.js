@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {
   Text, View, StyleSheet, ActivityIndicator, FlatList,
 } from 'react-native';
-import LibraryCard from '../components/LibraryCard';
+import LibraryCard from '../../components/LibraryCard';
 
 export default class LocationsList extends Component {
   constructor(props) {

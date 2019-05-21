@@ -6,6 +6,8 @@ import { withNavigation } from 'react-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Hours from './Hours';
 
+const icon = require('../../assets/mapIcon.png');
+
 export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
 
 class LibraryCard extends Component {
@@ -103,7 +105,7 @@ class LibraryCard extends Component {
               }}
               >
                 {/* Need to fix map logo later  */}
-                <Ionicon color="black" name="ios-locate" size={25} style={{ marginRight: 10 }} />
+                <Image source={icon} style={{ height: 20, width: 20, marginRight: 3 }} />
               </TouchableOpacity>
             )}
             {/* Check the state, if state is non-expanded use down */}
@@ -189,8 +191,8 @@ const listElement = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     marginLeft: 'auto',
-    alignItems: 'flex-end',
     justifyContent: 'center',
+    alignItems: 'center',
     bottom: 5,
     right: 15,
   },

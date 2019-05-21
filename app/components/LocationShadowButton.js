@@ -7,8 +7,9 @@ import {
 export default class LocationShadowButton extends Component {
   constructor(props) {
     super(props);
+    const { selected } = this.props;
     this.state = {
-      selected: this.props.selected
+      selected
     };
   }
 
@@ -20,9 +21,10 @@ export default class LocationShadowButton extends Component {
 
   select() {
     const { selected } = this.state;
+    const { changeLoc, title } = this.props;
     this.setState({
       selected: !selected
-    }, () => { this.props.changeLoc(this.props.title, this.state.selected); });
+    }, () => { changeLoc(title, selected); });
   }
 
   render() {

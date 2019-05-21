@@ -7,16 +7,18 @@ import {
 export default class SmallShadowButton extends Component {
   constructor(props) {
     super(props);
+    const { selected } = this.props;
     this.state = {
-      selected: this.props.selected
+      selected
     };
   }
 
   select() {
     const { selected } = this.state;
+    const { changeThing, title } = this.props;
     this.setState({
       selected: !selected
-    }, () => { this.props.changeThing(this.props.title, this.state.selected) });
+    }, () => { changeThing(title, selected) });
   }
 
   render() {

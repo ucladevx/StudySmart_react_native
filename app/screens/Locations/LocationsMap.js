@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-import LibraryCard from '../components/LibraryCard';
+import LibraryCard from '../../components/LibraryCard';
 
-const unselectedMarker = require('../../assets/library.png');
-const selectedMarker = require('../../assets/librarySelected.png');
+const unselectedMarker = require('../../../assets/library.png');
+const selectedMarker = require('../../../assets/librarySelected.png');
 
 // NOTE: hardcoding the markers for now - still checking accuracy of locations
 const markerList = [
@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     justifyContent: 'flex-end',
+    alignItems: 'center',
     flex: 1,
     zIndex: -1
   },

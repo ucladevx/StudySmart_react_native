@@ -4,10 +4,10 @@ import {
   Image
 } from 'react-native';
 import { StackNavigator, createBottomTabNavigator } from 'react-navigation';
-import LocationsMap from './app/screens/LocationsMap';
+import LocationsMap from './app/screens/Locations/LocationsMap';
 import configureStore from './store';
-import LocationsList from './app/screens/LocationsList';
-import LocationsContainer from './app/screens/LocationsContainer';
+import LocationsList from './app/screens/Locations/LocationsList';
+import LocationsContainer from './app/screens/Locations/LocationsContainer';
 import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
@@ -19,7 +19,6 @@ const StudyRoomStack = StackNavigator({
   StudyRoomList: { screen: StudyRoomList },
   BookingLocation: { screen: BookingLocation },
   BookingTime: { screen: BookingTime },
-  StudyRoomList: { screen: StudyRoomList },
   StudyRoomReserve: { screen: StudyRoomReserve },
   BookingWebView: { screen: BookingWebView },
 
