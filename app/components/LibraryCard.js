@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import ViewContainer from './ViewContainer';
-import { IMG_TEMP, getLibraryHours } from '../screens/LocationsList';
-import Hours from "./Hours";
+import {
+  StyleSheet, Dimensions, View, Text, Image, TouchableOpacity
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import { IMG_TEMP, getLibraryHours } from '../screens/LocationsList';
+import Hours from './Hours';
+
 
 class LibraryCard extends Component {
 
@@ -19,8 +21,7 @@ class LibraryCard extends Component {
     const { collapsed } = this.state;
     if (collapsed) {
       this.setState({ collapsed: false });
-    }
-    else {
+    } else {
       this.setState({ collapsed: true });
     }
   }
@@ -37,10 +38,9 @@ class LibraryCard extends Component {
 
     // Card is currently collapsed
     if (collapsed) {
-      arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />
-    }
-    else {
-      arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />
+      arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
+    } else {
+      arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
     }
 
     return (
