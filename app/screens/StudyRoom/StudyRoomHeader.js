@@ -6,9 +6,7 @@ import { withNavigation } from 'react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import Search from '../../components/Search';
-import Sorter from '../../components/Sorter';
 import { changeDuration } from '../../Actions/actions';
-import LocationContainer from '../LocationsContainer';
 
 
 const fakeVal = [];
@@ -25,7 +23,6 @@ class StudyRoomHeader extends Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
     const { date, time, location } = this.props;
     const { visible } = this.state;
     return (

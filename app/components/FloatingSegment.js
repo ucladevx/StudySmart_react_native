@@ -5,35 +5,31 @@ import {
 } from 'react-native';
 
 export default class FloatingSegment extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   select(duration) {
-    this.props.setDuration(duration);
+    const { setDuration } = this.props;
+    setDuration(duration);
   }
 
   renderDuration(title) {
     const { selected } = this.props;
-    return(
+    return (
       <TouchableOpacity
-      style={selected === title ? styles.durationSelected : styles.duration}
-      onPress={() => this.select(title)}
-    >
-      <Text style={selected === title ? styles.titleTextSelected : styles.titleText}>
-        {title}
-      </Text>
-      <View style={selected === title ? styles.line : styles.lineTransparent} />
-    </TouchableOpacity>
-    )
+        style={selected === title ? styles.durationSelected : styles.duration}
+        onPress={() => this.select(title)}
+      >
+        <Text style={selected === title ? styles.titleTextSelected : styles.titleText}>
+          {title}
+        </Text>
+        <View style={selected === title ? styles.line : styles.lineTransparent} />
+      </TouchableOpacity>
+    );
   }
 
   render() {
-    const { selected } = this.props;
     return (
       <SafeAreaView style={styles.rightButtonAbs}>
-       { this.renderDuration('1 hour')}
-       { this.renderDuration('2 hours')}
+        { this.renderDuration('1 hour') }
+        { this.renderDuration('2 hours') }
       </SafeAreaView>
     );
   }
