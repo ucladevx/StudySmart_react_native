@@ -10,10 +10,7 @@ const { width } = Dimensions.get('window');
 
 export default class Hours extends Component {
   render() {
-    /* Get item that was clicked */
-    // const item = this.props.navigation.getParam('locationClicked', 'NO-ITEM');
     const { item } = this.props;
-    // console.log(item);
 
     /* Calculate time */
     const millis = new Date();

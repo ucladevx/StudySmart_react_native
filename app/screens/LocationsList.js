@@ -1,11 +1,8 @@
 
 import React, { Component } from 'react';
 import {
-  Text, View, Dimensions, TouchableOpacity, StyleSheet, SectionList, Image, ActivityIndicator, FlatList,
+  Text, View, Dimensions, StyleSheet, ActivityIndicator, FlatList,
 } from 'react-native';
-// import LocationHeader from '../components/LocationHeader';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import ViewContainer from '../components/ViewContainer';
 import LibraryCard from '../components/LibraryCard';
 
 export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
@@ -27,14 +24,8 @@ export default class LocationsList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // libraryData: undefined
     };
   }
-
-  // setPage(pageType) {
-  //   const { setPage } = this.props;
-  //   setPage(pageType);
-  // }
 
   render() {
     const { libraryData, goToMap, busynessData } = this.props;
@@ -48,7 +39,8 @@ export default class LocationsList extends Component {
         </View>
       );
     }
-    else if (libraryData.length === 0) {
+
+    if (libraryData.length === 0) {
       return (
         <View styles={styles.loading}>
           <Text> No libraries to display . . . </Text>
@@ -62,9 +54,8 @@ export default class LocationsList extends Component {
         style={styles.list}
         data={libraryData}
         extraData={this.props}
-        contentContainerStyle={styles.scroll_style}
+        contentContainerStyle={styles.scrollStylele}
         renderItem={({ item }) => (
-          // Individual list elements 
           <LibraryCard item={item} goToMap={goToMap} />
         )}
         keyExtractor={(item, index) => index.toString()}
@@ -75,7 +66,6 @@ export default class LocationsList extends Component {
 
 /* Get width of window */
 const { width, height } = Dimensions.get('window');
-const headerHeight = 80;
 
 /* Standardized text used throughout code */
 const text = {
@@ -99,7 +89,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  scroll_style: {
+  scrollStylele: {
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -139,7 +129,7 @@ const styles = StyleSheet.create({
     width: '80%',
     padding: 5
   },
-  Section_Header: {
+  sectionHeader: {
     ...text,
     fontSize: 24,
     backgroundColor: '#4F87EC',
@@ -183,7 +173,6 @@ const listElement = StyleSheet.create({
     height: height / 10,
     borderRadius: 0,
   },
-  // this styling could be better!!! contains the map icon and the arrow of card
   buttonRow: {
     flexDirection: 'row',
     marginLeft: 'auto',
@@ -191,7 +180,7 @@ const listElement = StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'center'
   },
-  Name: { // name of location
+  name: { // name of location
     ...text,
     fontSize: 20,
     // fontWeight: 'bold',
@@ -199,12 +188,12 @@ const listElement = StyleSheet.create({
     paddingBottom: 10,
     paddingRight: 25,
   },
-  Closed: {
+  closed: {
     ...text,
     fontSize: 14,
     color: 'red',
   },
-  Open: {
+  open: {
     ...text,
     fontSize: 14,
     color: 'green',

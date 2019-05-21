@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, ScrollView, Image, View, Dimensions, Button, TouchableOpacity, ActivityIndicator, SafeAreaView,
+  StyleSheet, Text, ActivityIndicator, SafeAreaView,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import LocationHeader from '../components/LocationHeader';
-// import StudyRoomHeader from '../screens/StudyRoom/StudyRoomHeader';
 import LocationsList from './LocationsList';
 import Locations from './Locations';
 
@@ -31,8 +30,6 @@ class LocationContainer extends Component {
       initialSelectedLibrary: 'NO-LIBRARY',
       busynessData: undefined,
 
-      // Search bar state
-      Location: '',
       // This one NEVER changes after fetched
       fullLibraryData: undefined,
     };
@@ -40,19 +37,16 @@ class LocationContainer extends Component {
 
   async componentWillMount() {
     let temp;
-    console.log('Requesting library info...');
     // Fetch library data from API, store inside this.libraryData
     await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
       .then(response => response.json())
       .then((data) => {
-        console.log(data.Items);
         temp = data;
       });
     let temp2;
     await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/busyness_graphs')
       .then(response => response.json())
       .then((data) => {
-        console.log(data.Items);
         temp2 = data;
       });
     // Process activity levels - dictionary from name to name
@@ -96,20 +90,6 @@ class LocationContainer extends Component {
     });
   }
 
-  handlePress() {
-    // When moving to map, make sure there is no selected marker
-    this.setState({
-      initialSelectedLibrary: 'NO-LIBRARY'
-    });
-    // Switch page types
-    const { currentPage } = this.state;
-    if (currentPage === 'List') {
-      this.setState({ currentPage: 'Map' });
-    } else if (currentPage === 'Map') {
-      this.setState({ currentPage: 'List' });
-    }
-  }
-
   // Shirly's code from GlobalSearchBar.js
   getSearchQuery = (e) => {
     this.filterData(e);
@@ -132,10 +112,23 @@ class LocationContainer extends Component {
     this.setState({ libraryData: result });
   }
 
+  handlePress() {
+    // When moving to map, make sure there is no selected marker
+    this.setState({
+      initialSelectedLibrary: 'NO-LIBRARY'
+    });
+    // Switch page types
+    const { currentPage } = this.state;
+    if (currentPage === 'List') {
+      this.setState({ currentPage: 'Map' });
+    } else if (currentPage === 'Map') {
+      this.setState({ currentPage: 'List' });
+    }
+  }
 
   render() {
     const { navigation } = this.props;
-    const { currentPage, libraryData, initialSelectedLibrary } = this.state;
+    const { currentPage, libraryData, initialSelectedLibrary, busynessData } = this.state;
 
     // Loading animation screen should go here
     if (libraryData === undefined) {
@@ -150,9 +143,9 @@ class LocationContainer extends Component {
     // Choose to display list or map depending on state
     let body;
     if (currentPage === 'List') {
-      body = <LocationsList libraryData={libraryData} busynessData={this.state.busynessData} navigation={navigation} goToMap={this.goToMap} />;
+      body = <LocationsList libraryData={libraryData} busynessData={busynessData} navigation={navigation} goToMap={this.goToMap} />;
     } else if (currentPage === 'Map') {
-      body = <Locations libraryData={libraryData} busynessData={this.state.busynessData} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
+      body = <Locations libraryData={libraryData} busynessData={busynessData} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
     }
 
     return (
@@ -166,25 +159,6 @@ class LocationContainer extends Component {
         />
         {body}
       </SafeAreaView>
-
-      // After we get the data generate the list view and everything else
-      // if (this.state.currentPage === 'List') {
-      //   return (
-      //     <View styles={styles.container}>
-      //       <LocationHeader libraryData={this.state.libraryData} navigation={this.props.navigation} currentRouteKey="List"/>
-      //     <LocationsList libraryData={this.state.libraryData} navigation={this.props.navigation}/>
-      //     </View>
-      //   )
-      // }
-      // else if (this.state.currentPage === 'Map'){
-      //   console.log("In map")
-      //   return (
-      //     <View styles={styles.container}>
-      //       <LocationHeader libraryData={this.state.libraryData} navigation={this.props.navigation} currentRouteKey="Map"/>
-      //         <Locations libraryData={this.state.libraryData} navigation={this.props.navigation}/>
-      //     </View>
-      //   )
-      // }
     );
   }
 }

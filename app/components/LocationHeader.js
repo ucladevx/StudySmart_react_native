@@ -15,12 +15,10 @@ class LocationHeader extends Component {
   }
 
   render() {
-    // const locations = this.props.handleSearchSuggestions(this.state.Location);
     const locations = this.props.libraryData;
-    // console.log(locations)
     const { currentRouteKey } = this.state;
-
     const { navigate } = this.props.navigation;
+    
     return (
       <View style={styles.topBar}>
         <View style={styles.bar}>
@@ -41,9 +39,6 @@ class LocationHeader extends Component {
           inputContainerStyle={styles.inputContainer}
           style={styles.searchContainer}
           renderItem={() => (
-            // <TouchableOpacity onPress={() => this.props.handleSelection(item)}>
-            // <Text>{item.item.name.S}</Text>
-            // </TouchableOpacity>
             <TouchableOpacity onPress={() => null} />
           )}
         />
