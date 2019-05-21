@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import ViewContainer from './ViewContainer';
 import { IMG_TEMP, getLibraryHours } from '../screens/LocationsList';
 
 export default class LibraryCard extends Component {
