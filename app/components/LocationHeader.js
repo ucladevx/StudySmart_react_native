@@ -1,50 +1,36 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from './Search';
 
-class LocationHeader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentRouteKey: this.props.currentRouteKey,
-    };
-  }
-
-  render() {
-    const locations = this.props.libraryData;
-    const { currentRouteKey } = this.state;
-    const { navigate } = this.props.navigation;
-    
-    return (
-      <View style={styles.topBar}>
-        <View style={styles.bar}>
-          <Text style={styles.titleText}>
-            {' '}
-            Libraries
-            {' '}
-          </Text>
-          <TouchableOpacity onPress={() => this.props.onPress()}>
-            <Ionicon color="#108BF8" name="ios-map" size={25} backgroundColor="#4F87EC" />
-          </TouchableOpacity>
-        </View>
-        <Search
-          // Searchbar itself does not actually show any data so pass in nothing
-          data={[]}
-          defaultValue={this.state.Location}
-          onChangeText={(e) => this.props.getSearchQuery(e)}
-          inputContainerStyle={styles.inputContainer}
-          style={styles.searchContainer}
-          renderItem={() => (
-            <TouchableOpacity onPress={() => null} />
-          )}
-        />
+export default function LocationHeader(props) {
+  const { onPress, getSearchQuery } = props;
+  return (
+    <View style={styles.topBar}>
+      <View style={styles.bar}>
+        <Text style={styles.titleText}>
+          {' '}
+          Libraries
+          {' '}
+        </Text>
+        <TouchableOpacity onPress={() => onPress()}>
+          <Ionicon color="#108BF8" name="ios-map" size={25} backgroundColor="#4F87EC" />
+        </TouchableOpacity>
       </View>
-    );
-  }
+      <Search
+        // Searchbar itself does not actually show any data so pass in nothing
+        data={[]}
+        onChangeText={(e) => { getSearchQuery(e); }}
+        inputContainerStyle={styles.inputContainer}
+        style={styles.searchContainer}
+        renderItem={() => (
+          <TouchableOpacity onPress={() => null} />
+        )}
+      />
+    </View>
+  );
 }
 
 const text = {
@@ -128,5 +114,3 @@ const styles = StyleSheet.create({
 
 
 });
-
-export default withNavigation(LocationHeader);

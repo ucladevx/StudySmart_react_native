@@ -4,17 +4,27 @@ import {
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import { IMG_TEMP, getLibraryHours } from '../screens/LocationsList';
 import Hours from './Hours';
 
+export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
 
 class LibraryCard extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       collapsed: true,
     };
+  }
+
+  /* Returns "closed" if library is closed, otherwise returns the hours */
+  getLibraryHours = (library, day) => {
+    let status = 'Closed';
+    try {
+      status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
+    } catch (err) {
+      // console.log(library.name, 'does not have status');
+    }
+    return status;
   }
 
   handleExpandPress() {
@@ -57,28 +67,30 @@ class LibraryCard extends Component {
               />
             </View>
             <View style={listElement.information}>
-              <Text style={listElement.Name}>
+              <Text style={listElement.name}>
                 {item.name.S}
               </Text>
               {/* Special Case for when Hours are 'Closed' */}
               {
-                getLibraryHours(item, day) === 'Closed'
-                  ?
-                  (
-                    <Text style={getLibraryHours(item, day) === 'Closed' ? listElement.Closed : listElement.Open}>
+                this.getLibraryHours(item, day) === 'Closed'
+                  ? (
+                    <Text style={this.getLibraryHours(item, day) === 'Closed' ? listElement.closed : listElement.open}>
                       Closed
                     </Text>
                   )
-                  :
-                  (
-                    <Text style={getLibraryHours(item, day) === 'Closed' ? listElement.Closed : listElement.Open}>
-                      Hours: {getLibraryHours(item, day)}
+                  : (
+                    <Text style={this.getLibraryHours(item, day) === 'Closed' ? listElement.closed : listElement.open}>
+                      Hours:
+                      {this.getLibraryHours(item, day)}
                     </Text>
                   )
               }
 
               {/* NEED TO CHANGE TO A PROGRESS BAR, THIS IS TEMPORARY PLACEHOLER  */}
-              <Text style={listElement.activityLevel}>Activity Level: {item.currentBusyness}</Text>
+              <Text style={listElement.activityLevel}>
+                Activity Level:
+                {item.currentBusyness}
+              </Text>
             </View>
           </View>
 
@@ -107,8 +119,8 @@ class LibraryCard extends Component {
 
           {/* Conditional rendering of expanded data  */}
           <View>
-            {!collapsed &&
-              <Hours item={item} />
+            {!collapsed
+            && <Hours item={item} getLibraryHours={this.getLibraryHours} />
             }
           </View>
         </View>
@@ -118,14 +130,6 @@ class LibraryCard extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
-const headerHeight = 80;
-
-const styles = StyleSheet.create({
-  map: {
-    backgroundColor: 'transparent',
-    height: height - headerHeight,
-  },
-});
 
 /* Standardized text used throughout code */
 const text = {
@@ -164,13 +168,11 @@ const listElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     height: height / 5,
-    // width,
     backgroundColor: 'white',
   },
   information: { // child of card
     flexDirection: 'column',
     alignItems: 'flex-start',
-    // paddingLeft: 25,
     flex: 2,
   },
   imgContainer: { // child of card, holds image
@@ -192,22 +194,21 @@ const listElement = StyleSheet.create({
     bottom: 5,
     right: 15,
   },
-  Name: { // name of location
+  name: { // name of location
     ...text,
     fontSize: 16,
-    // fontWeight: 'bold',
     color: '#000',
     fontWeight: '300',
     paddingBottom: 10,
     paddingRight: 25,
   },
-  Closed: {
+  closed: {
     ...text,
     fontSize: 10,
     color: 'red',
     fontWeight: '300',
   },
-  Open: {
+  open: {
     ...text,
     fontSize: 10,
     color: 'green',
@@ -238,7 +239,6 @@ const expandedElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     height: height / 2.5,
-    // width,
     backgroundColor: 'white',
   },
 });

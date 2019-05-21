@@ -13,10 +13,11 @@ export default class FloatingSegment extends Component {
   }
 
   select(duration) {
+    const { setDuration } = this.props;
     this.setState({
       selected: duration
     });
-    this.props.setDuration(duration);
+    setDuration(duration);
   }
 
   render() {

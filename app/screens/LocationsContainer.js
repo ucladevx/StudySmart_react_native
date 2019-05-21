@@ -17,10 +17,8 @@ const libraryToBusynessTranslation = {
 
 class LocationContainer extends Component {
   static navigationOptions = {
-    header: () => {
-      false;
-    }
-  }
+    header: null
+  };
 
   constructor(props) {
     super(props);
@@ -110,7 +108,7 @@ class LocationContainer extends Component {
     this.setState({ libraryData: result });
   }
 
-  handlePress() {
+  handlePress = () => {
     // When moving to map, make sure there is no selected marker
     this.setState({
       initialSelectedLibrary: 'NO-LIBRARY'
@@ -165,10 +163,8 @@ class LocationContainer extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <LocationHeader
-          libraryData={libraryData}
           navigation={navigation}
-          currentRouteKey={currentPage}
-          onPress={() => this.handlePress()}
+          onPress={this.handlePress}
           getSearchQuery={this.getSearchQuery}
         />
         {body}

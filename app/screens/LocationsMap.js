@@ -7,6 +7,7 @@ import LibraryCard from '../components/LibraryCard';
 const unselectedMarker = require('../../assets/library.png');
 const selectedMarker = require('../../assets/librarySelected.png');
 
+// NOTE: hardcoding the markers for now - still checking accuracy of locations
 const markerList = [
   { title: 'Powell Library', latlng: { latitude: 34.071613, longitude: -118.442181 } },
   { title: 'Arts Library', latlng: { latitude: 34.074456, longitude: -118.439205 } },
@@ -33,7 +34,6 @@ export default class LocationsMap extends Component {
     };
   }
 
-  // NOTE: hardcoding the markers for now - still checking accuracy of locations
   componentDidMount() {
     this.setState({ markers: markerList });
   }

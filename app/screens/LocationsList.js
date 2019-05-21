@@ -1,26 +1,11 @@
 
 import React, { Component } from 'react';
 import {
-  Text, View, Dimensions, StyleSheet, ActivityIndicator, FlatList,
+  Text, View, StyleSheet, ActivityIndicator, FlatList,
 } from 'react-native';
 import LibraryCard from '../components/LibraryCard';
 
-export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
-
-/* Returns "closed" if library is closed, otherwise returns the hours */
-export function getLibraryHours(library, day) {
-  let status = 'Closed';
-  try {
-    status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
-  } catch (err) {
-    // console.log(library.name, 'does not have status');
-  }
-  return status;
-}
-
-
 export default class LocationsList extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +13,7 @@ export default class LocationsList extends Component {
   }
 
   render() {
-    const { libraryData, goToMap, busynessData } = this.props;
+    const { libraryData, goToMap } = this.props;
 
     /* Rendering temporary loading screen if http request is not done yet */
     if (libraryData === undefined) {
@@ -64,24 +49,8 @@ export default class LocationsList extends Component {
   }
 }
 
-/* Get width of window */
-const { width, height } = Dimensions.get('window');
-
-/* Standardized text used throughout code */
-const text = {
-  fontFamily: 'System',
-  letterSpacing: 1.92,
-};
-
 /* Styles for general screen */
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    top: 0,
-    bottom: 0,
-    zIndex: 2,
-    backgroundColor: 'white',
-  },
   loading: {
     flex: 1,
     top: 0,
@@ -92,52 +61,6 @@ const styles = StyleSheet.create({
   scrollStyle: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  floatingButton: {
-    position: 'absolute',
-    zIndex: 20,
-    // TODO: NEED TO FIX THIS:
-    bottom: -400,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  boxWithShadow: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
-  },
-  studyRoom: {
-    backgroundColor: '#4F87EC',
-    height: 50,
-    width: '65%',
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  titleText: {
-    ...text,
-    fontFamily: 'System',
-    fontSize: 18,
-    fontWeight: '500',
-    fontStyle: 'normal',
-    textAlign: 'center',
-    letterSpacing: 1.52,
-    color: 'white',
-    width: '80%',
-    padding: 5
-  },
-  sectionHeader: {
-    ...text,
-    fontSize: 24,
-    backgroundColor: '#4F87EC',
-    color: '#F5FCFF',
-    paddingTop: 10,
-    paddingBottom: 10,
-    textAlign: 'center',
-    width,
   },
   list: {
     backgroundColor: 'white'
