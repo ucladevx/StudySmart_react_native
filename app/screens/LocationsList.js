@@ -13,7 +13,7 @@ export function getLibraryHours(library, day) {
   try {
     status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
   } catch (err) {
-    console.log(library.name, 'does not have status');
+    // console.log(library.name, 'does not have status');
   }
   return status;
 }

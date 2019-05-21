@@ -7,6 +7,19 @@ import LibraryCard from '../components/LibraryCard';
 const unselectedMarker = require('../../assets/library.png');
 const selectedMarker = require('../../assets/librarySelected.png');
 
+const markerList = [
+  { title: 'Powell Library', latlng: { latitude: 34.071613, longitude: -118.442181 } },
+  { title: 'Arts Library', latlng: { latitude: 34.074456, longitude: -118.439205 } },
+  { title: 'Management Library (Eugene and Maxine Rosenfeld)', latlng: { latitude: 34.074281, longitude: -118.443350 } },
+  { title: 'Southern Regional Library Facility', latlng: { latitude: 34.071090, longitude: -118.454179 } },
+  { title: 'East Asian Library (Richard C. Rudolph)', latlng: { latitude: 34.074960, longitude: -118.441466 } },
+  { title: 'Science and Engineering Library', latlng: { latitude: 34.068986, longitude: -118.442659 } },
+  { title: 'Music Library', latlng: { latitude: 34.070693, longitude: -118.440154 } },
+  { title: 'Law Library (Hugh & Hazel Darling)', latlng: { latitude: 34.072646, longitude: -118.437929 } },
+  { title: 'Research Library (Charles E. Young)', latlng: { latitude: 34.074970, longitude: -118.441464 } },
+  { title: 'Biomedical Library (Louise M. Darling)', latlng: { latitude: 34.066654, longitude: -118.442417 } }
+];
+
 export default class LocationsMap extends Component {
   // selectedLibrary = name of current selected library
   // selectedLibraryData = dictionary that holds library data for selectedLibrary
@@ -22,23 +35,11 @@ export default class LocationsMap extends Component {
 
   // NOTE: hardcoding the markers for now - still checking accuracy of locations
   componentDidMount() {
-    const markerList = [
-      { title: 'Powell Library', latlng: { latitude: 34.071613, longitude: -118.442181 } },
-      { title: 'Arts Library', latlng: { latitude: 34.074456, longitude: -118.439205 } },
-      { title: 'Management Library (Eugene and Maxine Rosenfeld)', latlng: { latitude: 34.074281, longitude: -118.443350 } },
-      { title: 'Southern Regional Library Facility', latlng: { latitude: 34.071090, longitude: -118.454179 } },
-      { title: 'East Asian Library (Richard C. Rudolph)', latlng: { latitude: 34.074960, longitude: -118.441466 } },
-      { title: 'Science and Engineering Library', latlng: { latitude: 34.068986, longitude: -118.442659 } },
-      { title: 'Music Library', latlng: { latitude: 34.070693, longitude: -118.440154 } },
-      { title: 'Law Library (Hugh & Hazel Darling)', latlng: { latitude: 34.072646, longitude: -118.437929 } },
-      { title: 'Research Library (Charles E. Young)', latlng: { latitude: 34.074970, longitude: -118.441464 } },
-      { title: 'Biomedical Library (Louise M. Darling)', latlng: { latitude: 34.066654, longitude: -118.442417 } }
-    ];
     this.setState({ markers: markerList });
   }
 
   // Updates the selected marker on the Map
-  updateSelectedMarker(title) {
+  updateSelectedMarker = (title) => {
     const { libraryData } = this.props;
     const { selectedLibrary } = this.state;
     if (title === selectedLibrary) {

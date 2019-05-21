@@ -6,12 +6,10 @@ import {
 import { StackNavigator, createBottomTabNavigator } from 'react-navigation';
 import LocationsMap from './app/screens/LocationsMap';
 import configureStore from './store';
-import LocationsDetailed from './app/screens/LocationsDetailed';
 import LocationsList from './app/screens/LocationsList';
 import LocationsContainer from './app/screens/LocationsContainer';
 import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
-
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
 import Feedback from './app/screens/Feedback/Feedback';
@@ -35,7 +33,6 @@ const StudyRoomStack = StackNavigator({
 const LocationsStack = StackNavigator({
   LocationsContainer: { screen: LocationsContainer },
   List: { screen: LocationsList },
-  Detailed: { screen: LocationsDetailed },
   Map: { screen: LocationsMap },
 
   initialRouteName: 'LocationContainer',

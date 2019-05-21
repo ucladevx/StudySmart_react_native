@@ -143,9 +143,23 @@ class LocationContainer extends Component {
     // Choose to display list or map depending on state
     let body;
     if (currentPage === 'List') {
-      body = <LocationsList libraryData={libraryData} busynessData={busynessData} navigation={navigation} goToMap={this.goToMap} />;
+      body = (
+        <LocationsList
+          libraryData={libraryData}
+          busynessData={busynessData}
+          navigation={navigation}
+          goToMap={this.goToMap}
+        />
+      );
     } else if (currentPage === 'Map') {
-      body = <LocationsMap libraryData={libraryData} busynessData={busynessData} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
+      body = (
+        <LocationsMap
+          libraryData={libraryData}
+          busynessData={busynessData}
+          navigation={navigation}
+          initialLibrary={initialSelectedLibrary}
+        />
+      );
     }
 
     return (
