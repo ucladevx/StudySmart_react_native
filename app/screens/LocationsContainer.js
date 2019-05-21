@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, ScrollView, Image, View, Dimensions, Button, TouchableOpacity, ActivityIndicator, SafeAreaView,
+  StyleSheet, Text, ActivityIndicator, SafeAreaView,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import LocationHeader from '../components/LocationHeader';
-// import StudyRoomHeader from '../screens/StudyRoom/StudyRoomHeader';
 import LocationsList from './LocationsList';
 import LocationsMap from './LocationsMap';
+
+const libraryToBusynessTranslation = {
+  'Science and Engineering Library': 'UCLA Science and Engineering Library',
+  'Music Library': 'UCLA Music Library',
+  'Powell Library': 'Powell Library',
+  'Research Library (Charles E. Young)': 'Charles E. Young Research Library',
+  'Management Library (Eugene and Maxine Rosenfeld)': 'Rosenfeld Library',
+};
 
 class LocationContainer extends Component {
   static navigationOptions = {
@@ -18,66 +25,60 @@ class LocationContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      library_data: undefined,
+      libraryData: undefined,
       currentPage: 'List',
       initialSelectedLibrary: 'NO-LIBRARY',
-      busyness_data: undefined
+      busynessData: undefined,
+
+      // This one NEVER changes after fetched
+      fullLibraryData: undefined,
     };
   }
 
   async componentWillMount() {
     let temp;
-    console.log('Requesting library info...');
-    // Fetch library data from API, store inside this.library_data
+    // Fetch library data from API, store inside this.libraryData
     await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
       .then(response => response.json())
       .then((data) => {
-        console.log(data.Items);
         temp = data;
       });
-
     let temp2;
     await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/busyness_graphs')
       .then(response => response.json())
       .then((data) => {
-        console.log(data.Items);
         temp2 = data;
       });
-
     // Process activity levels - dictionary from name to name
-    const libraryToBusynessTranslation = {
-      'Science and Engineering Library': 'UCLA Science and Engineering Library',
-      'Music Library': 'UCLA Music Library',
-      'Powell Library': 'Powell Library',
-      'Research Library (Charles E. Young)': 'Charles E. Young Research Library',
-      'Management Library (Eugene and Maxine Rosenfeld)': 'Rosenfeld Library',
-    };
-    const lib_data = temp.Items;
-    const busy_data = temp2.Items;
+
+    const libData = temp.Items;
+    const busyData = temp2.Items;
 
     // loop through library data items, if in dictionary, add the busyness
-    for (let i = 0; i < lib_data.length; i++) {
-      const item = lib_data[i];
-      // This is the name from the library_data API
+    for (let i = 0; i < libData.length; i += 1) {
+      const item = libData[i];
+      // This is the name from the libraryData API
       const libraryName = item.name.S;
       // Found a valid translation, valid busyness data
       if (libraryName in libraryToBusynessTranslation) {
         // Get the name translation
         const busyName = libraryToBusynessTranslation[libraryName];
         // Find the item in API matching name
-        const busyItem = busy_data.find((element) => busyName === element.name['S']);
+        const busyItem = busyData.find(element => busyName === element.name.S);
         // Add the busyness data to the item
         const currentBusyness = busyItem.current_busyness.N;
-        item.currentBusyness = `${currentBusyness  }%`;
-      }
-      // Not in the translation, no busyness data, append N/A.
-      else {
+        item.currentBusyness = `${currentBusyness}%`;
+      } else { // Not in the translation, no busyness data, append N/A.
         item.currentBusyness = 'N/A';
       }
     }
 
     /* Once the request is done, save library data to current state */
-    this.setState({ library_data: lib_data, busyness_data: busy_data.Items });
+    this.setState({
+      libraryData: libData,
+      busynessData: busyData.Items,
+      fullLibraryData: libData,
+    });
   }
 
   goToMap = (library) => {
@@ -85,6 +86,28 @@ class LocationContainer extends Component {
       currentPage: 'Map',
       initialSelectedLibrary: library
     });
+  }
+
+  // Shirly's code from GlobalSearchBar.js
+  getSearchQuery = (e) => {
+    this.filterData(e);
+  }
+
+  // Shirly's code from GlobalSearchBar.js
+  filterData = (search) => {
+    const { fullLibraryData } = this.state;
+    let index; let
+      value;
+    const result = [];
+    for (index = 0; index < fullLibraryData.length; index += 1) {
+      value = fullLibraryData[index].name.S.toUpperCase();
+      const currentLocation = search.toUpperCase();
+      if (value.includes(currentLocation)) {
+        result.push(fullLibraryData[index]);
+      }
+    }
+    // return result;
+    this.setState({ libraryData: result });
   }
 
   handlePress() {
@@ -103,10 +126,12 @@ class LocationContainer extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { currentPage, library_data, initialSelectedLibrary } = this.state;
+    const {
+      currentPage, libraryData, initialSelectedLibrary, busynessData
+    } = this.state;
 
     // Loading animation screen should go here
-    if (library_data === undefined) {
+    if (libraryData === undefined) {
       return (
         <SafeAreaView style={styles.loading}>
           <Text style={{ textAlign: 'center', paddingBottom: 20, }}>Attemping to fetch library data...</Text>
@@ -118,35 +143,22 @@ class LocationContainer extends Component {
     // Choose to display list or map depending on state
     let body;
     if (currentPage === 'List') {
-      body = <LocationsList library_data={library_data} busyness_data={this.state.busyness_data} navigation={navigation} goToMap={this.goToMap} />;
+      body = <LocationsList libraryData={libraryData} busynessData={busynessData} navigation={navigation} goToMap={this.goToMap} />;
     } else if (currentPage === 'Map') {
-      body = <LocationsMap libraryData={library_data} busyness_data={this.state.busyness_data} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
+      body = <LocationsMap libraryData={libraryData} busynessData={busynessData} navigation={navigation} initialLibrary={initialSelectedLibrary} />;
     }
 
     return (
       <SafeAreaView style={styles.container}>
-        <LocationHeader library_data={library_data} navigation={navigation} currentRouteKey={currentPage} onPress={() => this.handlePress()} />
+        <LocationHeader
+          libraryData={libraryData}
+          navigation={navigation}
+          currentRouteKey={currentPage}
+          onPress={() => this.handlePress()}
+          getSearchQuery={this.getSearchQuery}
+        />
         {body}
       </SafeAreaView>
-
-    // After we get the data generate the list view and everything else
-    // if (this.state.currentPage === 'List') {
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="List"/>
-    //     <LocationsList library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
-    // else if (this.state.currentPage === 'Map'){
-    //   console.log("In map")
-    //   return (
-    //     <View styles={styles.container}>
-    //       <LocationHeader library_data={this.state.library_data} navigation={this.props.navigation} currentRouteKey="Map"/>
-    //         <Locations library_data={this.state.library_data} navigation={this.props.navigation}/>
-    //     </View>
-    //   )
-    // }
     );
   }
 }
@@ -163,13 +175,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     backgroundColor: 'white',
   }
-  // header: {
-  //   height: 50,
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  //   backgroundColor: '#4F87EC',
-  //   width: '100%',
-  // },
 });
 
 export default withNavigation(LocationContainer);

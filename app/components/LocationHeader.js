@@ -10,118 +10,15 @@ class LocationHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Location: '',
-      library_data: this.props.library_data,
       currentRouteKey: this.props.currentRouteKey,
     };
-    this.setInputState = this.setInputState.bind(this);
-    this.handleSearchSuggestions = this.handleSearchSuggestions.bind(this);
-  }
-
-  // Shirly's code from GlobalSearchBar.js
-  setInputState(e) {
-    this.setState({ Location: e });
-  }
-
-  // Shirly's code from GlobalSearchBar.js
-  handleSearchSuggestions(e) {
-    const { Location, library_data } = this.state;
-    if (Location.length === 0 || library_data.length === 0) {
-      return [];
-    }
-    let index; let
-      value;
-    const result = [];
-
-    for (index = 0; index < library_data.length; ++index) {
-      // fix API .name.touppercase stuff
-      value = library_data[index].name.S.toUpperCase();
-      const currentLocation = Location.toUpperCase();
-      if (value.substring(0, Location.length) == currentLocation) {
-        result.push(library_data[index]);
-      }
-    }
-    return result;
-  }
-
-  handleSelection(item) {
-    const { navigate } = this.props.navigation;
-    const { library_data } = this.state;
-    // TODO: Fix api .Name.toUpperCase()
-    navigate('Detailed', { locationClicked: library_data.find(x => x.name.S.toUpperCase() === item.item.name.S.toUpperCase()) });
-    this.setState({
-      Location: '',
-    });
   }
 
   render() {
-    const locations = this.handleSearchSuggestions(this.state.Location);
-    // console.log(locations)
+    const locations = this.props.libraryData;
     const { currentRouteKey } = this.state;
-    // const { navigate } = this.props.navigation;
-    // const currentRouteKey = this.props.navigation.state.routes[this.props.navigation.state.index].routeName;
-    // let right_navigate = '';
-    // let right_icon = '';
-    // if (currentRouteKey == 'List') {
-    //   right_icon = (
-    //     <Ionicon color="white" name="ios-map" size={25} backgroundColor="#4F87EC" />
-    //   );
-    //   right_navigate = 'Map';
-    // } else if (currentRouteKey == 'Map') {
-    //   right_icon = (
-    //     <Ionicon color="white" name="md-list" size={25} backgroundColor="#4F87EC" />
-    //   );
-    //   right_navigate = 'List';
-    // }
-    // return (
-    //   <View style={styles.bar}>
-    //     <View style={styles.leftView}>
-    //       <TouchableOpacity
-    //         style={styles.buttonLeft}
-    //         // onPress={() => {
-    //         //   navigate('List');
-    //         // }}
-    //         onPress={() => this.props.onPress()}
-    //       >
-    //         {currentRouteKey === 'Detailed'
-    //             && <Ionicon color="white" name="ios-arrow-back" size={25} backgroundColor="#4F87EC" />
-    //             }
-    //       </TouchableOpacity>
-    //     </View>
-    //     { (currentRouteKey === 'List')
-    //             // Code from Shirly
-    //             && (
-    // <Search
-    //   data={locations} // this should be an API call or huge list eventually
-    //   defaultValue={this.state.Location}
-    //   onChangeText={e => this.setInputState(e)}
-    //   inputContainerStyle={styles.inputContainer}
-    //   style={styles.searchContainer}
-    //   renderItem={item => ( 
-    //     <TouchableOpacity onPress={() => this.handleSelection(item)}>
-    //       <Text>{item.item.name.S}</Text>
-    //     </TouchableOpacity>
-    //   )}
-    // />
-    //             ) }
-    //     { currentRouteKey != 'Detailed'
-    //             && (
-    //               <View style={styles.rightView}>
-    //                 <TouchableOpacity
-    //                   style={styles.buttonRight}
-    //                   // onPress={() => {
-    //                   //   navigate(right_navigate);
-    //                   // }}
-    //                   onPress={() => this.props.onPress()}
-    //                 >
-    //                   {right_icon}
-    //                 </TouchableOpacity>
-    //               </View>
-    //             ) }
-    //   </View>
-    // );
-
     const { navigate } = this.props.navigation;
+    
     return (
       <View style={styles.topBar}>
         <View style={styles.bar}>
@@ -130,20 +27,19 @@ class LocationHeader extends Component {
             Libraries
             {' '}
           </Text>
-          <TouchableOpacity onPress={ () => this.props.onPress() }>
+          <TouchableOpacity onPress={() => this.props.onPress()}>
             <Ionicon color="#108BF8" name="ios-map" size={25} backgroundColor="#4F87EC" />
           </TouchableOpacity>
         </View>
         <Search
-          data={locations} // this should be an API call or huge list eventually
+          // Searchbar itself does not actually show any data so pass in nothing
+          data={[]}
           defaultValue={this.state.Location}
-          onChangeText={e => this.setInputState(e)}
+          onChangeText={(e) => this.props.getSearchQuery(e)}
           inputContainerStyle={styles.inputContainer}
           style={styles.searchContainer}
-          renderItem={item => (
-            <TouchableOpacity onPress={() => this.handleSelection(item)}>
-              <Text>{item.item.name.S}</Text>
-            </TouchableOpacity>
+          renderItem={() => (
+            <TouchableOpacity onPress={() => null} />
           )}
         />
       </View>
