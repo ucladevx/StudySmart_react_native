@@ -12,7 +12,7 @@ import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
-import Feedback from './app/screens/Feedback/Feedback';
+import FeedbackContainer from './app/screens/Feedback/FeedbackContainer';
 import BookingWebView from './app/screens/StudyRoom/BookingWebView';
 
 const StudyRoomStack = StackNavigator({
@@ -39,7 +39,7 @@ const LocationsStack = StackNavigator({
 });
 
 const FeedbackStack = StackNavigator({
-  Feedback: { screen: Feedback },
+  Feedback: { screen: FeedbackContainer },
 });
 
 StudyRoomStack.navigationOptions = {
