@@ -3,8 +3,9 @@ export const CHANGE_DATE = 'CHANGE_DATE';
 export const CHANGE_DURATION = 'CHANGE_DURATION';
 export const CHANGE_ROOM = 'CHANGE_ROOM';
 export const CHANGE_LOCATION = 'CHANGE_LOCATION';
-export const LOAD_DATA = 'LOAD_DATA';
-export const CHANGE_UNSTYLEDTIME = 'CHANGE_UNSTYLEDTIME'
+export const LOAD_HILLDATA = 'LOAD_HILLDATA';
+export const LOAD_LIBRARYDATA = 'LOAD_LIBRARYDATA';
+export const CHANGE_UNSTYLEDTIME = 'CHANGE_UNSTYLEDTIME';
 
 
 export const changeTime = time => ({
@@ -30,9 +31,14 @@ export const changeLocation = location => ({
   location,
 });
 
-export const loadData = data => ({
-  type: LOAD_DATA,
-  data,
+export const loadHillData = hillData => ({
+  type: LOAD_HILLDATA,
+  hillData,
+});
+
+export const loadLibraryData = libraryData => ({
+  type: LOAD_LIBRARYDATA,
+  libraryData,
 });
 
 export const changeUnstyledTime = unstyledTime => ({

@@ -49,7 +49,6 @@ class StudyRoomModal extends Component {
       const lastChar = styledTime[styledTime.length - 1];
       styledTime = styledTime.slice(0, -6);
       this.setState({
-        time: styledTime + last2ndChar + lastChar,
         timePickerVisible: !timePickerVisible
       });
       changeTimeAction(styledTime + last2ndChar + lastChar);
@@ -66,7 +65,6 @@ class StudyRoomModal extends Component {
       }
       chosen = `${mm}/${dd}/${yyyy}`;
       this.setState({
-        date: chosen,
         datePickerVisible: !datePickerVisible
       });
       changeDateAction(chosen);
@@ -74,7 +72,7 @@ class StudyRoomModal extends Component {
   }
 
 changeLoc = (location, selected) => {
-  const currentLocations = this.props.location;
+  const currentLocations = this.props.location.slice();
   if (!selected) {
     const index = currentLocations.indexOf(location);
     if (index > -1) {
@@ -84,6 +82,15 @@ changeLoc = (location, selected) => {
     currentLocations.push(location);
   }
   this.props.changeLocation(currentLocations);
+}
+
+isSelected = (location) => {
+  const currentLocations = this.props.location;
+  const index = currentLocations.indexOf(location);
+  if (index > -1) {
+    return true;
+  }
+  return false;
 }
 
 render() {
@@ -96,10 +103,10 @@ render() {
     >
       <View style={[styles.modalContainer, styles.boxWithShadow]}>
         <Text style={styles.promptText}> Study Preferences </Text>
-        <SmallShadowButton title="Anywhere" selected changeThing={this.changeLoc} />
-        <SmallShadowButton title="Hill" selected={false} changeThing={this.changeLoc} />
-        <SmallShadowButton title="Libraries" selected={false} changeThing={this.changeLoc} />
-        <SmallShadowButton title="Classrooms" selected={false} changeThing={this.changeLoc} />
+        <SmallShadowButton title="Anywhere" selected={this.isSelected('Anywhere')} changeThing={this.changeLoc} />
+        <SmallShadowButton title="Hill" selected={this.isSelected('Hill')} changeThing={this.changeLoc} />
+        <SmallShadowButton title="Libraries" selected={this.isSelected('Libraries')} changeThing={this.changeLoc} />
+        <SmallShadowButton title="Classrooms" selected={this.isSelected('Classrooms')} changeThing={this.changeLoc} />
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.promptText}>
@@ -145,23 +152,27 @@ render() {
           </View>
         </View>
         <View style={styles.containerRow}>
-        <TouchableOpacity
-              style={[styles.whiteButtonAbs, styles.boxWithShadow]}
-              onPress={() => this.props.handleModal()}
-            >
-              <Text style={styles.titleText}>
+          <View style={styles.containerCol}>
+                <TouchableOpacity
+                  style={[styles.blueButton, styles.boxWithShadow]}
+                  onPress={() => this.props.handleModal()}
+                >
+                  <Text style={styles.titleTextBlue}>
            Cancel
-              </Text>
-            </TouchableOpacity>
-        <TouchableOpacity
-              style={[styles.whiteButtonAbs, styles.boxWithShadow]}
-              onPress={() => this.changeSearch()}
-            >
-              <Text style={styles.titleText}>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+          <View style={styles.containerCol}>
+                <TouchableOpacity
+                  style={[styles.blueButton, styles.boxWithShadow]}
+                  onPress={() => this.changeSearch()}
+                >
+                  <Text style={styles.titleTextBlue}>
             Ok
-              </Text>
-            </TouchableOpacity>
-            </View>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+        </View>
       </View>
     </Modal>
   );
@@ -178,11 +189,21 @@ const promptText = {
   width: '80%',
   textAlign: 'center',
 };
+const titleText = {
+  fontFamily: 'System',
+  fontSize: 20,
+  fontWeight: '300',
+  fontStyle: 'normal',
+  letterSpacing: 1.92,
+  color: '#108BF8',
+  padding: 5
+};
 
 const styles = StyleSheet.create({
   promptText,
+  titleText,
   modalContainer: {
-    height: '50%',
+    height: '60%',
     width: '90%',
     backgroundColor: 'white',
     flexDirection: 'column',
@@ -197,14 +218,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  titleText: {
-    fontFamily: 'System',
-    fontSize: 20,
-    fontWeight: '600',
-    fontStyle: 'normal',
-    letterSpacing: 1.92,
-    color: '#108BF8',
-    padding: 5
+  titleTextBlue: {
+    ...titleText,
+    color: 'white'
   },
   verticalDivider: {
     height: 30,
@@ -215,7 +231,7 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
   },
   containerRow: {
-    flex: 0,
+    flex: 1,
     flexDirection: 'row',
     marginBottom: 5,
     marginTop: 5,
@@ -228,7 +244,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    height: '55%'
   },
   whiteButton: {
     backgroundColor: 'white',
@@ -236,18 +251,18 @@ const styles = StyleSheet.create({
     width: '65%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 5,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: 10,
 
   },
-  whiteButtonAbs: {
-    backgroundColor: 'white',
+  blueButton: {
+    backgroundColor: '#108BF8',
     height: 30,
-    width: '35%',
+    width: '65%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 30,
-    marginLeft: 35
+    marginTop: 10,
+    marginBottom: 10,
 
   },
   boxWithShadow: {

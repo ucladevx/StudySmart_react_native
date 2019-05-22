@@ -3,60 +3,44 @@ import {
   StyleSheet, Text, View, TouchableOpacity, SafeAreaView
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import Search from '../../components/Search';
-import Sorter from '../../components/Sorter';
 import { changeDuration } from '../../Actions/actions';
-import LocationContainer from '../LocationsContainer';
+
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: false,
     };
-    this.goBack = this.goBack.bind(this);
-    this.showResults = this.showResults.bind(this);
   }
 
-
-  // Shirly's code from GlobalSearchBar.js
-  goBack() {
-    this.props.navigation.navigate('BookingTime');
-  }
-
-  showSorter() {
-    this.setState({
-      visible: true
-    });
-  }
-
-  showResults() {
-    this.setState({
-      visible: false
-    });
-    this.props.sortData();
+  handleInput = (input) => {
+    this.props.filterData(input);
   }
 
   render() {
-    const { navigate } = this.props.navigation;
     const { date, time, location } = this.props;
     const { visible } = this.state;
     return (
       <View style={styles.topBar}>
         <View style={styles.bar}>
+          <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.props.handleModal()}>
+            <MaterialCommunityIcons name="filter-variant" color="#108BF8" size={35} />
+          </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {this.props.location.toString()}
+            {location.toString()}
             {' '}
           </Text>
         </View>
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
           defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
-          onFocus={this.goBack}
-          onChangeText={() => null}
+          onChangeText={(text) => this.handleInput(text)}
           style={[styles.searchContainer, styles.input]}
           inputContainerStyle={[styles.inputContainer]}
           renderItem={() => (
@@ -146,6 +130,14 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: '#000',
   },
+  rightButtonAbs: {
+    width: 30,
+    height: 30,
+    position: 'absolute',
+    right: 20,
+    top: '15%',
+    zIndex: 5,
+  },
 
 
 });
@@ -163,18 +155,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomHeader);
-
-/*
- <SafeAreaView style={styles.rightView}>
-          <TouchableOpacity
-            style={styles.buttonRight}
-            onPress={() => this.showSorter()}
-          >
-            <AntIcon name="filter" color="white" size={30} />
-          </TouchableOpacity>
-          { visible ? (
-            <Sorter
-              showResults={this.showResults}
-            />
-          ) : null }
-        </SafeAreaView> */

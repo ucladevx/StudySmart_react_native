@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Linking, SafeAreaView
+  Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView
 } from 'react-native';
 import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 import {
   changeTime, changeDate, changeLocation, loadData
 } from '../../Actions/actions';
@@ -27,7 +28,7 @@ const durationPairs = {
 };
 
 class StudyRoomReserve extends Component {
-  static navigationOptions={
+  static navigationOptions = {
     header: () => {
       false;
     }
@@ -37,8 +38,31 @@ class StudyRoomReserve extends Component {
     super(props);
     this.state = {
       rooms: this.props.navigation.getParam('rooms', 'NA'),
-      duration: '1 hour'
+      duration: '1 hour',
     };
+  }
+
+
+  onSwipeLeft(gestureState) {
+    this.setState({ duration: '2 hours' });
+  }
+
+  onSwipeRight(gestureState) {
+    this.setState({ duration: '1 hour' });
+  }
+
+  onSwipe(gestureName, gestureState) {
+    const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
+    switch (gestureName) {
+      case SWIPE_LEFT:
+        this.setState({ duration: '2 hours' });
+        break;
+      case SWIPE_RIGHT:
+        this.setState({ duration: '1 hour' });
+        break;
+      default:
+        break;
+    }
   }
 
   setDuration = (hour) => {
@@ -60,7 +84,6 @@ class StudyRoomReserve extends Component {
     details = details.trim();
     details = details.slice(0, -1);
     const detailsArray = details.split('(');
-    const { room } = this.state;
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
@@ -78,7 +101,7 @@ class StudyRoomReserve extends Component {
               onPress={() => this.handleReserve(item.link)}
             >
               <Text style={styles.whiteText}>
-          Reserve
+                Reserve
               </Text>
             </TouchableOpacity>
           </View>
@@ -90,34 +113,50 @@ class StudyRoomReserve extends Component {
 
   render() {
     const { rooms } = this.state;
+    const config = {
+      velocityThreshold: 0.1,
+      directionalOffsetThreshold: 200
+    };
     return (
       <SafeAreaView style={styles.container}>
-        <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
-          <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
-        </TouchableOpacity>
-        <FloatingSegment setDuration={this.setDuration} />
         <View style={styles.bar}>
+          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
+            <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
+          </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
             {namePairs[rooms.location]}
             {' '}
           </Text>
         </View>
-        <FlatList
-          data={rooms.available}
-          extraData={this.state}
-          renderItem={({ item }) => this.renderList(item)}
-          keyExtractor={(item, index) => index.toString()}
-          style={{ flex: 1, backgroundColor: 'transparent', marginTop: 10 }}
-        />
+        <FloatingSegment setDuration={this.setDuration} selected={this.state.duration} />
+        <GestureRecognizer
+          onSwipe={(direction, state) => this.onSwipe(direction, state)}
+          onSwipeLeft={state => this.onSwipeLeft(state)}
+          onSwipeRight={state => this.onSwipeRight(state)}
+          config={config}
+          style={{
+            flex: 1,
+            backgroundColor: 'white'
+          }}
+        >
+          <FlatList
+            data={rooms.available}
+            extraData={this.state}
+            renderItem={({ item }) => this.renderList(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
+          />
+        </GestureRecognizer>
       </SafeAreaView>
+
     );
   }
 }
 
 const text = {
   fontFamily: 'System',
-  fontSize: 16,
+  fontSize: 14,
   fontWeight: '300',
   fontStyle: 'normal',
   letterSpacing: 1.92,
@@ -207,7 +246,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 100,
     width: 100,
-    backgroundColor: 'green',
     marginRight: 10,
     justifyContent: 'center',
     alignItems: 'center'
@@ -217,7 +255,7 @@ const styles = StyleSheet.create({
     height: 30,
     position: 'absolute',
     left: 20,
-    top: '6%',
+    top: '15%',
     zIndex: 5
   },
   icon: {
@@ -226,12 +264,10 @@ const styles = StyleSheet.create({
   },
   bar: {
     height: 50,
-    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-
   },
 });
 

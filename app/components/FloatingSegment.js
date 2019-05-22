@@ -1,46 +1,36 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, View, TouchableOpacity, SafeAreaView
 } from 'react-native';
 
 export default class FloatingSegment extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selected: '1 hour'
-    };
-  }
-
   select(duration) {
     const { setDuration } = this.props;
-    this.setState({
-      selected: duration
-    });
     setDuration(duration);
   }
 
-  render() {
-    const { selected } = this.state;
+  renderDuration(title) {
+    const { selected } = this.props;
     return (
-      <View style={styles.rightButtonAbs}>
-        <TouchableOpacity
-          onPress={() => this.select('1 hour')}
-        >
-          <Text style={selected === '1 hour' ? styles.titleTextSelected : styles.titleText}>
-            {'1 hour'}
-          </Text>
-          <View style={selected === '1 hour' ? styles.line : styles.lineTransparent} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.select('2 hours')}
-        >
-          <Text style={selected === '2 hours' ? styles.titleTextSelected : styles.titleText}>
-            {'2 hours'}
-          </Text>
-          <View style={selected === '2 hours' ? styles.line : styles.lineTransparent} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={selected === title ? styles.durationSelected : styles.duration}
+        onPress={() => this.select(title)}
+      >
+        <Text style={selected === title ? styles.titleTextSelected : styles.titleText}>
+          {title}
+        </Text>
+        <View style={selected === title ? styles.line : styles.lineTransparent} />
+      </TouchableOpacity>
+    );
+  }
+
+  render() {
+    return (
+      <SafeAreaView style={styles.rightButtonAbs}>
+        { this.renderDuration('1 hour') }
+        { this.renderDuration('2 hours') }
+      </SafeAreaView>
     );
   }
 }
@@ -56,22 +46,29 @@ const titleText = {
   textAlign: 'center',
   padding: 1
 };
+const duration = {
+  backgroundColor: 'white',
+  borderRadius: 7,
+  justifyContent: 'center',
+  marginRight: 4,
+  width: 60,
+  alignItems: 'center'
+};
 
 const styles = StyleSheet.create({
   titleText,
-
+  duration,
   titleTextSelected: {
     ...titleText,
-    color: '#108BF8',
+    color: 'white',
 
   },
   rightButtonAbs: {
-    width: 110,
-    height: 20,
-    position: 'absolute',
-    right: 5,
-    top: 80,
+    width: '100%',
+    height: 25,
+    flex: 0,
     flexDirection: 'row',
+    justifyContent: 'flex-end',
     zIndex: 5,
   },
   line: {
@@ -83,6 +80,11 @@ const styles = StyleSheet.create({
     height: 1,
     width: '95%',
     backgroundColor: 'transparent'
+  },
+
+  durationSelected: {
+    ...duration,
+    backgroundColor: '#108BF8',
   }
 
 });

@@ -1,5 +1,5 @@
 import {
-  CHANGE_TIME, CHANGE_DATE, CHANGE_DURATION, CHANGE_ROOM, CHANGE_LOCATION, LOAD_DATA
+  CHANGE_TIME, CHANGE_DATE, CHANGE_DURATION, CHANGE_ROOM, CHANGE_LOCATION, LOAD_HILLDATA, LOAD_LIBRARYDATA
 } from '../Actions/actions';
 
 const initialState = {
@@ -8,7 +8,8 @@ const initialState = {
   duration: 0,
   room: '',
   location: ['Anywhere'],
-  data: []
+  hillData: [],
+  libraryData: [],
 
 };
 
@@ -39,10 +40,15 @@ const StudyReducer = (state = initialState, action) => {
         ...state,
         location: action.location
       };
-    case LOAD_DATA:
+    case LOAD_HILLDATA:
       return {
         ...state,
-        data: action.data
+        hillData: action.hillData
+      };
+    case LOAD_LIBRARYDATA:
+      return {
+        ...state,
+        libraryData: action.libraryData
       };
     default:
       return state;

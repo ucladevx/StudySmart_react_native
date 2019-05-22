@@ -3,10 +3,11 @@ import {
   View, StyleSheet, WebView
 } from 'react-native';
 
-export default function Feedback() {
+export default function Feedback(props) {
+  const { link } = props;
   return (
     <View style={styles.viewContainer}>
-      <WebView source={{ uri: 'https://forms.gle/qP3DZVirq9Ne9VSt7' }} />
+      <WebView source={{ uri: link }} />
     </View>
   );
 }

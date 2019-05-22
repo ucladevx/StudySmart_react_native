@@ -7,16 +7,24 @@ import {
 export default class LocationShadowButton extends Component {
   constructor(props) {
     super(props);
+    const { selected } = this.props;
     this.state = {
-      selected: this.props.selected
+      selected
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      selected: nextProps.selected
+    });
   }
 
   select() {
     const { selected } = this.state;
+    const { changeLoc, title } = this.props;
     this.setState({
       selected: !selected
-    }, () => { this.props.changeLoc(this.props.title, this.state.selected) });
+    }, () => { changeLoc(title, selected); });
   }
 
   render() {
@@ -37,16 +45,17 @@ export default class LocationShadowButton extends Component {
 
 const whiteButton = {
   backgroundColor: 'white',
-  height: 50,
+  height: '14%',
   width: '65%',
   alignItems: 'center',
   justifyContent: 'center',
-  marginTop: 20,
   shadowColor: '#000',
   shadowOffset: { width: 0, height: 1 },
   shadowOpacity: 0.5,
   shadowRadius: 1,
   elevation: 5,
+  marginTop: 10,
+  marginBottom: 10
 };
 
 const titleText = {
@@ -56,7 +65,7 @@ const titleText = {
   fontStyle: 'normal',
   letterSpacing: 1.92,
   color: '#108BF8',
-  width: '80%',
+  width: '90%',
   padding: 5,
   textAlign: 'center'
 };

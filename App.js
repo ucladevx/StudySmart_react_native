@@ -4,10 +4,10 @@ import {
   Image
 } from 'react-native';
 import { StackNavigator, createBottomTabNavigator } from 'react-navigation';
-import LocationsMap from './app/screens/LocationsMap';
+import LocationsMap from './app/screens/Locations/LocationsMap';
 import configureStore from './store';
-import LocationsList from './app/screens/LocationsList';
-import LocationsContainer from './app/screens/LocationsContainer';
+import LocationsList from './app/screens/Locations/LocationsList';
+import LocationsContainer from './app/screens/Locations/LocationsContainer';
 import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
@@ -19,16 +19,15 @@ const StudyRoomStack = StackNavigator({
   StudyRoomList: { screen: StudyRoomList },
   BookingLocation: { screen: BookingLocation },
   BookingTime: { screen: BookingTime },
-  StudyRoomList: { screen: StudyRoomList },
   StudyRoomReserve: { screen: StudyRoomReserve },
   BookingWebView: { screen: BookingWebView },
 
 
 },
-{
-// For now, use this to toggle between List view and Map view. We will eventually add a toggle button
-  initialRouteName: 'BookingLocation',
-});
+  {
+    // For now, use this to toggle between List view and Map view. We will eventually add a toggle button
+    initialRouteName: 'BookingLocation',
+  });
 
 const LocationsStack = StackNavigator({
   LocationsContainer: { screen: LocationsContainer },
@@ -39,7 +38,12 @@ const LocationsStack = StackNavigator({
 });
 
 const FeedbackStack = StackNavigator({
-  Feedback: { screen: FeedbackContainer },
+  Feedback: {
+    screen: FeedbackContainer,
+    navigationOptions: {
+      headerStyle: { height: 30 }
+    }
+  },
 });
 
 StudyRoomStack.navigationOptions = {
@@ -50,6 +54,7 @@ StudyRoomStack.navigationOptions = {
     return (
       <Image
         source={image}
+        style={{ width: 25, height: 25 }}
       />
     );
   },
@@ -64,11 +69,12 @@ StudyRoomStack.navigationOptions = {
 LocationsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => {
     const image = focused
-      ? require('./assets/locationTabSelected.png')
-      : require('./assets/locationTab.png');
+      ? require('./assets/locationsTabSelected.png')
+      : require('./assets/locationsTab.png');
     return (
       <Image
         source={image}
+        style={{ width: 25, height: 25 }}
       />
     );
   },
@@ -83,11 +89,12 @@ LocationsStack.navigationOptions = {
 FeedbackStack.navigationOptions = {
   tabBarIcon: ({ focused }) => {
     const image = focused
-      ? require('./assets/feedbackSelected.png')
-      : require('./assets/feedback.png');
+      ? require('./assets/feedbackTabSelected.png')
+      : require('./assets/feedbackTab.png');
     return (
       <Image
         source={image}
+        style={{ width: 25, height: 25 }}
       />
     );
   },
