@@ -129,7 +129,7 @@ class BookingTime extends Component {
             onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
             onCancel={this.showDatePicker}
             maximumDate={this.date}
-            //minimumDate={this.minDate}
+            minimumDate={this.minDate}
           />
           <Text style={styles.largeText}>
             {' '}

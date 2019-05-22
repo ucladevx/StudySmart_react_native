@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView
+  Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
@@ -39,26 +39,27 @@ class StudyRoomReserve extends Component {
     this.state = {
       rooms: this.props.navigation.getParam('rooms', 'NA'),
       duration: '1 hour',
+      slide: false
     };
   }
 
 
   onSwipeLeft(gestureState) {
-    this.setState({ duration: '2 hours' });
+    this.setDuration('2 hours');
   }
 
   onSwipeRight(gestureState) {
-    this.setState({ duration: '1 hour' });
+    this.setDuration('1 hour');
   }
 
   onSwipe(gestureName, gestureState) {
     const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
     switch (gestureName) {
       case SWIPE_LEFT:
-        this.setState({ duration: '2 hours' });
+        this.setDuration('2 hours');
         break;
       case SWIPE_RIGHT:
-        this.setState({ duration: '1 hour' });
+        this.setDuration('1 hour');
         break;
       default:
         break;
@@ -69,7 +70,18 @@ class StudyRoomReserve extends Component {
     this.setState({
       duration: hour
     });
+
+    this.setState({
+      slide: true
+    });
+
+    setTimeout(() => {
+      this.setState({
+        slide: false
+      });
+    }, 100);
   }
+
 
   handleReserve = (room) => {
     this.props.navigation.navigate('BookingWebView', { url: room });
@@ -148,6 +160,7 @@ class StudyRoomReserve extends Component {
             style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
           />
         </GestureRecognizer>
+        {this.state.slide ? <ActivityIndicator style={styles.animation} size="large" color="#4F87EC"/> : null } 
       </SafeAreaView>
 
     );
@@ -269,6 +282,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
+  animation: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    top: '15%',
+    justifyContent: 'center'
+  }
 });
 
 const mapStateToProps = state => ({

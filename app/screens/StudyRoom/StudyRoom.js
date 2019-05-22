@@ -261,20 +261,27 @@ class StudyRoomList extends Component {
           handleModal={this.handleModal}
           filterData={this.filterData}
         />
-        <SectionList
-          style={styles.list}
-          renderItem={({ item }) => this.renderRow(item)}
-          renderSectionHeader={({ section: { title } }) => (
-            <View style={styles.sectionHeader}>
-              <Text style={styles.titleText}>{title}</Text>
-            </View>
-          )}
-          sections={[
-            { title: 'Hill', data: hillData },
-          ]}
-          keyExtractor={(item, index) => item + index}
-          extraData={this.state}
-        />
+        { this.props.hillData.length > 0 ? (
+          <SectionList
+            style={styles.list}
+            renderItem={({ item }) => this.renderRow(item)}
+            renderSectionHeader={({ section: { title } }) => (
+              <View style={styles.sectionHeader}>
+                <Text style={styles.titleText}>{title}</Text>
+              </View>
+            )}
+            sections={[
+              { title: 'Hill', data: hillData },
+            ]}
+            keyExtractor={(item, index) => item + index}
+            extraData={this.state}
+          />
+        ) : (
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+          </View>
+        ) }
+
         {visible ? (
           <StudyRoomModal handleModal={this.handleModal} getStudyRooms={this.getStudyRooms} />
         ) : null}
@@ -389,6 +396,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white'
+  },
+  empty: {
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
