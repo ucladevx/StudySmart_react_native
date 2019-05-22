@@ -171,6 +171,7 @@ class LocationContainer extends Component {
           navigation={navigation}
           onPress={this.handlePress}
           getSearchQuery={this.getSearchQuery}
+          currentPage={currentPage}
         />
         {body}
       </SafeAreaView>

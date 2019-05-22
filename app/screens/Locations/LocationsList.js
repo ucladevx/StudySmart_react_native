@@ -41,7 +41,7 @@ export default class LocationsList extends Component {
         extraData={this.props}
         contentContainerStyle={styles.scrollStyle}
         renderItem={({ item }) => (
-          <LibraryCard item={item} goToMap={goToMap} />
+          <LibraryCard item={item} goToMap={goToMap} currentPage="List" />
         )}
         keyExtractor={(item, index) => index.toString()}
       />

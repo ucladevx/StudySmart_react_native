@@ -82,7 +82,7 @@ export default class LocationsMap extends Component {
             />
           ))}
         </MapView>
-        {selectedLibrary === 'NO-LIBRARY' ? <View /> : <LibraryCard item={selectedLibraryData} />}
+        {selectedLibrary === 'NO-LIBRARY' ? <View /> : <LibraryCard item={selectedLibraryData} currentPage="Map" />}
       </View>
     );
   }
