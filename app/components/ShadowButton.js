@@ -4,13 +4,25 @@ import {
   StyleSheet, Text, View, TouchableOpacity,
 } from 'react-native';
 
-export default class LocationShadowButton extends Component {
+export default class ShadowButton extends Component {
   constructor(props) {
+    const { selected, buttonStyle, disabled } = props;
     super(props);
-    const { selected } = this.props;
     this.state = {
       selected
     };
+    this.buttonStyle = styles.whiteButton;
+    this.selectedButtonStyle = styles.whiteButtonSelected;
+    if (buttonStyle === 'Small') {
+      this.buttonStyle = styles.whiteButtonSmall;
+      this.selectedButtonStyle = styles.whiteButtonSmallSelected;
+      if (disabled) {
+        this.buttonStyle = styles.disabledButtonSmall;
+      }
+    }
+    if (disabled && buttonStyle !== 'Small') {
+      this.buttonStyle = styles.disabledButton;
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -24,15 +36,16 @@ export default class LocationShadowButton extends Component {
     const { changeLoc, title } = this.props;
     this.setState({
       selected: !selected
-    }, () => { changeLoc(title, selected); });
+    }, () => { changeLoc(title, !selected) });
   }
 
   render() {
     const { selected } = this.state;
-    const { title } = this.props;
+    const { title, disabled } = this.props;
     return (
       <TouchableOpacity
-        style={selected ? styles.whiteButtonSelected : styles.whiteButton}
+        disabled={disabled}
+        style={selected ? this.selectedButtonStyle : this.buttonStyle}
         onPress={() => this.select()}
       >
         <Text style={selected ? styles.titleTextSelected : styles.titleText}>
@@ -42,6 +55,7 @@ export default class LocationShadowButton extends Component {
     );
   }
 }
+
 
 const whiteButton = {
   backgroundColor: 'white',
@@ -58,6 +72,22 @@ const whiteButton = {
   marginBottom: 10
 };
 
+const whiteButtonSmall = {
+  backgroundColor: 'white',
+  height: 30,
+  width: '45%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  marginTop: 10,
+  marginBottom: 10,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.5,
+  shadowRadius: 1,
+  elevation: 5,
+};
+
+
 const titleText = {
   fontFamily: 'System',
   fontSize: 18,
@@ -71,10 +101,15 @@ const titleText = {
 };
 
 const styles = StyleSheet.create({
-  whiteButton,
   titleText,
+  whiteButton,
+  whiteButtonSmall,
   whiteButtonSelected: {
     ...whiteButton,
+    backgroundColor: '#108BF8',
+  },
+  whiteButtonSmallSelected: {
+    ...whiteButtonSmall,
     backgroundColor: '#108BF8',
   },
 
@@ -83,5 +118,13 @@ const styles = StyleSheet.create({
     color: 'white',
 
   },
+  disabledButton: {
+    ...whiteButton,
+    opacity: 0.5
+  },
+  disabledButtonSmall: {
+    ...whiteButtonSmall,
+    opacity: 0.5
+  }
 
 });

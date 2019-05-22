@@ -33,13 +33,13 @@ class StudyRoomHeader extends Component {
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {location.toString()}
+            {date !== '' || time !== '' ? `${date} ${time}` : ''}
             {' '}
           </Text>
         </View>
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
-          defaultValue={date !== '' || time !== '' ? `${date} ${time}` : ''}
+          defaultValue=""
           onChangeText={(text) => this.handleInput(text)}
           style={[styles.searchContainer, styles.input]}
           inputContainerStyle={[styles.inputContainer]}
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     top: '15%',
-    zIndex: 5,
+    zIndex: 10,
   },
 
 

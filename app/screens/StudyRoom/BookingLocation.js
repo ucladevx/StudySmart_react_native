@@ -3,7 +3,7 @@ import {
   StyleSheet, Text, View, TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
-import LocationShadowButton from '../../components/LocationShadowButton';
+import ShadowButton from '../../components/ShadowButton';
 import { changeLocation } from '../../Actions/actions';
 
 class BookingLocation extends Component {
@@ -14,14 +14,24 @@ class BookingLocation extends Component {
   }
 
   changeLoc = (location, selected) => {
-    const currentLocations = this.props.location.slice();
+    let currentLocations = this.props.location.slice();
     if (!selected) {
       const index = currentLocations.indexOf(location);
       if (index > -1) {
-        currentLocations.splice(index, 1);
+        if (currentLocations.length > 1) {
+          currentLocations.splice(index, 1);
+        }
       }
     } else if (selected && !currentLocations.includes(location)) {
-      currentLocations.push(location);
+      if (location === 'Anywhere') {
+        currentLocations = ['Anywhere'];
+      } else {
+        const indexAnywhere = currentLocations.indexOf('Anywhere');
+        if (indexAnywhere > -1) {
+          currentLocations.splice(indexAnywhere, 1);
+        }
+        currentLocations.push(location);
+      }
     }
     this.props.changeLocation(currentLocations);
   }
@@ -40,10 +50,10 @@ class BookingLocation extends Component {
       <View style={styles.container}>
         <Text style={styles.promptText}>Where do you want to study?</Text>
         <View style={styles.centeredView}>
-          <LocationShadowButton title="Anywhere" selected={this.isSelected('Anywhere')} changeLoc={this.changeLoc} />
-          <LocationShadowButton title="Hill" selected={this.isSelected('Hill')} changeLoc={this.changeLoc} />
-          <LocationShadowButton title="Libraries" selected={this.isSelected('Libraries')} changeLoc={this.changeLoc} />
-          <LocationShadowButton title="Classrooms" selected={this.isSelected('Classrooms')} changeLoc={this.changeLoc} />
+          <ShadowButton disabled={false} title="Anywhere" selected={this.isSelected('Anywhere')} changeLoc={this.changeLoc} />
+          <ShadowButton disabled={false} title="Hill" selected={this.isSelected('Hill')} changeLoc={this.changeLoc} />
+          <ShadowButton disabled title="Libraries" selected={this.isSelected('Libraries')} changeLoc={this.changeLoc} />
+          <ShadowButton disabled title="Classrooms" selected={this.isSelected('Classrooms')} changeLoc={this.changeLoc} />
         </View>
         <TouchableOpacity style={styles.searchButton} onPress={() => this.props.navigation.navigate('BookingTime')}>
           <Text style={styles.searchText}> Next </Text>

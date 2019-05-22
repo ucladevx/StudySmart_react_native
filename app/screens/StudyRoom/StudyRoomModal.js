@@ -7,7 +7,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import {
   changeTime, changeDate, changeLocation, loadData
 } from '../../Actions/actions';
-import SmallShadowButton from '../../components/SmallShadowButton';
+import ShadowButton from '../../components/ShadowButton';
 
 class StudyRoomModal extends Component {
   constructor(props) {
@@ -71,18 +71,28 @@ class StudyRoomModal extends Component {
     }
   }
 
-changeLoc = (location, selected) => {
-  const currentLocations = this.props.location.slice();
-  if (!selected) {
-    const index = currentLocations.indexOf(location);
-    if (index > -1) {
-      currentLocations.splice(index, 1);
+  changeLoc = (location, selected) => {
+    let currentLocations = this.props.location.slice();
+    if (!selected) {
+      const index = currentLocations.indexOf(location);
+      if (index > -1) {
+        if (currentLocations.length > 1) {
+          currentLocations.splice(index, 1);
+        }
+      }
+    } else if (selected && !currentLocations.includes(location)) {
+      if (location === 'Anywhere') {
+        currentLocations = ['Anywhere'];
+      } else {
+        const indexAnywhere = currentLocations.indexOf('Anywhere');
+        if (indexAnywhere > -1) {
+          currentLocations.splice(indexAnywhere, 1);
+        }
+        currentLocations.push(location);
+      }
     }
-  } else if (selected && !currentLocations.includes(location)) {
-    currentLocations.push(location);
+    this.props.changeLocation(currentLocations);
   }
-  this.props.changeLocation(currentLocations);
-}
 
 isSelected = (location) => {
   const currentLocations = this.props.location;
@@ -103,13 +113,13 @@ render() {
     >
       <View style={[styles.modalContainer, styles.boxWithShadow]}>
         <Text style={styles.promptText}> Study Preferences </Text>
-        <SmallShadowButton title="Anywhere" selected={this.isSelected('Anywhere')} changeThing={this.changeLoc} />
-        <SmallShadowButton title="Hill" selected={this.isSelected('Hill')} changeThing={this.changeLoc} />
-        <SmallShadowButton title="Libraries" selected={this.isSelected('Libraries')} changeThing={this.changeLoc} />
-        <SmallShadowButton title="Classrooms" selected={this.isSelected('Classrooms')} changeThing={this.changeLoc} />
+        <ShadowButton disabled={false} buttonStyle="Small" title="Anywhere" selected={this.isSelected('Anywhere')} changeLoc={this.changeLoc} />
+        <ShadowButton disabled={false} buttonStyle="Small" title="Hill" selected={this.isSelected('Hill')} changeLoc={this.changeLoc} />
+        <ShadowButton disabled buttonStyle="Small" title="Libraries" selected={this.isSelected('Libraries')} changeLoc={this.changeLoc} />
+        <ShadowButton disabled buttonStyle="Small" title="Classrooms" selected={this.isSelected('Classrooms')} changeLoc={this.changeLoc} />
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
-            <Text style={styles.promptText}>
+            <Text style={styles.titleText}>
               {this.props.date}
             </Text>
             <DateTimePicker
@@ -129,7 +139,7 @@ render() {
             </TouchableOpacity>
           </View>
           <View style={styles.containerCol}>
-            <Text style={styles.promptText}>
+            <Text style={styles.titleText}>
               {this.props.time}
             </Text>
             <DateTimePicker
@@ -153,25 +163,25 @@ render() {
         </View>
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
-                <TouchableOpacity
-                  style={[styles.blueButton, styles.boxWithShadow]}
-                  onPress={() => this.props.handleModal()}
-                >
-                  <Text style={styles.titleTextBlue}>
+            <TouchableOpacity
+              style={[styles.blueButton, styles.boxWithShadow]}
+              onPress={() => this.props.handleModal()}
+            >
+              <Text style={styles.titleTextBlue}>
            Cancel
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.containerCol}>
-                <TouchableOpacity
-                  style={[styles.blueButton, styles.boxWithShadow]}
-                  onPress={() => this.changeSearch()}
-                >
-                  <Text style={styles.titleTextBlue}>
+            <TouchableOpacity
+              style={[styles.blueButton, styles.boxWithShadow]}
+              onPress={() => this.changeSearch()}
+            >
+              <Text style={styles.titleTextBlue}>
             Ok
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -191,12 +201,11 @@ const promptText = {
 };
 const titleText = {
   fontFamily: 'System',
-  fontSize: 20,
+  fontSize: 16,
   fontWeight: '300',
   fontStyle: 'normal',
   letterSpacing: 1.92,
   color: '#108BF8',
-  padding: 5
 };
 
 const styles = StyleSheet.create({
@@ -204,6 +213,7 @@ const styles = StyleSheet.create({
   titleText,
   modalContainer: {
     height: '60%',
+    minHeight: 420,
     width: '90%',
     backgroundColor: 'white',
     flexDirection: 'column',

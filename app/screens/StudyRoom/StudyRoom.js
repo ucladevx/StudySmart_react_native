@@ -271,7 +271,7 @@ class StudyRoomList extends Component {
           )}
           sections={[
             { title: 'Hill', data: hillData },
-            { title: 'Libraries', data: libraryData }]}
+          ]}
           keyExtractor={(item, index) => item + index}
           extraData={this.state}
         />

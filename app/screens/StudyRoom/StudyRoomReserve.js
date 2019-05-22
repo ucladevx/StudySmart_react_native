@@ -112,7 +112,7 @@ class StudyRoomReserve extends Component {
   }
 
   render() {
-    const { rooms } = this.state;
+    const { rooms, duration } = this.state;
     const config = {
       velocityThreshold: 0.1,
       directionalOffsetThreshold: 200
@@ -129,7 +129,7 @@ class StudyRoomReserve extends Component {
             {' '}
           </Text>
         </View>
-        <FloatingSegment setDuration={this.setDuration} selected={this.state.duration} />
+        <FloatingSegment setDuration={this.setDuration} selected={duration} />
         <GestureRecognizer
           onSwipe={(direction, state) => this.onSwipe(direction, state)}
           onSwipeLeft={state => this.onSwipeLeft(state)}
