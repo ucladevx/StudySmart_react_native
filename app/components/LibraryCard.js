@@ -8,7 +8,19 @@ import Hours from './Hours';
 
 const icon = require('../../assets/mapIcon.png');
 
-export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
+const libImages = {
+  'PowellLibrar': require('../../assets/Libraries/PowellLibrar.jpg'),
+  'ResearchLibr': require('../../assets/Libraries/ResearchLibr.jpg'),
+  'BiomedicalLi': require('../../assets/Libraries/BiomedicalLi.jpg'),
+  'LawLibraryHu': require('../../assets/Libraries/LawLibraryHu.jpg'),
+  'MusicLibrary': require('../../assets/Libraries/MusicLibrary.jpg'),
+  'ScienceandEn': require('../../assets/Libraries/ScienceandEn.jpg'),
+  'EastAsianLib': require('../../assets/Libraries/EastAsianLib.jpg'),
+  'SouthernRegi': require('../../assets/Libraries/SouthernRegi.jpg'),
+  'LibrarySpeci': require('../../assets/Libraries/LibrarySpeci.jpg'),
+  'ManagementLi': require('../../assets/Libraries/ManagementLi.jpg'),
+  'ArtsLibrary': require('../../assets/Libraries/ArtsLibrary.jpg'),
+};
 
 class LibraryCard extends Component {
   constructor(props) {
@@ -65,7 +77,7 @@ class LibraryCard extends Component {
             <View style={listElement.imgContainer}>
               <Image
                 style={listElement.img}
-                source={{ uri: IMG_TEMP }}
+                source={libImages[item.image]}
               />
             </View>
             <View style={listElement.information}>
@@ -83,6 +95,7 @@ class LibraryCard extends Component {
                   : (
                     <Text style={this.getLibraryHours(item, day) === 'Closed' ? listElement.closed : listElement.open}>
                       Hours:
+                      {' '}
                       {this.getLibraryHours(item, day)}
                     </Text>
                   )
@@ -91,6 +104,7 @@ class LibraryCard extends Component {
               {/* NEED TO CHANGE TO A PROGRESS BAR, THIS IS TEMPORARY PLACEHOLER  */}
               <Text style={listElement.activityLevel}>
                 Activity Level:
+                {' '}
                 {item.currentBusyness}
               </Text>
             </View>
@@ -122,7 +136,7 @@ class LibraryCard extends Component {
           {/* Conditional rendering of expanded data  */}
           <View>
             {!collapsed
-            && <Hours item={item} getLibraryHours={this.getLibraryHours} />
+              && <Hours item={item} getLibraryHours={this.getLibraryHours} />
             }
           </View>
         </View>
@@ -170,6 +184,7 @@ const listElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     height: height / 5,
+    minHeight: 150, 
     backgroundColor: 'white',
   },
   information: { // child of card
@@ -241,6 +256,7 @@ const expandedElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     height: height / 2.5,
+    minHeight: 280,
     backgroundColor: 'white',
   },
 });
