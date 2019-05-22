@@ -8,18 +8,30 @@ import Hours from './Hours';
 
 const icon = require('../../assets/mapIcon.png');
 
+const powellLibIcon = require('../../assets/Libraries/PowellLibrar.jpg');
+const researchLibIcon = require('../../assets/Libraries/ResearchLibr.jpg');
+const biomedLibIcon = require('../../assets/Libraries/BiomedicalLi.jpg');
+const lawLibIcon = require('../../assets/Libraries/LawLibraryHu.jpg');
+const musicLibIcon = require('../../assets/Libraries/MusicLibrary.jpg');
+const scienceEngLibIcon = require('../../assets/Libraries/ScienceandEn.jpg');
+const eastAsianLibIcon = require('../../assets/Libraries/EastAsianLib.jpg');
+const southernLibIcon = require('../../assets/Libraries/SouthernRegi.jpg');
+const specLibIcon = require('../../assets/Libraries/LibrarySpeci.jpg');
+const managementLibIcon = require('../../assets/Libraries/ManagementLi.jpg');
+const artsLibIcon = require('../../assets/Libraries/ArtsLibrary.jpg');
+
 const libImages = {
-  'PowellLibrar': require('../../assets/Libraries/PowellLibrar.jpg'),
-  'ResearchLibr': require('../../assets/Libraries/ResearchLibr.jpg'),
-  'BiomedicalLi': require('../../assets/Libraries/BiomedicalLi.jpg'),
-  'LawLibraryHu': require('../../assets/Libraries/LawLibraryHu.jpg'),
-  'MusicLibrary': require('../../assets/Libraries/MusicLibrary.jpg'),
-  'ScienceandEn': require('../../assets/Libraries/ScienceandEn.jpg'),
-  'EastAsianLib': require('../../assets/Libraries/EastAsianLib.jpg'),
-  'SouthernRegi': require('../../assets/Libraries/SouthernRegi.jpg'),
-  'LibrarySpeci': require('../../assets/Libraries/LibrarySpeci.jpg'),
-  'ManagementLi': require('../../assets/Libraries/ManagementLi.jpg'),
-  'ArtsLibrary': require('../../assets/Libraries/ArtsLibrary.jpg'),
+  PowellLibrar: powellLibIcon,
+  ResearchLibr: researchLibIcon,
+  BiomedicalLi: biomedLibIcon,
+  LawLibraryHu: lawLibIcon,
+  MusicLibrary: musicLibIcon,
+  ScienceandEn: scienceEngLibIcon,
+  EastAsianLib: eastAsianLibIcon,
+  SouthernRegi: southernLibIcon,
+  LibrarySpeci: specLibIcon,
+  ManagementLi: managementLibIcon,
+  ArtsLibrary: artsLibIcon,
 };
 
 class LibraryCard extends Component {
@@ -51,7 +63,9 @@ class LibraryCard extends Component {
   }
 
   render() {
-    const { item, goToMap, navigation, currentPage } = this.props;
+    const {
+      item, goToMap, navigation, currentPage
+    } = this.props;
     const { collapsed } = this.state;
     const { navigate } = navigation;
 
@@ -67,8 +81,7 @@ class LibraryCard extends Component {
       } else {
         arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
       }
-    }
-    else if (currentPage === 'List') {
+    } else if (currentPage === 'List') {
       if (collapsed) {
         arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
       } else {

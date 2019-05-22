@@ -33,8 +33,8 @@ export default function LocationHeader(props) {
         </Text>
         {rightButton}
       </View>
-      {currentPage === 'List' &&
-        (
+      {currentPage === 'List'
+        && (
           <Search
             // Searchbar itself does not actually show any data so pass in nothing
             data={[]}
