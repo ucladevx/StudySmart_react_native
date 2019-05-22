@@ -51,7 +51,7 @@ class LibraryCard extends Component {
   }
 
   render() {
-    const { item, goToMap, navigation } = this.props;
+    const { item, goToMap, navigation, currentPage } = this.props;
     const { collapsed } = this.state;
     const { navigate } = navigation;
 
@@ -60,12 +60,22 @@ class LibraryCard extends Component {
 
     let arrowIcon;
 
-    // Card is currently collapsed
-    if (collapsed) {
-      arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
-    } else {
-      arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
+    if (currentPage === 'Map') {
+      // Inverted arrows for map page
+      if (collapsed) {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
+      } else {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
+      }
     }
+    else if (currentPage === 'List') {
+      if (collapsed) {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
+      } else {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
+      }
+    }
+
 
     return (
       <TouchableOpacity onPress={() => {
@@ -184,7 +194,7 @@ const listElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     height: height / 5,
-    minHeight: 150, 
+    minHeight: 150,
     backgroundColor: 'white',
   },
   information: { // child of card

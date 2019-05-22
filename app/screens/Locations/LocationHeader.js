@@ -6,29 +6,47 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 import Search from '../../components/Search';
 
 export default function LocationHeader(props) {
-  const { onPress, getSearchQuery } = props;
+  const { onPress, getSearchQuery, currentPage } = props;
+  let rightButton;
+
+  if (currentPage === 'List') {
+    rightButton = (
+      <TouchableOpacity onPress={() => onPress()}>
+        <Ionicon color="#108BF8" name="ios-map" size={25} backgroundColor="#4F87EC" />
+      </TouchableOpacity>
+    );
+  } else if (currentPage === 'Map') {
+    rightButton = (
+      <TouchableOpacity onPress={() => onPress()}>
+        <Ionicon color="#108BF8" name="ios-list" size={25} backgroundColor="#4F87EC" />
+      </TouchableOpacity>
+    );
+  }
+
   return (
-    <View style={styles.topBar}>
+    <View style={currentPage === 'List' ? styles.topBar : styles.topBarMap}>
       <View style={styles.bar}>
         <Text style={styles.titleText}>
           {' '}
           Libraries
           {' '}
         </Text>
-        <TouchableOpacity onPress={() => onPress()}>
-          <Ionicon color="#108BF8" name="ios-map" size={25} backgroundColor="#4F87EC" />
-        </TouchableOpacity>
+        {rightButton}
       </View>
-      <Search
-        // Searchbar itself does not actually show any data so pass in nothing
-        data={[]}
-        onChangeText={(e) => { getSearchQuery(e); }}
-        inputContainerStyle={styles.inputContainer}
-        style={styles.searchContainer}
-        renderItem={() => (
-          <TouchableOpacity onPress={() => null} />
-        )}
-      />
+      {currentPage === 'List' &&
+        (
+          <Search
+            // Searchbar itself does not actually show any data so pass in nothing
+            data={[]}
+            onChangeText={(e) => { getSearchQuery(e); }}
+            inputContainerStyle={styles.inputContainer}
+            style={styles.searchContainer}
+            renderItem={() => (
+              <TouchableOpacity onPress={() => null} />
+            )}
+          />
+        )
+      }
     </View>
   );
 }
@@ -55,6 +73,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: 100,
+  },
+  topBarMap: {
+    alignItems: 'center',
+    width: '100%',
+    height: 65,
   },
   buttonLeft: {
     marginLeft: 15
