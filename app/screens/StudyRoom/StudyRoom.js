@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, SectionList
+  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList
 } from 'react-native';
 import { connect } from 'react-redux';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -9,6 +9,7 @@ import {
 } from '../../Actions/actions';
 import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
+import FloatingSegment from '../../components/FloatingSegment';
 
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
@@ -51,7 +52,9 @@ class StudyRoomList extends Component {
     this.state = {
       visible: false,
       hillData: [],
-      libraryData: [],
+      librariesData: [],
+      currentData: [],
+      currentLocation: 'Hill',
     };
     this.getStudyRooms = this.getStudyRooms.bind(this);
   }
@@ -165,7 +168,8 @@ class StudyRoomList extends Component {
     } */
     this.setState({
       hillData: hillArray,
-      // libraryData: libArray,
+      currentData: hillArray,
+      // librariesData: libArray,
     });
   }
 
@@ -202,6 +206,13 @@ class StudyRoomList extends Component {
   handleModal = () => {
     this.setState({
       visible: !this.state.visible
+    });
+  }
+
+  setLocation = (location) => {
+    this.setState({
+      currentData: location === 'Hill' ? this.state.hillData : null,
+      currentLocation: location,
     });
   }
 
@@ -251,7 +262,7 @@ class StudyRoomList extends Component {
 
   render() {
     const {
-      visible, hillData, libraryData
+      visible, currentData, currentLocation
     } = this.state;
     return (
       <SafeAreaView style={styles.container}>
@@ -261,20 +272,14 @@ class StudyRoomList extends Component {
           handleModal={this.handleModal}
           filterData={this.filterData}
         />
+        <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
         { this.props.hillData.length > 0 ? (
-          <SectionList
-            style={styles.list}
+          <FlatList
+            data={currentData}
+            extraData={currentData}
             renderItem={({ item }) => this.renderRow(item)}
-            renderSectionHeader={({ section: { title } }) => (
-              <View style={styles.sectionHeader}>
-                <Text style={styles.titleText}>{title}</Text>
-              </View>
-            )}
-            sections={[
-              { title: 'Hill', data: hillData },
-            ]}
-            keyExtractor={(item, index) => item + index}
-            extraData={this.state}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.list}
           />
         ) : (
           <View style={styles.empty}>

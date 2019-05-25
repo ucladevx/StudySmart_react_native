@@ -5,17 +5,19 @@ import {
 } from 'react-native';
 
 export default class FloatingSegment extends Component {
-  select(duration) {
-    const { setDuration } = this.props;
-    setDuration(duration);
+  select(category) {
+    const { setCategory } = this.props;
+    setCategory(category);
   }
 
-  renderDuration(title) {
+  renderCategory(title) {
     const { selected } = this.props;
     return (
       <TouchableOpacity
-        style={selected === title ? styles.durationSelected : styles.duration}
+        style={selected === title ? styles.categorySelected : styles.category}
         onPress={() => this.select(title)}
+        key={title}
+        disabled={title === 'Libraries' || title === 'Classrooms'}
       >
         <Text style={selected === title ? styles.titleTextSelected : styles.titleText}>
           {title}
@@ -28,8 +30,9 @@ export default class FloatingSegment extends Component {
   render() {
     return (
       <SafeAreaView style={styles.rightButtonAbs}>
-        { this.renderDuration('1 hour') }
-        { this.renderDuration('2 hours') }
+        {this.props.titles.map(title => (
+          this.renderCategory(title)
+        ))}
       </SafeAreaView>
     );
   }
@@ -46,18 +49,18 @@ const titleText = {
   textAlign: 'center',
   padding: 1
 };
-const duration = {
+const category = {
   backgroundColor: 'white',
   borderRadius: 7,
   justifyContent: 'center',
   marginRight: 4,
-  width: 60,
-  alignItems: 'center'
+  alignItems: 'center',
+  minWidth: 60
 };
 
 const styles = StyleSheet.create({
   titleText,
-  duration,
+  category,
   titleTextSelected: {
     ...titleText,
     color: 'white',
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
     height: 25,
     flex: 0,
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     zIndex: 5,
   },
   line: {
@@ -82,8 +85,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent'
   },
 
-  durationSelected: {
-    ...duration,
+  categorySelected: {
+    ...category,
     backgroundColor: '#108BF8',
   }
 

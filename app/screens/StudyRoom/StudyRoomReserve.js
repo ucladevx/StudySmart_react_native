@@ -141,7 +141,7 @@ class StudyRoomReserve extends Component {
             {' '}
           </Text>
         </View>
-        <FloatingSegment setDuration={this.setDuration} selected={duration} />
+        <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
         <GestureRecognizer
           onSwipe={(direction, state) => this.onSwipe(direction, state)}
           onSwipeLeft={state => this.onSwipeLeft(state)}
