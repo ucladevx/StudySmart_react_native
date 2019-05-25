@@ -193,7 +193,8 @@ class StudyRoomList extends Component {
       hillArray.push({ location: key, available: hillDict[key], area: 'Hill' });
     });
     this.setState({
-      hillData: hillArray
+      hillData: hillArray,
+      currentData: hillArray
     });
   }
 

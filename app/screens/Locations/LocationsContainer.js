@@ -57,6 +57,8 @@ class LocationContainer extends Component {
       const item = libData[i];
       // This is the name from the libraryData API
       const libraryName = item.name.S;
+      const fileString = libraryName.replace(/[^a-zA-Z0-9]/g, '').substring(0, 12);
+
       // Found a valid translation, valid busyness data
       if (libraryName in libraryToBusynessTranslation) {
         // Get the name translation
@@ -69,6 +71,9 @@ class LocationContainer extends Component {
       } else { // Not in the translation, no busyness data, append N/A.
         item.currentBusyness = 'N/A';
       }
+
+      // Add image URL
+      item.image = fileString;
     }
 
     /* Once the request is done, save library data to current state */
@@ -166,6 +171,7 @@ class LocationContainer extends Component {
           navigation={navigation}
           onPress={this.handlePress}
           getSearchQuery={this.getSearchQuery}
+          currentPage={currentPage}
         />
         {body}
       </SafeAreaView>

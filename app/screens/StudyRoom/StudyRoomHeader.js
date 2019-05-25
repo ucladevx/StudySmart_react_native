@@ -2,12 +2,25 @@ import React, { Component } from 'react';
 import {
   StyleSheet, Text, View, TouchableOpacity, SafeAreaView
 } from 'react-native';
-import { withNavigation } from 'react-navigation';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import Search from '../../components/Search';
 import { changeDuration } from '../../Actions/actions';
 
+const monthPairs = {
+  '01': 'January',
+  '02': 'February',
+  '03': 'March',
+  '04': 'April',
+  '05': 'May',
+  '06': 'June',
+  '07': 'July',
+  '08': 'August',
+  '09': 'September',
+  10: 'October',
+  11: 'November',
+  12: 'December',
+};
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
@@ -25,22 +38,25 @@ class StudyRoomHeader extends Component {
   render() {
     const { date, time, location } = this.props;
     const { visible } = this.state;
+    const month = monthPairs[date.substring(0, 2)];
+    const day = date.substring(3, 5);
     return (
       <View style={styles.topBar}>
         <View style={styles.bar}>
           <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.props.handleModal()}>
             <MaterialCommunityIcons name="filter-variant" color="#108BF8" size={35} />
           </TouchableOpacity>
-          <Text style={styles.titleText}>
+          <Text style={styles.searchText}>
             {' '}
-            {date !== '' || time !== '' ? `${date} ${time}` : ''}
+            {date !== '' || time !== '' ? `${month} ${day} ${time}` : ''}
             {' '}
           </Text>
         </View>
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
           defaultValue=""
-          onChangeText={(text) => this.handleInput(text)}
+          placeholder="Search places to reserve..."
+          onChangeText={text => this.handleInput(text)}
           style={[styles.searchContainer, styles.input]}
           inputContainerStyle={[styles.inputContainer]}
           renderItem={() => (
@@ -70,6 +86,19 @@ const titleText = {
 
 const styles = StyleSheet.create({
   titleText,
+  searchText: {
+    fontFamily: 'System',
+    fontSize: 24,
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: 'black',
+    width: '80%',
+    textAlign: 'left',
+    position: 'absolute',
+    left: '2%',
+    top: '15%',
+  },
   topBar: {
     alignItems: 'center',
     width: '100%',

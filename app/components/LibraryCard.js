@@ -8,7 +8,31 @@ import Hours from './Hours';
 
 const icon = require('../../assets/mapIcon.png');
 
-export const IMG_TEMP = 'https://facebook.github.io/react-native/docs/assets/favicon.png';
+const powellLibIcon = require('../../assets/Libraries/PowellLibrar.jpg');
+const researchLibIcon = require('../../assets/Libraries/ResearchLibr.jpg');
+const biomedLibIcon = require('../../assets/Libraries/BiomedicalLi.jpg');
+const lawLibIcon = require('../../assets/Libraries/LawLibraryHu.jpg');
+const musicLibIcon = require('../../assets/Libraries/MusicLibrary.jpg');
+const scienceEngLibIcon = require('../../assets/Libraries/ScienceandEn.jpg');
+const eastAsianLibIcon = require('../../assets/Libraries/EastAsianLib.jpg');
+const southernLibIcon = require('../../assets/Libraries/SouthernRegi.jpg');
+const specLibIcon = require('../../assets/Libraries/LibrarySpeci.jpg');
+const managementLibIcon = require('../../assets/Libraries/ManagementLi.jpg');
+const artsLibIcon = require('../../assets/Libraries/ArtsLibrary.jpg');
+
+const libImages = {
+  PowellLibrar: powellLibIcon,
+  ResearchLibr: researchLibIcon,
+  BiomedicalLi: biomedLibIcon,
+  LawLibraryHu: lawLibIcon,
+  MusicLibrary: musicLibIcon,
+  ScienceandEn: scienceEngLibIcon,
+  EastAsianLib: eastAsianLibIcon,
+  SouthernRegi: southernLibIcon,
+  LibrarySpeci: specLibIcon,
+  ManagementLi: managementLibIcon,
+  ArtsLibrary: artsLibIcon,
+};
 
 class LibraryCard extends Component {
   constructor(props) {
@@ -39,7 +63,9 @@ class LibraryCard extends Component {
   }
 
   render() {
-    const { item, goToMap, navigation } = this.props;
+    const {
+      item, goToMap, navigation, currentPage
+    } = this.props;
     const { collapsed } = this.state;
     const { navigate } = navigation;
 
@@ -48,12 +74,21 @@ class LibraryCard extends Component {
 
     let arrowIcon;
 
-    // Card is currently collapsed
-    if (collapsed) {
-      arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
-    } else {
-      arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
+    if (currentPage === 'Map') {
+      // Inverted arrows for map page
+      if (collapsed) {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
+      } else {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
+      }
+    } else if (currentPage === 'List') {
+      if (collapsed) {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-down" size={25} />;
+      } else {
+        arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
+      }
     }
+
 
     return (
       <TouchableOpacity onPress={() => {
@@ -65,7 +100,7 @@ class LibraryCard extends Component {
             <View style={listElement.imgContainer}>
               <Image
                 style={listElement.img}
-                source={{ uri: IMG_TEMP }}
+                source={libImages[item.image]}
               />
             </View>
             <View style={listElement.information}>
@@ -83,6 +118,7 @@ class LibraryCard extends Component {
                   : (
                     <Text style={this.getLibraryHours(item, day) === 'Closed' ? listElement.closed : listElement.open}>
                       Hours:
+                      {' '}
                       {this.getLibraryHours(item, day)}
                     </Text>
                   )
@@ -91,6 +127,7 @@ class LibraryCard extends Component {
               {/* NEED TO CHANGE TO A PROGRESS BAR, THIS IS TEMPORARY PLACEHOLER  */}
               <Text style={listElement.activityLevel}>
                 Activity Level:
+                {' '}
                 {item.currentBusyness}
               </Text>
             </View>
@@ -122,7 +159,7 @@ class LibraryCard extends Component {
           {/* Conditional rendering of expanded data  */}
           <View>
             {!collapsed
-            && <Hours item={item} getLibraryHours={this.getLibraryHours} />
+              && <Hours item={item} getLibraryHours={this.getLibraryHours} />
             }
           </View>
         </View>
@@ -170,6 +207,7 @@ const listElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     height: height / 5,
+    minHeight: 150,
     backgroundColor: 'white',
   },
   information: { // child of card
@@ -241,6 +279,7 @@ const expandedElement = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     height: height / 2.5,
+    minHeight: 280,
     backgroundColor: 'white',
   },
 });

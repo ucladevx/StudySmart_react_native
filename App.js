@@ -12,7 +12,7 @@ import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
 import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
-import Feedback from './app/screens/Feedback/Feedback';
+import FeedbackContainer from './app/screens/Feedback/FeedbackContainer';
 import BookingWebView from './app/screens/StudyRoom/BookingWebView';
 
 const StudyRoomStack = StackNavigator({
@@ -25,7 +25,7 @@ const StudyRoomStack = StackNavigator({
 
 },
 {
-// For now, use this to toggle between List view and Map view. We will eventually add a toggle button
+  // For now, use this to toggle between List view and Map view. We will eventually add a toggle button
   initialRouteName: 'BookingLocation',
 });
 
@@ -38,7 +38,12 @@ const LocationsStack = StackNavigator({
 });
 
 const FeedbackStack = StackNavigator({
-  Feedback: { screen: Feedback },
+  Feedback: {
+    screen: FeedbackContainer,
+    navigationOptions: {
+      headerStyle: { height: 30 }
+    }
+  },
 });
 
 StudyRoomStack.navigationOptions = {
@@ -82,6 +87,7 @@ LocationsStack.navigationOptions = {
 };
 
 FeedbackStack.navigationOptions = {
+  header: null,
   tabBarIcon: ({ focused }) => {
     const image = focused
       ? require('./assets/feedbackTabSelected.png')
