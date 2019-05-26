@@ -19,6 +19,7 @@ const southernLibIcon = require('../../assets/Libraries/SouthernRegi.jpg');
 const specLibIcon = require('../../assets/Libraries/LibrarySpeci.jpg');
 const managementLibIcon = require('../../assets/Libraries/ManagementLi.jpg');
 const artsLibIcon = require('../../assets/Libraries/ArtsLibrary.jpg');
+const hedrickStudyIcon = require('../../assets/Libraries/TheStudyatHe.jpg');
 
 const libImages = {
   PowellLibrar: powellLibIcon,
@@ -32,6 +33,7 @@ const libImages = {
   LibrarySpeci: specLibIcon,
   ManagementLi: managementLibIcon,
   ArtsLibrary: artsLibIcon,
+  TheStudyatHe: hedrickStudyIcon
 };
 
 class LibraryCard extends Component {
@@ -89,7 +91,6 @@ class LibraryCard extends Component {
       }
     }
 
-
     return (
       <TouchableOpacity onPress={() => {
         this.handleExpandPress();
@@ -128,7 +129,7 @@ class LibraryCard extends Component {
               <Text style={listElement.activityLevel}>
                 Activity Level:
                 {' '}
-                {item.currentBusyness}
+                {item.current_busyness !== undefined ? `${item.current_busyness.N}%` : 'N/A'}
               </Text>
             </View>
           </View>

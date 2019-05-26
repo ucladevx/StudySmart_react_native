@@ -99,7 +99,7 @@ class BookingTime extends Component {
         datePickerVisible: false,
       });
     }
-    navigation.navigate('StudyRoomList');
+    navigation.navigate('StudyRoomsContainer');
   }
 
   render() {

@@ -10,13 +10,13 @@ import LocationsList from './app/screens/Locations/LocationsList';
 import LocationsContainer from './app/screens/Locations/LocationsContainer';
 import BookingLocation from './app/screens/StudyRoom/BookingLocation';
 import BookingTime from './app/screens/StudyRoom/BookingTime';
-import StudyRoomList from './app/screens/StudyRoom/StudyRoom';
+import StudyRoomsContainer from './app/screens/StudyRoom/StudyRoomsContainer';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
 import FeedbackContainer from './app/screens/Feedback/FeedbackContainer';
 import BookingWebView from './app/screens/StudyRoom/BookingWebView';
 
 const StudyRoomStack = StackNavigator({
-  StudyRoomList: { screen: StudyRoomList },
+  StudyRoomsContainer: { screen: StudyRoomsContainer },
   BookingLocation: { screen: BookingLocation },
   BookingTime: { screen: BookingTime },
   StudyRoomReserve: { screen: StudyRoomReserve },

@@ -26,8 +26,6 @@ class LocationContainer extends Component {
       libraryData: undefined,
       currentPage: 'List',
       initialSelectedLibrary: 'NO-LIBRARY',
-      busynessData: undefined,
-
       // This one NEVER changes after fetched
       fullLibraryData: undefined,
     };
@@ -41,37 +39,15 @@ class LocationContainer extends Component {
       .then((data) => {
         temp = data;
       });
-    let temp2;
-    await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/busyness_graphs')
-      .then(response => response.json())
-      .then((data) => {
-        temp2 = data;
-      });
     // Process activity levels - dictionary from name to name
 
     const libData = temp.Items;
-    const busyData = temp2.Items;
 
-    // loop through library data items, if in dictionary, add the busyness
     for (let i = 0; i < libData.length; i += 1) {
       const item = libData[i];
       // This is the name from the libraryData API
       const libraryName = item.name.S;
       const fileString = libraryName.replace(/[^a-zA-Z0-9]/g, '').substring(0, 12);
-
-      // Found a valid translation, valid busyness data
-      if (libraryName in libraryToBusynessTranslation) {
-        // Get the name translation
-        const busyName = libraryToBusynessTranslation[libraryName];
-        // Find the item in API matching name
-        const busyItem = busyData.find(element => busyName === element.name.S);
-        // Add the busyness data to the item
-        const currentBusyness = busyItem.current_busyness.N;
-        item.currentBusyness = `${currentBusyness}%`;
-      } else { // Not in the translation, no busyness data, append N/A.
-        item.currentBusyness = 'N/A';
-      }
-
       // Add image URL
       item.image = fileString;
     }
@@ -79,7 +55,6 @@ class LocationContainer extends Component {
     /* Once the request is done, save library data to current state */
     this.setState({
       libraryData: libData,
-      busynessData: busyData.Items,
       fullLibraryData: libData,
     });
   }
@@ -130,7 +105,7 @@ class LocationContainer extends Component {
   render() {
     const { navigation } = this.props;
     const {
-      currentPage, libraryData, initialSelectedLibrary, busynessData
+      currentPage, libraryData, initialSelectedLibrary, 
     } = this.state;
 
     // Loading animation screen should go here
@@ -149,7 +124,6 @@ class LocationContainer extends Component {
       body = (
         <LocationsList
           libraryData={libraryData}
-          busynessData={busynessData}
           navigation={navigation}
           goToMap={this.goToMap}
         />
@@ -158,7 +132,6 @@ class LocationContainer extends Component {
       body = (
         <LocationsMap
           libraryData={libraryData}
-          busynessData={busynessData}
           navigation={navigation}
           initialLibrary={initialSelectedLibrary}
         />

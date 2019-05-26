@@ -28,7 +28,7 @@ export default function LocationHeader(props) {
       <View style={styles.bar}>
         <Text style={styles.titleText}>
           {' '}
-          Libraries
+          Study Spots
           {' '}
         </Text>
         {rightButton}

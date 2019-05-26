@@ -188,6 +188,15 @@ const reserveButton = {
 };
 
 const styles = StyleSheet.create({
+  searchText: {
+    fontFamily: 'System',
+    fontSize: 22,
+    fontWeight: 'bold',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: 'black',
+    width: '80%',
+  },
   reserveButton,
   text,
   littleText: {

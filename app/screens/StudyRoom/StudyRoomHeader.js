@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   titleText,
   searchText: {
     fontFamily: 'System',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     fontStyle: 'normal',
     letterSpacing: 1.92,
