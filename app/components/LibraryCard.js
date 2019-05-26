@@ -222,8 +222,8 @@ const listElement = StyleSheet.create({
     justifyContent: 'center',
   },
   img: {
-    width: height / 8,
-    height: height / 8,
+    width: 90,
+    height: 90,
     borderRadius: 5,
   },
   buttonRow: {

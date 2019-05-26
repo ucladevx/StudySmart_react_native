@@ -5,9 +5,7 @@ import {
 import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
-import {
-  changeTime, changeDate, changeLocation, loadData
-} from '../../Actions/actions';
+
 import FloatingSegment from '../../components/FloatingSegment';
 
 const namePairs = {
@@ -96,6 +94,7 @@ class StudyRoomReserve extends Component {
     details = details.trim();
     details = details.slice(0, -1);
     const detailsArray = details.split('(');
+    // eslint-disable-next-line consistent-return
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
@@ -124,7 +123,8 @@ class StudyRoomReserve extends Component {
   }
 
   render() {
-    const { rooms, duration } = this.state;
+    const { rooms, duration, slide } = this.state;
+    const { navigate } = this.props.navigation;
     const config = {
       velocityThreshold: 0.1,
       directionalOffsetThreshold: 200
@@ -132,7 +132,7 @@ class StudyRoomReserve extends Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
+          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('StudyRoomsContainer')}>
             <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
           </TouchableOpacity>
           <Text style={styles.titleText}>
@@ -160,7 +160,7 @@ class StudyRoomReserve extends Component {
             style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
           />
         </GestureRecognizer>
-        {this.state.slide ? <ActivityIndicator style={styles.animation} size="large" color="#4F87EC"/> : null } 
+        { slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null }
       </SafeAreaView>
 
     );
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   titleText: {
     ...text,
     fontSize: 17,
-    color: '#108BF8'
+    color: 'black'
   },
   whiteText: {
     ...text,
@@ -311,19 +311,5 @@ const mapStateToProps = state => ({
 
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeTime: (time) => {
-    dispatch(changeTime(time));
-  },
-  changeDate: (date) => {
-    dispatch(changeDate(date));
-  },
-  changeLocation: (location) => {
-    dispatch(changeLocation(location));
-  },
-  loadData: (data) => {
-    dispatch(loadData(data));
-  }
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomReserve);
+export default connect(mapStateToProps)(StudyRoomReserve);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList
+  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator, Dimensions
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import StudyRoomHeader from './StudyRoomHeader';
@@ -19,6 +19,29 @@ const namePairs = {
   movement: 'Hedrick Movement Studio',
 };
 
+const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
+const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
+const deneve = require('../../../assets/Studyrooms/deneve.jpg');
+const rieber = require('../../../assets/Studyrooms/rieber.jpg');
+const hedrick = require('../../../assets/Studyrooms/hedrick.jpg');
+const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
+const music = require('../../../assets/Studyrooms/music.jpg');
+const hedrickstudy = require('../../../assets/Studyrooms/hedrickstudy.jpg');
+const movement = require('../../../assets/Studyrooms/movement.jpg');
+
+const imagePairs = {
+  sproulmusic,
+  sproulstudy,
+  deneve,
+  rieber,
+  hedrick,
+  hedrickmusic,
+  music,
+  hedrickstudy,
+  movement
+};
+
+
 const monthPairs = {
   '01': 'January',
   '02': 'February',
@@ -34,8 +57,6 @@ const monthPairs = {
   12: 'December',
 };
 
-const icon = require('../../../assets/studyTab.png');
-
 export default class StudyRoomList extends Component {
   static navigationOptions = {
     header: () => {
@@ -47,52 +68,34 @@ export default class StudyRoomList extends Component {
     super(props);
     this.state = {
       visible: false,
-      currentData: this.props.hillDataFound,
+      currentData: props.hillDataFound,
       currentLocation: 'Hill',
     };
   }
 
-  filterData = (search) => {
-    const rooms = this.props.hillDataFound.slice();
-    const hillArray = [];
-    const hillDict = {};
-    const upperSearch = search.toUpperCase();
-    for (let i = 0; i < rooms.length; i += 1) {
-      const name = namePairs[rooms[i].name].toUpperCase();
-      if (name.includes(upperSearch)) {
-        if (rooms[i].name in hillDict) {
-          hillDict[rooms[i].name].push(rooms[i]);
-        } else {
-          hillDict[rooms[i].name] = [rooms[i]];
-        }
-      }
-    }
-    Object.keys(hillDict).forEach((key) => {
-      hillArray.push({ location: key, available: hillDict[key], area: 'Hill' });
-    });
-    this.setState({
-      currentData: hillArray
-    });
-  }
 
   handleSelectRoom = (item) => {
-    this.props.navigation.navigate('StudyRoomReserve', {
+    const { navigate } = this.props.navigation;
+    navigate('StudyRoomReserve', {
       rooms: item
     });
   }
 
   handleModal = () => {
+    const { visible } = this.state;
     this.setState({
-      visible: !this.state.visible
+      visible: !visible
     });
   }
 
   setLocation = (location) => {
+    const { hillDataFound } = this.props;
     this.setState({
-      currentData: location === 'Hill' ? this.props.hillDataFound: null,
+      currentData: location === 'Hill' ? hillDataFound : null,
       currentLocation: location,
     });
   }
+
 
   renderRow(item) {
     return (
@@ -110,7 +113,7 @@ export default class StudyRoomList extends Component {
             style={styles.containerRow}
           >
             <View style={styles.imageIcon}>
-              <Image source={icon} style={{ height: 50, width: 60 }} />
+              <Image source={imagePairs[item.location]} style={styles.image} />
             </View>
             <View
               style={styles.containerCol}
@@ -142,19 +145,23 @@ export default class StudyRoomList extends Component {
     const {
       visible, currentData, currentLocation
     } = this.state;
+    const {
+      navigation, filterData, hillDataFound, loading, getStudyRooms
+    } = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <StudyRoomHeader
-          navigation={this.props.navigation}
+          navigation={navigation}
           sortData={this.sortData}
           handleModal={this.handleModal}
-          filterData={this.filterData}
+          filterData={filterData}
         />
         <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
-        { this.props.hillDataFound.length > 0 ? (
+        {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
+        { hillDataFound.length > 0 ? (
           <FlatList
-            data={this.props.hillDataFound}
-            extraData={currentData}
+            data={hillDataFound}
+            extraData={hillDataFound}
             renderItem={({ item }) => this.renderRow(item)}
             keyExtractor={(item, index) => index.toString()}
             style={styles.list}
@@ -166,7 +173,7 @@ export default class StudyRoomList extends Component {
         ) }
 
         {visible ? (
-          <StudyRoomModal handleModal={this.handleModal} getStudyRooms={this.props.getStudyRooms} />
+          <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
         ) : null}
       </SafeAreaView>
     );
@@ -238,10 +245,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
   },
-  category: {
-    fontSize: 11,
-    fontStyle: 'italic',
-  },
   imageIcon: {
     borderRadius: 5,
     height: 100,
@@ -251,14 +254,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  text,
-  bigText: {
-    ...text,
-    height: 20,
-    fontSize: 17,
-    letterSpacing: 1.92,
-    color: 'black',
+  image: {
+    width: 90,
+    height: 90,
+    borderRadius: 5,
   },
+  text,
   leftText: {
     textAlign: 'left',
     flex: 0
@@ -274,15 +275,17 @@ const styles = StyleSheet.create({
     right: 5,
     top: '45%'
   },
-  sectionHeader: {
-    height: 30,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white'
-  },
   empty: {
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  animation: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    height: '90%',
+    width: '100%',
+    top: 100,
+    justifyContent: 'center',
+    zIndex: 20
   }
 });

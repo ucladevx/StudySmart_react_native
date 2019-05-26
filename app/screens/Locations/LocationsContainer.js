@@ -105,7 +105,7 @@ class LocationContainer extends Component {
   render() {
     const { navigation } = this.props;
     const {
-      currentPage, libraryData, initialSelectedLibrary, 
+      currentPage, libraryData, initialSelectedLibrary,
     } = this.state;
 
     // Loading animation screen should go here

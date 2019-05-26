@@ -20,7 +20,7 @@ export default class LocationsList extends Component {
       return (
         <View styles={styles.loading}>
           <Text> Attempting to get library data . . . </Text>
-          <ActivityIndicator size="large" color="#4F87EC" />
+          <ActivityIndicator size="large" color="#108BF8" />
         </View>
       );
     }
@@ -35,8 +35,8 @@ export default class LocationsList extends Component {
 
     return (
       <FlatList
-        bounces={false}
         style={styles.list}
+        showsVerticalScrollIndicator={false}
         data={libraryData}
         extraData={this.props}
         contentContainerStyle={styles.scrollStyle}

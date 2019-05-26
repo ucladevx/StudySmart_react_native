@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, FlatList, Modal
+  Text, View, TouchableOpacity, StyleSheet, Modal
 } from 'react-native';
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {
-  changeTime, changeDate, changeLocation, loadData
+  changeTime, changeDate,
 } from '../../Actions/actions';
-import ShadowButton from '../../components/ShadowButton';
 
 class StudyRoomModal extends Component {
   constructor(props) {
@@ -36,13 +35,26 @@ class StudyRoomModal extends Component {
   }
 
   changeSearch = () => {
-    this.props.handleModal();
-    this.props.getStudyRooms();
+    const { handleModal, getStudyRooms } = this.props;
+    handleModal();
+    getStudyRooms();
   }
 
   handleConfirm = (setting, thing) => {
     const { datePickerVisible, timePickerVisible } = this.state;
     const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
+    const minutes = setting.getMinutes();
+    if (minutes !== 30 && minutes !== 0) {
+      if (minutes > 30) {
+        setting.setMinutes(0);
+        setting.setHours(setting.getHours() + 1);
+        if (setting.getHours() === 0) {
+          setting.setDate(setting.getDate() + 1);
+        }
+      } else {
+        setting.setMinutes(30);
+      }
+    }
     if (thing === 'time') {
       let styledTime = setting.toLocaleTimeString();
       const last2ndChar = styledTime[styledTime.length - 2];
@@ -71,122 +83,81 @@ class StudyRoomModal extends Component {
     }
   }
 
-  changeLoc = (location, selected) => {
-    let currentLocations = this.props.location.slice();
-    if (!selected) {
-      const index = currentLocations.indexOf(location);
-      if (index > -1) {
-        if (currentLocations.length > 1) {
-          currentLocations.splice(index, 1);
-        }
-      }
-    } else if (selected && !currentLocations.includes(location)) {
-      if (location === 'Anywhere') {
-        currentLocations = ['Anywhere'];
-      } else {
-        const indexAnywhere = currentLocations.indexOf('Anywhere');
-        if (indexAnywhere > -1) {
-          currentLocations.splice(indexAnywhere, 1);
-        }
-        currentLocations.push(location);
-      }
-    }
-    this.props.changeLocation(currentLocations);
-  }
-
-isSelected = (location) => {
-  const currentLocations = this.props.location;
-  const index = currentLocations.indexOf(location);
-  if (index > -1) {
-    return true;
-  }
-  return false;
-}
-
-render() {
-  const { datePickerVisible, timePickerVisible } = this.state;
-  return (
-    <Modal
-      style={styles.modal}
-      transparent
-      animationType="fade"
-    >
-      <View style={[styles.modalContainer, styles.boxWithShadow]}>
-        <Text style={styles.promptText}> Study Preferences </Text>
-        <ShadowButton disabled={false} buttonStyle="Small" title="Anywhere" selected={this.isSelected('Anywhere')} changeLoc={this.changeLoc} />
-        <ShadowButton disabled={false} buttonStyle="Small" title="Hill" selected={this.isSelected('Hill')} changeLoc={this.changeLoc} />
-        <ShadowButton disabled buttonStyle="Small" title="Libraries" selected={this.isSelected('Libraries')} changeLoc={this.changeLoc} />
-        <ShadowButton disabled buttonStyle="Small" title="Classrooms" selected={this.isSelected('Classrooms')} changeLoc={this.changeLoc} />
-        <View style={styles.containerRow}>
-          <View style={styles.containerCol}>
+  render() {
+    const { datePickerVisible, timePickerVisible } = this.state;
+    const { handleModal, date, time } = this.props;
+    return (
+      <Modal
+        style={styles.modal}
+        transparent
+        animationType="fade"
+      >
+        <View style={[styles.modalContainer, styles.boxWithShadow]}>
+          <Text style={styles.promptText}> Change Time </Text>
+          <Text style={styles.titleText}>
+            {date}
+          </Text>
+          <DateTimePicker
+            isVisible={datePickerVisible}
+            onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
+            onCancel={this.showDatePicker}
+            maximumDate={this.date}
+            minimumDate={this.minDate}
+          />
+          <TouchableOpacity
+            style={[styles.whiteButton, styles.boxWithShadow]}
+            onPress={this.showDatePicker}
+          >
             <Text style={styles.titleText}>
-              {this.props.date}
+              Change
             </Text>
-            <DateTimePicker
-              isVisible={datePickerVisible}
-              onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
-              onCancel={this.showDatePicker}
-              maximumDate={this.date}
-              minimumDate={this.minDate}
-            />
-            <TouchableOpacity
-              style={[styles.whiteButton, styles.boxWithShadow]}
-              onPress={this.showDatePicker}
-            >
-              <Text style={styles.titleText}>
-            Change
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.containerCol}>
+          </TouchableOpacity>
+          <Text style={styles.titleText}>
+            {time}
+          </Text>
+          <DateTimePicker
+            mode="time"
+            isVisible={timePickerVisible}
+            onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
+            onCancel={this.showTimePicker}
+            is24Hour
+            minuteInterval={30}
+            titleIOS="Pick a time"
+          />
+          <TouchableOpacity
+            style={[styles.whiteButton, styles.boxWithShadow]}
+            onPress={this.showTimePicker}
+          >
             <Text style={styles.titleText}>
-              {this.props.time}
+              Change
             </Text>
-            <DateTimePicker
-              mode="time"
-              isVisible={timePickerVisible}
-              onConfirm={chosenTime => this.handleConfirm(chosenTime, 'time')}
-              onCancel={this.showTimePicker}
-              is24Hour
-              minuteInterval={30}
-              titleIOS="Pick a time"
-            />
-            <TouchableOpacity
-              style={[styles.whiteButton, styles.boxWithShadow]}
-              onPress={this.showTimePicker}
-            >
-              <Text style={styles.titleText}>
-           Change
-              </Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
+          <View style={styles.containerRow}>
+            <View style={styles.containerCol}>
+              <TouchableOpacity
+                style={[styles.blueButton, styles.boxWithShadow]}
+                onPress={() => handleModal()}
+              >
+                <Text style={styles.titleTextBlue}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.containerCol}>
+              <TouchableOpacity
+                style={[styles.blueButton, styles.boxWithShadow]}
+                onPress={() => this.changeSearch()}
+              >
+                <Text style={styles.titleTextBlue}>
+                  Ok
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-        <View style={styles.containerRow}>
-          <View style={styles.containerCol}>
-            <TouchableOpacity
-              style={[styles.blueButton, styles.boxWithShadow]}
-              onPress={() => this.props.handleModal()}
-            >
-              <Text style={styles.titleTextBlue}>
-           Cancel
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.containerCol}>
-            <TouchableOpacity
-              style={[styles.blueButton, styles.boxWithShadow]}
-              onPress={() => this.changeSearch()}
-            >
-              <Text style={styles.titleTextBlue}>
-            Ok
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
-    </Modal>
-  );
-}
+      </Modal>
+    );
+  }
 }
 
 const promptText = {
@@ -198,6 +169,8 @@ const promptText = {
   color: '#108BF8',
   width: '80%',
   textAlign: 'center',
+  marginBottom: 10,
+  marginTop: 10
 };
 const titleText = {
   fontFamily: 'System',
@@ -212,21 +185,22 @@ const styles = StyleSheet.create({
   promptText,
   titleText,
   modalContainer: {
-    height: '60%',
-    minHeight: 420,
+    height: '30%',
+    minHeight: 250,
     width: '90%',
     backgroundColor: 'white',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: 50,
+    justifyContent: 'center',
+    top: '35%',
     marginLeft: 20,
-    marginRight: 30,
-    flex: 0,
+    marginRight: 20,
     borderRadius: 10
   },
   modal: {
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 1
   },
   titleTextBlue: {
     ...titleText,
@@ -287,11 +261,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   time: state.study.time,
   date: state.study.date,
-  duration: state.study.duration,
-  location: state.study.location,
-  data: state.study.data,
-  unstyledTime: state.study.unstyledTime
-
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -301,12 +270,6 @@ const mapDispatchToProps = dispatch => ({
   changeDate: (date) => {
     dispatch(changeDate(date));
   },
-  changeLocation: (location) => {
-    dispatch(changeLocation(location));
-  },
-  loadData: (data) => {
-    dispatch(loadData(data));
-  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomModal);

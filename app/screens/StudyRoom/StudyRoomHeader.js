@@ -1,56 +1,52 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, SafeAreaView
+  StyleSheet, Text, View, TouchableOpacity, Image
 } from 'react-native';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import Search from '../../components/Search';
-import { changeDuration } from '../../Actions/actions';
 
 const monthPairs = {
-  '01': 'January',
-  '02': 'February',
+  '01': 'Jan',
+  '02': 'Feb',
   '03': 'March',
   '04': 'April',
   '05': 'May',
   '06': 'June',
   '07': 'July',
-  '08': 'August',
-  '09': 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December',
+  '08': 'Aug',
+  '09': 'Sept',
+  10: 'Oct',
+  11: 'Nov',
+  12: 'Dec',
 };
+
+const clockIcon = require('../../../assets/clock.png');
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      visible: false,
-    };
-  }
 
   handleInput = (input) => {
-    this.props.filterData(input);
+    const { filterData } = this.props;
+    filterData(input);
   }
 
   render() {
-    const { date, time, location } = this.props;
-    const { visible } = this.state;
+    const { date, time, handleModal } = this.props;
     const month = monthPairs[date.substring(0, 2)];
     const day = date.substring(3, 5);
     return (
       <View style={styles.topBar}>
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.rightButtonAbs} onPress={() => this.props.handleModal()}>
-            <MaterialCommunityIcons name="filter-variant" color="#108BF8" size={35} />
+          <TouchableOpacity style={styles.rightButtonAbs} onPress={() => handleModal()}>
+            <Image source={clockIcon} style={{ width: 25, height: 25 }} />
           </TouchableOpacity>
-          <Text style={styles.searchText}>
-            {' '}
-            {date !== '' || time !== '' ? `${month} ${day} ${time}` : ''}
-            {' '}
-          </Text>
+          <View style={styles.leftViewAbs}>
+            <Text style={styles.searchText}>
+              {' '}
+              {date !== '' || time !== '' ? `${month} ${day} ${time}` : ''}
+              {' '}
+            </Text>
+          </View>
         </View>
         <Search
           data={fakeVal} // this should be an API call or huge list eventually
@@ -88,21 +84,16 @@ const styles = StyleSheet.create({
   titleText,
   searchText: {
     fontFamily: 'System',
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '800',
     fontStyle: 'normal',
     letterSpacing: 1.92,
     color: 'black',
-    width: '80%',
     textAlign: 'left',
-    position: 'absolute',
-    left: '2%',
-    top: '15%',
   },
   topBar: {
     alignItems: 'center',
     width: '100%',
-    height: 100,
   },
   buttonLeft: {
     marginLeft: 15
@@ -122,12 +113,10 @@ const styles = StyleSheet.create({
   },
   bar: {
     height: 50,
-    backgroundColor: 'white',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-
   },
   searchContainer: {
     zIndex: 5,
@@ -139,6 +128,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     marginTop: 5,
+    marginBottom: 10,
     flexDirection: 'row',
     backgroundColor: 'white',
     zIndex: 5,
@@ -163,10 +153,19 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     position: 'absolute',
-    right: 20,
-    top: '15%',
+    right: 10,
+    marginTop: '1%',
     zIndex: 10,
+    justifyContent: 'center'
   },
+  leftViewAbs: {
+    width: '80%',
+    height: 30,
+    position: 'absolute',
+    left: '2%',
+    marginTop: '1%',
+    zIndex: 10,
+  }
 
 
 });
@@ -174,13 +173,7 @@ const mapStateToProps = state => ({
   location: state.study.location,
   time: state.study.time,
   date: state.study.date,
-  duration: state.study.duration,
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeDuration: (duration) => {
-    dispatch(changeDuration(duration));
-  }
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomHeader);
+export default connect(mapStateToProps)(StudyRoomHeader);

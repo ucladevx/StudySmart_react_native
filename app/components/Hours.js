@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
   },
-  Activity_Level_TEMPORARY: {
+  activityLevelTemp: {
     color: '#5e5b59',
     textAlign: 'left',
     paddingTop: 10,

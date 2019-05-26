@@ -12,15 +12,16 @@ export default class BookingWebView extends Component {
     }
 
     render() {
+      const { navigate, getParam } = this.props.navigation;
       return (
         <SafeAreaView style={styles.container}>
           <View style={styles.bar}>
-            <TouchableOpacity style={styles.leftButtonAbs} onPress={() => this.props.navigation.navigate('StudyRoomList')}>
+            <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('StudyRoomsContainer')}>
               <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
             </TouchableOpacity>
           </View>
           <WebView
-            source={{ uri: this.props.navigation.getParam('url', 'https://reslife.ucla.edu/reserve/') }}
+            source={{ uri: getParam('url', 'https://reslife.ucla.edu/reserve/') }}
           />
         </SafeAreaView>
       );

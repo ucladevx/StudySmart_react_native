@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import {
-  StyleSheet, Text, View, TouchableOpacity,
+  StyleSheet, Text, TouchableOpacity,
 } from 'react-native';
 
 export default class ShadowButton extends Component {

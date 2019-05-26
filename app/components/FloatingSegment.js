@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
 import {
-  StyleSheet, Text, View, TouchableOpacity, SafeAreaView
+  StyleSheet, Text, TouchableOpacity, SafeAreaView
 } from 'react-native';
 
 export default class FloatingSegment extends Component {
@@ -22,15 +22,15 @@ export default class FloatingSegment extends Component {
         <Text style={selected === title ? styles.titleTextSelected : styles.titleText}>
           {title}
         </Text>
-        <View style={selected === title ? styles.line : styles.lineTransparent} />
       </TouchableOpacity>
     );
   }
 
   render() {
+    const { titles } = this.props;
     return (
-      <SafeAreaView style={styles.rightButtonAbs}>
-        {this.props.titles.map(title => (
+      <SafeAreaView style={styles.segment}>
+        {titles.map(title => (
           this.renderCategory(title)
         ))}
       </SafeAreaView>
@@ -53,7 +53,7 @@ const category = {
   backgroundColor: 'white',
   borderRadius: 7,
   justifyContent: 'center',
-  marginRight: 4,
+  marginRight: 8,
   alignItems: 'center',
   minWidth: 60
 };
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     color: 'white',
 
   },
-  rightButtonAbs: {
+  segment: {
     width: '100%',
     height: 25,
     flex: 0,
@@ -74,17 +74,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 5,
   },
-  line: {
-    height: 1,
-    width: '95%',
-    backgroundColor: '#108BF8'
-  },
-  lineTransparent: {
-    height: 1,
-    width: '95%',
-    backgroundColor: 'transparent'
-  },
-
   categorySelected: {
     ...category,
     backgroundColor: '#108BF8',

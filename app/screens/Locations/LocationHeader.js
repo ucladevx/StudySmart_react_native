@@ -7,31 +7,20 @@ import Search from '../../components/Search';
 
 export default function LocationHeader(props) {
   const { onPress, getSearchQuery, currentPage } = props;
-  let rightButton;
-
-  if (currentPage === 'List') {
-    rightButton = (
-      <TouchableOpacity onPress={() => onPress()}>
-        <Ionicon color="#108BF8" name="ios-map" size={25} backgroundColor="#4F87EC" />
-      </TouchableOpacity>
-    );
-  } else if (currentPage === 'Map') {
-    rightButton = (
-      <TouchableOpacity onPress={() => onPress()}>
-        <Ionicon color="#108BF8" name="ios-list" size={25} backgroundColor="#4F87EC" />
-      </TouchableOpacity>
-    );
-  }
 
   return (
     <View style={currentPage === 'List' ? styles.topBar : styles.topBarMap}>
       <View style={styles.bar}>
-        <Text style={styles.titleText}>
-          {' '}
+        <View style={styles.leftViewAbs}>
+          <Text style={styles.searchText}>
+            {' '}
           Study Spots
-          {' '}
-        </Text>
-        {rightButton}
+            {' '}
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.rightButtonAbs} onPress={() => onPress()}>
+          <Ionicon color="#108BF8" name={currentPage === 'List' ? 'ios-map' : 'ios-list'} size={25} backgroundColor="#4F87EC" />
+        </TouchableOpacity>
       </View>
       {currentPage === 'List'
         && (
@@ -70,6 +59,15 @@ const titleText = {
 
 const styles = StyleSheet.create({
   titleText,
+  searchText: {
+    fontFamily: 'System',
+    fontSize: 24,
+    fontWeight: '800',
+    fontStyle: 'normal',
+    letterSpacing: 1.92,
+    color: 'black',
+    textAlign: 'left',
+  },
   topBar: {
     alignItems: 'center',
     width: '100%',
@@ -80,27 +78,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 65,
   },
-  buttonLeft: {
-    marginLeft: 15
-  },
-  buttonRight: {
-    marginRight: 15
-  },
-  rightView: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: 40
-  },
-  leftView: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    width: 40
-  },
   bar: {
     height: 50,
-    backgroundColor: 'white',
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
 
@@ -129,11 +109,22 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     shadowOpacity: 0.8,
   },
-  input: {
-    ...text,
-    fontSize: 14,
-    fontWeight: '300',
-    color: '#000',
+  leftViewAbs: {
+    width: '70%',
+    height: 30,
+    position: 'absolute',
+    left: '2%',
+    marginTop: '1%',
+    zIndex: 10,
+  },
+  rightButtonAbs: {
+    width: 30,
+    height: 30,
+    position: 'absolute',
+    zIndex: 10,
+    justifyContent: 'center',
+    right: 20,
+    top: '15%'
   },
 
 

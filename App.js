@@ -8,8 +8,6 @@ import LocationsMap from './app/screens/Locations/LocationsMap';
 import configureStore from './store';
 import LocationsList from './app/screens/Locations/LocationsList';
 import LocationsContainer from './app/screens/Locations/LocationsContainer';
-import BookingLocation from './app/screens/StudyRoom/BookingLocation';
-import BookingTime from './app/screens/StudyRoom/BookingTime';
 import StudyRoomsContainer from './app/screens/StudyRoom/StudyRoomsContainer';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
 import FeedbackContainer from './app/screens/Feedback/FeedbackContainer';
@@ -17,8 +15,6 @@ import BookingWebView from './app/screens/StudyRoom/BookingWebView';
 
 const StudyRoomStack = StackNavigator({
   StudyRoomsContainer: { screen: StudyRoomsContainer },
-  BookingLocation: { screen: BookingLocation },
-  BookingTime: { screen: BookingTime },
   StudyRoomReserve: { screen: StudyRoomReserve },
   BookingWebView: { screen: BookingWebView },
 
@@ -26,7 +22,7 @@ const StudyRoomStack = StackNavigator({
 },
 {
   // For now, use this to toggle between List view and Map view. We will eventually add a toggle button
-  initialRouteName: 'BookingLocation',
+  initialRouteName: 'StudyRoomsContainer',
 });
 
 const LocationsStack = StackNavigator({

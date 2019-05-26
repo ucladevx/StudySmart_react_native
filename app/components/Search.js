@@ -47,9 +47,6 @@ class Search extends Component {
     super(props);
     this.state = { dataSource: props.data };
     this.resultList = null;
-    if (this.props.onFocus !== undefined) {
-      this.onFocus = this.props.onFocus;
-    }
   }
 
   componentWillReceiveProps({ data }) {
@@ -81,7 +78,6 @@ class Search extends Component {
     const {
       listStyle,
       renderItem,
-      renderSeparator,
       keyboardShouldPersistTaps,
       onEndReached,
       onEndReachedThreshold
@@ -103,10 +99,12 @@ class Search extends Component {
   }
 
   renderTextInput() {
-    const { onEndEditing, renderTextInput, style, } = this.props;
+    const {
+      onEndEditing, renderTextInput, style, value, placeholder
+    } = this.props;
     const props = {
-      value: this.props.value,
-      placeholder: this.props.placeholder,
+      value,
+      placeholder,
       style: [style],
       ref: ref => (this.textInput = ref),
       onEndEditing: e => onEndEditing && onEndEditing(e),
