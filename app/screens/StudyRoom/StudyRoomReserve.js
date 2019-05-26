@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, ActivityIndicator
 } from 'react-native';
-import { connect } from 'react-redux';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 
@@ -25,7 +24,7 @@ const durationPairs = {
   '2 hours': '120',
 };
 
-class StudyRoomReserve extends Component {
+export default class StudyRoomReserve extends Component {
   static navigationOptions = {
     header: () => {
       false;
@@ -185,6 +184,8 @@ const reserveButton = {
   shadowOffset: { width: 0, height: 1 },
   shadowOpacity: 0.5,
   shadowRadius: 1,
+  borderRadius: 5,
+  marginLeft: 20
 };
 
 const styles = StyleSheet.create({
@@ -208,16 +209,13 @@ const styles = StyleSheet.create({
   titleText: {
     ...text,
     fontSize: 17,
+    fontWeight: '600',
     color: 'black'
   },
   whiteText: {
     ...text,
     fontSize: 15,
     color: 'white'
-  },
-  leftText: {
-    textAlign: 'left',
-    flex: 0
   },
   container: {
     flex: 1,
@@ -280,10 +278,6 @@ const styles = StyleSheet.create({
     top: '15%',
     zIndex: 5
   },
-  icon: {
-    position: 'absolute',
-    right: 5
-  },
   bar: {
     height: 50,
     flexDirection: 'row',
@@ -301,15 +295,3 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = state => ({
-  time: state.study.time,
-  date: state.study.date,
-  duration: state.study.duration,
-  location: state.study.location,
-  data: state.study.data,
-  unstyledTime: state.study.unstyledTime
-
-});
-
-
-export default connect(mapStateToProps)(StudyRoomReserve);

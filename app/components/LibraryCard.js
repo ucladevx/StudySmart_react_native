@@ -143,7 +143,7 @@ class LibraryCard extends Component {
               }}
               >
                 {/* Need to fix map logo later  */}
-                <Image source={icon} style={{ height: 20, width: 20, marginRight: 3 }} />
+                <Image source={icon} style={{ height: 20, width: 20, marginRight: 8 }} />
               </TouchableOpacity>
             )}
             {/* Check the state, if state is non-expanded use down */}

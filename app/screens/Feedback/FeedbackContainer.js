@@ -4,7 +4,7 @@ import Feedback from './Feedback';
 
 const FeedbackContainer = createMaterialTopTabNavigator(
   {
-    Bugs: { screen: () => <Feedback link="https://forms.gle/FEVruhjkQUX8ZtwY8" /> },
+    Bugs: { screen: () => <Feedback link="https://forms.gle/Wc2v4nQyqxj89oUq7" /> },
     Feedback: { screen: () => <Feedback link="https://forms.gle/khhjTShNv54Yif3B9" /> },
   },
   {

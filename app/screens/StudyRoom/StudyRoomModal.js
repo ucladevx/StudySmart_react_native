@@ -17,7 +17,7 @@ class StudyRoomModal extends Component {
     };
     this.date = new Date();
     this.minDate = new Date();
-    this.date.setDate(this.date.getDate() + 7);
+    this.date.setDate(this.date.getDate() + 6);
   }
 
   showDatePicker = () => {
@@ -163,10 +163,10 @@ class StudyRoomModal extends Component {
 const promptText = {
   fontFamily: 'System',
   fontSize: 22,
-  fontWeight: '200',
+  fontWeight: '600',
   fontStyle: 'normal',
   letterSpacing: 1.92,
-  color: '#108BF8',
+  color: 'black',
   width: '80%',
   textAlign: 'center',
   marginBottom: 10,
@@ -178,7 +178,7 @@ const titleText = {
   fontWeight: '300',
   fontStyle: 'normal',
   letterSpacing: 1.92,
-  color: '#108BF8',
+  color: 'black',
 };
 
 const styles = StyleSheet.create({
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     marginBottom: 10,
-
+    borderRadius: 5
   },
   blueButton: {
     backgroundColor: '#108BF8',
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10,
     marginBottom: 10,
-
+    borderRadius: 5
   },
   boxWithShadow: {
     shadowColor: '#000',

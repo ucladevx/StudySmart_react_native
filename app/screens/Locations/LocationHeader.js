@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 10,
     justifyContent: 'center',
-    right: 20,
+    right: 10,
     top: '15%'
   },
 

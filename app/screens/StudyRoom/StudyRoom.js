@@ -107,7 +107,7 @@ export default class StudyRoomList extends Component {
             style={styles.icon}
             onPress={() => this.handleSelectRoom(item)}
           >
-            <Entypo name="chevron-thin-right" size={25} color="#108BF8" />
+            <Entypo name="chevron-thin-right" size={25} color="black" />
           </TouchableOpacity>
           <View
             style={styles.containerRow}
