@@ -5,6 +5,7 @@ import {
 import { withNavigation } from 'react-navigation';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Hours from './Hours';
+import ActivityBar from './ActivityBar';
 
 const icon = require('../../assets/mapIcon.png');
 
@@ -71,6 +72,8 @@ class LibraryCard extends Component {
     const { collapsed } = this.state;
     const { navigate } = navigation;
 
+    const activityBarWidth = width * 0.45;
+
     const millis = new Date();
     const day = millis.getDay();
 
@@ -124,13 +127,14 @@ class LibraryCard extends Component {
                     </Text>
                   )
               }
-
-              {/* NEED TO CHANGE TO A PROGRESS BAR, THIS IS TEMPORARY PLACEHOLER  */}
-              <Text style={listElement.activityLevel}>
-                Activity Level:
-                {' '}
-                {item.current_busyness !== undefined ? `${item.current_busyness.N}%` : 'N/A'}
-              </Text>
+              {/* Progress Bar */}
+              {
+                item.current_busyness !== undefined
+                  ?
+                  <ActivityBar barWidth={activityBarWidth} activityLevel={item.current_busyness.N} />
+                  :
+                  <ActivityBar barWidth={activityBarWidth} activityLevel="N/A" />
+              }
             </View>
           </View>
 
@@ -240,7 +244,7 @@ const listElement = StyleSheet.create({
     fontSize: 16,
     color: '#000',
     fontWeight: '300',
-    paddingBottom: 10,
+    paddingBottom: 5,
     paddingRight: 25,
   },
   closed: {
@@ -248,12 +252,14 @@ const listElement = StyleSheet.create({
     fontSize: 10,
     color: 'red',
     fontWeight: '300',
+    marginBottom: 5,
   },
   open: {
     ...text,
     fontSize: 10,
     color: 'green',
     fontWeight: '300',
+    marginBottom: 5,
   },
   activityLevel: {
     paddingTop: 3,
