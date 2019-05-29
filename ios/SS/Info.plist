@@ -25,12 +25,6 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>google_sign_in</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>ENTER_API_KEY_HERE</string>
-			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
@@ -45,7 +39,7 @@
 		<dict/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
