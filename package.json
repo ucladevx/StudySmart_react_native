@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "lint": "eslint *.js **/*.js"
+    "lint": "eslint *.js **/*.js",
+"build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/SS/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
   },
   "dependencies": {
     "react": "16.6.0-alpha.8af6728",
@@ -53,4 +54,5 @@
     "url": "https://github.com/ucladevx/StudySmart_react_native/issues"
   },
   "homepage": "https://github.com/ucladevx/StudySmart_react_native#readme"
+
 }

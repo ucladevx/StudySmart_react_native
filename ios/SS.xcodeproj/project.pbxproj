@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -43,6 +42,8 @@
 		4CB9C35ADE554626B916211D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA182156FE854C4C96395294 /* FontAwesome5_Solid.ttf */; };
 		4D176451BD6A41B8B85B4198 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF486700A4B24010846A6C11 /* EvilIcons.ttf */; };
 		4FBB8079A62A4BDFAD61FDB5 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E31D1ED3B84D4EF4B910951D /* AntDesign.ttf */; };
+		5639A16B229E3A61000E8D70 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 5639A16A229E3A61000E8D70 /* main.jsbundle */; };
+		5639A16D229E3A8B000E8D70 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 5639A16C229E3A8B000E8D70 /* assets */; };
 		5B96112042004274AE909151 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFF382D530B4865B590516E /* libAirMaps.a */; };
 		5EE97B4B13CD4F6E210C7635 /* libPods-SS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D1CFC6153ED765D5ED16D1D /* libPods-SS.a */; };
 		76238572C2B7443BACF4071F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D163C66979F844828EA04F40 /* Octicons.ttf */; };
@@ -370,7 +371,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTActionSheet.xcodeproj; path = "../node_modules/react-native/Libraries/ActionSheetIOS/RCTActionSheet.xcodeproj"; sourceTree = "<group>"; };
 		00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTGeolocation.xcodeproj; path = "../node_modules/react-native/Libraries/Geolocation/RCTGeolocation.xcodeproj"; sourceTree = "<group>"; };
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
@@ -406,6 +406,8 @@
 		478953D25871C5A32D571849 /* libPods-SS-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SS-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47FBB09F089847F780F4565E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		48EF4A58740D4617BDB98A0F /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		5639A16A229E3A61000E8D70 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		5639A16C229E3A8B000E8D70 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		5B759529D6B7476689D29538 /* Pods-SS-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SS-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SS-tvOSTests/Pods-SS-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5DC5D8492A230477C4228901 /* Pods-SS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SS/Pods-SS.release.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -577,7 +579,6 @@
 			children = (
 				9FE86AA721F703C400A54A7A /* GoogleService-Info.plist */,
 				767B48C9223223F200666EA9 /* GoogleService-Info.plist */,
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -748,6 +749,8 @@
 		E0510C3F70764E7092F4A7B1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5639A16A229E3A61000E8D70 /* main.jsbundle */,
+				5639A16C229E3A8B000E8D70 /* assets */,
 				E31D1ED3B84D4EF4B910951D /* AntDesign.ttf */,
 				A6180C7CF2AB4C83BC56D090 /* Entypo.ttf */,
 				CF486700A4B24010846A6C11 /* EvilIcons.ttf */,
@@ -1287,6 +1290,7 @@
 				F873B8C4AE754A58928CD508 /* FontAwesome5_Regular.ttf in Resources */,
 				4CB9C35ADE554626B916211D /* FontAwesome5_Solid.ttf in Resources */,
 				CAB4054D52C34FF4BC06848B /* Foundation.ttf in Resources */,
+				5639A16B229E3A61000E8D70 /* main.jsbundle in Resources */,
 				767B48CA223223F200666EA9 /* GoogleService-Info.plist in Resources */,
 				9FE86AD121F703C400A54A7A /* GoogleService-Info.plist in Resources */,
 				47AD1A2CE54F46C7ADC805DC /* Ionicons.ttf in Resources */,
@@ -1295,6 +1299,7 @@
 				76238572C2B7443BACF4071F /* Octicons.ttf in Resources */,
 				B476E2158C224D49B7E748A0 /* SimpleLineIcons.ttf in Resources */,
 				C6C059CFC7F6437FA1283868 /* Zocial.ttf in Resources */,
+				5639A16D229E3A8B000E8D70 /* assets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
