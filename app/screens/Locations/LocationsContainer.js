@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, ActivityIndicator, SafeAreaView,
+  StyleSheet, Text, ActivityIndicator, SafeAreaView, TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import LocationHeader from './LocationHeader';
@@ -139,15 +140,17 @@ class LocationContainer extends Component {
     }
 
     return (
-      <SafeAreaView style={styles.container}>
-        <LocationHeader
-          navigation={navigation}
-          onPress={this.handlePress}
-          getSearchQuery={this.getSearchQuery}
-          currentPage={currentPage}
-        />
-        {body}
-      </SafeAreaView>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <SafeAreaView style={styles.container}>
+          <LocationHeader
+            navigation={navigation}
+            onPress={this.handlePress}
+            getSearchQuery={this.getSearchQuery}
+            currentPage={currentPage}
+          />
+          {body}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
     );
   }
 }
