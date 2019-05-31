@@ -9,27 +9,28 @@ export default class ActivityBar extends Component {
     let { activityLevel, barWidth } = this.props;
 
     barWidth = parseInt(barWidth);
-
-    if (activityLevel === 'N/A') {
-      return (
-        <View style={[styles.outside, { width: barWidth }, { backgroundColor: 'gray' }]} />
-      );
-    }
-    else {
+    if (activityLevel !== 'N/A') {
       // Cap Activity Level at 100% 
       if (parseInt(activityLevel) >= 100) {
         activityLevel = '100';
       }
       activityLevel += '%';
-
-      return (
-        <View style={[styles.outside, { width: barWidth }]}>
-          <View style={[styles.filler, { width: activityLevel }]} />
-        </View>
-      );
     }
+
+    return (
+      activityLevel === 'N/A'
+        ? (
+          <View style={[styles.outside, { width: barWidth }, { backgroundColor: 'gray' }]} />
+        )
+        : (
+          <View style={[styles.outside, { width: barWidth }]}>
+            <View style={[styles.filler, { width: activityLevel }]} />
+          </View>
+        )
+    );
   }
 }
+
 
 const styles = StyleSheet.create({
   outside: {
