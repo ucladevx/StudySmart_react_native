@@ -16,6 +16,10 @@ export default class ActivityBar extends Component {
       );
     }
     else {
+      // Cap Activity Level at 100% 
+      if (parseInt(activityLevel) >= 100) {
+        activityLevel = '100';
+      }
       activityLevel += '%';
 
       return (
@@ -24,7 +28,6 @@ export default class ActivityBar extends Component {
         </View>
       );
     }
-
   }
 }
 

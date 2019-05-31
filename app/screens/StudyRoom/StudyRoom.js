@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator, Dimensions
+  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator, Dimensions,
+  TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import StudyRoomHeader from './StudyRoomHeader';
@@ -149,33 +150,35 @@ export default class StudyRoomList extends Component {
       navigation, filterData, hillDataFound, loading, getStudyRooms
     } = this.props;
     return (
-      <SafeAreaView style={styles.container}>
-        <StudyRoomHeader
-          navigation={navigation}
-          sortData={this.sortData}
-          handleModal={this.handleModal}
-          filterData={filterData}
-        />
-        <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
-        {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
-        { hillDataFound.length > 0 ? (
-          <FlatList
-            data={hillDataFound}
-            extraData={hillDataFound}
-            renderItem={({ item }) => this.renderRow(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.list}
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <SafeAreaView style={styles.container}>
+          <StudyRoomHeader
+            navigation={navigation}
+            sortData={this.sortData}
+            handleModal={this.handleModal}
+            filterData={filterData}
           />
-        ) : (
-          <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-          </View>
-        ) }
+          <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
+          {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
+          {hillDataFound.length > 0 ? (
+            <FlatList
+              data={hillDataFound}
+              extraData={hillDataFound}
+              renderItem={({ item }) => this.renderRow(item)}
+              keyExtractor={(item, index) => index.toString()}
+              style={styles.list}
+            />
+          ) : (
+              <View style={styles.empty}>
+                <Text style={titleText}> No rooms available </Text>
+              </View>
+            )}
 
-        {visible ? (
-          <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
-        ) : null}
-      </SafeAreaView>
+          {visible ? (
+            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
+          ) : null}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
     );
   }
 }
