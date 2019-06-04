@@ -7,6 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
 import FloatingSegment from '../../components/FloatingSegment';
+import ShadowButton from '../../components/ShadowButton';
 
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
@@ -99,6 +100,12 @@ export default class StudyRoomList extends Component {
 
 
   renderRow(item) {
+    let unique = [];
+    for (let i = 0; i < item.available.length; i += 1) {
+      if (!unique.includes(item.available[i].details)) {
+        unique.push(item.available[i].details);
+      }
+    }
     return (
       <TouchableOpacity
         onPress={() => this.handleSelectRoom(item)}
@@ -127,7 +134,7 @@ export default class StudyRoomList extends Component {
               <View style={styles.containerRow}>
                 <Text style={[styles.text, styles.leftText]}>
                   Rooms Available:
-                  {item.available.length}
+                  {unique.length}
                 </Text>
               </View>
               <View style={styles.containerRow}>
@@ -169,10 +176,11 @@ export default class StudyRoomList extends Component {
               style={styles.list}
             />
           ) : (
-              <View style={styles.empty}>
-                <Text style={titleText}> No rooms available </Text>
-              </View>
-            )}
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          )}
 
           {visible ? (
             <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
