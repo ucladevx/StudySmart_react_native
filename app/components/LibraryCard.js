@@ -245,7 +245,7 @@ const listElement = StyleSheet.create({
     color: '#000',
     fontWeight: '300',
     paddingBottom: 5,
-    paddingRight: 25,
+    paddingRight: 10,
   },
   closed: {
     ...text,

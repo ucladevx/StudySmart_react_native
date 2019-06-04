@@ -45,12 +45,10 @@
 		5B96112042004274AE909151 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFF382D530B4865B590516E /* libAirMaps.a */; };
 		5EE97B4B13CD4F6E210C7635 /* libPods-SS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D1CFC6153ED765D5ED16D1D /* libPods-SS.a */; };
 		76238572C2B7443BACF4071F /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D163C66979F844828EA04F40 /* Octicons.ttf */; };
-		767B48CA223223F200666EA9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 767B48C9223223F200666EA9 /* GoogleService-Info.plist */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		85EB134AED7F3165F1BF2327 /* libPods-SSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDD21820DA70457783C8FCB /* libPods-SSTests.a */; };
 		94E93235CA1B43F7A3C4B871 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9443FBF30EC049768F0FB4AD /* Feather.ttf */; };
 		9F2953032282AFDA00C1259A /* blue in Resources */ = {isa = PBXBuildFile; fileRef = 9F2952D92282AFD900C1259A /* blue */; };
-		9FE86AD121F703C400A54A7A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9FE86AA721F703C400A54A7A /* GoogleService-Info.plist */; };
 		A71A733433087B1B2F42517E /* libPods-SS-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 478953D25871C5A32D571849 /* libPods-SS-tvOSTests.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B1B1239D41174BEEBE6F184C /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1ADAF7261E54C8BB26A746F /* FontAwesome5_Brands.ttf */; };
@@ -408,7 +406,6 @@
 		5B759529D6B7476689D29538 /* Pods-SS-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SS-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SS-tvOSTests/Pods-SS-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5DC5D8492A230477C4228901 /* Pods-SS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SS.release.xcconfig"; path = "Pods/Target Support Files/Pods-SS/Pods-SS.release.xcconfig"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		767B48C9223223F200666EA9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7A21320F0EA5629B10134584 /* Pods-SSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SSTests/Pods-SSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -416,7 +413,6 @@
 		9443FBF30EC049768F0FB4AD /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		961B1E25F12241E7A297AD90 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		9F2952D92282AFD900C1259A /* blue */ = {isa = PBXFileReference; lastKnownFileType = folder; path = blue; sourceTree = "<group>"; };
-		9FE86AA721F703C400A54A7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A3CC3A3090B042B2A9DBBC9B /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		A6180C7CF2AB4C83BC56D090 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
@@ -574,8 +570,6 @@
 		13B07FAE1A68108700A75B9A /* SS */ = {
 			isa = PBXGroup;
 			children = (
-				9FE86AA721F703C400A54A7A /* GoogleService-Info.plist */,
-				767B48C9223223F200666EA9 /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -1286,8 +1280,6 @@
 				F873B8C4AE754A58928CD508 /* FontAwesome5_Regular.ttf in Resources */,
 				4CB9C35ADE554626B916211D /* FontAwesome5_Solid.ttf in Resources */,
 				CAB4054D52C34FF4BC06848B /* Foundation.ttf in Resources */,
-				767B48CA223223F200666EA9 /* GoogleService-Info.plist in Resources */,
-				9FE86AD121F703C400A54A7A /* GoogleService-Info.plist in Resources */,
 				47AD1A2CE54F46C7ADC805DC /* Ionicons.ttf in Resources */,
 				4638578F190F4A6E9518F906 /* MaterialCommunityIcons.ttf in Resources */,
 				BAFA96F3CC224B7FBB6241F1 /* MaterialIcons.ttf in Resources */,

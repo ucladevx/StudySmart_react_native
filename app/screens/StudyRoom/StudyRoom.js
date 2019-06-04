@@ -24,10 +24,10 @@ const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
 const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
 const deneve = require('../../../assets/Studyrooms/deneve.jpg');
 const rieber = require('../../../assets/Studyrooms/rieber.jpg');
-const hedrick = require('../../../assets/Studyrooms/hedrick.jpg');
+const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
 const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
 const music = require('../../../assets/Studyrooms/music.jpg');
-const hedrickstudy = require('../../../assets/Studyrooms/hedrickstudy.jpg');
+const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
 const movement = require('../../../assets/Studyrooms/movement.jpg');
 
 const imagePairs = {
