@@ -8,10 +8,10 @@ export default class ActivityBar extends Component {
   render() {
     let { activityLevel, barWidth } = this.props;
 
-    barWidth = parseInt(barWidth);
+    barWidth = parseInt(barWidth, 10);
     if (activityLevel !== 'N/A') {
-      // Cap Activity Level at 100% 
-      if (parseInt(activityLevel) >= 100) {
+      // Cap Activity Level at 100%
+      if (parseInt(activityLevel, 10) >= 100) {
         activityLevel = '100';
       }
       activityLevel += '%';

@@ -293,9 +293,9 @@ const styles = StyleSheet.create({
   animation: {
     backgroundColor: 'white',
     position: 'absolute',
-    height: '90%',
+    height: '100%',
     width: '100%',
-    top: 100,
+    top: 0,
     justifyContent: 'center',
     zIndex: 20
   }
