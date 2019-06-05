@@ -6,7 +6,6 @@ target 'SS' do
   # use_frameworks!
 
   # Pods for SS
-  pod 'GoogleSignIn'
 
   target 'SS-tvOSTests' do
     inherit! :search_paths
