@@ -33,10 +33,10 @@ export default class ShadowButton extends Component {
 
   select() {
     const { selected } = this.state;
-    const { changeLoc, title } = this.props;
+    const { select } = this.props;
     this.setState({
       selected: !selected
-    }, () => { changeLoc(title, !selected) });
+    }, () => { select(); });
   }
 
   render() {
@@ -69,7 +69,9 @@ const whiteButton = {
   shadowRadius: 1,
   elevation: 5,
   marginTop: 10,
-  marginBottom: 10
+  marginBottom: 10,
+  borderRadius: 5,
+  minHeight: 30
 };
 
 const whiteButtonSmall = {

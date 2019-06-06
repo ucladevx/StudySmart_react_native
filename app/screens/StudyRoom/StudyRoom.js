@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator, Dimensions
+  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator, Dimensions,
+  TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
 import FloatingSegment from '../../components/FloatingSegment';
+import ShadowButton from '../../components/ShadowButton';
 
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
@@ -23,10 +25,10 @@ const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
 const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
 const deneve = require('../../../assets/Studyrooms/deneve.jpg');
 const rieber = require('../../../assets/Studyrooms/rieber.jpg');
-const hedrick = require('../../../assets/Studyrooms/hedrick.jpg');
+const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
 const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
 const music = require('../../../assets/Studyrooms/music.jpg');
-const hedrickstudy = require('../../../assets/Studyrooms/hedrickstudy.jpg');
+const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
 const movement = require('../../../assets/Studyrooms/movement.jpg');
 
 const imagePairs = {
@@ -98,6 +100,12 @@ export default class StudyRoomList extends Component {
 
 
   renderRow(item) {
+    let unique = [];
+    for (let i = 0; i < item.available.length; i += 1) {
+      if (!unique.includes(item.available[i].details)) {
+        unique.push(item.available[i].details);
+      }
+    }
     return (
       <TouchableOpacity
         onPress={() => this.handleSelectRoom(item)}
@@ -126,7 +134,7 @@ export default class StudyRoomList extends Component {
               <View style={styles.containerRow}>
                 <Text style={[styles.text, styles.leftText]}>
                   Rooms Available:
-                  {item.available.length}
+                  {unique.length}
                 </Text>
               </View>
               <View style={styles.containerRow}>
@@ -149,33 +157,36 @@ export default class StudyRoomList extends Component {
       navigation, filterData, hillDataFound, loading, getStudyRooms
     } = this.props;
     return (
-      <SafeAreaView style={styles.container}>
-        <StudyRoomHeader
-          navigation={navigation}
-          sortData={this.sortData}
-          handleModal={this.handleModal}
-          filterData={filterData}
-        />
-        <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
-        {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
-        { hillDataFound.length > 0 ? (
-          <FlatList
-            data={hillDataFound}
-            extraData={hillDataFound}
-            renderItem={({ item }) => this.renderRow(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.list}
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <SafeAreaView style={styles.container}>
+          <StudyRoomHeader
+            navigation={navigation}
+            sortData={this.sortData}
+            handleModal={this.handleModal}
+            filterData={filterData}
           />
-        ) : (
-          <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-          </View>
-        ) }
+          <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
+          {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
+          {hillDataFound.length > 0 ? (
+            <FlatList
+              data={hillDataFound}
+              extraData={hillDataFound}
+              renderItem={({ item }) => this.renderRow(item)}
+              keyExtractor={(item, index) => index.toString()}
+              style={styles.list}
+            />
+          ) : (
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          )}
 
-        {visible ? (
-          <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
-        ) : null}
-      </SafeAreaView>
+          {visible ? (
+            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
+          ) : null}
+        </SafeAreaView>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -282,9 +293,9 @@ const styles = StyleSheet.create({
   animation: {
     backgroundColor: 'white',
     position: 'absolute',
-    height: '90%',
+    height: '100%',
     width: '100%',
-    top: 100,
+    top: 0,
     justifyContent: 'center',
     zIndex: 20
   }

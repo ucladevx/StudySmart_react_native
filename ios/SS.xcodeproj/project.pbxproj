@@ -56,7 +56,6 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		B1B1239D41174BEEBE6F184C /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1ADAF7261E54C8BB26A746F /* FontAwesome5_Brands.ttf */; };
 		B476E2158C224D49B7E748A0 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C16C3EEF4E04F6DAEDB701B /* SimpleLineIcons.ttf */; };
-		B5D70613DB84417C9DDF091D /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB5A298E87D4AA3826BCDFC /* libRNGoogleSignin.a */; };
 		BAFA96F3CC224B7FBB6241F1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 01E5926B0EA64B26AA13FF7A /* MaterialIcons.ttf */; };
 		C6C059CFC7F6437FA1283868 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 961B1E25F12241E7A297AD90 /* Zocial.ttf */; };
 		C7F4F952BB114BF6A246D8B6 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 47FBB09F089847F780F4565E /* FontAwesome.ttf */; };
@@ -457,7 +456,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				B5D70613DB84417C9DDF091D /* libRNGoogleSignin.a in Frameworks */,
 				5B96112042004274AE909151 /* libAirMaps.a in Frameworks */,
 				2B7577F8142A419D90863444 /* libRNVectorIcons.a in Frameworks */,
 				5EE97B4B13CD4F6E210C7635 /* libPods-SS.a in Frameworks */,
@@ -809,7 +807,6 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				EEE0067415A6C214666A0957 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1384,28 +1381,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EEE0067415A6C214666A0957 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SS/Pods-SS-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SS/Pods-SS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F62ED56F2E8FAE1E2E1409B9 /* [CP] Check Pods Manifest.lock */ = {
