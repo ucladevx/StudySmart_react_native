@@ -6,13 +6,12 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "lint": "eslint *.js **/*.js",
-"build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/SS/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
+    "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/SS/main.jsbundle' --dev=false --platform='ios' --assets-dest='./ios'"
   },
   "dependencies": {
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
     "react-native-elements": "^0.19.1",
-    "react-native-google-signin": "^1.0.2",
     "react-native-maps": "^0.22.1",
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-swipe-gestures": "^1.0.3",
@@ -54,5 +53,4 @@
     "url": "https://github.com/ucladevx/StudySmart_react_native/issues"
   },
   "homepage": "https://github.com/ucladevx/StudySmart_react_native#readme"
-
 }
