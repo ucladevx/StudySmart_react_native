@@ -119,6 +119,8 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            buildConfigField 'String', "ApiKey", GOOGLE_MAPS_API_KEY
+            resValue 'string', "maps_api_key", GOOGLE_MAPS_API_KEY
         }
     }
     // applicationVariants are e.g. debug, release
