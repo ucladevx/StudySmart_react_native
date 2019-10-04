@@ -110,7 +110,11 @@ class StudyRoomsContainer extends Component {
         }
       }
       if (time.length > 0) {
-        const splitTime = time.split(':');
+        let time2 = time;
+        if (!time2.includes(':')) {
+          time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
+        }
+        const splitTime = time2.split(':');
         const yearInt = parseInt(year, 10);
         const monthInt = parseInt(month, 10);
         const dayInt = parseInt(day, 10);
