@@ -24,7 +24,6 @@ const clockIcon = require('../../../assets/clock.png');
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
-
   handleInput = (input) => {
     const { filterData } = this.props;
     filterData(input);
@@ -94,6 +93,7 @@ const styles = StyleSheet.create({
   topBar: {
     alignItems: 'center',
     width: '100%',
+    height: 100
   },
   buttonLeft: {
     marginLeft: 15
