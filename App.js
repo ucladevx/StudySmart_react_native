@@ -37,7 +37,7 @@ const FeedbackStack = StackNavigator({
   Feedback: {
     screen: FeedbackContainer,
     navigationOptions: {
-      headerStyle: { height: 30 }
+      headerStyle: { height: 0 }
     }
   },
 });
