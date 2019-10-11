@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator, Dimensions,
+  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator,
   TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -43,42 +43,23 @@ const imagePairs = {
   movement
 };
 
-
-const monthPairs = {
-  '01': 'January',
-  '02': 'February',
-  '03': 'March',
-  '04': 'April',
-  '05': 'May',
-  '06': 'June',
-  '07': 'July',
-  '08': 'August',
-  '09': 'September',
-  10: 'October',
-  11: 'November',
-  12: 'December',
-};
-
 export default class StudyRoomList extends Component {
   static navigationOptions = {
-    header: () => {
-      false;
-    }
+    header: () => {}
   }
 
   constructor(props) {
     super(props);
     this.state = {
       visible: false,
-      currentData: props.hillDataFound,
       currentLocation: 'Hill',
     };
   }
 
 
   handleSelectRoom = (item) => {
-    const { navigate } = this.props.navigation;
-    navigate('StudyRoomReserve', {
+    const { navigation } = this.props;
+    navigation.navigate('StudyRoomReserve', {
       rooms: item
     });
   }
@@ -91,16 +72,14 @@ export default class StudyRoomList extends Component {
   }
 
   setLocation = (location) => {
-    const { hillDataFound } = this.props;
     this.setState({
-      currentData: location === 'Hill' ? hillDataFound : null,
       currentLocation: location,
     });
   }
 
 
   renderRow(item) {
-    let unique = [];
+    const unique = [];
     for (let i = 0; i < item.available.length; i += 1) {
       if (!unique.includes(item.available[i].details)) {
         unique.push(item.available[i].details);
@@ -151,7 +130,7 @@ export default class StudyRoomList extends Component {
 
   render() {
     const {
-      visible, currentData, currentLocation
+      visible, currentLocation
     } = this.state;
     const {
       navigation, filterData, hillDataFound, loading, getStudyRooms
