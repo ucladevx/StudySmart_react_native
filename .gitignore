@@ -58,3 +58,4 @@ buck-out/
 # Hide API keys
 config.js
 /ios/GoogleService-Info.plist
+android/gradle.properties
