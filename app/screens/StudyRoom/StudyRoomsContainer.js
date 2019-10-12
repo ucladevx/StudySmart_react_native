@@ -33,9 +33,7 @@ const monthPairs = {
 
 class StudyRoomsContainer extends Component {
     static navigationOptions = {
-      header: () => {
-        false;
-      }
+      header: () => {}
     }
 
     constructor(props) {
@@ -55,11 +53,7 @@ class StudyRoomsContainer extends Component {
       const minutes = setting.getMinutes();
       if (minutes !== 30 && minutes !== 0) {
         if (minutes > 30) {
-          setting.setMinutes(0);
-          setting.setHours(setting.getHours() + 1);
-          if (setting.getHours() === 0) {
-            setting.setDate(setting.getDate() + 1);
-          }
+          setting.setMinutes(60);
         } else {
           setting.setMinutes(30);
         }
@@ -149,7 +143,7 @@ class StudyRoomsContainer extends Component {
 
     async getLibraryStudyRooms() {
       let temp;
-      const { date } = this.props;
+      const { date, loadLibraryData: loadLibraryDataAction } = this.props;
       const month = date.substring(0, 2);
       const day = date.substring(3, 5);
       const year = date.substring(date.length - 4);
@@ -163,17 +157,17 @@ class StudyRoomsContainer extends Component {
       for (let k = 0; k < temp.Items.length; k += 1) {
         temp.Items[k].area = 'Libraries';
       }
-      this.props.loadLibraryData(temp.Items);
+      loadLibraryDataAction(temp.Items);
       this.sortData();
     }
 
     sortData = () => {
       const hillDict = {};
-      const libDict = {};
+      // const libDict = {};
       const hillArray = [];
-      const libArray = [];
+      // const libArray = [];
       const { location } = this.props;
-      const { hillData, libraryData } = this.props;
+      const { hillData } = this.props;
       if (location.includes('Anywhere') || location.includes('Hill')) {
         for (let i = 0; i < hillData.length; i += 1) {
           if (hillData[i].name in hillDict) {
