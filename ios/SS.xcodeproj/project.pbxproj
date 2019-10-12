@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -42,7 +43,6 @@
 		4CB9C35ADE554626B916211D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA182156FE854C4C96395294 /* FontAwesome5_Solid.ttf */; };
 		4D176451BD6A41B8B85B4198 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF486700A4B24010846A6C11 /* EvilIcons.ttf */; };
 		4FBB8079A62A4BDFAD61FDB5 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E31D1ED3B84D4EF4B910951D /* AntDesign.ttf */; };
-		5639A16B229E3A61000E8D70 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 5639A16A229E3A61000E8D70 /* main.jsbundle */; };
 		5639A16D229E3A8B000E8D70 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 5639A16C229E3A8B000E8D70 /* assets */; };
 		5B96112042004274AE909151 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FFF382D530B4865B590516E /* libAirMaps.a */; };
 		5EE97B4B13CD4F6E210C7635 /* libPods-SS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D1CFC6153ED765D5ED16D1D /* libPods-SS.a */; };
@@ -867,9 +867,6 @@
 						DevelopmentTeam = TLUY6DGT96;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
-					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = TLUY6DGT96;
-					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = TLUY6DGT96;
@@ -1281,7 +1278,6 @@
 				F873B8C4AE754A58928CD508 /* FontAwesome5_Regular.ttf in Resources */,
 				4CB9C35ADE554626B916211D /* FontAwesome5_Solid.ttf in Resources */,
 				CAB4054D52C34FF4BC06848B /* Foundation.ttf in Resources */,
-				5639A16B229E3A61000E8D70 /* main.jsbundle in Resources */,
 				47AD1A2CE54F46C7ADC805DC /* Ionicons.ttf in Resources */,
 				4638578F190F4A6E9518F906 /* MaterialCommunityIcons.ttf in Resources */,
 				BAFA96F3CC224B7FBB6241F1 /* MaterialIcons.ttf in Resources */,
@@ -1322,7 +1318,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1545,7 +1541,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = TLUY6DGT96;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
@@ -1573,7 +1569,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TLUY6DGT96;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
