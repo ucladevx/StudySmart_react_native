@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import {
@@ -13,6 +14,13 @@ import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
 import FeedbackContainer from './app/screens/Feedback/FeedbackContainer';
 import BookingWebView from './app/screens/StudyRoom/BookingWebView';
 
+const locationsTabSelected = require('./assets/locationsTabSelected.png');
+const locationsTab = require('./assets/locationsTab.png');
+const studyTabSelected = require('./assets/studyTabSelected.png');
+const studyTab = require('./assets/studyTab.png');
+const feedbackTabSelected = require('./assets/feedbackTabSelected.png');
+const feedbackTab = require('./assets/feedbackTab.png');
+
 const StudyRoomStack = StackNavigator({
   StudyRoomsContainer: { screen: StudyRoomsContainer },
   StudyRoomReserve: { screen: StudyRoomReserve },
@@ -21,7 +29,6 @@ const StudyRoomStack = StackNavigator({
 
 },
 {
-  // For now, use this to toggle between List view and Map view. We will eventually add a toggle button
   initialRouteName: 'StudyRoomsContainer',
 });
 
@@ -45,8 +52,8 @@ const FeedbackStack = StackNavigator({
 StudyRoomStack.navigationOptions = {
   tabBarIcon: ({ focused }) => {
     const image = focused
-      ? require('./assets/studyTabSelected.png')
-      : require('./assets/studyTab.png');
+      ? studyTabSelected
+      : studyTab;
     return (
       <Image
         source={image}
@@ -65,8 +72,8 @@ StudyRoomStack.navigationOptions = {
 LocationsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => {
     const image = focused
-      ? require('./assets/locationsTabSelected.png')
-      : require('./assets/locationsTab.png');
+      ? locationsTabSelected
+      : locationsTab;
     return (
       <Image
         source={image}
@@ -86,8 +93,8 @@ FeedbackStack.navigationOptions = {
   header: null,
   tabBarIcon: ({ focused }) => {
     const image = focused
-      ? require('./assets/feedbackTabSelected.png')
-      : require('./assets/feedbackTab.png');
+      ? feedbackTabSelected
+      : feedbackTab;
     return (
       <Image
         source={image}
