@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Platform } from 'react-native';
 import { connect } from 'react-redux';
 import {
   changeTime, changeDate, changeLocation, loadHillData, loadLibraryData,
@@ -61,8 +62,20 @@ class StudyRoomsContainer extends Component {
       let styledTime = setting.toLocaleTimeString();
       const last2ndChar = styledTime[styledTime.length - 2];
       const lastChar = styledTime[styledTime.length - 1];
-      styledTime = styledTime.slice(0, -6);
-      changeTimeAction(styledTime + last2ndChar + lastChar);
+      if (Platform.OS === 'ios') {
+        styledTime = styledTime.slice(0, -6) + last2ndChar + lastChar;
+      } else {
+        styledTime = styledTime.slice(0, -3);
+        let hour = parseInt(styledTime.substring(0, 2), 10);
+        if (hour > 12) {
+          hour -= 12;
+          const hourString = hour.toString();
+          styledTime = `${hourString + styledTime.slice(2)}PM`;
+        } else {
+          styledTime += 'AM';
+        }
+      }
+      changeTimeAction(styledTime);
       let chosen = setting;
       let dd = chosen.getDate();
       let mm = chosen.getMonth() + 1; // January is 0!

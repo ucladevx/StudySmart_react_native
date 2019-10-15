@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import {
+  Platform,
   Text, View, TouchableOpacity, StyleSheet, Modal
 } from 'react-native';
+
 import { connect } from 'react-redux';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {
@@ -46,8 +48,7 @@ class StudyRoomModal extends Component {
     const minutes = setting.getMinutes();
     if (minutes !== 30 && minutes !== 0) {
       if (minutes > 30) {
-        setting.setMinutes(0);
-        setting.setHours(setting.getHours() + 1);
+        setting.setMinutes(60);
         if (setting.getHours() === 0) {
           setting.setDate(setting.getDate() + 1);
         }
@@ -59,11 +60,23 @@ class StudyRoomModal extends Component {
       let styledTime = setting.toLocaleTimeString();
       const last2ndChar = styledTime[styledTime.length - 2];
       const lastChar = styledTime[styledTime.length - 1];
-      styledTime = styledTime.slice(0, -6);
+      if (Platform.OS === 'ios') {
+        styledTime = styledTime.slice(0, -6) + last2ndChar + lastChar;
+      } else {
+        styledTime = styledTime.slice(0, -3);
+        let hour = parseInt(styledTime.substring(0, 2), 10);
+        if (hour > 12) {
+          hour -= 12;
+          const hourString = hour.toString();
+          styledTime = `${hourString + styledTime.slice(2)}PM`;
+        } else {
+          styledTime += 'AM';
+        }
+      }
       this.setState({
         timePickerVisible: !timePickerVisible
       });
-      changeTimeAction(styledTime + last2ndChar + lastChar);
+      changeTimeAction(styledTime);
     } else {
       let chosen = setting;
       let dd = chosen.getDate();
