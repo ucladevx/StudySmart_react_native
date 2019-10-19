@@ -65,12 +65,15 @@ class StudyRoomModal extends Component {
       } else {
         styledTime = styledTime.slice(0, -3);
         let hour = parseInt(styledTime.substring(0, 2), 10);
+        let hourString = hour.toString();
         if (hour > 12) {
           hour -= 12;
-          const hourString = hour.toString();
           styledTime = `${hourString + styledTime.slice(2)}PM`;
         } else {
-          styledTime += 'AM';
+          if (hourString === '0') {
+            hourString = '12';
+          }
+          styledTime = `${hourString + styledTime.slice(2)}AM`;
         }
       }
       this.setState({
