@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 import LibraryCard from '../../components/LibraryCard';
@@ -30,7 +30,8 @@ export default class LocationsMap extends Component {
     this.state = {
       markers: [],
       selectedLibrary: initialLibrary === 'NO-LIBRARY' ? 'NO-LIBRARY' : initialLibrary.name.S,
-      selectedLibraryData: initialLibrary
+      selectedLibraryData: initialLibrary,
+      loading: true,
     };
   }
 
@@ -58,6 +59,13 @@ export default class LocationsMap extends Component {
   render() {
     const { selectedLibrary, markers, selectedLibraryData } = this.state;
 
+    if (!unselectedMarker || !selectedMarker) {
+      this.setState({ loading: false });
+      return(
+      <ActivityIndicator size="large" color="#108BF8" />
+      );
+    }
+
     return (
       <View style={styles.mapContainer}>
         <MapView
@@ -78,6 +86,7 @@ export default class LocationsMap extends Component {
               coordinate={marker.latlng}
               description={marker.description}
               image={selectedLibrary === marker.title ? selectedMarker : unselectedMarker}
+              tracksViewChanges={false}
               onPress={(e) => { e.stopPropagation(); this.updateSelectedMarker(marker.title); }}
             />
           ))}
