@@ -45,7 +45,7 @@ const titleText = {
   fontStyle: 'normal',
   letterSpacing: 1.92,
   color: 'gray',
-  width: '95%',
+  width: '100%',
   textAlign: 'center',
   padding: 1
 };
