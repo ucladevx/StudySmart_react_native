@@ -31,7 +31,6 @@ export default class LocationsMap extends Component {
       markers: [],
       selectedLibrary: initialLibrary === 'NO-LIBRARY' ? 'NO-LIBRARY' : initialLibrary.name.S,
       selectedLibraryData: initialLibrary,
-      loading: true,
     };
   }
 
@@ -60,9 +59,8 @@ export default class LocationsMap extends Component {
     const { selectedLibrary, markers, selectedLibraryData } = this.state;
 
     if (!unselectedMarker || !selectedMarker) {
-      this.setState({ loading: false });
-      return(
-      <ActivityIndicator size="large" color="#108BF8" />
+      return (
+        <ActivityIndicator size="large" color="#108BF8" />
       );
     }
 
