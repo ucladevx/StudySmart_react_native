@@ -70,6 +70,7 @@ class StudyRoomsContainer extends Component {
         let hourString = hour.toString();
         if (hour > 12) {
           hour -= 12;
+          hourString = hour.toString();
           styledTime = `${hourString + styledTime.slice(2)}PM`;
         } else {
           if (hourString === '0') {
@@ -140,6 +141,7 @@ class StudyRoomsContainer extends Component {
           hourInt = 0;
         }
         const newDate = new Date(yearInt, monthInt - 1, dayInt, hourInt, minuteInt, 0, 0);
+
         const seconds = newDate.getTime() / 1000;
         appendedURL += `?time=${seconds}`;
       }

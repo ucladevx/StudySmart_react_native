@@ -68,6 +68,7 @@ class StudyRoomModal extends Component {
         let hourString = hour.toString();
         if (hour > 12) {
           hour -= 12;
+          hourString = hour.toString();
           styledTime = `${hourString + styledTime.slice(2)}PM`;
         } else {
           if (hourString === '0') {
