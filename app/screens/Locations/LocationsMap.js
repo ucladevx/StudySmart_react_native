@@ -50,7 +50,7 @@ export default class LocationsMap extends Component {
     } else {
       this.setState({
         selectedLibrary: title,
-        selectedLibraryData: libraryData.find(element => element.name.S === title)
+        selectedLibraryData: libraryData.find(element => element.name === title)
       });
     }
   }
