@@ -13,7 +13,7 @@ const markerList = [
   { title: 'Arts Library', latlng: { latitude: 34.074456, longitude: -118.439205 } },
   { title: 'Management Library (Eugene and Maxine Rosenfeld)', latlng: { latitude: 34.074281, longitude: -118.443350 } },
   { title: 'Southern Regional Library Facility', latlng: { latitude: 34.071090, longitude: -118.454179 } },
-  { title: 'East Asian Library (Richard C. Rudolph)', latlng: { latitude: 34.074960, longitude: -118.441466 } },
+  { title: 'East Asian Library (Richard C. Rudolph) ', latlng: { latitude: 34.074960, longitude: -118.441466 } },
   { title: 'Science and Engineering Library', latlng: { latitude: 34.068986, longitude: -118.442659 } },
   { title: 'Music Library', latlng: { latitude: 34.070693, longitude: -118.440154 } },
   { title: 'Law Library (Hugh & Hazel Darling)', latlng: { latitude: 34.072646, longitude: -118.437929 } },
