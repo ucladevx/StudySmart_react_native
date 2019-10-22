@@ -29,7 +29,7 @@ export default class LocationsMap extends Component {
     const { initialLibrary } = this.props;
     this.state = {
       markers: [],
-      selectedLibrary: initialLibrary === 'NO-LIBRARY' ? 'NO-LIBRARY' : initialLibrary.name.S,
+      selectedLibrary: initialLibrary === 'NO-LIBRARY' ? 'NO-LIBRARY' : initialLibrary.name,
       selectedLibraryData: initialLibrary,
     };
   }

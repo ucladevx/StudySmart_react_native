@@ -120,7 +120,7 @@ class LocationContainer extends Component {
       value;
     const result = [];
     for (index = 0; index < fullLibraryData.length; index += 1) {
-      value = fullLibraryData[index].name.S.toUpperCase();
+      value = fullLibraryData[index].name.toUpperCase();
       const currentLocation = search.toUpperCase();
       if (value.includes(currentLocation)) {
         result.push(fullLibraryData[index]);
