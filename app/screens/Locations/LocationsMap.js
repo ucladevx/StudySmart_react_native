@@ -57,7 +57,6 @@ export default class LocationsMap extends Component {
 
   render() {
     const { selectedLibrary, markers, selectedLibraryData } = this.state;
-
     if (!unselectedMarker || !selectedMarker) {
       return (
         <ActivityIndicator size="large" color="#108BF8" />

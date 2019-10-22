@@ -8,12 +8,38 @@ import LocationHeader from './LocationHeader';
 import LocationsList from './LocationsList';
 import LocationsMap from './LocationsMap';
 
-const libraryToBusynessTranslation = {
-  'Science and Engineering Library': 'UCLA Science and Engineering Library',
-  'Music Library': 'UCLA Music Library',
-  'Powell Library': 'Powell Library',
-  'Research Library (Charles E. Young)': 'Charles E. Young Research Library',
-  'Management Library (Eugene and Maxine Rosenfeld)': 'Rosenfeld Library',
+const hedrick = {
+  name: 'The Study at Hedrick',
+  location: ' 250 De Neve Dr, Los Angeles, CA 90024',
+  department: {
+    Study: [{
+      dp_open_time: '24 hours',
+      date: 'M 14'
+    }, {
+      dp_open_time: '24 hours',
+      date: 'M 14'
+    },
+    {
+      dp_open_time: '24 hours',
+      date: 'M 14'
+    },
+    {
+      dp_open_time: '24 hours',
+      date: 'M 14'
+    },
+    {
+      dp_open_time: '24 hours',
+      date: 'M 14'
+    },
+    {
+      dp_open_time: '24 hours',
+      date: 'M 14'
+    },
+    {
+      dp_open_time: '24 hours',
+      date: 'M 14'
+    }]
+  }
 };
 
 class LocationContainer extends Component {
@@ -33,24 +59,39 @@ class LocationContainer extends Component {
   }
 
   async componentWillMount() {
-    let temp;
+    const temp = [];
+    let busynessLevels;
     // Fetch library data from API, store inside this.libraryData
-    await fetch('http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/libinfo')
+    await fetch('http://studysmartserver-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/libinfo/')
       .then(response => response.json())
       .then((data) => {
-        temp = data;
+        Object.keys(data).forEach((key) => {
+          const dict = data[key];
+          dict.name = key;
+          temp.push(dict);
+        });
+      });
+
+    await fetch('http://studysmartserver-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/libinfo/')
+      .then(response => response.json())
+      .then((data) => {
+        busynessLevels = data.Items;
       });
     // Process activity levels - dictionary from name to name
 
-    const libData = temp.Items;
-
+    temp.push(hedrick);
+    const libData = temp;
     for (let i = 0; i < libData.length; i += 1) {
       const item = libData[i];
-      // This is the name from the libraryData API
-      const libraryName = item.name.S;
+      const libraryName = item.name;
       const fileString = libraryName.replace(/[^a-zA-Z0-9]/g, '').substring(0, 12);
       // Add image URL
       item.image = fileString;
+      for (let j = 0; j < libData.length; j += 1) {
+        if (busynessLevels[j].name.S === item.name) {
+          item.current_busyness = busynessLevels[j].current_busyness;
+        }
+      }
     }
 
     /* Once the request is done, save library data to current state */

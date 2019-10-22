@@ -49,7 +49,8 @@ class LibraryCard extends Component {
   getLibraryHours = (library, day) => {
     let status = 'Closed';
     try {
-      status = library.department.L[0].M.time.L[`${day}`].M.dp_open_time.S;
+      const libraryChosen = Object.keys(library.department)[0];
+      status = library.department[libraryChosen][`${day}`].dp_open_time;
     } catch (err) {
       // console.log(library.name, 'does not have status');
     }
@@ -93,8 +94,8 @@ class LibraryCard extends Component {
         arrowIcon = <Ionicon color="black" name="ios-arrow-up" size={25} />;
       }
     }
-
     return (
+
       <TouchableOpacity onPress={() => {
         this.handleExpandPress();
       }}
@@ -104,12 +105,12 @@ class LibraryCard extends Component {
             <View style={listElement.imgContainer}>
               <Image
                 style={listElement.img}
-                source={libImages[item.image]}
+                source={libImages[`${item.image}`]}
               />
             </View>
             <View style={listElement.information}>
               <Text style={listElement.name}>
-                {item.name.S}
+                {item.name}
               </Text>
               {/* Special Case for when Hours are 'Closed' */}
               {
@@ -130,10 +131,13 @@ class LibraryCard extends Component {
               {/* Progress Bar */}
               {
                 item.current_busyness !== undefined
-                  ?
-                  <ActivityBar barWidth={activityBarWidth} activityLevel={item.current_busyness.N} />
-                  :
-                  <ActivityBar barWidth={activityBarWidth} activityLevel="N/A" />
+                  ? (
+                    <ActivityBar
+                      barWidth={activityBarWidth}
+                      activityLevel={item.current_busyness.N}
+                    />
+                  )
+                  : <ActivityBar barWidth={activityBarWidth} activityLevel="N/A" />
               }
             </View>
           </View>

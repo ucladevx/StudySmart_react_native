@@ -146,7 +146,7 @@ class StudyRoomsContainer extends Component {
         appendedURL += `?time=${seconds}`;
       }
       /* Fetch library data from API, store inside this.library_data */
-      await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/studyinfo${appendedURL}`)
+      await fetch(`http://studysmartserver-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/studyinfo${appendedURL}`)
         .then(response => response.json())
         .then((data) => {
           temp = data;
