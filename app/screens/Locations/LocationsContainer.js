@@ -154,7 +154,7 @@ class LocationContainer extends Component {
     if (libraryData === undefined) {
       return (
         <SafeAreaView style={styles.loading}>
-          <Text style={{ textAlign: 'center', paddingBottom: 20, }}>Attemping to fetch library data...</Text>
+          <Text style={{ textAlign: 'center', paddingBottom: 20, }}>Attempting to fetch library data...</Text>
           <ActivityIndicator size="large" color="#4F87EC" />
         </SafeAreaView>
       );
