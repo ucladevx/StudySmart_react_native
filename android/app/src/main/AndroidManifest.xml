@@ -6,8 +6,8 @@
     <application
       android:name=".MainApplication"
       android:label="StudySmart"
-      android:icon="@mipmap/studysmart"
-      android:roundIcon="@mipmap/studysmart"
+      android:icon="@mipmap/logo"
+      android:roundIcon="@mipmap/logo"
       android:allowBackup="false"
         android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
