@@ -2,12 +2,12 @@
     package="com.ss">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
       android:name=".MainApplication"
       android:label="StudySmart"
       android:icon="@mipmap/studysmart"
+      android:roundIcon="@mipmap/studysmart"
       android:allowBackup="false"
         android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
