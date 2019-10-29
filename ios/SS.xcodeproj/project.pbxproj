@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -53,7 +52,7 @@
 		9F2953032282AFDA00C1259A /* blue in Resources */ = {isa = PBXBuildFile; fileRef = 9F2952D92282AFD900C1259A /* blue */; };
 		A71A733433087B1B2F42517E /* libPods-SS-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 478953D25871C5A32D571849 /* libPods-SS-tvOSTests.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-			ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
+		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 		B1B1239D41174BEEBE6F184C /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D1ADAF7261E54C8BB26A746F /* FontAwesome5_Brands.ttf */; };
 		B476E2158C224D49B7E748A0 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C16C3EEF4E04F6DAEDB701B /* SimpleLineIcons.ttf */; };
@@ -63,6 +62,7 @@
 		CAB4054D52C34FF4BC06848B /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02610440F0A145F0BC318DAA /* Foundation.ttf */; };
 		F1AA57A4F2144C5DA7312166 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A6180C7CF2AB4C83BC56D090 /* Entypo.ttf */; };
 		F873B8C4AE754A58928CD508 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A5A5DA81CE841208DEAEFDA /* FontAwesome5_Regular.ttf */; };
+		8BB164C34CCF47E3BF34F286 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9B8642727384C3FB4C4F166 /* Fontisto.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -431,6 +431,7 @@
 		E0679F4F975B4015B0CF11AB /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		E31D1ED3B84D4EF4B910951D /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
 		FDB5A298E87D4AA3826BCDFC /* libRNGoogleSignin.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNGoogleSignin.a; sourceTree = "<group>"; };
+		E9B8642727384C3FB4C4F166 /* Fontisto.ttf */ = {isa = PBXFileReference; name = "Fontisto.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/Fontisto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -766,6 +767,7 @@
 				D163C66979F844828EA04F40 /* Octicons.ttf */,
 				3C16C3EEF4E04F6DAEDB701B /* SimpleLineIcons.ttf */,
 				961B1E25F12241E7A297AD90 /* Zocial.ttf */,
+				E9B8642727384C3FB4C4F166 /* Fontisto.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1296,6 +1298,7 @@
 				B476E2158C224D49B7E748A0 /* SimpleLineIcons.ttf in Resources */,
 				C6C059CFC7F6437FA1283868 /* Zocial.ttf in Resources */,
 				5639A16D229E3A8B000E8D70 /* assets in Resources */,
+				8BB164C34CCF47E3BF34F286 /* Fontisto.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
