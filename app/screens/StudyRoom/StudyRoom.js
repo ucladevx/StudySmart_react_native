@@ -23,13 +23,6 @@ export default class StudyRoomList extends Component {
   }
 
 
-  handleSelectRoom = (item) => {
-    const { navigation } = this.props;
-    navigation.navigate('StudyRoomReserve', {
-      rooms: item
-    });
-  }
-
   handleModal = () => {
     const { visible } = this.state;
     this.setState({

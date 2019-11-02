@@ -7,6 +7,7 @@ import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures'
 
 import FloatingSegment from '../../components/FloatingSegment';
 
+// TODO: Update with proper library abbrevs and names later
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
   sproulmusic: 'Sproul Music Rooms',
@@ -17,6 +18,12 @@ const namePairs = {
   hedrickstudy: 'Hedrick Study Rooms',
   hedrickmusic: 'Hedrick Music Rooms',
   movement: 'Hedrick Movement Studio',
+};
+
+const nameToLink = {
+  powell: 'http://calendar.library.ucla.edu/spaces',
+  yrl: 'http://calendar.library.ucla.edu/reserve/yrl_gsr',
+  pods: 'http://calendar.library.ucla.edu/reserve/yrl_pods'
 };
 
 const durationPairs = {
@@ -81,10 +88,10 @@ export default class LibraryRoomReserve extends Component {
 
 
   handleReserve = () => {
-    // TODO: Need to determine the library that we are on by looking at 
     const { rooms } = this.state;
-    alert(rooms.location);
-    this.props.navigation.navigate('BookingWebView', { url: 'https://www.google.com/' });
+    // Determine which library we are looking at, default to powell (for now)
+    const link = nameToLink[rooms.location] || nameToLink['powell'];
+    this.props.navigation.navigate('BookingWebView', { url: link });
   }
 
   reserveButtonComponent = () => {
@@ -157,9 +164,8 @@ export default class LibraryRoomReserve extends Component {
             onSwipeRight={state => this.onSwipeRight(state)}
             config={config}
             style={{
-              backgroundColor: 'red',
-              flexDirection: 'column',
-              alignItems: 'center',
+              flex: 1,
+              backgroundColor: 'white',
             }}
           >
             <FlatList
@@ -198,6 +204,8 @@ const reserveButton = {
   shadowRadius: 1,
   borderRadius: 5,
   width: '40%',
+  alignSelf: 'center',
+  marginTop: 25,
   flex: 1,
 };
 
@@ -253,7 +261,7 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     flexDirection: 'row',
-    height: 120,
+    height: 80,
     width: '95%',
     padding: 10,
     marginTop: 4,
@@ -322,4 +330,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-
