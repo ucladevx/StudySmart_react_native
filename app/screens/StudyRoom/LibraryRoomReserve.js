@@ -20,9 +20,7 @@ const namePairs = {
 };
 
 const durationPairs = {
-  '30 min': '30',
   '1 hour': '60',
-  '1.5 hours': '90',
   '2 hours': '120',
 };
 
@@ -44,47 +42,21 @@ export default class LibraryRoomReserve extends Component {
 
 
   onSwipeLeft(gestureState) {
-    const { duration } = this.state;
-    switch (duration) {
-      case '30 min':
-        this.setDuration('1 hour');
-        break;
-      case '1 hour':
-        this.setDuration('1.5 hours');
-        break;
-      case '1.5 hours':
-        this.setDuration('2 hours');
-        break;
-      default:
-        this.setDuration('2 hours');
-    }
+    this.setDuration('2 hours');
   }
 
   onSwipeRight(gestureState) {
-    const { duration } = this.state;
-    switch (duration) {
-      case '2 hours':
-        this.setDuration('1.5 hours');
-        break;
-      case '1.5 hours':
-        this.setDuration('1 hour');
-        break;
-      case '1 hour':
-        this.setDuration('30 min');
-        break;
-      default:
-        this.setDuration('30 min');
-    }
+    this.setDuration('1 hour');
   }
 
   onSwipe(gestureName, gestureState) {
     const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
     switch (gestureName) {
       case SWIPE_LEFT:
-        this.onSwipeLeft(gestureState);
+        this.setDuration('2 hours');
         break;
       case SWIPE_RIGHT:
-        this.onSwipeRight(gestureState);
+        this.setDuration('1 hour');
         break;
       default:
         break;
@@ -108,8 +80,24 @@ export default class LibraryRoomReserve extends Component {
   }
 
 
-  handleReserve = (room) => {
-    this.props.navigation.navigate('BookingWebView', { url: room });
+  handleReserve = () => {
+    // TODO: Need to determine the library that we are on by looking at 
+    const { rooms } = this.state;
+    alert(rooms.location);
+    this.props.navigation.navigate('BookingWebView', { url: 'https://www.google.com/' });
+  }
+
+  reserveButtonComponent = () => {
+    return (
+      <TouchableOpacity
+        style={styles.reserveButton}
+        onPress={() => this.handleReserve()}
+      >
+        <Text style={styles.whiteText}>
+          Reserve a Room
+        </Text>
+      </TouchableOpacity>
+    );
   }
 
   renderList(item) {
@@ -132,16 +120,6 @@ export default class LibraryRoomReserve extends Component {
             <Text style={styles.littleText}>
               {detailsArray[1]}
             </Text>
-          </View>
-          <View style={styles.containerCol}>
-            <TouchableOpacity
-              style={styles.reserveButton}
-              onPress={() => this.handleReserve(item.link)}
-            >
-              <Text style={styles.whiteText}>
-                Reserve
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -168,26 +146,33 @@ export default class LibraryRoomReserve extends Component {
             {' '}
           </Text>
         </View>
-        <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['30 min', '1 hour', '1.5 hours', '2 hours']} />
-        <GestureRecognizer
-          onSwipe={(direction, state) => this.onSwipe(direction, state)}
-          onSwipeLeft={state => this.onSwipeLeft(state)}
-          onSwipeRight={state => this.onSwipeRight(state)}
-          config={config}
-          style={{
-            flex: 1,
-            backgroundColor: 'white'
-          }}
-        >
-          <FlatList
-            data={rooms.available}
-            extraData={this.state}
-            renderItem={({ item }) => this.renderList(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
-          />
-        </GestureRecognizer>
-        {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
+        <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
+        <View style={styles.centeredContent}>
+          <Text style={styles.subtitleText}>
+            <Text>Available Rooms</Text>
+          </Text>
+          <GestureRecognizer
+            onSwipe={(direction, state) => this.onSwipe(direction, state)}
+            onSwipeLeft={state => this.onSwipeLeft(state)}
+            onSwipeRight={state => this.onSwipeRight(state)}
+            config={config}
+            style={{
+              backgroundColor: 'red',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <FlatList
+              data={rooms.available}
+              extraData={this.state}
+              renderItem={({ item }) => this.renderList(item)}
+              keyExtractor={(item, index) => index.toString()}
+              style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
+              ListFooterComponent={this.reserveButtonComponent}
+            />
+          </GestureRecognizer>
+          {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
+        </View>
       </SafeAreaView>
 
     );
@@ -205,7 +190,6 @@ const text = {
 const reserveButton = {
   backgroundColor: '#108BF8',
   height: 30,
-  width: '75%',
   alignItems: 'center',
   justifyContent: 'center',
   elevation: 5,
@@ -213,7 +197,8 @@ const reserveButton = {
   shadowOpacity: 0.5,
   shadowRadius: 1,
   borderRadius: 5,
-  marginLeft: 20
+  width: '40%',
+  flex: 1,
 };
 
 const styles = StyleSheet.create({
@@ -240,14 +225,27 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: 'black'
   },
+  subtitleText: {
+    ...text,
+    fontSize: 15,
+    fontWeight: '500',
+    color: 'gray',
+  },
   whiteText: {
     ...text,
     fontSize: 15,
-    color: 'white'
+    color: 'white',
+  },
+  centeredContent: {
+    flex: 1,
+    marginTop: 25,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   list: {
     backgroundColor: 'transparent',
@@ -277,6 +275,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginLeft: 15,
     justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
   },
   containerRow: {
@@ -284,6 +283,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginBottom: 3,
     alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
   },
   category: {

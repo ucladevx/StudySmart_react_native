@@ -44,7 +44,7 @@ class BookingCard extends Component {
     const { navigation } = this.props;
     switch (item.area) {
       case 'Hill':
-        navigation.navigate('StudyRoomReserve', {
+        navigation.navigate('LibraryRoomReserve', {
           rooms: item
         });
         break;
@@ -56,8 +56,6 @@ class BookingCard extends Component {
       default:
         break;
     }
-
-
   }
 
   render() {
