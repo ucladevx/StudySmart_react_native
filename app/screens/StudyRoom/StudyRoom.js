@@ -3,49 +3,15 @@ import {
   Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator,
   TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
-import Entypo from 'react-native-vector-icons/Entypo';
 import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
 import FloatingSegment from '../../components/FloatingSegment';
 import ShadowButton from '../../components/ShadowButton';
-
-const namePairs = {
-  sproulstudy: 'Sproul Study Rooms',
-  sproulmusic: 'Sproul Music Rooms',
-  deneve: 'De Neve Meeting Rooms',
-  rieber: 'Rieber Study Rooms',
-  music: 'Rieber Music Rooms',
-  hedrick: 'The Study at Hedrick',
-  hedrickstudy: 'Hedrick Study Rooms',
-  hedrickmusic: 'Hedrick Music Rooms',
-  movement: 'Hedrick Movement Studio',
-};
-
-const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
-const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
-const deneve = require('../../../assets/Studyrooms/deneve.jpg');
-const rieber = require('../../../assets/Studyrooms/rieber.jpg');
-const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
-const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
-const music = require('../../../assets/Studyrooms/music.jpg');
-const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
-const movement = require('../../../assets/Studyrooms/movement.jpg');
-
-const imagePairs = {
-  sproulmusic,
-  sproulstudy,
-  deneve,
-  rieber,
-  hedrick,
-  hedrickmusic,
-  music,
-  hedrickstudy,
-  movement
-};
+import BookingCard from '../../components/BookingCard';
 
 export default class StudyRoomList extends Component {
   static navigationOptions = {
-    header: () => {}
+    header: () => { }
   }
 
   constructor(props) {
@@ -77,56 +43,7 @@ export default class StudyRoomList extends Component {
     });
   }
 
-
-  renderRow(item) {
-    const unique = [];
-    for (let i = 0; i < item.available.length; i += 1) {
-      if (!unique.includes(item.available[i].details)) {
-        unique.push(item.available[i].details);
-      }
-    }
-    return (
-      <TouchableOpacity
-        onPress={() => this.handleSelectRoom(item)}
-      >
-        <View style={styles.cell}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => this.handleSelectRoom(item)}
-          >
-            <Entypo name="chevron-thin-right" size={25} color="black" />
-          </TouchableOpacity>
-          <View
-            style={styles.containerRow}
-          >
-            <View style={styles.imageIcon}>
-              <Image source={imagePairs[item.location]} style={styles.image} />
-            </View>
-            <View
-              style={styles.containerCol}
-            >
-              <View style={styles.containerRow}>
-                <Text style={[styles.name, styles.leftText]}>
-                  {item.area === 'Hill' ? namePairs[item.location] : item.location}
-                </Text>
-              </View>
-              <View style={styles.containerRow}>
-                <Text style={[styles.text, styles.leftText]}>
-                  Rooms Available:
-                  {unique.length}
-                </Text>
-              </View>
-              <View style={styles.containerRow}>
-                <Text style={[styles.text, styles.leftText]}>
-                  {''}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  }
+  renderRow = item => <BookingCard item={item} />
 
   render() {
     const {
@@ -135,6 +52,34 @@ export default class StudyRoomList extends Component {
     const {
       navigation, filterData, hillDataFound, loading, getStudyRooms
     } = this.props;
+
+    let listData;
+    switch (currentLocation) {
+      case 'Hill':
+        listData = hillDataFound.length > 0 ? (
+          <FlatList
+            data={hillDataFound}
+            extraData={hillDataFound}
+            renderItem={({ item }) => this.renderRow(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.list}
+          />
+        ) : (
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          );
+        break;
+      default:
+        listData = (
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
+    }
+
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={styles.container}>
@@ -146,21 +91,7 @@ export default class StudyRoomList extends Component {
           />
           <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
-          {hillDataFound.length > 0 ? (
-            <FlatList
-              data={hillDataFound}
-              extraData={hillDataFound}
-              renderItem={({ item }) => this.renderRow(item)}
-              keyExtractor={(item, index) => index.toString()}
-              style={styles.list}
-            />
-          ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          )}
-
+          {listData}
           {visible ? (
             <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
           ) : null}
