@@ -42,9 +42,22 @@ const imagePairs = {
 class BookingCard extends Component {
   handleSelectRoom = (item) => {
     const { navigation } = this.props;
-    navigation.navigate('StudyRoomReserve', {
-      rooms: item
-    });
+    switch (item.area) {
+      case 'Hill':
+        navigation.navigate('StudyRoomReserve', {
+          rooms: item
+        });
+        break;
+      case 'Library':
+        navigation.navigate('LibraryRoomReserve', {
+          rooms: item
+        });
+        break;
+      default:
+        break;
+    }
+
+
   }
 
   render() {
