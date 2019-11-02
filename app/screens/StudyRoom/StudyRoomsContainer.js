@@ -104,7 +104,6 @@ class StudyRoomsContainer extends Component {
 
     getStudyRooms() {
       this.getHillStudyRooms();
-      // this should call getLibrariesRooms or getClassrooms later
       // this.getLibraryStudyRooms();
     }
 

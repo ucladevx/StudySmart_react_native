@@ -50,7 +50,7 @@ export default class StudyRoomList extends Component {
       visible, currentLocation
     } = this.state;
     const {
-      navigation, filterData, hillDataFound, loading, getStudyRooms
+      navigation, filterData, hillDataFound, loading, getStudyRooms, librariesDataFound,
     } = this.props;
 
     let listData;
@@ -71,6 +71,26 @@ export default class StudyRoomList extends Component {
             </View>
           );
         break;
+      case 'Libraries':
+        listData = librariesDataFound.length > 0 ? (
+          <FlatList
+            data={librariesDataFound}
+            extraData={librariesDataFound}
+            renderItem={({ item }) => this.renderRow(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.list}
+          />
+        ) : (
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          );
+        break;
+      case 'Classrooms':
+      // TODO
+      // listData = 
+      // break;
       default:
         listData = (
           <View style={styles.empty}>
