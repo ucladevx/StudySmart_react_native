@@ -17,7 +17,7 @@ export default class FloatingSegment extends Component {
         style={selected === title ? styles.categorySelected : styles.category}
         onPress={() => this.select(title)}
         key={title}
-        disabled={title === 'Libraries' || title === 'Classrooms'}
+        disabled={title === 'Libraries' } //|| title === 'Classrooms'}
       >
         <Text style={selected === title ? styles.titleTextSelected : styles.titleText}>
           {title}

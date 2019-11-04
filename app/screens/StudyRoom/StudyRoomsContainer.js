@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState, useRef } from 'react';
 import { Platform } from 'react-native';
 import { connect } from 'react-redux';
 import {

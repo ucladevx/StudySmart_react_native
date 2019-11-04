@@ -13,6 +13,7 @@ import StudyRoomsContainer from './app/screens/StudyRoom/StudyRoomsContainer';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
 import FeedbackContainer from './app/screens/Feedback/FeedbackContainer';
 import BookingWebView from './app/screens/StudyRoom/BookingWebView';
+import ClassroomView from './app/screens/StudyRoom/ClassroomView';
 
 const locationsTabSelected = require('./assets/locationsTabSelected.png');
 const locationsTab = require('./assets/locationsTab.png');
@@ -24,6 +25,7 @@ const feedbackTab = require('./assets/feedbackTab.png');
 const StudyRoomStack = StackNavigator({
   StudyRoomsContainer: { screen: StudyRoomsContainer },
   StudyRoomReserve: { screen: StudyRoomReserve },
+  ClassroomView: { screen: ClassroomView },
   BookingWebView: { screen: BookingWebView },
 
 

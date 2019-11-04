@@ -1,3 +1,108 @@
+// import React, { Component, useEffect, useState, useRef } from 'react';
+// import { Platform } from 'react-native';
+// import { connect } from 'react-redux';
+// import {
+//     changeTime, changeDate, changeLocation, loadHillData, loadLibraryData,
+//   } from '../../Actions/actions';
+//   import StudyRoomList from './StudyRoom';
+
+// const monthPairs = {
+//     '01': 'Jan',
+//     '02': 'Feb',
+//     '03': 'March',
+//     '04': 'April',
+//     '05': 'May',
+//     '06': 'June',
+//     '07': 'July',
+//     '08': 'Aug',
+//     '09': 'Sept',
+//     10: 'Oct',
+//     11: 'Nov',
+//     12: 'Dec',
+// };
+
+// export default BuildingSelectView = (props) => {
+//     // this.state = {
+//     //     hillData: [],
+//     //     librariesData: [],
+//     //     loading: true,
+//     //   };
+//     const [librariesData, setLibrariesData] = useState([]);
+//     const [loading, setLoading] = useState(true);
+//     const [buildingData, setBuildingData] = useState([]);
+
+//     const prevDate = usePrevious(props.date);
+
+    // useEffect(() => {
+
+    //     /* componentDidMount code + componentDidUpdate code */
+    //     const setting = new Date();
+
+    //     const { date } = this.props;
+
+    //   const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
+    //   const minutes = setting.getMinutes();
+    //   if (minutes !== 30 && minutes !== 0) {
+    //     if (minutes > 30) {
+    //       setting.setMinutes(60);
+    //     } else {
+    //       setting.setMinutes(30);
+    //     }
+    //   }
+    //   let styledTime = setting.toLocaleTimeString();
+    //   const last2ndChar = styledTime[styledTime.length - 2];
+    //   const lastChar = styledTime[styledTime.length - 1];
+    //   if (Platform.OS === 'ios') {
+    //     styledTime = styledTime.slice(0, -6) + last2ndChar + lastChar;
+    //   } else {
+    //     styledTime = styledTime.slice(0, -3);
+    //     let hour = parseInt(styledTime.substring(0, 2), 10);
+    //     let hourString = hour.toString();
+    //     if (hour > 12) {
+    //       hour -= 12;
+    //       hourString = hour.toString();
+    //       styledTime = `${hourString + styledTime.slice(2)}PM`;
+    //     } else {
+    //       if (hourString === '0') {
+    //         hourString = '12';
+    //       }
+    //       styledTime = `${hourString + styledTime.slice(2)}AM`;
+    //     }
+    //   }
+    //   changeTimeAction(styledTime);
+    //   let chosen = setting;
+    //   let dd = chosen.getDate();
+    //   let mm = chosen.getMonth() + 1; // January is 0!
+    //   const yyyy = chosen.getFullYear();
+    //   if (dd < 10) {
+    //     dd = `0${dd}`;
+    //   }
+    //   if (mm < 10) {
+    //     mm = `0${mm}`;
+    //   }
+    //   chosen = `${mm}/${dd}/${yyyy}`;
+    //   changeDateAction(chosen);
+
+      
+    //   // Typical usage (don't forget to compare props):
+    //   if (date !== prevDate) {
+    //     this.getStudyRooms();
+    //   }
+    //     return () => {
+    //         /* componentWillUnmount code */
+    //     }
+    // }, [props]);
+
+    // usePrevious= (value) => {
+    //     const ref = useRef();
+    //     useEffect(() => {
+    //       ref.current = value;
+    //     }, []);
+    //     return ref.current;
+    //   }
+
+// }
+
 import React, { Component } from 'react';
 import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, ActivityIndicator
@@ -18,13 +123,44 @@ const namePairs = {
   hedrickmusic: 'Hedrick Music Rooms',
   movement: 'Hedrick Movement Studio',
 };
+  //for later
+const BldgPairs = {
+  boelter: 'Boelter Hall',
+  boyer: 'Boyer Hall',
+  bradley: 'Bradley Hall',
+  bunche: 'Bunche Hall',
+  dodd: 'Dodd Hall',
+  haines: 'Haines Hall',
+  hershey: 'Hershey Hall',
+  kaplan: 'Kaplan Hall',
+  kaufman: 'Kaufman Hall',
+  knudsen: 'Knudsen Hall',
+  lakretz: 'La Kretz Hall',
+  law: 'Law Building',
+  ls: 'Life Sciences',
+  macgown: 'Macgowan Hall',
+  melnitz: 'Melnitz Hall',
+  molsci: 'Molecular Sciences Building',
+  moore: 'Moore Hall',
+  ms: 'Mathematical Sciences',
+  ostin: 'Ostin Music Center',
+  pab: 'Physics and Astronomy Building',
+  pubaff: "Public Affairs Building",
+  pubhealth: 'School of Public Health',
+  rolfe: 'Rolfe Hall',
+  royce: 'Royce Hall',
+  slichter: 'Slichter Hall',
+  schoenberg: 'Schoenberg Musi Building',
+  teraski: 'Teraski Life Sciences Building',
+  young: 'Young Hall',
+};
 
 const durationPairs = {
   '1 hour': '60',
   '2 hours': '120',
 };
 
-export default class StudyRoomReserve extends Component {
+export default class ClassroomView extends Component {
   static navigationOptions = {
     header: () => {
       false;
@@ -79,17 +215,11 @@ export default class StudyRoomReserve extends Component {
     }, 100);
   }
 
-
-  handleReserve = (room) => {
-    this.props.navigation.navigate('BookingWebView', { url: room });
-  }
-
   renderList(item) {
     const { duration } = this.state;
     if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
       return;
     }
-    
     let details = item.details.replace(/\n/g, '');
     details = details.trim();
     details = details.slice(0, -1);
@@ -106,16 +236,6 @@ export default class StudyRoomReserve extends Component {
               {detailsArray[1]}
             </Text>
           </View>
-          <View style={styles.containerCol}>
-            <TouchableOpacity
-              style={styles.reserveButton}
-              onPress={() => this.handleReserve(item.link)}
-            >
-              <Text style={styles.whiteText}>
-                Reserve
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
 
@@ -125,6 +245,7 @@ export default class StudyRoomReserve extends Component {
   render() {
     const { rooms, duration, slide } = this.state;
     const { navigate } = this.props.navigation;
+    const tester = "Is this thing on?";
     const config = {
       velocityThreshold: 0.1,
       directionalOffsetThreshold: 200
@@ -175,19 +296,6 @@ const text = {
   letterSpacing: 1.92,
   color: 'black',
 };
-const reserveButton = {
-  backgroundColor: '#108BF8',
-  height: 30,
-  width: '75%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  elevation: 5,
-  shadowOffset: { width: 0, height: 1 },
-  shadowOpacity: 0.5,
-  shadowRadius: 1,
-  borderRadius: 5,
-  marginLeft: 20
-};
 
 const styles = StyleSheet.create({
   searchText: {
@@ -199,7 +307,6 @@ const styles = StyleSheet.create({
     color: 'black',
     width: '80%',
   },
-  reserveButton,
   text,
   littleText: {
     ...text,
@@ -295,4 +402,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-

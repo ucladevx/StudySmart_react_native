@@ -8,6 +8,7 @@ import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
 import FloatingSegment from '../../components/FloatingSegment';
 import ShadowButton from '../../components/ShadowButton';
+import BookingCard from '../../components/BookingCard';
 
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
@@ -56,14 +57,6 @@ export default class StudyRoomList extends Component {
     };
   }
 
-
-  handleSelectRoom = (item) => {
-    const { navigation } = this.props;
-    navigation.navigate('StudyRoomReserve', {
-      rooms: item
-    });
-  }
-
   handleModal = () => {
     const { visible } = this.state;
     this.setState({
@@ -77,56 +70,15 @@ export default class StudyRoomList extends Component {
     });
   }
 
-
-  renderRow(item) {
-    const unique = [];
-    for (let i = 0; i < item.available.length; i += 1) {
-      if (!unique.includes(item.available[i].details)) {
-        unique.push(item.available[i].details);
-      }
-    }
-    return (
-      <TouchableOpacity
-        onPress={() => this.handleSelectRoom(item)}
-      >
-        <View style={styles.cell}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => this.handleSelectRoom(item)}
-          >
-            <Entypo name="chevron-thin-right" size={25} color="black" />
-          </TouchableOpacity>
-          <View
-            style={styles.containerRow}
-          >
-            <View style={styles.imageIcon}>
-              <Image source={imagePairs[item.location]} style={styles.image} />
-            </View>
-            <View
-              style={styles.containerCol}
-            >
-              <View style={styles.containerRow}>
-                <Text style={[styles.name, styles.leftText]}>
-                  {item.area === 'Hill' ? namePairs[item.location] : item.location}
-                </Text>
-              </View>
-              <View style={styles.containerRow}>
-                <Text style={[styles.text, styles.leftText]}>
-                  Rooms Available:
-                  {unique.length}
-                </Text>
-              </View>
-              <View style={styles.containerRow}>
-                <Text style={[styles.text, styles.leftText]}>
-                  {''}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
+  // MY NEW THINGS HERE HAHAHA /////// 
+  handleSelectBldg = (item) => {
+    const { navigation } = this.props;
+    navigation.navigate('BuildingSelectView', {
+      rooms: item
+    });
   }
+  
+  renderRow = item => <BookingCard item={item} />
 
   render() {
     const {
@@ -135,6 +87,72 @@ export default class StudyRoomList extends Component {
     const {
       navigation, filterData, hillDataFound, loading, getStudyRooms
     } = this.props;
+
+
+    let listData;
+    switch (currentLocation) {
+      case 'Hill':
+        listData = hillDataFound.length > 0 ? (
+          <FlatList
+            data={hillDataFound}
+            extraData={hillDataFound}
+            renderItem={({ item }) => this.renderRow(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.list}
+          />
+        ) : (
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          );
+        break;
+      case 'Libraries':
+        listData = librariesDataFound.length > 0 ? (
+          <FlatList
+            data={librariesDataFound}
+            extraData={librariesDataFound}
+            renderItem={({ item }) => this.renderRow(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.list}
+          />
+        ) : (
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          );
+        break;
+      case 'Classrooms':
+
+        listData = hillDataFound.length > 0 ? (
+          <FlatList
+            data={hillDataFound}
+            extraData={hillDataFound}
+            renderItem={({ item }) => this.renderRow(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.list}
+          />
+        ) : (
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          );
+
+
+      // TODO
+      // listData = 
+      break;
+      default:
+        listData = (
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
+    }
+
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={styles.container}>
@@ -146,20 +164,7 @@ export default class StudyRoomList extends Component {
           />
           <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
-          {hillDataFound.length > 0 ? (
-            <FlatList
-              data={hillDataFound}
-              extraData={hillDataFound}
-              renderItem={({ item }) => this.renderRow(item)}
-              keyExtractor={(item, index) => index.toString()}
-              style={styles.list}
-            />
-          ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          )}
+          {listData}
 
           {visible ? (
             <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
