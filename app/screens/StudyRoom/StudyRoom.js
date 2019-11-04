@@ -70,14 +70,6 @@ export default class StudyRoomList extends Component {
     });
   }
 
-  // MY NEW THINGS HERE HAHAHA /////// 
-  handleSelectBldg = (item) => {
-    const { navigation } = this.props;
-    navigation.navigate('BuildingSelectView', {
-      rooms: item
-    });
-  }
-  
   renderRow = item => <BookingCard item={item} />
 
   render() {
@@ -124,7 +116,7 @@ export default class StudyRoomList extends Component {
           );
         break;
       case 'Classrooms':
-
+          //testing with Hill Data for now
         listData = hillDataFound.length > 0 ? (
           <FlatList
             data={hillDataFound}
