@@ -26,6 +26,9 @@ const hedrickmusic = require('../../assets/Studyrooms/hedrickmusic.jpg');
 const music = require('../../assets/Studyrooms/music.jpg');
 const hedrickstudy = require('../../assets/Studyrooms/hedrick.jpg');
 const movement = require('../../assets/Studyrooms/movement.jpg');
+const powellLibIcon = require('../../assets/Libraries/PowellLibrar.jpg');
+const researchLibIcon = require('../../assets/Libraries/ResearchLibr.jpg');
+const biomedLibIcon = require('../../assets/Libraries/BiomedicalLi.jpg');
 
 const imagePairs = {
   sproulmusic,
@@ -36,12 +39,15 @@ const imagePairs = {
   hedrickmusic,
   music,
   hedrickstudy,
-  movement
+  movement,
+  'Powell Library': powellLibIcon,
+  'Young Research Library': researchLibIcon,
 };
 
 class BookingCard extends Component {
   handleSelectRoom = (item) => {
     const { navigation } = this.props;
+    console.log(item);
     switch (item.area) {
       case 'Hill':
         navigation.navigate('StudyRoomReserve', {
