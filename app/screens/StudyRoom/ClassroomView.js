@@ -126,33 +126,19 @@ const namePairs = {
   //for later
 const BldgPairs = {
   boelter: 'Boelter Hall',
-  boyer: 'Boyer Hall',
-  bradley: 'Bradley Hall',
   bunche: 'Bunche Hall',
   dodd: 'Dodd Hall',
+  franz: 'Franz Hall',
   haines: 'Haines Hall',
-  hershey: 'Hershey Hall',
   kaplan: 'Kaplan Hall',
-  kaufman: 'Kaufman Hall',
-  knudsen: 'Knudsen Hall',
-  lakretz: 'La Kretz Hall',
-  law: 'Law Building',
   ls: 'Life Sciences',
-  macgown: 'Macgowan Hall',
-  melnitz: 'Melnitz Hall',
-  molsci: 'Molecular Sciences Building',
   moore: 'Moore Hall',
   ms: 'Mathematical Sciences',
   ostin: 'Ostin Music Center',
   pab: 'Physics and Astronomy Building',
   pubaff: "Public Affairs Building",
   pubhealth: 'School of Public Health',
-  rolfe: 'Rolfe Hall',
-  royce: 'Royce Hall',
-  slichter: 'Slichter Hall',
-  schoenberg: 'Schoenberg Musi Building',
-  teraski: 'Teraski Life Sciences Building',
-  young: 'Young Hall',
+  
 };
 
 const durationPairs = {

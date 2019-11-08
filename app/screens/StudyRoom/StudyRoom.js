@@ -9,6 +9,7 @@ import StudyRoomModal from './StudyRoomModal';
 import FloatingSegment from '../../components/FloatingSegment';
 import ShadowButton from '../../components/ShadowButton';
 import BookingCard from '../../components/BookingCard';
+import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
 
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
@@ -71,6 +72,8 @@ export default class StudyRoomList extends Component {
   }
 
   renderRow = item => <BookingCard item={item} />
+  renderRowBldg = item => <ClassroomBuildingCard item={item} />
+  // renderBldg  = item => <ClassroomBuilding item={item}>
 
   render() {
     const {
@@ -80,10 +83,30 @@ export default class StudyRoomList extends Component {
       navigation, filterData, hillDataFound, loading, getStudyRooms
     } = this.props;
 
+    const buildings = {
+      "count": 3,
+      "items": [
+        {
+         "name": "boelter",
+         "available": 37,
+        },
+        {
+          "name": "haines",
+          "available": 18,
+        },
+        {
+          "name": "franz",
+          "available": 24,
+        },
+      ]
+    };
+
+
 
     let listData;
     switch (currentLocation) {
       case 'Hill':
+        console.log("HILL DATA STUFF:", hillDataFound);
         listData = hillDataFound.length > 0 ? (
           <FlatList
             data={hillDataFound}
@@ -117,25 +140,39 @@ export default class StudyRoomList extends Component {
         break;
       case 'Classrooms':
           //testing with Hill Data for now
-        listData = hillDataFound.length > 0 ? (
+        // listData = hillDataFound.length > 0 ? (
+        //   <FlatList
+        //     data={hillDataFound}
+        //     extraData={hillDataFound}
+        //     renderItem={({ item }) => this.renderRow(item)}
+        //     keyExtractor={(item, index) => index.toString()}
+        //     style={styles.list}
+        //   />
+        // ) : (
+        //     <View style={styles.empty}>
+        //       <Text style={titleText}> No rooms available </Text>
+        //       <ShadowButton title="Change Time" select={this.handleModal} />
+        //     </View>
+        //   );
+        console.log("building count: ", buildings.count);
+        listData = buildings.count > 0 ? (
           <FlatList
-            data={hillDataFound}
-            extraData={hillDataFound}
-            renderItem={({ item }) => this.renderRow(item)}
+            data={buildings.items}
+            extraData={buildings.items}
+            renderItem={({ item }) => this.renderRowBldg(item)}
             keyExtractor={(item, index) => index.toString()}
             style={styles.list}
           />
-        ) : (
-            <View style={styles.empty}>
+            ) : (
+           <View style={styles.empty}>
               <Text style={titleText}> No rooms available </Text>
               <ShadowButton title="Change Time" select={this.handleModal} />
             </View>
           );
 
-
-      // TODO
-      // listData = 
-      break;
+          // TODO
+          // listData = 
+        break;
       default:
         listData = (
           <View style={styles.empty}>
