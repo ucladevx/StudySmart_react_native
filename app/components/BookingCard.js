@@ -47,7 +47,6 @@ const imagePairs = {
 class BookingCard extends Component {
   handleSelectRoom = (item) => {
     const { navigation } = this.props;
-    console.log(item);
     switch (item.area) {
       case 'Hill':
         navigation.navigate('StudyRoomReserve', {
@@ -67,12 +66,23 @@ class BookingCard extends Component {
   render() {
     const { item } = this.props;
 
-    const unique = [];
-    for (let i = 0; i < item.available.length; i += 1) {
-      if (!unique.includes(item.available[i].details)) {
-        unique.push(item.available[i].details);
-      }
+    let unique = [];
+    switch (item.area) {
+      case 'Hill':
+        unique = [];
+        for (let i = 0; i < item.available.length; i += 1) {
+          if (!unique.includes(item.available[i].details)) {
+            unique.push(item.available[i].details);
+          }
+        }
+        break;
+      case 'Library':
+        unique = item.available;
+        break;
+      default:
+        break;
     }
+
     return (
       <TouchableOpacity
         onPress={() => this.handleSelectRoom(item)}
@@ -101,6 +111,7 @@ class BookingCard extends Component {
               <View style={styles.containerRow}>
                 <Text style={[styles.text, styles.leftText]}>
                   Rooms Available:
+                  {' '}
                   {unique.length}
                 </Text>
               </View>

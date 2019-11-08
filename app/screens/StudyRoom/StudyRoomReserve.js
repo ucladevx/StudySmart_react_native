@@ -3,7 +3,6 @@ import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, ActivityIndicator
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 
 import FloatingSegment from '../../components/FloatingSegment';
 
