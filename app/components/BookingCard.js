@@ -47,6 +47,7 @@ const imagePairs = {
 class BookingCard extends Component {
   handleSelectRoom = (item) => {
     const { navigation } = this.props;
+    console.log(item);
     switch (item.area) {
       case 'Hill':
         navigation.navigate('StudyRoomReserve', {
