@@ -47,6 +47,29 @@ export default class LibraryRoomReserve extends Component {
     };
   }
 
+
+  onSwipeLeft(gestureState) {
+    this.setDuration('2 hours');
+  }
+
+  onSwipeRight(gestureState) {
+    this.setDuration('1 hour');
+  }
+
+  onSwipe(gestureName, gestureState) {
+    const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
+    switch (gestureName) {
+      case SWIPE_LEFT:
+        this.setDuration('2 hours');
+        break;
+      case SWIPE_RIGHT:
+        this.setDuration('1 hour');
+        break;
+      default:
+        break;
+    }
+  }
+
   setDuration = (hour) => {
     this.setState({
       duration: hour
@@ -67,10 +90,7 @@ export default class LibraryRoomReserve extends Component {
   handleReserve = () => {
     const { rooms } = this.state;
     // Determine which library we are looking at, default to powell (for now)
-    let link = nameToLink['powell'];
-    const { location } = rooms;
-    // if (location == )
-
+    const link = nameToLink[rooms.location] || nameToLink['powell'];
     this.props.navigation.navigate('BookingWebView', { url: link });
   }
 
@@ -89,23 +109,23 @@ export default class LibraryRoomReserve extends Component {
 
   renderList(item) {
     const { duration } = this.state;
-    if (duration.length !== 0 && durationPairs[duration] > item.duration) {
+    if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
       return;
     }
+    let details = item.details.replace(/\n/g, '');
+    details = details.trim();
+    details = details.slice(0, -1);
+    const detailsArray = details.split('(');
     // eslint-disable-next-line consistent-return
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.text}>
-              {item.room}
+              {detailsArray[0]}
             </Text>
             <Text style={styles.littleText}>
-              max
-              {' '}
-              {item.capacity}
-              {' '}
-              {item.capacity === 1 ? 'person' : 'people'}
+              {detailsArray[1]}
             </Text>
           </View>
         </View>
@@ -138,14 +158,25 @@ export default class LibraryRoomReserve extends Component {
           <Text style={styles.subtitleText}>
             <Text>Available Rooms</Text>
           </Text>
-          <FlatList
-            data={rooms.available}
-            extraData={this.state}
-            renderItem={({ item }) => this.renderList(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
-            ListFooterComponent={this.reserveButtonComponent}
-          />
+          <GestureRecognizer
+            onSwipe={(direction, state) => this.onSwipe(direction, state)}
+            onSwipeLeft={state => this.onSwipeLeft(state)}
+            onSwipeRight={state => this.onSwipeRight(state)}
+            config={config}
+            style={{
+              flex: 1,
+              backgroundColor: 'white',
+            }}
+          >
+            <FlatList
+              data={rooms.available}
+              extraData={this.state}
+              renderItem={({ item }) => this.renderList(item)}
+              keyExtractor={(item, index) => index.toString()}
+              style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
+              ListFooterComponent={this.reserveButtonComponent}
+            />
+          </GestureRecognizer>
           {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
         </View>
       </SafeAreaView>

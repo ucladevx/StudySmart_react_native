@@ -27,10 +27,6 @@ const music = require('../../assets/Studyrooms/music.jpg');
 const hedrickstudy = require('../../assets/Studyrooms/hedrick.jpg');
 const movement = require('../../assets/Studyrooms/movement.jpg');
 
-const powellLibIcon = require('../../assets/Libraries/PowellLibrar.jpg');
-const researchLibIcon = require('../../assets/Libraries/ResearchLibr.jpg');
-const biomedLibIcon = require('../../assets/Libraries/BiomedicalLi.jpg');
-
 const imagePairs = {
   sproulmusic,
   sproulstudy,
@@ -40,9 +36,7 @@ const imagePairs = {
   hedrickmusic,
   music,
   hedrickstudy,
-  movement,
-  'Young Research Library': researchLibIcon,
-  'Powell Library': powellLibIcon,
+  movement
 };
 
 class BookingCard extends Component {
@@ -66,25 +60,13 @@ class BookingCard extends Component {
 
   render() {
     const { item } = this.props;
-    let unique = [];
 
-    switch (item.area) {
-      case 'Hill':
-        unique = [];
-        for (let i = 0; i < item.available.length; i += 1) {
-          if (!unique.includes(item.available[i].details)) {
-            unique.push(item.available[i].details);
-          }
-        }
-        break;
-      case 'Library':
-        unique = item.available;
-        break;
-      default:
-        break;
+    const unique = [];
+    for (let i = 0; i < item.available.length; i += 1) {
+      if (!unique.includes(item.available[i].details)) {
+        unique.push(item.available[i].details);
+      }
     }
-
-
     return (
       <TouchableOpacity
         onPress={() => this.handleSelectRoom(item)}
@@ -238,5 +220,6 @@ const styles = StyleSheet.create({
     zIndex: 20
   }
 });
+
 
 export default withNavigation(BookingCard);
