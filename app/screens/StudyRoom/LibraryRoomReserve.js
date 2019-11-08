@@ -47,29 +47,6 @@ export default class LibraryRoomReserve extends Component {
     };
   }
 
-
-  onSwipeLeft(gestureState) {
-    this.setDuration('2 hours');
-  }
-
-  onSwipeRight(gestureState) {
-    this.setDuration('1 hour');
-  }
-
-  onSwipe(gestureName, gestureState) {
-    const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
-    switch (gestureName) {
-      case SWIPE_LEFT:
-        this.setDuration('2 hours');
-        break;
-      case SWIPE_RIGHT:
-        this.setDuration('1 hour');
-        break;
-      default:
-        break;
-    }
-  }
-
   setDuration = (hour) => {
     this.setState({
       duration: hour
@@ -109,23 +86,24 @@ export default class LibraryRoomReserve extends Component {
 
   renderList(item) {
     const { duration } = this.state;
-    if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
+    if (duration.length !== 0 && Number(item.duration) < Number(durationPairs[duration])) {
       return;
     }
-    let details = item.details.replace(/\n/g, '');
-    details = details.trim();
-    details = details.slice(0, -1);
-    const detailsArray = details.split('(');
+
     // eslint-disable-next-line consistent-return
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.text}>
-              {detailsArray[0]}
+              {item.room}
             </Text>
             <Text style={styles.littleText}>
-              {detailsArray[1]}
+              max
+              {' '}
+              {item.capacity}
+              {' '}
+              {item.capacity === 1 ? 'person' : 'people'}
             </Text>
           </View>
         </View>
@@ -149,7 +127,7 @@ export default class LibraryRoomReserve extends Component {
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {namePairs[rooms.location]}
+            {rooms.location}
             {' '}
           </Text>
         </View>
@@ -158,25 +136,14 @@ export default class LibraryRoomReserve extends Component {
           <Text style={styles.subtitleText}>
             <Text>Available Rooms</Text>
           </Text>
-          <GestureRecognizer
-            onSwipe={(direction, state) => this.onSwipe(direction, state)}
-            onSwipeLeft={state => this.onSwipeLeft(state)}
-            onSwipeRight={state => this.onSwipeRight(state)}
-            config={config}
-            style={{
-              flex: 1,
-              backgroundColor: 'white',
-            }}
-          >
-            <FlatList
-              data={rooms.available}
-              extraData={this.state}
-              renderItem={({ item }) => this.renderList(item)}
-              keyExtractor={(item, index) => index.toString()}
-              style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
-              ListFooterComponent={this.reserveButtonComponent}
-            />
-          </GestureRecognizer>
+          <FlatList
+            data={rooms.available}
+            extraData={this.state}
+            renderItem={({ item }) => this.renderList(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5, minWidth: '90%' }}
+            ListFooterComponent={this.reserveButtonComponent}
+          />
           {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
         </View>
       </SafeAreaView>
