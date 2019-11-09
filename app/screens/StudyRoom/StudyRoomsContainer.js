@@ -167,8 +167,10 @@ class StudyRoomsContainer extends Component {
     const year = date.substring(date.length - 4);
     const monthName = monthPairs[month];
     let appendedURL = `?date=${monthName} ${day} ${year}`;
-    // appendedURL = '?date=2019-06-05&start=14:00:00';
-    appendedURL = '?date=2019-06-05&start=08:30:00';
+    // debugging for YRL
+    appendedURL = '?date=2019-06-05&start=15:30:00';
+    // debugging for Powell
+    // appendedURL = '?date=2019-06-05&start=08:45:00';
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -203,6 +205,11 @@ class StudyRoomsContainer extends Component {
     }
     if (location.includes('Anywhere') || location.includes('Libraries')) {
       for (let i = 0; i < libraryData.length; i += 1) {
+        // if building is YRL and contains "POD" --> libraryData[i].building = YRL-POD
+        if (libraryData[i].building === 'Young Research Library' && libraryData[i].room.includes('Pod')) {
+          libraryData[i].building = 'Young Research Library - Pods';
+        }
+
         if (libraryData[i].building in libDict) {
           libDict[libraryData[i].building].push(libraryData[i]);
         } else {

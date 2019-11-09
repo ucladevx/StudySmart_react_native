@@ -47,7 +47,6 @@ const imagePairs = {
 class BookingCard extends Component {
   handleSelectRoom = (item) => {
     const { navigation } = this.props;
-    console.log(item);
     switch (item.area) {
       case 'Hill':
         navigation.navigate('StudyRoomReserve', {
@@ -70,7 +69,6 @@ class BookingCard extends Component {
     let unique = [];
     switch (item.area) {
       case 'Hill':
-        unique = [];
         for (let i = 0; i < item.available.length; i += 1) {
           if (!unique.includes(item.available[i].details)) {
             unique.push(item.available[i].details);
@@ -78,7 +76,11 @@ class BookingCard extends Component {
         }
         break;
       case 'Library':
-        unique = item.available;
+        for (let i = 0; i < item.available.length; i += 1) {
+          if (Number(item.available[i].duration) >= 60) {
+            unique.push(item.available[i]);
+          }
+        }
         break;
       default:
         break;
