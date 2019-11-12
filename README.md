@@ -29,6 +29,26 @@ $ watchman watch-del-all
 * double tap on the Xcode project
 * build
 
+# Android
+
+- Follow same instructions as above.
+- Create file `gradle.properties` in `/android/app/`.
+- Drop the following in the file, with the API_KEY replaced
+```
+GOOGLE_MAPS_API_KEY="api_key_string_goes_here"
+```
+- Start Android Emulator with
+```
+$ emulator -avd YOUR_EMULATOR_NAME_HERE
+```
+If necessary, you can find the list of your emulators with
+```
+$ emulator -list-avds
+```
+```
+$ react-native run-android
+```
+
 # Hot reloading
 * Save your file
 * Pres cmd+r to reload javascript
