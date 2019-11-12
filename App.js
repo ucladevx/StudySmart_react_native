@@ -9,7 +9,7 @@ import LocationsMap from './app/screens/Locations/LocationsMap';
 import configureStore from './store';
 import LocationsList from './app/screens/Locations/LocationsList';
 import LocationsContainer from './app/screens/Locations/LocationsContainer';
-import StudyRoomsContainer from './app/screens/StudyRoom/StudyRoomsContainer';
+import StudyRoomsPreview from './app/screens/StudyRoom/StudyRoomsPreview';
 import StudyRoomReserve from './app/screens/StudyRoom/StudyRoomReserve';
 import LibraryRoomReserve from './app/screens/StudyRoom/LibraryRoomReserve';
 import FeedbackContainer from './app/screens/Feedback/FeedbackContainer';
@@ -23,13 +23,13 @@ const feedbackTabSelected = require('./assets/feedbackTabSelected.png');
 const feedbackTab = require('./assets/feedbackTab.png');
 
 const StudyRoomStack = StackNavigator({
-  StudyRoomsContainer: { screen: StudyRoomsContainer },
+  StudyRoomsPreview: { screen: StudyRoomsPreview },
   StudyRoomReserve: { screen: StudyRoomReserve },
   LibraryRoomReserve: { screen: LibraryRoomReserve },
   BookingWebView: { screen: BookingWebView },
 },
 {
-  initialRouteName: 'StudyRoomsContainer',
+  initialRouteName: 'StudyRoomsPreview',
 });
 
 const LocationsStack = StackNavigator({
