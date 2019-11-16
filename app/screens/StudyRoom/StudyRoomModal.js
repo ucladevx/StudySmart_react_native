@@ -61,9 +61,6 @@ class StudyRoomModal extends Component {
     if (minutes !== 30 && minutes !== 0) {
       if (minutes > 30) {
         setting.setMinutes(60);
-        if (setting.getHours() === 0) {
-          setting.setDate(setting.getDate() + 1);
-        }
       } else {
         setting.setMinutes(30);
       }

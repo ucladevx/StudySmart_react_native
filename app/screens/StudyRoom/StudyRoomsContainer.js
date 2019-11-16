@@ -161,15 +161,47 @@ class StudyRoomsContainer extends Component {
 
   async getLibraryStudyRooms() {
     let temp;
-    const { date, loadLibraryData: loadLibraryDataAction } = this.props;
+    const { date, time, loadLibraryData: loadLibraryDataAction } = this.props;
     const month = date.substring(0, 2);
     const day = date.substring(3, 5);
     const year = date.substring(date.length - 4);
+
     let appendedURL = `?date=${year}-${month}-${day}`;
 
-    const setting = new Date();
-    const hours = setting.getHours();
-    const minutes = setting.getMinutes();
+    if (time.length > 0) {
+      let time2 = time;
+      if (!time2.includes(':')) {
+        time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
+      }
+      const splitTime = time2.split(':');
+      let hourInt = parseInt(splitTime[0], 10);
+      const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
+      const amPm = splitTime[1].substring(splitTime[1].length - 2);
+      if (amPm === 'PM') {
+        if (hourInt !== 12) {
+          hourInt += 12;
+        }
+      }
+      if (hourInt === 12 && amPm === 'AM') {
+        hourInt = 0;
+      }
+
+      let hourString;
+      let minuteString;
+
+      if (hourInt < 10) {
+        hourString = '0' + hourInt;
+      } else {
+        hourString = hourInt;
+      }
+      if (minuteInt < 10) {
+        minuteString = '0' + minuteInt;
+      } else {
+        minuteString = minuteInt;
+      }
+
+      appendedURL += `&start=${hourString}:${minuteString}:00`;
+    }
 
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
