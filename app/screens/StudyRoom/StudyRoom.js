@@ -106,7 +106,7 @@ export default class StudyRoomList extends Component {
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
           {listData}
           {visible ? (
-            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} />
+            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={this.state.currentLocation}/>
           ) : null}
         </SafeAreaView>
       </TouchableWithoutFeedback>

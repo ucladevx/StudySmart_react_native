@@ -19,7 +19,19 @@ class StudyRoomModal extends Component {
     };
     this.date = new Date();
     this.minDate = new Date();
-    this.date.setDate(this.date.getDate() + 6);
+    const { currentLocation } = this.props;
+    switch (currentLocation) {
+      case 'Hill':
+        this.date.setDate(this.date.getDate() + 6);
+        break;
+      case 'Libraries':
+        this.date.setDate(this.date.getDate() + 3);
+        break;
+      default:
+        this.date.setDate(this.date.getDate() + 6);
+        break;
+    }
+
   }
 
   showDatePicker = () => {

@@ -165,12 +165,12 @@ class StudyRoomsContainer extends Component {
     const month = date.substring(0, 2);
     const day = date.substring(3, 5);
     const year = date.substring(date.length - 4);
-    const monthName = monthPairs[month];
-    let appendedURL = `?date=${monthName} ${day} ${year}`;
-    // debugging for YRL
-    appendedURL = '?date=2019-06-05&start=15:30:00';
-    // debugging for Powell
-    // appendedURL = '?date=2019-06-05&start=08:45:00';
+    let appendedURL = `?date=${year}-${month}-${day}`;
+
+    const setting = new Date();
+    const hours = setting.getHours();
+    const minutes = setting.getMinutes();
+
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
