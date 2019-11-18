@@ -160,7 +160,8 @@ class StudyRoomsContainer extends Component {
   }
 
   async getLibraryStudyRooms() {
-    let temp;
+    let temp = {};
+    let seenRooms = new Set();
     const { date, time, loadLibraryData: loadLibraryDataAction } = this.props;
     const month = date.substring(0, 2);
     const day = date.substring(3, 5);
@@ -190,24 +191,100 @@ class StudyRoomsContainer extends Component {
       let minuteString;
 
       if (hourInt < 10) {
-        hourString = '0' + hourInt;
+        hourString = `0${hourInt}`;
       } else {
         hourString = hourInt;
       }
       if (minuteInt < 10) {
-        minuteString = '0' + minuteInt;
+        minuteString = `0${minuteInt}`;
       } else {
         minuteString = minuteInt;
       }
-
       appendedURL += `&start=${hourString}:${minuteString}:00`;
+      // appendedURL = "?date=2019-11-18&start=09:00:00";
     }
-
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
+        // Add these rooms to Set
+        for (let i = 0; i < data.Items.length; i += 1) {
+          seenRooms.add(data.Items[i].room);
+        }
         temp = data;
       });
+    // Check rooms with start 30 minutes before start with duration >= 90 and room not already in temp.items.room
+    // update duration -= 30
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        let d = data;
+        let nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 90) {
+            d.Items[i].duration -= 30;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+    // Check rooms with start 60 minutes before start with duration >= 120 and room not already in temp.items.room
+    // update duration -= 60
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        let d = data;
+        let nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 120) {
+            d.Items[i].duration -= 60;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+    // Check rooms with start 90 minutes before start with duration >= 150 and room not already in temp.items.room
+    // update duration -= 90
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        let d = data;
+        let nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 150) {
+            d.Items[i].duration -= 90;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+    // Check rooms with start 120 minutes before start with duration >= 180 and room not already in temp.items.room
+    // update duration -= 120
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        let d = data;
+        let nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 180) {
+            d.Items[i].duration -= 120;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+
     for (let k = 0; k < temp.Items.length; k += 1) {
       temp.Items[k].area = 'Libraries';
     }
