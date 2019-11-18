@@ -201,7 +201,6 @@ class StudyRoomsContainer extends Component {
         minuteString = minuteInt;
       }
       appendedURL += `&start=${hourString}:${minuteString}:00`;
-      // appendedURL = "?date=2019-11-18&start=09:00:00";
     }
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
