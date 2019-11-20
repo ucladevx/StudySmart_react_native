@@ -169,6 +169,7 @@ class StudyRoomsContainer extends Component {
 
     let appendedURL = `?date=${year}-${month}-${day}`;
 
+    let adjustedDate;
     if (time.length > 0) {
       let time2 = time;
       if (!time2.includes(':')) {
@@ -201,6 +202,8 @@ class StudyRoomsContainer extends Component {
         minuteString = minuteInt;
       }
       appendedURL += `&start=${hourString}:${minuteString}:00`;
+      const tempStringDate = `${year}-${month}-${day}T${hourString}:${minuteString}:00`;
+      adjustedDate = new Date(tempStringDate);
     }
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
@@ -218,6 +221,12 @@ class StudyRoomsContainer extends Component {
       });
     // Check rooms with start 30 minutes before start with duration >= 90 and room not already in temp.items.room
     // update duration -= 30
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+    // JS thinks the string we are passing in is in UTC when in fact it is in local time
+    // Thus, JS will send the time "back" to our local time which is not what we want
+    // We must instead send the time "forward" again back to UTC
+    let stringAdjusted = adjustedDate.toLocaleString('en-US', { timeZone: 'UTC' });
+
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -236,6 +245,9 @@ class StudyRoomsContainer extends Component {
       });
     // Check rooms with start 60 minutes before start with duration >= 120 and room not already in temp.items.room
     // update duration -= 60
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+    stringAdjusted = adjustedDate.toLocaleString('en-US', { timeZone: 'UTC' });
+
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -254,6 +266,9 @@ class StudyRoomsContainer extends Component {
       });
     // Check rooms with start 90 minutes before start with duration >= 150 and room not already in temp.items.room
     // update duration -= 90
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+    stringAdjusted = adjustedDate.toLocaleString('en-US', { timeZone: 'UTC' });
+
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -272,6 +287,9 @@ class StudyRoomsContainer extends Component {
       });
     // Check rooms with start 120 minutes before start with duration >= 180 and room not already in temp.items.room
     // update duration -= 120
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+    stringAdjusted = adjustedDate.toLocaleString('en-US', { timeZone: 'UTC' });
+
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
