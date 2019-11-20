@@ -206,10 +206,15 @@ class StudyRoomsContainer extends Component {
       .then(response => response.json())
       .then((data) => {
         // Add these rooms to Set
+        let nextItems = [];
         for (let i = 0; i < data.Items.length; i += 1) {
-          seenRooms.add(data.Items[i].room);
+          if (Number(data.Items[i].duration) >= 60) {
+            seenRooms.add(data.Items[i].room);
+            nextItems.push(data.Items[i]);
+          }
         }
         temp = data;
+        temp.Items = nextItems;
       });
     // Check rooms with start 30 minutes before start with duration >= 90 and room not already in temp.items.room
     // update duration -= 30
