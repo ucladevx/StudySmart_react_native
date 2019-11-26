@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Alert } from 'react-native';
+import { Platform } from 'react-native';
 import { connect } from 'react-redux';
 import {
   changeTime, changeDate, changeLocation, loadHillData, loadLibraryData,
@@ -202,7 +202,7 @@ class StudyRoomsContainer extends Component {
         minuteString = minuteInt;
       }
       appendedURL += `&start=${hourString}:${minuteString}:00`;
-      adjustedDate = new Date(year, Number(month)-1, day, hourInt, minuteInt);
+      adjustedDate = new Date(year, Number(month) - 1, day, hourInt, minuteInt);
     }
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
@@ -358,16 +358,19 @@ class StudyRoomsContainer extends Component {
     month = this.dateLeadingZero(month);
     day = this.dateLeadingZero(day);
     if (Platform.OS === 'ios') {
-      let time2 = date.toLocaleTimeString('en-US');
+      const time2 = date.toLocaleTimeString('en-US');
       let appendedURL = '';
       appendedURL = `?date=${year}-${month}-${day}`;
       appendedURL += this.timeSplitter(time2);
       return appendedURL;
     }
-    let stringTime = date.toLocaleTimeString('en-US');
     let appendedURL = '';
     appendedURL = `?date=${year}-${month}-${day}`;
-    appendedURL += this.timeSplitter(stringTime);
+    const hoursInt = date.getHours();
+    const minuteInt = date.getMinutes();
+    const hourString = this.dateLeadingZero(hoursInt);
+    const minuteString = this.dateLeadingZero(minuteInt);
+    appendedURL += `&start=${hourString}:${minuteString}:00`;
     return appendedURL;
   }
 
