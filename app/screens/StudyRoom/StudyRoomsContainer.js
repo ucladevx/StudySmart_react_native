@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import {
   changeTime, changeDate, changeLocation, loadHillData, loadLibraryData,
@@ -202,8 +202,7 @@ class StudyRoomsContainer extends Component {
         minuteString = minuteInt;
       }
       appendedURL += `&start=${hourString}:${minuteString}:00`;
-      const tempStringDate = `${year}-${month}-${day}T${hourString}:${minuteString}:00`;
-      adjustedDate = new Date(tempStringDate);
+      adjustedDate = new Date(year, Number(month)-1, day, hourInt, minuteInt);
     }
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
@@ -222,11 +221,7 @@ class StudyRoomsContainer extends Component {
     // Check rooms with start 30 minutes before start with duration >= 90 and room not already in temp.items.room
     // update duration -= 30
     adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
-    // JS thinks the string we are passing in is in UTC when in fact it is in local time
-    // Thus, JS will send the time "back" to our local time which is not what we want
-    // We must instead send the time "forward" again back to UTC
-    let stringAdjusted = adjustedDate.toLocaleString('en-US');
-    appendedURL = this.getNextQueryURL(stringAdjusted);
+    appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -246,8 +241,7 @@ class StudyRoomsContainer extends Component {
     // Check rooms with start 60 minutes before start with duration >= 120 and room not already in temp.items.room
     // update duration -= 60
     adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
-    stringAdjusted = adjustedDate.toLocaleString('en-US');
-    appendedURL = this.getNextQueryURL(stringAdjusted);
+    appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -267,8 +261,7 @@ class StudyRoomsContainer extends Component {
     // Check rooms with start 90 minutes before start with duration >= 150 and room not already in temp.items.room
     // update duration -= 90
     adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
-    stringAdjusted = adjustedDate.toLocaleString('en-US');
-    appendedURL = this.getNextQueryURL(stringAdjusted);
+    appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -288,8 +281,7 @@ class StudyRoomsContainer extends Component {
     // Check rooms with start 120 minutes before start with duration >= 180 and room not already in temp.items.room
     // update duration -= 120
     adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
-    stringAdjusted = adjustedDate.toLocaleString('en-US');
-    appendedURL = this.getNextQueryURL(stringAdjusted);
+    appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
@@ -323,7 +315,7 @@ class StudyRoomsContainer extends Component {
       const splitTime = time2.split(':');
       let hourInt = parseInt(splitTime[0], 10);
       const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
-      const amPm = splitTime[1].substring(splitTime[1].length - 2);
+      const amPm = splitTime[2].substring(splitTime[2].length - 2);
       if (amPm === 'PM') {
         if (hourInt !== 12) {
           hourInt += 12;
@@ -359,23 +351,23 @@ class StudyRoomsContainer extends Component {
     return date;
   }
 
-  getNextQueryURL = (dateString) => {
-    let month;
-    let day;
-    let rest;
-    let stringAdjusted = dateString;
-    let year;
-    let time2;
-    stringAdjusted = stringAdjusted.split('/');
-    [month, day, rest] = stringAdjusted;
-    stringAdjusted = rest.split(',');
-    [year, time2] = stringAdjusted;
-    time2.trim();
+  getNextQueryURL = (date) => {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    const year = date.getFullYear();
     month = this.dateLeadingZero(month);
     day = this.dateLeadingZero(day);
+    if (Platform.OS === 'ios') {
+      let time2 = date.toLocaleTimeString('en-US');
+      let appendedURL = '';
+      appendedURL = `?date=${year}-${month}-${day}`;
+      appendedURL += this.timeSplitter(time2);
+      return appendedURL;
+    }
+    let stringTime = date.toLocaleTimeString('en-US');
     let appendedURL = '';
     appendedURL = `?date=${year}-${month}-${day}`;
-    appendedURL += this.timeSplitter(time2);
+    appendedURL += this.timeSplitter(stringTime);
     return appendedURL;
   }
 
