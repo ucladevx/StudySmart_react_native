@@ -5,7 +5,7 @@
 
     <application
       android:name=".MainApplication"
-      android:label="StudySmart"
+      android:label="StudyB"
       android:icon="@mipmap/logo"
       android:roundIcon="@mipmap/logo"
       android:allowBackup="false"
@@ -14,7 +14,7 @@
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
       <activity
         android:name=".MainActivity"
-        android:label="StudySmart"
+        android:label="StudyB"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
         android:windowSoftInputMode="adjustResize">
         <intent-filter>
