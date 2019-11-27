@@ -66,7 +66,6 @@ export default class LibraryRoomReserve extends Component {
   handleReserve = () => {
     const { rooms } = this.state;
     // Determine which library we are looking at, default to powell (for now)
-    console.log('WOW,', rooms.location);
     const link = nameToLink[rooms.location] || nameToLink.powell;
     this.props.navigation.navigate('BookingWebView', { url: link });
   }
