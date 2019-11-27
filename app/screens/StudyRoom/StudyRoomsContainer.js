@@ -161,11 +161,11 @@ class StudyRoomsContainer extends Component {
 
   async getLibraryStudyRooms() {
     let temp = {};
-    let seenRooms = new Set();
+    const seenRooms = new Set();
     const { date, time, loadLibraryData: loadLibraryDataAction } = this.props;
-    let month = date.substring(0, 2);
-    let day = date.substring(3, 5);
-    let year = date.substring(date.length - 4);
+    const month = date.substring(0, 2);
+    const day = date.substring(3, 5);
+    const year = date.substring(date.length - 4);
 
     let appendedURL = `?date=${year}-${month}-${day}`;
 
@@ -208,7 +208,7 @@ class StudyRoomsContainer extends Component {
       .then(response => response.json())
       .then((data) => {
         // Add these rooms to Set
-        let nextItems = [];
+        const nextItems = [];
         for (let i = 0; i < data.Items.length; i += 1) {
           if (Number(data.Items[i].duration) >= 60) {
             seenRooms.add(data.Items[i].room);
@@ -218,15 +218,15 @@ class StudyRoomsContainer extends Component {
         temp = data;
         temp.Items = nextItems;
       });
-    // Check rooms with start 30 minutes before start with duration >= 90 and room not already in temp.items.room
-    // update duration -= 30
-    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+    // Check rooms with start 15 minutes before start with duration >= 90 and room not already in temp.items.room
+    // update duration -= 15
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
     appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
-        let d = data;
-        let nextItems = [];
+        const d = data;
+        const nextItems = [];
         for (let i = 0; i < d.Items.length; i += 1) {
           // don't have this item yet
           if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 90) {
@@ -238,15 +238,36 @@ class StudyRoomsContainer extends Component {
         const update = temp.Items.concat(nextItems);
         temp.Items = update;
       });
-    // Check rooms with start 60 minutes before start with duration >= 120 and room not already in temp.items.room
-    // update duration -= 60
-    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+
+    // Check rooms with start 30 minutes before start with duration >= 90 and room not already in temp.items.room
+    // update duration -= 30
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
     appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
-        let d = data;
-        let nextItems = [];
+        const d = data;
+        const nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 90) {
+            d.Items[i].duration -= 30;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+    // Check rooms with start 45 minutes before start with duration >= 120 and room not already in temp.items.room
+    // update duration -= 45
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
+    appendedURL = this.getNextQueryURL(adjustedDate);
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        const d = data;
+        const nextItems = [];
         for (let i = 0; i < d.Items.length; i += 1) {
           // don't have this item yet
           if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 120) {
@@ -258,15 +279,36 @@ class StudyRoomsContainer extends Component {
         const update = temp.Items.concat(nextItems);
         temp.Items = update;
       });
-    // Check rooms with start 90 minutes before start with duration >= 150 and room not already in temp.items.room
-    // update duration -= 90
-    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+    // Check rooms with start 60 minutes before start with duration >= 120 and room not already in temp.items.room
+    // update duration -= 60
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
     appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
-        let d = data;
-        let nextItems = [];
+        const d = data;
+        const nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 120) {
+            d.Items[i].duration -= 60;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+
+    // Check rooms with start 75 minutes before start with duration >= 150 and room not already in temp.items.room
+    // update duration -= 75
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
+    appendedURL = this.getNextQueryURL(adjustedDate);
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        const d = data;
+        const nextItems = [];
         for (let i = 0; i < d.Items.length; i += 1) {
           // don't have this item yet
           if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 150) {
@@ -278,15 +320,57 @@ class StudyRoomsContainer extends Component {
         const update = temp.Items.concat(nextItems);
         temp.Items = update;
       });
-    // Check rooms with start 120 minutes before start with duration >= 180 and room not already in temp.items.room
-    // update duration -= 120
-    adjustedDate.setMinutes(adjustedDate.getMinutes() - 30);
+    // Check rooms with start 90 minutes before start with duration >= 150 and room not already in temp.items.room
+    // update duration -= 90
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
     appendedURL = this.getNextQueryURL(adjustedDate);
     await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
-        let d = data;
-        let nextItems = [];
+        const d = data;
+        const nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 150) {
+            d.Items[i].duration -= 90;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+
+    // Check rooms with start 105 minutes before start with duration >= 180 and room not already in temp.items.room
+    // update duration -= 105
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
+    appendedURL = this.getNextQueryURL(adjustedDate);
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        const d = data;
+        const nextItems = [];
+        for (let i = 0; i < d.Items.length; i += 1) {
+          // don't have this item yet
+          if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 180) {
+            d.Items[i].duration -= 120;
+            seenRooms.add(d.Items[i].room);
+            nextItems.push(d.Items[i]);
+          }
+        }
+        const update = temp.Items.concat(nextItems);
+        temp.Items = update;
+      });
+
+    // Check rooms with start 120 minutes before start with duration >= 180 and room not already in temp.items.room
+    // update duration -= 120
+    adjustedDate.setMinutes(adjustedDate.getMinutes() - 15);
+    appendedURL = this.getNextQueryURL(adjustedDate);
+    await fetch(`http://studysmart-env-2.dqiv29pdi2.us-east-1.elasticbeanstalk.com/librooms${appendedURL}`)
+      .then(response => response.json())
+      .then((data) => {
+        const d = data;
+        const nextItems = [];
         for (let i = 0; i < d.Items.length; i += 1) {
           // don't have this item yet
           if (!seenRooms.has(d.Items[i].room) && Number(d.Items[i].duration) >= 180) {

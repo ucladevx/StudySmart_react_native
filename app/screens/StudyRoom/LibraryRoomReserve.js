@@ -21,8 +21,8 @@ const namePairs = {
 
 const nameToLink = {
   powell: 'http://calendar.library.ucla.edu/spaces',
-  yrl: 'http://calendar.library.ucla.edu/reserve/yrl_gsr',
-  pods: 'http://calendar.library.ucla.edu/reserve/yrl_pods'
+  'Young Research Library': 'http://calendar.library.ucla.edu/reserve/yrl_gsr',
+  'Young Research Library - Pods': 'http://calendar.library.ucla.edu/reserve/yrl_pods'
 };
 
 const durationPairs = {
@@ -66,22 +66,21 @@ export default class LibraryRoomReserve extends Component {
   handleReserve = () => {
     const { rooms } = this.state;
     // Determine which library we are looking at, default to powell (for now)
-    const link = nameToLink[rooms.location] || nameToLink['powell'];
+    console.log('WOW,', rooms.location);
+    const link = nameToLink[rooms.location] || nameToLink.powell;
     this.props.navigation.navigate('BookingWebView', { url: link });
   }
 
-  reserveButtonComponent = () => {
-    return (
-      <TouchableOpacity
-        style={styles.reserveButton}
-        onPress={() => this.handleReserve()}
-      >
-        <Text style={styles.whiteText}>
+  reserveButtonComponent = () => (
+    <TouchableOpacity
+      style={styles.reserveButton}
+      onPress={() => this.handleReserve()}
+    >
+      <Text style={styles.whiteText}>
           Reserve a Room
-        </Text>
-      </TouchableOpacity>
-    );
-  }
+      </Text>
+    </TouchableOpacity>
+  )
 
   renderList(item) {
     const { duration } = this.state;
@@ -140,7 +139,9 @@ export default class LibraryRoomReserve extends Component {
             extraData={this.state}
             renderItem={({ item }) => this.renderList(item)}
             keyExtractor={(item, index) => index.toString()}
-            style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5, minWidth: '90%' }}
+            style={{
+              flex: 1, backgroundColor: 'transparent', marginTop: 5, minWidth: '90%'
+            }}
             ListFooterComponent={this.reserveButtonComponent}
           />
           {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
