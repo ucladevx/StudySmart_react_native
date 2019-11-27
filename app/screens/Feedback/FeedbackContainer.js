@@ -6,7 +6,7 @@ const FeedbackContainer = createMaterialTopTabNavigator(
   {
     Bugs: { screen: () => <Feedback link="https://docs.google.com/forms/d/e/1FAIpQLSfvXDqcr7ZVeYExWY4wjNaLWOtLf5MPdpr4P9roO0YJnAYugA/viewform" /> },
     Feedback: { screen: () => <Feedback link="https://docs.google.com/forms/d/e/1FAIpQLSdHako4AkbD_xvBkLuUGnXEbYVwGKhIJ7ww_rVvBpRu6ppJSQ/viewform" /> },
-    Privacy: { screen: () => <Feedback link="https://drive.google.com/file/d/13KceghuhhVlXsHjaml55t5SEc9wN6zdd/view?usp=sharing" /> },
+    Privacy: { screen: () => <Feedback link="https://drive.google.com/open?id=1Dk2bhsjwfZ6p_PoX3WAPMvlrdnCP7ujK" /> },
   },
   {
     swipeEnabled: true,

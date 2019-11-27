@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>StudySmart</string>
+	<string>StudyB</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -39,9 +39,9 @@
 		<dict/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>StudySmart will use your location to provide you the best study spot information. </string>
+	<string>StudyB will use your location to provide you the best study spot information. </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>StudySmart will use your location to provide you the best study spot information. </string>
+	<string>StudyB will use your location to provide you the best study spot information. </string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
