@@ -4,37 +4,37 @@ import {
 } from 'react-native';
 
 const intervals = {
-  '12:00AM-1:00AM': ['12:00', '12:30'],
-  '1:00AM-2:00AM': ['1:00', '1:30'],
-  '2:00AM-3:00AM': ['2:00', '2:30'],
-  '3:00AM-4:00AM': ['3:00', '3:30'],
-  '4:00AM-5:00AM': ['4:00', '4:30'],
-  '5:00AM-6:00AM': ['5:00', '5:30'],
-  '6:00AM-7:00AM': ['6:00', '6:30'],
-  '7:00AM-8:00AM': ['7:00', '7:30'],
-  '8:00AM-9:00AM': ['8:00', '8:30'],
-  '9:00AM-10:00AM': ['9:00', '9:30'],
-  '10:00AM-11:00AM': ['10:00', '10:30'],
-  '11:00AM-12:00PM': ['11:00', '11:30'],
-  '12:00PM-1:00PM': ['12:00', '12:30'],
-  '1:00PM-2:00PM': ['1:00', '1:30'],
-  '2:00PM-3:00PM': ['2:00', '2:30'],
-  '3:00PM-4:00PM': ['3:00', '3:30'],
-  '4:00PM-5:00PM': ['4:00', '4:30'],
-  '5:00PM-6:00PM': ['5:00', '5:30'],
-  '6:00PM-7:00PM': ['6:00', '6:30'],
-  '7:00PM-8:00PM': ['7:00', '7:30'],
-  '8:00PM-9:00PM': ['8:00', '8:30'],
-  '9:00PM-10:00PM': ['9:00', '9:30'],
-  '10:00PM-11:00PM': ['10:00', '10:30'],
-  '11:00PM-12:00AM': ['11:00', '11:30'],
+  '12:00-1:00am': ['12:00', '12:30'],
+  '1:00-2:00am': ['1:00', '1:30'],
+  '2:00-3:00am': ['2:00', '2:30'],
+  '3:00-4:00am': ['3:00', '3:30'],
+  '4:00-5:00am': ['4:00', '4:30'],
+  '5:00-6:00am': ['5:00', '5:30'],
+  '6:00-7:00am': ['6:00', '6:30'],
+  '7:00-8:00am': ['7:00', '7:30'],
+  '8:00-9:00am': ['8:00', '8:30'],
+  '9:00-10:00am': ['9:00', '9:30'],
+  '10:00-11:00am': ['10:00', '10:30'],
+  '11:00-12:00pm': ['11:00', '11:30'],
+  '12:00-1:00pm': ['12:00', '12:30'],
+  '1:00-2:00pm': ['1:00', '1:30'],
+  '2:00-3:00pm': ['2:00', '2:30'],
+  '3:00-4:00pm': ['3:00', '3:30'],
+  '4:00-5:00pm': ['4:00', '4:30'],
+  '5:00-6:00pm': ['5:00', '5:30'],
+  '6:00-7:00pm': ['6:00', '6:30'],
+  '7:00-8:00pm': ['7:00', '7:30'],
+  '8:00-9:00pm': ['8:00', '8:30'],
+  '9:00-10:00pm': ['9:00', '9:30'],
+  '10:00-11:00pm': ['10:00', '10:30'],
+  '11:00-12:00am': ['11:00', '11:30'],
 };
 
 export default class TimeRangeCard extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      collapsed: true
+      collapsed: true,
     };
   }
 
@@ -58,13 +58,13 @@ export default class TimeRangeCard extends Component {
     if (!collapsed) {
       return (
         <View style={styles.row}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity disabled={this.props.hour.length === 0} style={this.props.hour.length > 0 ? styles.button : styles.buttonDisabled}>
             <Text style={styles.text}>
               {' '}
               {intervals[title][0]}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity disabled={this.props.half.length === 0} style={this.props.half.length > 0 ? styles.button : styles.buttonDisabled}>
             <Text style={styles.text}>
               {' '}
               {intervals[title][1]}
@@ -78,7 +78,7 @@ export default class TimeRangeCard extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, available } = this.props;
     const { collapsed } = this.state;
     return (
       <TouchableOpacity
@@ -88,7 +88,11 @@ export default class TimeRangeCard extends Component {
           <Text style={[styles.text]}>
             {title}
           </Text>
-          <Text style={styles.smallText}> 25 Rooms Available </Text>
+          <Text style={styles.smallText}>
+            {' '}
+            {`${available.length} Available`}
+            {' '}
+          </Text>
           {this.showExpandedCell(title)}
         </View>
       </TouchableOpacity>
@@ -128,9 +132,21 @@ const cell = {
   shadowOpacity: 0.8,
 };
 
+const button = {
+  borderRadius: 7,
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderColor: 'black',
+  borderWidth: 1,
+  minWidth: 60,
+  marginLeft: 5,
+  marginRight: 5,
+};
+
 const styles = StyleSheet.create({
   text,
   cell,
+  button,
   expandedCell: {
     ...cell,
     height: 100,
@@ -146,15 +162,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  button: {
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
-    minWidth: 60,
-    marginLeft: 5,
-    marginRight: 5,
+  buttonDisabled: {
+    ...button,
+    opacity: 0.3
   }
 
 });

@@ -58,11 +58,11 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          );
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
         break;
       case 'Libraries':
         listData = librariesDataFound.length > 0 ? (
@@ -74,15 +74,15 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          );
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
         break;
       case 'Classrooms':
       // TODO
-      // listData = 
+      // listData =
       // break;
       default:
         listData = (
@@ -106,7 +106,7 @@ export default class StudyRoomList extends Component {
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
           {listData}
           {visible ? (
-            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={this.state.currentLocation}/>
+            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={this.state.currentLocation} />
           ) : null}
         </SafeAreaView>
       </TouchableWithoutFeedback>
