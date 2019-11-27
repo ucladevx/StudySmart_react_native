@@ -29,6 +29,7 @@ const movement = require('../../assets/Studyrooms/movement.jpg');
 const powellLibIcon = require('../../assets/Libraries/PowellLibrar.jpg');
 const researchLibIcon = require('../../assets/Libraries/ResearchLibr.jpg');
 const biomedLibIcon = require('../../assets/Libraries/BiomedicalLi.jpg');
+const yrl_pods = require('../../assets/Libraries/Pods.jpg');
 
 const imagePairs = {
   sproulmusic,
@@ -42,6 +43,7 @@ const imagePairs = {
   movement,
   'Powell Library': powellLibIcon,
   'Young Research Library': researchLibIcon,
+  'Young Research Library - Pods': yrl_pods,
 };
 
 class BookingCard extends Component {
