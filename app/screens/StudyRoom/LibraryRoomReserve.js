@@ -6,6 +6,7 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 
 import FloatingSegment from '../../components/FloatingSegment';
 
+// TODO: Update with proper library abbrevs and names later
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
   sproulmusic: 'Sproul Music Rooms',
@@ -18,12 +19,18 @@ const namePairs = {
   movement: 'Hedrick Movement Studio',
 };
 
+const nameToLink = {
+  powell: 'http://calendar.library.ucla.edu/spaces',
+  'Young Research Library': 'http://calendar.library.ucla.edu/reserve/yrl_gsr',
+  'Young Research Library - Pods': 'http://calendar.library.ucla.edu/reserve/yrl_pods'
+};
+
 const durationPairs = {
   '1 hour': '60',
   '2 hours': '120',
 };
 
-export default class StudyRoomReserve extends Component {
+export default class LibraryRoomReserve extends Component {
   static navigationOptions = {
     header: () => {
       false;
@@ -56,40 +63,45 @@ export default class StudyRoomReserve extends Component {
   }
 
 
-  handleReserve = (room) => {
-    this.props.navigation.navigate('BookingWebView', { url: room });
+  handleReserve = () => {
+    const { rooms } = this.state;
+    // Determine which library we are looking at, default to powell (for now)
+    const link = nameToLink[rooms.location] || nameToLink.powell;
+    this.props.navigation.navigate('BookingWebView', { url: link });
   }
+
+  reserveButtonComponent = () => (
+    <TouchableOpacity
+      style={styles.reserveButton}
+      onPress={() => this.handleReserve()}
+    >
+      <Text style={styles.whiteText}>
+          Reserve a Room
+      </Text>
+    </TouchableOpacity>
+  )
 
   renderList(item) {
     const { duration } = this.state;
-    if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
+    if (duration.length !== 0 && Number(item.duration) < Number(durationPairs[duration])) {
       return;
     }
-    let details = item.details.replace(/\n/g, '');
-    details = details.trim();
-    details = details.slice(0, -1);
-    const detailsArray = details.split('(');
+
     // eslint-disable-next-line consistent-return
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.text}>
-              {detailsArray[0]}
+              {item.room}
             </Text>
             <Text style={styles.littleText}>
-              {detailsArray[1]}
+              max
+              {' '}
+              {item.capacity}
+              {' '}
+              {item.capacity === 1 ? 'person' : 'people'}
             </Text>
-          </View>
-          <View style={styles.containerCol}>
-            <TouchableOpacity
-              style={styles.reserveButton}
-              onPress={() => this.handleReserve(item.link)}
-            >
-              <Text style={styles.whiteText}>
-                Reserve
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -112,19 +124,27 @@ export default class StudyRoomReserve extends Component {
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {namePairs[rooms.location]}
+            {rooms.location}
             {' '}
           </Text>
         </View>
         <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
-        <FlatList
-          data={rooms.available}
-          extraData={this.state}
-          renderItem={({ item }) => this.renderList(item)}
-          keyExtractor={(item, index) => index.toString()}
-          style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
-        />
-        {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
+        <View style={styles.centeredContent}>
+          <Text style={styles.subtitleText}>
+            <Text>Available Rooms</Text>
+          </Text>
+          <FlatList
+            data={rooms.available}
+            extraData={this.state}
+            renderItem={({ item }) => this.renderList(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={{
+              flex: 1, backgroundColor: 'transparent', marginTop: 5, minWidth: '90%'
+            }}
+            ListFooterComponent={this.reserveButtonComponent}
+          />
+          {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
+        </View>
       </SafeAreaView>
 
     );
@@ -142,7 +162,6 @@ const text = {
 const reserveButton = {
   backgroundColor: '#108BF8',
   height: 30,
-  width: '75%',
   alignItems: 'center',
   justifyContent: 'center',
   elevation: 5,
@@ -150,7 +169,11 @@ const reserveButton = {
   shadowOpacity: 0.5,
   shadowRadius: 1,
   borderRadius: 5,
-  marginLeft: 20
+  width: '40%',
+  alignSelf: 'center',
+  marginTop: 25,
+  flex: 1,
+  marginBottom: 25,
 };
 
 const styles = StyleSheet.create({
@@ -177,14 +200,27 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: 'black'
   },
+  subtitleText: {
+    ...text,
+    fontSize: 15,
+    fontWeight: '500',
+    color: 'gray',
+  },
   whiteText: {
     ...text,
     fontSize: 15,
-    color: 'white'
+    color: 'white',
+  },
+  centeredContent: {
+    flex: 1,
+    marginTop: 25,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   list: {
     backgroundColor: 'transparent',
@@ -192,7 +228,7 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     flexDirection: 'row',
-    height: 120,
+    height: 80,
     width: '95%',
     padding: 10,
     marginTop: 4,
@@ -214,6 +250,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginLeft: 15,
     justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
   },
   containerRow: {
@@ -221,6 +258,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginBottom: 3,
     alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
   },
   category: {
@@ -259,4 +297,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });
-
