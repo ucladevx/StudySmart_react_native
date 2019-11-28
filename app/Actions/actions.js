@@ -5,6 +5,7 @@ export const CHANGE_ROOM = 'CHANGE_ROOM';
 export const CHANGE_LOCATION = 'CHANGE_LOCATION';
 export const LOAD_HILLDATA = 'LOAD_HILLDATA';
 export const LOAD_LIBRARYDATA = 'LOAD_LIBRARYDATA';
+export const LOAD_AVAILCLASSROOMDATA = 'LOAD_AVAILCLASSROOMDATA';
 export const CHANGE_UNSTYLEDTIME = 'CHANGE_UNSTYLEDTIME';
 
 
@@ -39,6 +40,11 @@ export const loadHillData = hillData => ({
 export const loadLibraryData = libraryData => ({
   type: LOAD_LIBRARYDATA,
   libraryData,
+});
+
+export const loadAvailClassroomData = availClassroomData => ({
+  type: LOAD_AVAILCLASSROOMDATA,
+  availClassroomData,
 });
 
 export const changeUnstyledTime = unstyledTime => ({

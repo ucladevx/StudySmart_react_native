@@ -85,7 +85,6 @@ export default class StudyRoomReserve extends Component {
   }
 
   renderList(item) {
-    console.log(item);
     const { duration } = this.state;
     if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
       return;

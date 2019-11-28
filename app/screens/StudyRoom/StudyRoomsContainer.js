@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState, useRef } from 'react';
 import { Platform } from 'react-native';
 import { connect } from 'react-redux';
 import {
-  changeTime, changeDate, changeLocation, loadHillData, loadLibraryData,
+  changeTime, changeDate, changeLocation, loadHillData, loadLibraryData, loadAvailClassroomData
 } from '../../Actions/actions';
 import StudyRoomList from './StudyRoom';
 
@@ -105,6 +105,7 @@ class StudyRoomsContainer extends Component {
     getStudyRooms() {
       this.getHillStudyRooms();
       // this.getLibraryStudyRooms();
+      this.getAvailableClassrooms();
     }
 
     async getHillStudyRooms() {
@@ -179,13 +180,60 @@ class StudyRoomsContainer extends Component {
       this.sortData();
     }
 
+    async getAvailableClassrooms() {
+      let temp;
+      let minutesMidnight;
+      const { date, time, loadAvailClassroomData: loadAvailClassroomDataAction } = this.props;
+      let weekDay = new Date(date).getDay();
+      if (time.length > 0) {
+        let time2 = time;
+        if (!time2.includes(':')) {
+          time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
+        }
+        const splitTime = time2.split(':');
+        let hourInt = parseInt(splitTime[0], 10);
+        const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
+        const amPm = splitTime[1].substring(splitTime[1].length - 2);
+        if (amPm === 'PM') {
+          if (hourInt !== 12) {
+            hourInt += 12;
+          }
+        }
+        if (hourInt === 12 && amPm === 'AM') {
+          hourInt = 0;
+        }
+        minutesMidnight = (hourInt * 60) + minuteInt;
+      }
+      await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)
+        .then(response => response.json())
+        .then((data) => {
+          temp = data;
+        });
+        // temp.rows.weekDay = weekDay;
+        // temp.rows.minutesMidnight = minutesMidnight;
+
+        for (let k = 0; k < temp.rows.length; k += 1) {
+          temp.rows[k].weekDay = weekDay;
+          temp.rows[k].minutesMidnight = minutesMidnight;
+        }
+      loadAvailClassroomDataAction(temp.rows);
+      this.setState({
+        availClassroomData: temp,
+      });
+      console.log("temp.rows: ", temp.rows);
+      // this.sortData();
+    }
+
     sortData = () => {
       const hillDict = {};
       // const libDict = {};
+      const classroomDict = {};
       const hillArray = [];
+      const classroomArray = [];
       // const libArray = [];
       const { location } = this.props;
       const { hillData } = this.props;
+      const { availClassroomData } = this.props;
       if (location.includes('Anywhere') || location.includes('Hill')) {
         for (let i = 0; i < hillData.length; i += 1) {
           if (hillData[i].name in hillDict) {
@@ -210,10 +258,25 @@ class StudyRoomsContainer extends Component {
             libArray.push({ location: key, available: libDict[key] });
           });
         } */
+
+          // if (location.includes('Anywhere') || location.includes('Classrooms')) {
+          // for (let i = 0; i < availClassroomData.length; i += 1) {
+          //   if (availClassroomData[i].building in classroomDict) {
+          //     classroomDict[availClassroomData[i].building].push(availClassroomData[i]);
+          //   } else {
+          //     classroomDict[availClassroomData[i].building] = [availClassroomData[i]];
+          //   }
+          // }
+          // Object.keys(classroomDict).forEach((key) => {
+          //   classroomArray.push({ location: key, available: classroomDict[key] });
+          // });
+        // }
       this.setState({
         hillData: hillArray,
         loading: false,
+        
         // librariesData: libArray,
+        // classroomData: classroomDataArray
       });
     }
 
@@ -242,12 +305,13 @@ class StudyRoomsContainer extends Component {
   }
 
   render() {
-    const { hillData, librariesData, loading } = this.state;
+    const { hillData, librariesData, availClassroomData, loading } = this.state;
     const { navigation } = this.props;
     return (
       <StudyRoomList
         hillDataFound={hillData}
         librariesDataFound={librariesData}
+        availClassroomDataFound={availClassroomData}
         filterData={this.filterData}
         getStudyRooms={this.getStudyRooms}
         navigation={navigation}
@@ -283,7 +347,10 @@ const mapDispatchToProps = dispatch => ({
   },
   loadLibraryData: (libraryData) => {
     dispatch(loadLibraryData(libraryData));
-  }
+  },
+  loadAvailClassroomData: (availClassroomData) => {
+    dispatch(loadAvailClassroomData(availClassroomData));
+  },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomsContainer);

@@ -73,14 +73,13 @@ export default class StudyRoomList extends Component {
 
   renderRow = item => <BookingCard item={item} />
   renderRowBldg = item => <ClassroomBuildingCard item={item} />
-  // renderBldg  = item => <ClassroomBuilding item={item}>
 
   render() {
     const {
       visible, currentLocation
     } = this.state;
     const {
-      navigation, filterData, hillDataFound, loading, getStudyRooms
+      navigation, filterData, hillDataFound, availClassroomDataFound, loading, getStudyRooms
     } = this.props;
 
     const buildings = {
@@ -89,14 +88,32 @@ export default class StudyRoomList extends Component {
         {
          "name": "boelter",
          "available": 37,
+         "rooms": [ 
+          "A44",
+          "A48",
+          "A40",
+          "A41",
+        ],
         },
         {
           "name": "haines",
           "available": 18,
+          "rooms": [ 
+            "A44",
+            "A48",
+            "A40",
+            "A41",
+          ],
         },
         {
           "name": "franz",
           "available": 24,
+          "rooms": [ 
+            "A44",
+            "A48",
+            "A40",
+            "A41",
+          ],
         },
       ]
     };
@@ -106,7 +123,6 @@ export default class StudyRoomList extends Component {
     let listData;
     switch (currentLocation) {
       case 'Hill':
-        console.log("HILL DATA STUFF:", hillDataFound);
         listData = hillDataFound.length > 0 ? (
           <FlatList
             data={hillDataFound}
@@ -154,11 +170,11 @@ export default class StudyRoomList extends Component {
         //       <ShadowButton title="Change Time" select={this.handleModal} />
         //     </View>
         //   );
-        console.log("building count: ", buildings.count);
-        listData = buildings.count > 0 ? (
+        console.log("availClassroomDataFound count: ", availClassroomDataFound.rowCount);
+        listData = availClassroomDataFound.rowCount > 0 ? (
           <FlatList
-            data={buildings.items}
-            extraData={buildings.items}
+            data={availClassroomDataFound.rows}
+            extraData={availClassroomDataFound.rows}
             renderItem={({ item }) => this.renderRowBldg(item)}
             keyExtractor={(item, index) => index.toString()}
             style={styles.list}

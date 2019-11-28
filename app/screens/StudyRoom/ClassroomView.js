@@ -157,6 +157,9 @@ export default class ClassroomView extends Component {
     super(props);
     this.state = {
       rooms: this.props.navigation.getParam('rooms', 'NA'),
+      building: this.props.navigation.getParam('building', 'NA'),
+      class_key: this.props.navigation.getParam('class_key', 'NA'),
+      // classtimes: this.props.navigation.getParam('classtimes', 'NA'),
       duration: '1 hour',
       slide: false
     };
@@ -201,26 +204,59 @@ export default class ClassroomView extends Component {
     }, 100);
   }
 
+  handleAvailability = (room) => {
+    this.props.navigation.navigate('BookingWebView', { url: room });
+    // this.getClasstimes();
+  }
+
+  async getClasstimes() {
+    let temp;
+    const { navigation } = this.props;
+    await fetch(`
+    `)
+      .then(response => response.json())
+      .then((data) => {
+        temp = data;
+      });
+      navigation.navigate('ClassroomView',{
+        rooms: this.state.classroomList,
+        building: item.building,
+        // classtimes: roomData.classtimes,
+      });
+  }
+
   renderList(item) {
     const { duration } = this.state;
-    if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
-      return;
-    }
-    let details = item.details.replace(/\n/g, '');
-    details = details.trim();
-    details = details.slice(0, -1);
-    const detailsArray = details.split('(');
+    console.log("item in renderList", item);
+    // if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
+    //   return;
+    // }
+    // let details = item.details.replace(/\n/g, '');
+    // details = details.trim();
+    // details = details.slice(0, -1);
+    // const detailsArray = details.split('(');
+    
     // eslint-disable-next-line consistent-return
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.text}>
-              {detailsArray[0]}
+              {"Classroom " + item.room}
             </Text>
-            <Text style={styles.littleText}>
+            {/* <Text style={styles.littleText}>
               {detailsArray[1]}
-            </Text>
+            </Text> */}
+          </View>
+          <View style={styles.containerCol}>
+            <TouchableOpacity
+              style={styles.reserveButton}
+              onPress={() => this.handleAvailability("nice")}
+            >
+              <Text style={styles.whiteText}>
+                Availability
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -229,9 +265,12 @@ export default class ClassroomView extends Component {
   }
 
   render() {
-    const { rooms, duration, slide } = this.state;
+    const { building, rooms, classtimes, duration, slide } = this.state;
+    console.log("building: ", building);
+    console.log("rooms: ", rooms);
+    // console.log("classtimes: ", classtimes);
     const { navigate } = this.props.navigation;
-    const tester = "Is this thing on?";
+    // const tester = "Is this thing on?";
     const config = {
       velocityThreshold: 0.1,
       directionalOffsetThreshold: 200
@@ -244,11 +283,11 @@ export default class ClassroomView extends Component {
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {namePairs[rooms.location]}
+            {building}
             {' '}
           </Text>
         </View>
-        <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
+       <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
         <GestureRecognizer
           onSwipe={(direction, state) => this.onSwipe(direction, state)}
           onSwipeLeft={state => this.onSwipeLeft(state)}
@@ -260,7 +299,7 @@ export default class ClassroomView extends Component {
           }}
         >
           <FlatList
-            data={rooms.available}
+            data={rooms}
             extraData={this.state}
             renderItem={({ item }) => this.renderList(item)}
             keyExtractor={(item, index) => index.toString()}
@@ -283,6 +322,20 @@ const text = {
   color: 'black',
 };
 
+const reserveButton = {
+  backgroundColor: '#108BF8',
+  height: 30,
+  width: '75%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  elevation: 5,
+  shadowOffset: { width: 0, height: 1 },
+  shadowOpacity: 0.5,
+  shadowRadius: 1,
+  borderRadius: 5,
+  marginLeft: 20
+};
+
 const styles = StyleSheet.create({
   searchText: {
     fontFamily: 'System',
@@ -293,6 +346,7 @@ const styles = StyleSheet.create({
     color: 'black',
     width: '80%',
   },
+  reserveButton,
   text,
   littleText: {
     ...text,

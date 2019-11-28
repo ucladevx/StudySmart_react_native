@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import {
   StyleSheet, Dimensions, View, Text, Image, TouchableOpacity
 } from 'react-native';
@@ -55,115 +55,121 @@ const imagePairs = {
   movement
 };
 
-// const roomDetails = { //lame example data
-//   "availableRooms:" [
-//     {
-//       "roomNumber": "A48",
-//       "availablity": [
-//         {
-//           "start": "12:30",
-//           "end": "02:00",
-//         },
-//         {
-//           "start": "3:00",
-//           "end": "4:00",
-//         },
-//         {
-//           "start": "05:00",
-//           "end": "08:00"
-//         },
-//       ]
-//     },
-//     {
-//       "roomNumber": "A48",
-//       "availablity": [
-//         {
-//           "start": "12:30",
-//           "end": "02:00",
-//         },
-//         {
-//           "start": "3:00",
-//           "end": "4:00",
-//         },
-//         {
-//           "start": "05:00",
-//           "end": "08:00"
-//         },
-//       ]
-//     },
-//     {
-//       "roomNumber": "A48",
-//       "availablity": [
-//         {
-//           "start": "12:30",
-//           "end": "02:00",
-//         },
-//         {
-//           "start": "3:00",
-//           "end": "4:00",
-//         },
-//         {
-//           "start": "05:00",
-//           "end": "08:00"
-//         },
-//       ]
-//     },
-//   ]
-// }
+const roomData = {
 
-handleSelectBuilding = (navigation, item) => {
-  navigation.navigate('ClassroomView',{
-    rooms: item
-  });
-}
+      "building": "Boelter",
+      "class_key": "Boelter 383",
+      "classtimes": [
+        {
+          "day": "1",
+          "end": 1320,
+          "start": 800,
+        },
+        {
+          "day": "1",
+          "end": 2000,
+          "start": 1730,
+        },
+        {
+          "day": "2",
+          "end": 1320,
+          "start": 800,
+        },
+      ],
+      "room": "383",
+};
 
-const BookingCard = ({item, navigation}) => {
-    return (
-      <TouchableOpacity
-        onPress={() => this.handleSelectBuilding(navigation, item)}
-      >
-        <View style={styles.cell}>
-          <TouchableOpacity
-            style={styles.icon}
-            onPress={() => this.handleSelectBuilding(navigation, item)}
-          >
-            <Entypo name="chevron-thin-right" size={25} color="black" />
-          </TouchableOpacity>
-          <View
-            style={styles.containerRow}
-          >
-            <View style={styles.imageIcon}>
-              {/* <Image source={imagePairs[item.location]} style={styles.image} /> */}
-              <Image source={hedrickstudy} style={styles.image} />
-            </View>
-            <View
-              style={styles.containerCol}
+class ClassroomBuildingCard extends Component {
+  static navigationOptions = {
+    header: () => {}
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      classroomList: [],
+    };
+    this.getClassrooms = this.getClassrooms.bind(this);
+  }
+
+  handleSelectBuilding = () => { 
+    this.getClassrooms();
+  }
+
+  async getClassrooms() {
+    let temp;
+    const { item } = this.props;
+    const { navigation } = this.props;
+    console.log("item.building: " + item.building + " item.weekDay: " + item.weekDay + " item.minMidnight: " + item.minutesMidnight);
+    await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/get_rooms/${item.building}/${item.weekDay}/${item.minutesMidnight}
+    `)
+      .then(response => response.json())
+      .then((data) => {
+        temp = data;
+      });
+      console.log("temp.rows", temp.rows);
+      this.setState({
+        classroomList: temp.rows,
+      });
+      navigation.navigate('ClassroomView',{
+        rooms: this.state.classroomList,
+        building: item.building,
+        // classtimes: roomData.classtimes,
+      });
+  }
+
+    render() {
+      const { item } = this.props;
+      const { navigation } = this.props;
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            clicked = true;
+            this.handleSelectBuilding();
+          }}
+        >
+          <View style={styles.cell}>
+            <TouchableOpacity
+              style={styles.icon}
+              onPress={() => {
+                clicked = true;
+                this.handleSelectBuilding();
+              }}
             >
-              <View style={styles.containerRow}>
-                <Text style={[styles.name, styles.leftText]}>
-                  {item.name === '' ? 'Building name not found' : BldgPairs[item.name]}
-                </Text>
+              <Entypo name="chevron-thin-right" size={25} color="black" />
+            </TouchableOpacity>
+            <View
+              style={styles.containerRow}
+            >
+              <View style={styles.imageIcon}>
+                {/* <Image source={imagePairs[item.location]} style={styles.image} /> */}
+                <Image source={hedrickstudy} style={styles.image} />
               </View>
-              <View style={styles.containerRow}>
-                <Text style={[styles.text, styles.leftText]}>
-                  Rooms Available:
-                  {item.available}
-                </Text>
-              </View>
-              <View style={styles.containerRow}>
-                <Text style={[styles.text, styles.leftText]}>
-                  {''}
-                </Text>
+              <View
+                style={styles.containerCol}
+              >
+                <View style={styles.containerRow}>
+                  <Text style={[styles.name, styles.leftText]}>
+                    {item.building === '' ? 'Building name not found' : item.building}
+                  </Text>
+                </View>
+                <View style={styles.containerRow}>
+                  <Text style={[styles.text, styles.leftText]}>
+                    Rooms Available:
+                    {item.count}
+                  </Text>
+                </View>
+                <View style={styles.containerRow}>
+                  <Text style={[styles.text, styles.leftText]}>
+                    {''}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
-        </View>
-      </TouchableOpacity>
-    );
-}
-
-
-
+        </TouchableOpacity>
+      );
+    }
+};
 
 
 
@@ -277,4 +283,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default withNavigation(BookingCard);
+export default withNavigation(ClassroomBuildingCard);
