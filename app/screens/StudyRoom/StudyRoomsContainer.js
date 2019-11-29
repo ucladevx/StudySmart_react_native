@@ -209,8 +209,6 @@ class StudyRoomsContainer extends Component {
         .then((data) => {
           temp = data;
         });
-        // temp.rows.weekDay = weekDay;
-        // temp.rows.minutesMidnight = minutesMidnight;
 
         for (let k = 0; k < temp.rows.length; k += 1) {
           temp.rows[k].weekDay = weekDay;
