@@ -3,7 +3,6 @@ import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, ActivityIndicator
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import GestureRecognizer, { swipeDirections } from 'react-native-swipe-gestures';
 
 import FloatingSegment from '../../components/FloatingSegment';
 
@@ -31,27 +30,27 @@ const durationPairs = {
     }
   
   
-    onSwipeLeft(gestureState) {
-      this.setDuration('2 hours');
-    }
+    // onSwipeLeft(gestureState) {
+    //   this.setDuration('2 hours');
+    // }
   
-    onSwipeRight(gestureState) {
-      this.setDuration('1 hour');
-    }
+    // onSwipeRight(gestureState) {
+    //   this.setDuration('1 hour');
+    // }
   
-    onSwipe(gestureName, gestureState) {
-      const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
-      switch (gestureName) {
-        case SWIPE_LEFT:
-          this.setDuration('2 hours');
-          break;
-        case SWIPE_RIGHT:
-          this.setDuration('1 hour');
-          break;
-        default:
-          break;
-      }
-    }
+    // onSwipe(gestureName, gestureState) {
+    //   const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
+    //   switch (gestureName) {
+    //     case SWIPE_LEFT:
+    //       this.setDuration('2 hours');
+    //       break;
+    //     case SWIPE_RIGHT:
+    //       this.setDuration('1 hour');
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
   
     setDuration = (hour) => {
       this.setState({
@@ -117,16 +116,6 @@ const durationPairs = {
             </Text>
           </View>
           <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
-          <GestureRecognizer
-            onSwipe={(direction, state) => this.onSwipe(direction, state)}
-            onSwipeLeft={state => this.onSwipeLeft(state)}
-            onSwipeRight={state => this.onSwipeRight(state)}
-            config={config}
-            style={{
-              flex: 1,
-              backgroundColor: 'white'
-            }}
-          >
             <FlatList
               data={rooms.available}
               extraData={this.state}
@@ -134,7 +123,6 @@ const durationPairs = {
               keyExtractor={(item, index) => index.toString()}
               style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
             />
-          </GestureRecognizer>
           { slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null }
         </SafeAreaView>
   
