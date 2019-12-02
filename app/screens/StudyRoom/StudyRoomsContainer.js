@@ -218,20 +218,13 @@ class StudyRoomsContainer extends Component {
       this.setState({
         availClassroomData: temp,
       });
-      console.log("temp.rows: ", temp.rows);
-      // this.sortData();
     }
 
     sortData = () => {
       const hillDict = {};
-      // const libDict = {};
-      const classroomDict = {};
       const hillArray = [];
-      const classroomArray = [];
-      // const libArray = [];
       const { location } = this.props;
       const { hillData } = this.props;
-      const { availClassroomData } = this.props;
       if (location.includes('Anywhere') || location.includes('Hill')) {
         for (let i = 0; i < hillData.length; i += 1) {
           if (hillData[i].name in hillDict) {
@@ -244,37 +237,11 @@ class StudyRoomsContainer extends Component {
           hillArray.push({ location: key, available: hillDict[key], area: 'Hill' });
         });
       }
-      /*  if (location.includes('Anywhere') || location.includes('Libraries')) {
-          for (let i = 0; i < libraryData.length; i += 1) {
-            if (libraryData[i].building in libDict) {
-              libDict[libraryData[i].building].push(libraryData[i]);
-            } else {
-              libDict[libraryData[i].building] = [libraryData[i]];
-            }
-          }
-          Object.keys(libDict).forEach((key) => {
-            libArray.push({ location: key, available: libDict[key] });
-          });
-        } */
-
-          // if (location.includes('Anywhere') || location.includes('Classrooms')) {
-          // for (let i = 0; i < availClassroomData.length; i += 1) {
-          //   if (availClassroomData[i].building in classroomDict) {
-          //     classroomDict[availClassroomData[i].building].push(availClassroomData[i]);
-          //   } else {
-          //     classroomDict[availClassroomData[i].building] = [availClassroomData[i]];
-          //   }
-          // }
-          // Object.keys(classroomDict).forEach((key) => {
-          //   classroomArray.push({ location: key, available: classroomDict[key] });
-          // });
-        // }
       this.setState({
         hillData: hillArray,
         loading: false,
         
         // librariesData: libArray,
-        // classroomData: classroomDataArray
       });
     }
 

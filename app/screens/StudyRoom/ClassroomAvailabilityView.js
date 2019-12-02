@@ -4,19 +4,6 @@ import {
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
-import FloatingSegment from '../../components/FloatingSegment';
-
-const namePairs = {
-  sproulstudy: 'Sproul Study Rooms',
-  sproulmusic: 'Sproul Music Rooms',
-  deneve: 'De Neve Meeting Rooms',
-  rieber: 'Rieber Study Rooms',
-  music: 'Rieber Music Rooms',
-  hedrick: 'The Study at Hedrick',
-  hedrickstudy: 'Hedrick Study Rooms',
-  hedrickmusic: 'Hedrick Music Rooms',
-  movement: 'Hedrick Movement Studio',
-};
   //for later
 const BldgPairs = {
   boelter: 'Boelter Hall',
@@ -35,12 +22,9 @@ const BldgPairs = {
   
 };
 
-const durationPairs = {
-  '1 hour': '60',
-  '2 hours': '120',
-};
+const dayPairs = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-export default class ClassroomView extends Component {
+export default class ClassroomAvailabilityView extends Component {
   static navigationOptions = {
     header: () => {
       false;
@@ -50,82 +34,57 @@ export default class ClassroomView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rooms: this.props.navigation.getParam('rooms', 'NA'),
+      classtimes: this.props.navigation.getParam('classtimes', 'NA'),
       building: this.props.navigation.getParam('building', 'NA'),
-      class_key: this.props.navigation.getParam('class_key', 'NA'),
-      weekDay: this.props.navigation.getParam('weekDay', 'NA'),
-      minutesMidnight: this.props.navigation.getParam('minutesMidnight', 'NA'),
-      // classtimes: this.props.navigation.getParam('classtimes', 'NA'),
-      duration: '1 hour',
-      currentRoom: "NA",
+      room: this.props.navigation.getParam('room', 'NA'),
+      // duration: '1 hour',
       slide: false
     };
   }
+  
+  // setDuration = (hour) => {
+  //   this.setState({
+  //     duration: hour
+  //   });
 
-  setDuration = (hour) => {
-    this.setState({
-      duration: hour
-    });
+  //   this.setState({
+  //     slide: true
+  //   });
 
-    this.setState({
-      slide: true
-    });
+  //   setTimeout(() => {
+  //     this.setState({
+  //       slide: false
+  //     });
+  //   }, 100);
+  // }
 
-    setTimeout(() => {
-      this.setState({
-        slide: false
-      });
-    }, 100);
-  }
-
-  handleAvailability = (room) => {
-    this.getClasstimes(room);
-  }
-
-  async getClasstimes(room) {
-    let temp;
-    const { navigation } = this.props;
-    const { building } = this.state;
-    await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/get_room_timetable/${building}/${room}`)
-      .then(response => response.json())
-      .then((data) => {
-        temp = data;
-      });
-      navigation.navigate('ClassroomAvailabilityView', { classtimes: temp.rows, building: building, room: room });
-  }
-
-  timeFormat(time) {
-    const hours = time / 60;
-    if(hours >= 2) {
-      return hours + " hours";
+  formatTime(timeString) {
+    const dateObj = new Date(timeString * 60000);
+    let hours = dateObj.getUTCHours();
+    let minutes = dateObj.getUTCMinutes();
+    let time = hours.toString().padStart(2, '0') + ':' + 
+        minutes.toString().padStart(2, '0') + " am";
+    if(hours >= 12) {
+      hours -= 12;
+      time = hours.toString().padStart(2, '0') + ':' + 
+        minutes.toString().padStart(2, '0') + " pm";
     }
-    return hours + " hour";
+    if(hours == 12) {
+      time += " pm"
+    }
+    return time;
   }
+
 
   renderList(item) {
-    const { duration } = this.state;
-    
     // eslint-disable-next-line consistent-return
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.text}>
-              {"Classroom " + item.room}
+              {dayPairs[item.day] + ": " + this.formatTime(item.start_time) +" - " + this.formatTime(item.end_time)}
             </Text>
-            <Text style={styles.littleText}>
-              {this.timeFormat(item.amount_of_time)}
-            </Text>
-          </View>
-          <View style={styles.containerCol}>
-            <TouchableOpacity
-              style={styles.reserveButton}
-              onPress={() => this.handleAvailability(item.room)}
-            >
-              <Text style={styles.whiteText}>
-                Availability
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -134,23 +93,22 @@ export default class ClassroomView extends Component {
   }
 
   render() {
-    const { building, rooms, duration, slide } = this.state;
+    const { building, room, classtimes, slide } = this.state;
     const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('StudyRoomsContainer')}>
+          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('ClassroomView')}>
             <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {building}
+            {building + ' ' + room}
             {' '}
           </Text>
         </View>
-       {/* <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} /> */}
           <FlatList
-            data={rooms}
+            data={classtimes}
             extraData={this.state}
             renderItem={({ item }) => this.renderList(item)}
             keyExtractor={(item, index) => index.toString()}

@@ -155,22 +155,6 @@ export default class StudyRoomList extends Component {
           );
         break;
       case 'Classrooms':
-          //testing with Hill Data for now
-        // listData = hillDataFound.length > 0 ? (
-        //   <FlatList
-        //     data={hillDataFound}
-        //     extraData={hillDataFound}
-        //     renderItem={({ item }) => this.renderRow(item)}
-        //     keyExtractor={(item, index) => index.toString()}
-        //     style={styles.list}
-        //   />
-        // ) : (
-        //     <View style={styles.empty}>
-        //       <Text style={titleText}> No rooms available </Text>
-        //       <ShadowButton title="Change Time" select={this.handleModal} />
-        //     </View>
-        //   );
-        console.log("availClassroomDataFound count: ", availClassroomDataFound.rowCount);
         listData = availClassroomDataFound.rowCount > 0 ? (
           <FlatList
             data={availClassroomDataFound.rows}

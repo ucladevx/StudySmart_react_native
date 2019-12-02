@@ -99,21 +99,18 @@ class ClassroomBuildingCard extends Component {
     let temp;
     const { item } = this.props;
     const { navigation } = this.props;
-    console.log("item.building: " + item.building + " item.weekDay: " + item.weekDay + " item.minMidnight: " + item.minutesMidnight);
     await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/get_rooms/${item.building}/${item.weekDay}/${item.minutesMidnight}
     `)
       .then(response => response.json())
       .then((data) => {
         temp = data;
       });
-      console.log("temp.rows", temp.rows);
       this.setState({
         classroomList: temp.rows,
       });
       navigation.navigate('ClassroomView',{
         rooms: this.state.classroomList,
         building: item.building,
-        // classtimes: roomData.classtimes,
       });
   }
 
