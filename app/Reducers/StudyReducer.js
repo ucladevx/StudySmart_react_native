@@ -1,4 +1,5 @@
 import {
+  // eslint-disable-next-line max-len
   CHANGE_TIME, CHANGE_DATE, CHANGE_DURATION, CHANGE_ROOM, CHANGE_LOCATION, LOAD_HILLDATA, LOAD_LIBRARYDATA, LOAD_AVAILCLASSROOMDATA
 } from '../Actions/actions';
 

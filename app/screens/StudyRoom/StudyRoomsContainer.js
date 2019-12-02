@@ -1,5 +1,7 @@
+/* eslint-disable react/sort-comp */
+/* eslint-disable max-len */
 import React, {
-  Component, useEffect, useState, useRef
+  Component
 } from 'react';
 import { Platform } from 'react-native';
 import { connect } from 'react-redux';
@@ -19,20 +21,7 @@ const namePairs = {
   hedrickmusic: 'Hedrick Music Rooms',
   movement: 'Hedrick Movement Studio',
 };
-const monthPairs = {
-  '01': 'Jan',
-  '02': 'Feb',
-  '03': 'March',
-  '04': 'April',
-  '05': 'May',
-  '06': 'June',
-  '07': 'July',
-  '08': 'Aug',
-  '09': 'Sept',
-  10: 'Oct',
-  11: 'Nov',
-  12: 'Dec',
-};
+
 
 class StudyRoomsContainer extends Component {
   static navigationOptions = {

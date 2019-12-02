@@ -31,7 +31,6 @@ class StudyRoomModal extends Component {
         this.date.setDate(this.date.getDate() + 6);
         break;
     }
-
   }
 
   showDatePicker = () => {
