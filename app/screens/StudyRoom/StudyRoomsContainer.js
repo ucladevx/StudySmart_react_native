@@ -548,6 +548,12 @@ class StudyRoomsContainer extends Component {
   }
 
   filterData = (search) => {
+    this.filterHill(search);
+    this.filterLibraries(search);
+    this.filterClassrooms(search);
+  }
+
+  filterHill = (search) => {
     const { hillData } = this.props;
     const rooms = hillData.slice();
     const hillArray = [];
@@ -568,6 +574,49 @@ class StudyRoomsContainer extends Component {
     });
     this.setState({
       hillData: hillArray
+    });
+  }
+
+  filterLibraries = (search) => {
+    const { libraryData } = this.props;
+    const rooms = libraryData.slice();
+    const libraryArray = [];
+    const libraryDict = {};
+    const upperSearch = search.toUpperCase();
+    for (let i = 0; i < rooms.length; i += 1) {
+      const name = rooms[i].building.toUpperCase();
+      if (name.includes(upperSearch)) {
+        if (rooms[i].building in libraryDict) {
+          libraryDict[rooms[i].building].push(rooms[i]);
+        } else {
+          libraryDict[rooms[i].building] = [rooms[i]];
+        }
+      }
+    }
+    Object.keys(libraryDict).forEach((key) => {
+      libraryArray.push({ location: key, available: libraryDict[key], area: 'Library' });
+    });
+    this.setState({
+      librariesData: libraryArray
+    });
+  }
+
+  filterClassrooms = (search) => {
+    const { availClassroomData } = this.props;
+    const rooms = availClassroomData.slice();
+    const classroomsArray = [];
+    const upperSearch = search.toUpperCase();
+    for (let i = 0; i < rooms.length; i += 1) {
+      const name = rooms[i].building.toUpperCase();
+      if (name.includes(upperSearch)) {
+        classroomsArray.push(rooms[i]);
+      }
+    }
+
+    const classroomsDict = { rows: classroomsArray, rowCount: classroomsArray.length };
+
+    this.setState({
+      availClassroomData: classroomsDict
     });
   }
 
@@ -597,6 +646,7 @@ const mapStateToProps = state => ({
   location: state.study.location,
   hillData: state.study.hillData,
   libraryData: state.study.libraryData,
+  availClassroomData: state.study.availClassroomData,
   unstyledTime: state.study.unstyledTime
 
 });
