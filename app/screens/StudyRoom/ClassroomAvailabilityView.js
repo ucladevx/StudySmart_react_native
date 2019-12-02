@@ -63,14 +63,17 @@ export default class ClassroomAvailabilityView extends Component {
     let hours = dateObj.getUTCHours();
     let minutes = dateObj.getUTCMinutes();
     let time = hours.toString().padStart(2, '0') + ':' + 
-        minutes.toString().padStart(2, '0') + " am";
-    if(hours >= 12) {
+        minutes.toString().padStart(2, '0');
+    if(hours > 12) {
       hours -= 12;
       time = hours.toString().padStart(2, '0') + ':' + 
         minutes.toString().padStart(2, '0') + " pm";
     }
-    if(hours == 12) {
-      time += " pm"
+    else if(hours == 12) {
+      time += " pm";
+    }
+    else{
+      time += " am";
     }
     return time;
   }
