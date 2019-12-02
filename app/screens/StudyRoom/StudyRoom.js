@@ -8,6 +8,41 @@ import StudyRoomModal from './StudyRoomModal';
 import FloatingSegment from '../../components/FloatingSegment';
 import ShadowButton from '../../components/ShadowButton';
 import BookingCard from '../../components/BookingCard';
+import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
+
+const namePairs = {
+  sproulstudy: 'Sproul Study Rooms',
+  sproulmusic: 'Sproul Music Rooms',
+  deneve: 'De Neve Meeting Rooms',
+  rieber: 'Rieber Study Rooms',
+  music: 'Rieber Music Rooms',
+  hedrick: 'The Study at Hedrick',
+  hedrickstudy: 'Hedrick Study Rooms',
+  hedrickmusic: 'Hedrick Music Rooms',
+  movement: 'Hedrick Movement Studio',
+};
+
+const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
+const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
+const deneve = require('../../../assets/Studyrooms/deneve.jpg');
+const rieber = require('../../../assets/Studyrooms/rieber.jpg');
+const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
+const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
+const music = require('../../../assets/Studyrooms/music.jpg');
+const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
+const movement = require('../../../assets/Studyrooms/movement.jpg');
+
+const imagePairs = {
+  sproulmusic,
+  sproulstudy,
+  deneve,
+  rieber,
+  hedrick,
+  hedrickmusic,
+  music,
+  hedrickstudy,
+  movement
+};
 
 export default class StudyRoomList extends Component {
   static navigationOptions = {
@@ -21,7 +56,6 @@ export default class StudyRoomList extends Component {
       currentLocation: 'Hill',
     };
   }
-
 
   handleModal = () => {
     const { visible } = this.state;
@@ -38,13 +72,51 @@ export default class StudyRoomList extends Component {
 
   renderRow = item => <BookingCard item={item} />
 
+  renderRowBldg = item => <ClassroomBuildingCard item={item} />
+
   render() {
     const {
       visible, currentLocation
     } = this.state;
     const {
-      navigation, filterData, hillDataFound, loading, getStudyRooms, librariesDataFound,
+      navigation, filterData, hillDataFound, librariesDataFound, availClassroomDataFound, loading, getStudyRooms
     } = this.props;
+
+    const buildings = {
+      count: 3,
+      items: [
+        {
+          name: 'boelter',
+          available: 37,
+          rooms: [
+            'A44',
+            'A48',
+            'A40',
+            'A41',
+          ],
+        },
+        {
+          name: 'haines',
+          available: 18,
+          rooms: [
+            'A44',
+            'A48',
+            'A40',
+            'A41',
+          ],
+        },
+        {
+          name: 'franz',
+          available: 24,
+          rooms: [
+            'A44',
+            'A48',
+            'A40',
+            'A41',
+          ],
+        },
+      ]
+    };
 
     let listData;
     switch (currentLocation) {
@@ -58,11 +130,11 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          );
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
         break;
       case 'Libraries':
         listData = librariesDataFound.length > 0 ? (
@@ -74,16 +146,33 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          );
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
         break;
       case 'Classrooms':
-      // TODO
-      // listData = 
-      // break;
+
+        console.log('availClassroomDataFound count: ', availClassroomDataFound.rowCount);
+        listData = availClassroomDataFound.rowCount > 0 ? (
+          <FlatList
+            data={availClassroomDataFound.rows}
+            extraData={availClassroomDataFound.rows}
+            renderItem={({ item }) => this.renderRowBldg(item)}
+            keyExtractor={(item, index) => index.toString()}
+            style={styles.list}
+          />
+        ) : (
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
+
+        // TODO
+        // listData =
+        break;
       default:
         listData = (
           <View style={styles.empty}>
@@ -106,7 +195,7 @@ export default class StudyRoomList extends Component {
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
           {listData}
           {visible ? (
-            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={this.state.currentLocation}/>
+            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={this.state.currentLocation} />
           ) : null}
         </SafeAreaView>
       </TouchableWithoutFeedback>

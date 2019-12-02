@@ -60,6 +60,11 @@ class BookingCard extends Component {
           rooms: item
         });
         break;
+      case 'Classrooms':
+        navigation.navigate('ClassroomView', {
+          rooms: item
+        });
+        break;
       default:
         break;
     }
@@ -68,8 +73,9 @@ class BookingCard extends Component {
   render() {
     const { item } = this.props;
 
-    let unique = [];
+    const unique = [];
     switch (item.area) {
+      case 'Classrooms':
       case 'Hill':
         for (let i = 0; i < item.available.length; i += 1) {
           if (!unique.includes(item.available[i].details)) {
@@ -121,9 +127,7 @@ class BookingCard extends Component {
                 </Text>
               </View>
               <View style={styles.containerRow}>
-                <Text style={[styles.text, styles.leftText]}>
-                  {''}
-                </Text>
+                <Text style={[styles.text, styles.leftText]} />
               </View>
             </View>
           </View>
