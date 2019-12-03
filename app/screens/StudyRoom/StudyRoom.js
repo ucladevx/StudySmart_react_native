@@ -153,8 +153,6 @@ export default class StudyRoomList extends Component {
         );
         break;
       case 'Classrooms':
-
-        console.log('availClassroomDataFound count: ', availClassroomDataFound.rowCount);
         listData = availClassroomDataFound.rowCount > 0 ? (
           <FlatList
             data={availClassroomDataFound.rows}

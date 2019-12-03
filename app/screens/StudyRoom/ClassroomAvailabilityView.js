@@ -4,64 +4,61 @@ import {
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
-export default class ClassroomView extends Component {
+// for later
+const BldgPairs = {
+  boelter: 'Boelter Hall',
+  bunche: 'Bunche Hall',
+  dodd: 'Dodd Hall',
+  franz: 'Franz Hall',
+  haines: 'Haines Hall',
+  kaplan: 'Kaplan Hall',
+  ls: 'Life Sciences',
+  moore: 'Moore Hall',
+  ms: 'Mathematical Sciences',
+  ostin: 'Ostin Music Center',
+  pab: 'Physics and Astronomy Building',
+  pubaff: 'Public Affairs Building',
+  pubhealth: 'School of Public Health',
+
+};
+
+const dayPairs = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+export default class ClassroomAvailabilityView extends Component {
+  static navigationOptions = {
+    header: () => {
+      false;
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      rooms: this.props.navigation.getParam('rooms', 'NA'),
+      classtimes: this.props.navigation.getParam('classtimes', 'NA'),
       building: this.props.navigation.getParam('building', 'NA'),
-      // classtimes: this.props.navigation.getParam('classtimes', 'NA'),
-      duration: '1 hour',
+      room: this.props.navigation.getParam('room', 'NA'),
+      // duration: '1 hour',
       slide: false
     };
   }
 
-  async getClasstimes(room) {
-    let temp;
-    const { navigation } = this.props;
-    const { building } = this.state;
-    await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/get_room_timetable/${building}/${room}`)
-      .then(response => response.json())
-      .then((data) => {
-        temp = data;
-      });
-    navigation.navigate('ClassroomAvailabilityView', { classtimes: temp.rows, building, room });
-  }
-
-  // eslint-disable-next-line react/sort-comp
-
-
-  setDuration = (hour) => {
-    this.setState({
-      duration: hour
-    });
-
-    this.setState({
-      slide: true
-    });
-
-    setTimeout(() => {
-      this.setState({
-        slide: false
-      });
-    }, 100);
-  }
-
-  handleAvailability = (room) => {
-    this.getClasstimes(room);
-  }
-
-  static navigationOptions = {
-    header: () => { }
-  }
-
   // eslint-disable-next-line class-methods-use-this
-  timeFormat(time) {
-    const hours = time / 60;
-    if (hours >= 2) {
-      return `${hours} hours`;
+  formatTime(timeString) {
+    const dateObj = new Date(timeString * 60000);
+    let hours = dateObj.getUTCHours();
+    const minutes = dateObj.getUTCMinutes();
+    let time = `${hours.toString().padStart(2, '0')}:${
+      minutes.toString().padStart(2, '0')}`;
+    if (hours > 12) {
+      hours -= 12;
+      time = `${hours.toString().padStart(2, '0')}:${
+        minutes.toString().padStart(2, '0')} pm`;
+    } else if (hours === 12) {
+      time += ' pm';
+    } else {
+      time += ' am';
     }
-    return `${hours} hour`;
+    return time;
   }
 
 
@@ -72,21 +69,8 @@ export default class ClassroomView extends Component {
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.text}>
-              {`Classroom ${item.room}`}
+              {`${dayPairs[item.day]}: ${this.formatTime(item.start_time)} - ${this.formatTime(item.end_time)}`}
             </Text>
-            <Text style={styles.littleText}>
-              {this.timeFormat(item.amount_of_time)}
-            </Text>
-          </View>
-          <View style={styles.containerCol}>
-            <TouchableOpacity
-              style={styles.reserveButton}
-              onPress={() => this.handleAvailability(item.room)}
-            >
-              <Text style={styles.whiteText}>
-                Availability
-              </Text>
-            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -96,23 +80,23 @@ export default class ClassroomView extends Component {
 
   render() {
     const {
-      building, rooms, duration, slide
+      building, room, classtimes, slide
     } = this.state;
     const { navigate } = this.props.navigation;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('StudyRoomsContainer')}>
+          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('ClassroomView')}>
             <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {building}
+            {`${building} ${room}`}
             {' '}
           </Text>
         </View>
         <FlatList
-          data={rooms}
+          data={classtimes}
           extraData={this.state}
           renderItem={({ item }) => this.renderList(item)}
           keyExtractor={(item, index) => index.toString()}
