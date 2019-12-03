@@ -59,9 +59,9 @@ export default class ClassroomView extends Component {
   timeFormat(time) {
     const hours = time / 60;
     if (hours >= 2) {
-      return `${hours} hours`;
+      return `Available for ${hours} hours`;
     }
-    return `${hours} hour`;
+    return `Available for ${hours} hour`;
   }
 
 
