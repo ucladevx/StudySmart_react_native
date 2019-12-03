@@ -4,92 +4,72 @@ import {
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
 
-import FloatingSegment from '../../components/FloatingSegment';
+// for later
+// eslint-disable-next-line no-unused-vars
+const BldgPairs = {
+  boelter: 'Boelter Hall',
+  bunche: 'Bunche Hall',
+  dodd: 'Dodd Hall',
+  franz: 'Franz Hall',
+  haines: 'Haines Hall',
+  kaplan: 'Kaplan Hall',
+  ls: 'Life Sciences',
+  moore: 'Moore Hall',
+  ms: 'Mathematical Sciences',
+  ostin: 'Ostin Music Center',
+  pab: 'Physics and Astronomy Building',
+  pubaff: 'Public Affairs Building',
+  pubhealth: 'School of Public Health',
 
-// TODO: Update with proper library abbrevs and names later
-const nameToLink = {
-  powell: 'http://calendar.library.ucla.edu/spaces',
-  'Young Research Library': 'http://calendar.library.ucla.edu/reserve/yrl_gsr',
-  'Young Research Library - Pods': 'http://calendar.library.ucla.edu/reserve/yrl_pods'
 };
 
-const durationPairs = {
-  '1 hour': '60',
-  '2 hours': '120',
-};
+const dayPairs = ['', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
-export default class LibraryRoomReserve extends Component {
+export default class ClassroomAvailabilityView extends Component {
   constructor(props) {
     super(props);
     const { navigation } = this.props;
     this.state = {
-      rooms: navigation.getParam('rooms', 'NA'),
-      duration: '1 hour',
-      slide: false,
+      classtimes: navigation.getParam('classtimes', 'NA'),
+      building: navigation.getParam('building', 'NA'),
+      room: navigation.getParam('room', 'NA'),
+      slide: false
     };
   }
 
-  setDuration = (hour) => {
-    this.setState({
-      duration: hour
-    });
-
-    this.setState({
-      slide: true
-    });
-
-    setTimeout(() => {
-      this.setState({
-        slide: false
-      });
-    }, 100);
-  }
-
-  handleReserve = () => {
-    const { rooms } = this.state;
-    const { navigation } = this.props;
-    const { navigate } = navigation;
-    // Determine which library we are looking at, default to powell (for now)
-    const link = nameToLink[rooms.location] || nameToLink.powell;
-    navigate('BookingWebView', { url: link });
-  }
-
-  reserveButtonComponent = () => (
-    <TouchableOpacity
-      style={styles.reserveButton}
-      onPress={() => this.handleReserve()}
-    >
-      <Text style={styles.whiteText}>
-        {}
-Reserve a Room
-      </Text>
-    </TouchableOpacity>
-  )
-
   static navigationOptions = {
-    header: () => { }
+    header: () => {
+    }
   }
+
+  // eslint-disable-next-line class-methods-use-this
+  formatTime(timeString) {
+    const dateObj = new Date(timeString * 60000);
+    let hours = dateObj.getUTCHours();
+    const minutes = dateObj.getUTCMinutes();
+    let time = `${hours.toString().padStart(2, '0')}:${
+      minutes.toString().padStart(2, '0')}`;
+    if (hours > 12) {
+      hours -= 12;
+      time = `${hours.toString().padStart(2, '0')}:${
+        minutes.toString().padStart(2, '0')} pm`;
+    } else if (hours === 12) {
+      time += ' pm';
+    } else {
+      time += ' am';
+    }
+    return time;
+  }
+
 
   renderList(item) {
-    const { duration } = this.state;
-    if (duration.length !== 0 && Number(item.duration) < Number(durationPairs[duration])) {
-      return;
-    }
-
     // eslint-disable-next-line consistent-return
     return (
       <View style={styles.cell}>
         <View style={styles.containerRow}>
           <View style={styles.containerCol}>
             <Text style={styles.text}>
-              {item.room}
-            </Text>
-            <Text style={styles.littleText}>
-              max
-              {' '}
-              {item.capacity}
-              {' '}
-              {item.capacity === 1 ? 'person' : 'people'}
+              {`${dayPairs[item.day]}: ${this.formatTime(item.start_time)} - ${this.formatTime(item.end_time)}`}
             </Text>
           </View>
         </View>
@@ -99,38 +79,31 @@ Reserve a Room
   }
 
   render() {
-    const { rooms, duration, slide } = this.state;
+    const {
+      building, room, classtimes, slide
+    } = this.state;
     const { navigation } = this.props;
     const { navigate } = navigation;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('StudyRoomsContainer')}>
+          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('ClassroomView')}>
             <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {rooms.location}
+            {`${building} ${room}`}
             {' '}
           </Text>
         </View>
-        <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
-        <View style={styles.centeredContent}>
-          <Text style={styles.subtitleText}>
-            <Text>Available Rooms</Text>
-          </Text>
-          <FlatList
-            data={rooms.available}
-            extraData={this.state}
-            renderItem={({ item }) => this.renderList(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={{
-              flex: 1, backgroundColor: 'transparent', marginTop: 5, minWidth: '90%'
-            }}
-            ListFooterComponent={this.reserveButtonComponent}
-          />
-          {slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
-        </View>
+        <FlatList
+          data={classtimes}
+          extraData={this.state}
+          renderItem={({ item }) => this.renderList(item)}
+          keyExtractor={(item, index) => index.toString()}
+          style={{ flex: 1, backgroundColor: 'transparent', marginTop: 5 }}
+        />
+        { slide ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null }
       </SafeAreaView>
 
     );
@@ -145,9 +118,11 @@ const text = {
   letterSpacing: 1.92,
   color: 'black',
 };
+
 const reserveButton = {
   backgroundColor: '#108BF8',
   height: 30,
+  width: '75%',
   alignItems: 'center',
   justifyContent: 'center',
   elevation: 5,
@@ -155,11 +130,7 @@ const reserveButton = {
   shadowOpacity: 0.5,
   shadowRadius: 1,
   borderRadius: 5,
-  width: '40%',
-  alignSelf: 'center',
-  marginTop: 25,
-  flex: 1,
-  marginBottom: 25,
+  marginLeft: 20
 };
 
 const styles = StyleSheet.create({
@@ -186,27 +157,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: 'black'
   },
-  subtitleText: {
-    ...text,
-    fontSize: 15,
-    fontWeight: '500',
-    color: 'gray',
-  },
   whiteText: {
     ...text,
     fontSize: 15,
-    color: 'white',
-  },
-  centeredContent: {
-    flex: 1,
-    marginTop: 25,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    color: 'white'
   },
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   list: {
     backgroundColor: 'transparent',
@@ -214,7 +172,7 @@ const styles = StyleSheet.create({
   cell: {
     flex: 1,
     flexDirection: 'row',
-    height: 80,
+    height: 120,
     width: '95%',
     padding: 10,
     marginTop: 4,
@@ -236,7 +194,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     marginLeft: 15,
     justifyContent: 'center',
-    alignItems: 'center',
     width: '100%',
   },
   containerRow: {
@@ -244,7 +201,6 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginBottom: 3,
     alignItems: 'center',
-    justifyContent: 'center',
     width: '100%',
   },
   category: {

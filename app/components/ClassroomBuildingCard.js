@@ -1,88 +1,13 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import {
-  StyleSheet, Dimensions, View, Text, Image, TouchableOpacity
+  StyleSheet, View, Text, Image, TouchableOpacity
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { withNavigation } from 'react-navigation';
 
-const namePairs = {
-  sproulstudy: 'Sproul Study Rooms',
-  sproulmusic: 'Sproul Music Rooms',
-  deneve: 'De Neve Meeting Rooms',
-  rieber: 'Rieber Study Rooms',
-  music: 'Rieber Music Rooms',
-  hedrick: 'The Study at Hedrick',
-  hedrickstudy: 'Hedrick Study Rooms',
-  hedrickmusic: 'Hedrick Music Rooms',
-  movement: 'Hedrick Movement Studio',
-};
-
-const BldgPairs = {
-  boelter: 'Boelter Hall',
-  bunche: 'Bunche Hall',
-  dodd: 'Dodd Hall',
-  franz: 'Franz Hall',
-  haines: 'Haines Hall',
-  kaplan: 'Kaplan Hall',
-  ls: 'Life Sciences',
-  moore: 'Moore Hall',
-  ms: 'Mathematical Sciences',
-  ostin: 'Ostin Music Center',
-  pab: 'Physics and Astronomy Building',
-  pubaff: "Public Affairs Building",
-  pubhealth: 'School of Public Health',
-};
-
-const sproulstudy = require('../../assets/Studyrooms/sproulstudy.jpg');
-const sproulmusic = require('../../assets/Studyrooms/sproulmusic.jpg');
-const deneve = require('../../assets/Studyrooms/deneve.jpg');
-const rieber = require('../../assets/Studyrooms/rieber.jpg');
-const hedrick = require('../../assets/Studyrooms/hedrickstudy.jpg');
-const hedrickmusic = require('../../assets/Studyrooms/hedrickmusic.jpg');
-const music = require('../../assets/Studyrooms/music.jpg');
 const hedrickstudy = require('../../assets/Studyrooms/hedrick.jpg');
-const movement = require('../../assets/Studyrooms/movement.jpg');
-
-const imagePairs = {
-  sproulmusic,
-  sproulstudy,
-  deneve,
-  rieber,
-  hedrick,
-  hedrickmusic,
-  music,
-  hedrickstudy,
-  movement
-};
-
-const roomData = {
-
-      "building": "Boelter",
-      "class_key": "Boelter 383",
-      "classtimes": [
-        {
-          "day": "1",
-          "end": 1320,
-          "start": 800,
-        },
-        {
-          "day": "1",
-          "end": 2000,
-          "start": 1730,
-        },
-        {
-          "day": "2",
-          "end": 1320,
-          "start": 800,
-        },
-      ],
-      "room": "383",
-};
 
 class ClassroomBuildingCard extends Component {
-  static navigationOptions = {
-    header: () => {}
-  }
   constructor(props) {
     super(props);
     this.state = {
@@ -91,86 +16,81 @@ class ClassroomBuildingCard extends Component {
     this.getClassrooms = this.getClassrooms.bind(this);
   }
 
-  handleSelectBuilding = () => { 
-    this.getClassrooms();
-  }
-
   async getClassrooms() {
     let temp;
-    const { item } = this.props;
-    const { navigation } = this.props;
-    console.log("item.building: " + item.building + " item.weekDay: " + item.weekDay + " item.minMidnight: " + item.minutesMidnight);
+    const { item, navigation } = this.props;
+    const { classroomList } = this.state;
     await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/get_rooms/${item.building}/${item.weekDay}/${item.minutesMidnight}
     `)
       .then(response => response.json())
       .then((data) => {
         temp = data;
       });
-      console.log("temp.rows", temp.rows);
-      this.setState({
-        classroomList: temp.rows,
-      });
-      navigation.navigate('ClassroomView',{
-        rooms: this.state.classroomList,
-        building: item.building,
-        // classtimes: roomData.classtimes,
-      });
+    this.setState({
+      classroomList: temp.rows,
+    });
+    navigation.navigate('ClassroomView', {
+      rooms: classroomList,
+      building: item.building,
+    });
   }
 
-    render() {
-      const { item } = this.props;
-      const { navigation } = this.props;
-      return (
-        <TouchableOpacity
-          onPress={() => {
-            clicked = true;
-            this.handleSelectBuilding();
-          }}
-        >
-          <View style={styles.cell}>
-            <TouchableOpacity
-              style={styles.icon}
-              onPress={() => {
-                clicked = true;
-                this.handleSelectBuilding();
-              }}
-            >
-              <Entypo name="chevron-thin-right" size={25} color="black" />
-            </TouchableOpacity>
+  handleSelectBuilding = () => {
+    this.getClassrooms();
+  }
+
+
+  static navigationOptions = {
+    header: () => {}
+  }
+
+  render() {
+    const { item } = this.props;
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this.handleSelectBuilding();
+        }}
+      >
+        <View style={styles.cell}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={() => {
+              this.handleSelectBuilding();
+            }}
+          >
+            <Entypo name="chevron-thin-right" size={25} color="black" />
+          </TouchableOpacity>
+          <View
+            style={styles.containerRow}
+          >
+            <View style={styles.imageIcon}>
+              <Image source={hedrickstudy} style={styles.image} />
+            </View>
             <View
-              style={styles.containerRow}
+              style={styles.containerCol}
             >
-              <View style={styles.imageIcon}>
-                {/* <Image source={imagePairs[item.location]} style={styles.image} /> */}
-                <Image source={hedrickstudy} style={styles.image} />
+              <View style={styles.containerRow}>
+                <Text style={[styles.name, styles.leftText]}>
+                  {item.building === '' ? 'Building name not found' : item.building}
+                </Text>
               </View>
-              <View
-                style={styles.containerCol}
-              >
-                <View style={styles.containerRow}>
-                  <Text style={[styles.name, styles.leftText]}>
-                    {item.building === '' ? 'Building name not found' : item.building}
-                  </Text>
-                </View>
-                <View style={styles.containerRow}>
-                  <Text style={[styles.text, styles.leftText]}>
+              <View style={styles.containerRow}>
+                <Text style={[styles.text, styles.leftText]}>
                     Rooms Available:
-                    {item.count}
-                  </Text>
-                </View>
-                <View style={styles.containerRow}>
-                  <Text style={[styles.text, styles.leftText]}>
-                    {''}
-                  </Text>
-                </View>
+                  {item.count}
+                </Text>
+              </View>
+              <View style={styles.containerRow}>
+                <Text style={[styles.text, styles.leftText]} />
               </View>
             </View>
           </View>
-        </TouchableOpacity>
-      );
-    }
-};
-
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 
 const text = {
