@@ -9,6 +9,7 @@ import FloatingSegment from '../../components/FloatingSegment';
 import ShadowButton from '../../components/ShadowButton';
 import BookingCard from '../../components/BookingCard';
 import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
+import StudyRoomsPreview from './StudyRoomsPreview';
 
 const namePairs = {
   sproulstudy: 'Sproul Study Rooms',
@@ -79,62 +80,13 @@ export default class StudyRoomList extends Component {
       visible, currentLocation
     } = this.state;
     const {
-      navigation, filterData, hillDataFound, librariesDataFound, availClassroomDataFound, loading, getStudyRooms
+      navigation, filterData, librariesDataFound, availClassroomDataFound, loading, getStudyRooms,
     } = this.props;
-
-    const buildings = {
-      count: 3,
-      items: [
-        {
-          name: 'boelter',
-          available: 37,
-          rooms: [
-            'A44',
-            'A48',
-            'A40',
-            'A41',
-          ],
-        },
-        {
-          name: 'haines',
-          available: 18,
-          rooms: [
-            'A44',
-            'A48',
-            'A40',
-            'A41',
-          ],
-        },
-        {
-          name: 'franz',
-          available: 24,
-          rooms: [
-            'A44',
-            'A48',
-            'A40',
-            'A41',
-          ],
-        },
-      ]
-    };
 
     let listData;
     switch (currentLocation) {
       case 'Hill':
-        listData = hillDataFound.length > 0 ? (
-          <FlatList
-            data={hillDataFound}
-            extraData={hillDataFound}
-            renderItem={({ item }) => this.renderRow(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.list}
-          />
-        ) : (
-          <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-            <ShadowButton title="Change Time" select={this.handleModal} />
-          </View>
-        );
+        listData = <StudyRoomsPreview />;
         break;
       case 'Libraries':
         listData = librariesDataFound.length > 0 ? (
@@ -167,9 +119,6 @@ export default class StudyRoomList extends Component {
             <ShadowButton title="Change Time" select={this.handleModal} />
           </View>
         );
-
-        // TODO
-        // listData =
         break;
       default:
         listData = (
@@ -188,12 +137,13 @@ export default class StudyRoomList extends Component {
             sortData={this.sortData}
             handleModal={this.handleModal}
             filterData={filterData}
+            currentLocation={currentLocation}
           />
           <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
           {listData}
           {visible ? (
-            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={this.state.currentLocation} />
+            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={currentLocation} />
           ) : null}
         </SafeAreaView>
       </TouchableWithoutFeedback>

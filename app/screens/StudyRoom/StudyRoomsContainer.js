@@ -22,7 +22,6 @@ const namePairs = {
   movement: 'Hedrick Movement Studio',
 };
 
-
 class StudyRoomsContainer extends Component {
   static navigationOptions = {
     header: () => { }
@@ -37,7 +36,6 @@ class StudyRoomsContainer extends Component {
     };
     this.getStudyRooms = this.getStudyRooms.bind(this);
   }
-
 
   componentDidMount() {
     const setting = new Date();
@@ -70,6 +68,7 @@ class StudyRoomsContainer extends Component {
         styledTime = `${hourString + styledTime.slice(2)}AM`;
       }
     }
+
     changeTimeAction(styledTime);
     let chosen = setting;
     let dd = chosen.getDate();
@@ -94,7 +93,7 @@ class StudyRoomsContainer extends Component {
   }
 
   getStudyRooms() {
-    this.getHillStudyRooms();
+    // this.getHillStudyRooms();
     this.getLibraryStudyRooms();
     this.getAvailableClassrooms();
   }
@@ -464,7 +463,7 @@ class StudyRoomsContainer extends Component {
     const { navigation } = this.props;
     return (
       <StudyRoomList
-        hillDataFound={hillData}
+        // hillDataFound={hillData}
         librariesDataFound={librariesData}
         availClassroomDataFound={availClassroomData}
         filterData={this.filterData}
