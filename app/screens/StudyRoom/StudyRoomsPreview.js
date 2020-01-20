@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import {
-  Text, SafeAreaView, TouchableOpacity, StyleSheet, FlatList, Platform, ActivityIndicator
+  SafeAreaView, StyleSheet, FlatList,
 } from 'react-native';
-import { connect } from 'react-redux';
-// import StudyRoomsContainer from './StudyRoomsContainer';
 import TimeRangeCard from '../../components/TimeRangeCard';
-import {
-  changeTime, changeDate, changeLocation, loadHillData, loadLibraryData,
-} from '../../Actions/actions';
 
 const timeRanges = {
   '12:00-1:00am': [0, 1],
@@ -116,33 +111,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = state => ({
-  // time: state.study.time,
-  // date: state.study.date,
-  // duration: state.study.duration,
-  // location: state.study.location,
-  // hillData: state.study.hillData,
-  // libraryData: state.study.libraryData,
-  // unstyledTime: state.study.unstyledTime
-
-});
-
-const mapDispatchToProps = dispatch => ({
-  // changeTime: (time) => {
-  //   dispatch(changeTime(time));
-  // },
-  // changeDate: (date) => {
-  //   dispatch(changeDate(date));
-  // },
-  // changeLocation: (location) => {
-  //   dispatch(changeLocation(location));
-  // },
-  // loadHillData: (hillData) => {
-  //   dispatch(loadHillData(hillData));
-  // },
-  // loadLibraryData: (libraryData) => {
-  //   dispatch(loadLibraryData(libraryData));
-  // }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomsPreview);
+export default StudyRoomsPreview;

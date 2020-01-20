@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator,
+  Text, View, StyleSheet, SafeAreaView, FlatList, ActivityIndicator,
   TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
 import StudyRoomHeader from './StudyRoomHeader';
@@ -11,41 +11,42 @@ import BookingCard from '../../components/BookingCard';
 import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
 import StudyRoomsPreview from './StudyRoomsPreview';
 
-const namePairs = {
-  sproulstudy: 'Sproul Study Rooms',
-  sproulmusic: 'Sproul Music Rooms',
-  deneve: 'De Neve Meeting Rooms',
-  rieber: 'Rieber Study Rooms',
-  music: 'Rieber Music Rooms',
-  hedrick: 'The Study at Hedrick',
-  hedrickstudy: 'Hedrick Study Rooms',
-  hedrickmusic: 'Hedrick Music Rooms',
-  movement: 'Hedrick Movement Studio',
-};
+// const namePairs = {
+//   sproulstudy: 'Sproul Study Rooms',
+//   sproulmusic: 'Sproul Music Rooms',
+//   deneve: 'De Neve Meeting Rooms',
+//   rieber: 'Rieber Study Rooms',
+//   music: 'Rieber Music Rooms',
+//   hedrick: 'The Study at Hedrick',
+//   hedrickstudy: 'Hedrick Study Rooms',
+//   hedrickmusic: 'Hedrick Music Rooms',
+//   movement: 'Hedrick Movement Studio',
+// };
 
-const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
-const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
-const deneve = require('../../../assets/Studyrooms/deneve.jpg');
-const rieber = require('../../../assets/Studyrooms/rieber.jpg');
-const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
-const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
-const music = require('../../../assets/Studyrooms/music.jpg');
-const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
-const movement = require('../../../assets/Studyrooms/movement.jpg');
+// const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
+// const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
+// const deneve = require('../../../assets/Studyrooms/deneve.jpg');
+// const rieber = require('../../../assets/Studyrooms/rieber.jpg');
+// const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
+// const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
+// const music = require('../../../assets/Studyrooms/music.jpg');
+// const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
+// const movement = require('../../../assets/Studyrooms/movement.jpg');
 
-const imagePairs = {
-  sproulmusic,
-  sproulstudy,
-  deneve,
-  rieber,
-  hedrick,
-  hedrickmusic,
-  music,
-  hedrickstudy,
-  movement
-};
+// const imagePairs = {
+//   sproulmusic,
+//   sproulstudy,
+//   deneve,
+//   rieber,
+//   hedrick,
+//   hedrickmusic,
+//   music,
+//   hedrickstudy,
+//   movement
+// };
 
 export default class StudyRoomList extends Component {
+  // eslint-disable-next-line react/sort-comp
   static navigationOptions = {
     header: () => { }
   }
@@ -106,11 +107,11 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          );
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
         break;
       case 'Classrooms':
         listData = availClassroomDataFound.rowCount > 0 ? (
@@ -122,11 +123,11 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-            <View style={styles.empty}>
-              <Text style={titleText}> No rooms available </Text>
-              <ShadowButton title="Change Time" select={this.handleModal} />
-            </View>
-          );
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
         break;
       default:
         listData = (
@@ -153,7 +154,11 @@ export default class StudyRoomList extends Component {
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
           {listData}
           {visible ? (
-            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={currentLocation} />
+            <StudyRoomModal
+              handleModal={this.handleModal}
+              getStudyRooms={getStudyRooms}
+              currentLocation={currentLocation}
+            />
           ) : null}
         </SafeAreaView>
       </TouchableWithoutFeedback>
