@@ -98,11 +98,11 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-          <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-            <ShadowButton title="Change Time" select={this.handleModal} />
-          </View>
-        );
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          );
         break;
       case 'Classrooms':
         listData = availClassroomDataFound.rowCount > 0 ? (
@@ -114,11 +114,11 @@ export default class StudyRoomList extends Component {
             style={styles.list}
           />
         ) : (
-          <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-            <ShadowButton title="Change Time" select={this.handleModal} />
-          </View>
-        );
+            <View style={styles.empty}>
+              <Text style={titleText}> No rooms available </Text>
+              <ShadowButton title="Change Time" select={this.handleModal} />
+            </View>
+          );
         break;
       default:
         listData = (
@@ -129,6 +129,8 @@ export default class StudyRoomList extends Component {
         );
     }
 
+    const floatComponent = <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />;
+
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={styles.container}>
@@ -138,8 +140,8 @@ export default class StudyRoomList extends Component {
             handleModal={this.handleModal}
             filterData={filterData}
             currentLocation={currentLocation}
+            floatComponent={floatComponent}
           />
-          <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
           {listData}
           {visible ? (

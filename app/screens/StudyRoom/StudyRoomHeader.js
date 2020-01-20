@@ -30,17 +30,18 @@ class StudyRoomHeader extends Component {
   }
 
   render() {
-    const { date, time, handleModal, currentLocation } = this.props;
+    const { date, time, handleModal, currentLocation, floatComponent } = this.props;
     const month = monthPairs[date.substring(0, 2)];
     const day = date.substring(3, 5);
 
     return (
-      <View style={styles.topBar}>
+      <View style={currentLocation !== 'Hill' ? styles.topBar : styles.topShortBar}>
         <View style={styles.bar}>
           <TouchableOpacity style={styles.rightButtonAbs} onPress={() => handleModal()}>
+            {/* TODO: Change source icon for 'Hill' to be a calendar instead */}
             <Image source={clockIcon} style={{ width: 25, height: 25 }} />
           </TouchableOpacity>
-          <View style={styles.leftViewAbs}>
+          <View>
             <Text style={styles.searchText}>
               {' '}
               {date !== '' || time !== '' ? `${month} ${day} ${currentLocation !== 'Hill' ? time : ''}` : ''}
@@ -48,21 +49,21 @@ class StudyRoomHeader extends Component {
             </Text>
           </View>
         </View>
-        {/* TOOD: Switch order of 3 selector and the search bar so it doesnt look weird */}
+        {floatComponent}
         {
           currentLocation !== 'Hill'
           && (
-          <Search
-            data={fakeVal} // this should be an API call or huge list eventually
-            defaultValue=""
-            placeholder="Search places to reserve..."
-            onChangeText={text => this.handleInput(text)}
-            style={[styles.searchContainer, styles.input]}
-            inputContainerStyle={[styles.inputContainer]}
-            renderItem={() => (
-              <TouchableOpacity onPress={() => null} />
-            )}
-          />
+            <Search
+              data={fakeVal} // this should be an API call or huge list eventually
+              defaultValue=""
+              placeholder="Search places to reserve..."
+              onChangeText={text => this.handleInput(text)}
+              style={[styles.searchContainer, styles.input]}
+              inputContainerStyle={[styles.inputContainer]}
+              renderItem={() => (
+                <TouchableOpacity onPress={() => null} />
+              )}
+            />
           )
         }
       </View>
@@ -99,6 +100,11 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   topBar: {
+    alignItems: 'center',
+    width: '100%',
+    height: 120
+  },
+  topShortBar: {
     alignItems: 'center',
     width: '100%',
     height: 100
