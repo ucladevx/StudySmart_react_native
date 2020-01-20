@@ -81,12 +81,20 @@ export default class StudyRoomList extends Component {
     } = this.state;
     const {
       navigation, filterData, librariesDataFound, availClassroomDataFound, loading, getStudyRooms,
+      available, hillDataFound,
     } = this.props;
 
     let listData;
     switch (currentLocation) {
       case 'Hill':
-        listData = <StudyRoomsPreview />;
+        listData = hillDataFound.length > 0 ? (
+          <StudyRoomsPreview available={available} listOfRooms={hillDataFound} />
+        ) : (
+          <View style={styles.empty}>
+            <Text style={titleText}> No rooms available </Text>
+            <ShadowButton title="Change Time" select={this.handleModal} />
+          </View>
+        );
         break;
       case 'Libraries':
         listData = librariesDataFound.length > 0 ? (

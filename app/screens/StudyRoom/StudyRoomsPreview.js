@@ -3,7 +3,7 @@ import {
   Text, SafeAreaView, TouchableOpacity, StyleSheet, FlatList, Platform, ActivityIndicator
 } from 'react-native';
 import { connect } from 'react-redux';
-import StudyRoomsContainer from './StudyRoomsContainer';
+// import StudyRoomsContainer from './StudyRoomsContainer';
 import TimeRangeCard from '../../components/TimeRangeCard';
 import {
   changeTime, changeDate, changeLocation, loadHillData, loadLibraryData,
@@ -68,104 +68,8 @@ class StudyRoomsPreview extends Component {
     header: () => { }
   }
 
-  constructor() {
-    super();
-    this.state = {
-      available: {},
-      listOfRooms: [],
-      loading: true,
-    };
-  }
-
-  componentDidMount() {
-    const setting = new Date();
-    const { changeTime: changeTimeAction, changeDate: changeDateAction } = this.props;
-    const minutes = setting.getMinutes();
-    if (minutes !== 30 && minutes !== 0) {
-      if (minutes > 30) {
-        setting.setMinutes(60);
-      } else {
-        setting.setMinutes(30);
-      }
-    }
-    let styledTime = setting.toLocaleTimeString();
-    const last2ndChar = styledTime[styledTime.length - 2];
-    const lastChar = styledTime[styledTime.length - 1];
-    if (Platform.OS === 'ios') {
-      styledTime = styledTime.slice(0, -6) + last2ndChar + lastChar;
-    } else {
-      styledTime = styledTime.slice(0, -3);
-      let hour = parseInt(styledTime.substring(0, 2), 10);
-      let hourString = hour.toString();
-      if (hour > 12) {
-        hour -= 12;
-        hourString = hour.toString();
-        styledTime = `${hourString + styledTime.slice(2)}PM`;
-      } else {
-        if (hourString === '0') {
-          hourString = '12';
-        }
-        styledTime = `${hourString + styledTime.slice(2)}AM`;
-      }
-    }
-
-    changeTimeAction(styledTime);
-    let chosen = setting;
-    let dd = chosen.getDate();
-    let mm = chosen.getMonth() + 1; // January is 0!
-    const yyyy = chosen.getFullYear();
-    if (dd < 10) {
-      dd = `0${dd}`;
-    }
-    if (mm < 10) {
-      mm = `0${mm}`;
-    }
-    chosen = `${mm}/${dd}/${yyyy}`;
-    changeDateAction(chosen);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { date } = this.props;
-    // Typical usage (don't forget to compare props):
-    if (date !== prevProps.date) {
-      this.getHourAvailabilities();
-    } 
-  }
-
-  async getHourAvailabilities() {
-    let appendedURL = '';
-    const { date } = this.props;
-    if (date.length > 0) {
-      const month = date.substring(0, 2);
-      const day = date.substring(3, 5);
-      const year = date.substring(date.length - 4);
-      appendedURL = `?date=${year}-${month}-${day}`;
-    }
-    const rangeDict = {};
-    const listOfRooms = [];
-    await fetch(`http://studysmartserver-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/studyinfo${appendedURL}`)
-      .then(response => response.json())
-      .then((data) => {
-        for (let i = 0; i < data.Items.length; i += 1) {
-          const time = data.Items[i].time.split(' ')[0];
-          if (time in rangeDict) {
-            rangeDict[time].push(data.Items[i]);
-          } else {
-            rangeDict[time] = [data.Items[i]];
-          }
-          listOfRooms.push(data.Items[i]);
-        }
-        this.setState({
-          available: rangeDict,
-          listOfRooms,
-          loading: false,
-        });
-      });
-  }
-
-
   renderRow(item) {
-    const { available } = this.state;
+    const { available } = this.props;
     const firstHour = available[item];
     const firstHalfHour = available[timeRangesSecondary[item][0]];
     const twoHour = available[timeRangesSecondary[item][1]];
@@ -190,25 +94,16 @@ class StudyRoomsPreview extends Component {
 
   render() {
     const titles = Object.keys(timeRanges);
-    const { loading, listOfRooms } = this.state;
+    const { listOfRooms } = this.props;
 
     return (
       <SafeAreaView style={styles.container}>
-        {
-          loading
-            ?
-            <ActivityIndicator style={styles.animation} size="large" color="#108BF8" />
-            :
-            (
-              <FlatList
-                data={titles}
-                extraData={listOfRooms}
-                renderItem={({ item }) => this.renderRow(item)}
-                keyExtractor={(item, index) => index.toString()}
-              />
-            )
-        }
-
+        <FlatList
+          data={titles}
+          extraData={listOfRooms}
+          renderItem={({ item }) => this.renderRow(item)}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </SafeAreaView>
     );
   }
@@ -222,32 +117,32 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  time: state.study.time,
-  date: state.study.date,
-  duration: state.study.duration,
-  location: state.study.location,
-  hillData: state.study.hillData,
-  libraryData: state.study.libraryData,
-  unstyledTime: state.study.unstyledTime
+  // time: state.study.time,
+  // date: state.study.date,
+  // duration: state.study.duration,
+  // location: state.study.location,
+  // hillData: state.study.hillData,
+  // libraryData: state.study.libraryData,
+  // unstyledTime: state.study.unstyledTime
 
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeTime: (time) => {
-    dispatch(changeTime(time));
-  },
-  changeDate: (date) => {
-    dispatch(changeDate(date));
-  },
-  changeLocation: (location) => {
-    dispatch(changeLocation(location));
-  },
-  loadHillData: (hillData) => {
-    dispatch(loadHillData(hillData));
-  },
-  loadLibraryData: (libraryData) => {
-    dispatch(loadLibraryData(libraryData));
-  }
+  // changeTime: (time) => {
+  //   dispatch(changeTime(time));
+  // },
+  // changeDate: (date) => {
+  //   dispatch(changeDate(date));
+  // },
+  // changeLocation: (location) => {
+  //   dispatch(changeLocation(location));
+  // },
+  // loadHillData: (hillData) => {
+  //   dispatch(loadHillData(hillData));
+  // },
+  // loadLibraryData: (libraryData) => {
+  //   dispatch(loadLibraryData(libraryData));
+  // }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudyRoomsPreview);
