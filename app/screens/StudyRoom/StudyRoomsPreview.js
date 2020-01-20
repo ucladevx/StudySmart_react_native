@@ -133,7 +133,6 @@ class StudyRoomsPreview extends Component {
   }
 
   async getHourAvailabilities() {
-    console.log('api')
     let appendedURL = '';
     const { date } = this.props;
     if (date.length > 0) {
@@ -192,8 +191,6 @@ class StudyRoomsPreview extends Component {
   render() {
     const titles = Object.keys(timeRanges);
     const { loading, listOfRooms } = this.state;
-
-    console.log('loading', loading);
 
     return (
       <SafeAreaView style={styles.container}>
