@@ -16,7 +16,7 @@ const timeRanges = {
   '8:00-9:00am': [8, 9],
   '9:00-10:00am': [9, 10],
   '10:00-11:00am': [10, 11],
-  '11:00-12:00pm': [11, 12],
+  '11:00am-12:00pm': [11, 12],
   '12:00-1:00pm': [12, 13],
   '1:00-2:00pm': [13, 14],
   '2:00-3:00pm': [14, 15],
@@ -28,7 +28,7 @@ const timeRanges = {
   '8:00-9:00pm': [20, 21],
   '9:00-10:00pm': [21, 22],
   '10:00-11:00pm': [22, 23],
-  '11:00-12:00am': [23, 0],
+  '11:00pm-midnight': [23, 0],
 };
 
 const timeRangesSecondary = {
@@ -42,8 +42,8 @@ const timeRangesSecondary = {
   '7:00-8:00am': ['7:30-8:30am', '7:00-9:00am', '7:30-9:30am'],
   '8:00-9:00am': ['8:30-9:30am', '8:00-10:00am', '8:30-10:30am'],
   '9:00-10:00am': ['9:30-10:30am', '9:00-11:00am', '9:30-11:30am'],
-  '10:00-11:00am': ['10:30-11:30am', '10:00-12:00pm', '10:30-12:30pm'],
-  '11:00-12:00pm': ['11:30-12:30pm', '11:00-1:00pm', '11:30-1:30pm'],
+  '10:00-11:00am': ['10:30-11:30am', '10:00am-12:00pm', '10:30am-12:30pm'],
+  '11:00am-12:00pm': ['11:30am-12:30pm', '11:00am-1:00pm', '11:30am-1:30pm'],
   '12:00-1:00pm': ['12:30-1:30pm', '12:00-2:00pm', '12:30-2:30pm'],
   '1:00-2:00pm': ['1:30-2:30pm', '1:00-3:00pm', '1:30-3:30pm'],
   '2:00-3:00pm': ['2:30-3:30pm', '2:00-4:00pm', '2:30-4:30pm'],
@@ -54,8 +54,8 @@ const timeRangesSecondary = {
   '7:00-8:00pm': ['7:30-8:30pm', '7:00-9:00pm', '7:30-9:30pm'],
   '8:00-9:00pm': ['8:30-9:30pm', '8:00-10:00pm', '8:30-10:30pm'],
   '9:00-10:00pm': ['9:30-10:30pm', '9:00-11:00pm', '9:30-11:30pm'],
-  '10:00-11:00pm': ['10:30-11:30pm', '10:00-12:00am', '10:30-12:30am'],
-  '11:00-12:00am': ['11:30-12:30am', '11:00-1:00am', '11:30-1:30am']
+  '10:00-11:00pm': ['10:30-11:30pm', '10:00pm-midnight', '10:30pm-12:30am'],
+  '11:00pm-midnight': ['11:30pm-12:30am', '11:00pm-1:00am', '11:30pm-1:30am']
 };
 
 class StudyRoomsPreview extends Component {
@@ -70,7 +70,7 @@ class StudyRoomsPreview extends Component {
     const twoHour = available[timeRangesSecondary[item][1]];
     const twoHalfHour = available[timeRangesSecondary[item][2]];
     const first = firstHour !== undefined ? firstHour : [];
-    const second = second !== undefined ? firstHalfHour : [];
+    const second = firstHalfHour !== undefined ? firstHalfHour : [];
     const third = twoHour !== undefined ? twoHour : [];
     const fourth = twoHalfHour !== undefined ? twoHalfHour : [];
     const total = first.concat(second, third, fourth);

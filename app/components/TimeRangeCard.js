@@ -15,7 +15,7 @@ const intervals = {
   '8:00-9:00am': ['8:00', '8:30'],
   '9:00-10:00am': ['9:00', '9:30'],
   '10:00-11:00am': ['10:00', '10:30'],
-  '11:00-12:00pm': ['11:00', '11:30'],
+  '11:00am-12:00pm': ['11:00', '11:30'],
   '12:00-1:00pm': ['12:00', '12:30'],
   '1:00-2:00pm': ['1:00', '1:30'],
   '2:00-3:00pm': ['2:00', '2:30'],
@@ -27,7 +27,7 @@ const intervals = {
   '8:00-9:00pm': ['8:00', '8:30'],
   '9:00-10:00pm': ['9:00', '9:30'],
   '10:00-11:00pm': ['10:00', '10:30'],
-  '11:00-12:00am': ['11:00', '11:30'],
+  '11:00pm-midnight': ['11:00', '11:30'],
 };
 
 export default class TimeRangeCard extends Component {
@@ -54,17 +54,24 @@ export default class TimeRangeCard extends Component {
   }
 
   showExpandedCell = (title) => {
+    const { hour, half } = this.props;
     const { collapsed } = this.state;
     if (!collapsed) {
       return (
         <View style={styles.row}>
-          <TouchableOpacity disabled={this.props.hour.length === 0} style={this.props.hour.length > 0 ? styles.button : styles.buttonDisabled}>
+          <TouchableOpacity
+            disabled={hour.length === 0}
+            style={hour.length > 0 ? styles.button : styles.buttonDisabled}
+          >
             <Text style={styles.text}>
               {' '}
               {intervals[title][0]}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity disabled={this.props.half.length === 0} style={this.props.half.length > 0 ? styles.button : styles.buttonDisabled}>
+          <TouchableOpacity
+            disabled={half.length === 0}
+            style={half.length > 0 ? styles.button : styles.buttonDisabled}
+          >
             <Text style={styles.text}>
               {' '}
               {intervals[title][1]}

@@ -88,7 +88,7 @@ export default class StudyRoomList extends Component {
     let listData;
     switch (currentLocation) {
       case 'Hill':
-        listData = hillDataFound.length > 0 ? (
+        listData = hillDataFound.length > 0 && Object.keys(available).length !== 0 ? (
           <StudyRoomsPreview available={available} listOfRooms={hillDataFound} />
         ) : (
           <View style={styles.empty}>
