@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Text, View, TouchableOpacity, StyleSheet
 } from 'react-native';
+import { withNavigation } from 'react-navigation';
 
 const intervals = {
   '12:00-1:00am': ['12:00', '12:30'],
@@ -30,7 +31,7 @@ const intervals = {
   '11:00pm-midnight': ['11:00', '11:30'],
 };
 
-export default class TimeRangeCard extends Component {
+class TimeRangeCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,6 +55,7 @@ export default class TimeRangeCard extends Component {
   }
 
   showExpandedCell = (title) => {
+    const { navigate } = this.props.navigation;
     const { hour, half } = this.props;
     const { collapsed } = this.state;
     if (!collapsed) {
@@ -62,6 +64,9 @@ export default class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={hour.length === 0}
             style={hour.length > 0 ? styles.button : styles.buttonDisabled}
+            onPress={() => navigate('StudyRoomReserve', {
+              rooms: hour.sort((a, b) => (a.details > b.details) ? 1 : -1)
+            })}
           >
             <Text style={styles.text}>
               {' '}
@@ -71,6 +76,9 @@ export default class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={half.length === 0}
             style={half.length > 0 ? styles.button : styles.buttonDisabled}
+            onPress={() => navigate('StudyRoomReserve', {
+              rooms: half.sort((a, b) => (a.details > b.details) ? 1 : -1)
+            })}
           >
             <Text style={styles.text}>
               {' '}
@@ -175,3 +183,5 @@ const styles = StyleSheet.create({
   }
 
 });
+
+export default withNavigation(TimeRangeCard)
