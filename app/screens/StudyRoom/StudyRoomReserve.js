@@ -118,7 +118,7 @@ export default class StudyRoomReserve extends Component {
         </View>
         <FloatingSegment setCategory={this.setDuration} selected={duration} titles={['1 hour', '2 hours']} />
         <FlatList
-          data={rooms.available}
+          data={rooms}
           extraData={this.state}
           renderItem={({ item }) => this.renderList(item)}
           keyExtractor={(item, index) => index.toString()}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text, View, TouchableOpacity, StyleSheet, Image, SafeAreaView, FlatList, ActivityIndicator,
+  Text, View, StyleSheet, SafeAreaView, FlatList, ActivityIndicator,
   TouchableWithoutFeedback, Keyboard,
 } from 'react-native';
 import StudyRoomHeader from './StudyRoomHeader';
@@ -9,42 +9,44 @@ import FloatingSegment from '../../components/FloatingSegment';
 import ShadowButton from '../../components/ShadowButton';
 import BookingCard from '../../components/BookingCard';
 import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
+import StudyRoomsPreview from './StudyRoomsPreview';
 
-const namePairs = {
-  sproulstudy: 'Sproul Study Rooms',
-  sproulmusic: 'Sproul Music Rooms',
-  deneve: 'De Neve Meeting Rooms',
-  rieber: 'Rieber Study Rooms',
-  music: 'Rieber Music Rooms',
-  hedrick: 'The Study at Hedrick',
-  hedrickstudy: 'Hedrick Study Rooms',
-  hedrickmusic: 'Hedrick Music Rooms',
-  movement: 'Hedrick Movement Studio',
-};
+// const namePairs = {
+//   sproulstudy: 'Sproul Study Rooms',
+//   sproulmusic: 'Sproul Music Rooms',
+//   deneve: 'De Neve Meeting Rooms',
+//   rieber: 'Rieber Study Rooms',
+//   music: 'Rieber Music Rooms',
+//   hedrick: 'The Study at Hedrick',
+//   hedrickstudy: 'Hedrick Study Rooms',
+//   hedrickmusic: 'Hedrick Music Rooms',
+//   movement: 'Hedrick Movement Studio',
+// };
 
-const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
-const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
-const deneve = require('../../../assets/Studyrooms/deneve.jpg');
-const rieber = require('../../../assets/Studyrooms/rieber.jpg');
-const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
-const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
-const music = require('../../../assets/Studyrooms/music.jpg');
-const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
-const movement = require('../../../assets/Studyrooms/movement.jpg');
+// const sproulstudy = require('../../../assets/Studyrooms/sproulstudy.jpg');
+// const sproulmusic = require('../../../assets/Studyrooms/sproulmusic.jpg');
+// const deneve = require('../../../assets/Studyrooms/deneve.jpg');
+// const rieber = require('../../../assets/Studyrooms/rieber.jpg');
+// const hedrick = require('../../../assets/Studyrooms/hedrickstudy.jpg');
+// const hedrickmusic = require('../../../assets/Studyrooms/hedrickmusic.jpg');
+// const music = require('../../../assets/Studyrooms/music.jpg');
+// const hedrickstudy = require('../../../assets/Studyrooms/hedrick.jpg');
+// const movement = require('../../../assets/Studyrooms/movement.jpg');
 
-const imagePairs = {
-  sproulmusic,
-  sproulstudy,
-  deneve,
-  rieber,
-  hedrick,
-  hedrickmusic,
-  music,
-  hedrickstudy,
-  movement
-};
+// const imagePairs = {
+//   sproulmusic,
+//   sproulstudy,
+//   deneve,
+//   rieber,
+//   hedrick,
+//   hedrickmusic,
+//   music,
+//   hedrickstudy,
+//   movement
+// };
 
 export default class StudyRoomList extends Component {
+  // eslint-disable-next-line react/sort-comp
   static navigationOptions = {
     header: () => { }
   }
@@ -79,56 +81,15 @@ export default class StudyRoomList extends Component {
       visible, currentLocation
     } = this.state;
     const {
-      navigation, filterData, hillDataFound, librariesDataFound, availClassroomDataFound, loading, getStudyRooms
+      navigation, filterData, librariesDataFound, availClassroomDataFound, loading, getStudyRooms,
+      available, hillDataFound,
     } = this.props;
-
-    const buildings = {
-      count: 3,
-      items: [
-        {
-          name: 'boelter',
-          available: 37,
-          rooms: [
-            'A44',
-            'A48',
-            'A40',
-            'A41',
-          ],
-        },
-        {
-          name: 'haines',
-          available: 18,
-          rooms: [
-            'A44',
-            'A48',
-            'A40',
-            'A41',
-          ],
-        },
-        {
-          name: 'franz',
-          available: 24,
-          rooms: [
-            'A44',
-            'A48',
-            'A40',
-            'A41',
-          ],
-        },
-      ]
-    };
 
     let listData;
     switch (currentLocation) {
       case 'Hill':
-        listData = hillDataFound.length > 0 ? (
-          <FlatList
-            data={hillDataFound}
-            extraData={hillDataFound}
-            renderItem={({ item }) => this.renderRow(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.list}
-          />
+        listData = hillDataFound.length > 0 && Object.keys(available).length !== 0 ? (
+          <StudyRoomsPreview available={available} listOfRooms={hillDataFound} />
         ) : (
           <View style={styles.empty}>
             <Text style={titleText}> No rooms available </Text>
@@ -167,9 +128,6 @@ export default class StudyRoomList extends Component {
             <ShadowButton title="Change Time" select={this.handleModal} />
           </View>
         );
-
-        // TODO
-        // listData =
         break;
       default:
         listData = (
@@ -180,6 +138,8 @@ export default class StudyRoomList extends Component {
         );
     }
 
+    const floatComponent = <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />;
+
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={styles.container}>
@@ -188,12 +148,17 @@ export default class StudyRoomList extends Component {
             sortData={this.sortData}
             handleModal={this.handleModal}
             filterData={filterData}
+            currentLocation={currentLocation}
+            floatComponent={floatComponent}
           />
-          <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />
           {loading ? <ActivityIndicator style={styles.animation} size="large" color="#108BF8" /> : null}
           {listData}
           {visible ? (
-            <StudyRoomModal handleModal={this.handleModal} getStudyRooms={getStudyRooms} currentLocation={this.state.currentLocation} />
+            <StudyRoomModal
+              handleModal={this.handleModal}
+              getStudyRooms={getStudyRooms}
+              currentLocation={currentLocation}
+            />
           ) : null}
         </SafeAreaView>
       </TouchableWithoutFeedback>

@@ -22,7 +22,6 @@ const namePairs = {
   movement: 'Hedrick Movement Studio',
 };
 
-
 class StudyRoomsContainer extends Component {
   static navigationOptions = {
     header: () => { }
@@ -31,13 +30,13 @@ class StudyRoomsContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      availableHill: {},
       hillData: [],
       librariesData: [],
       loading: true,
     };
     this.getStudyRooms = this.getStudyRooms.bind(this);
   }
-
 
   componentDidMount() {
     const setting = new Date();
@@ -70,6 +69,7 @@ class StudyRoomsContainer extends Component {
         styledTime = `${hourString + styledTime.slice(2)}AM`;
       }
     }
+
     changeTimeAction(styledTime);
     let chosen = setting;
     let dd = chosen.getDate();
@@ -100,55 +100,34 @@ class StudyRoomsContainer extends Component {
   }
 
   async getHillStudyRooms() {
-    let temp; let month; let day; let
-      year;
     let appendedURL = '';
-    const { date, time, loadHillData: loadHillDataAction } = this.props;
+    const { date } = this.props;
     if (date.length > 0) {
-      month = date.substring(0, 2);
-      day = date.substring(3, 5);
-      year = date.substring(date.length - 4);
-      if (time.length === 0) {
-        appendedURL = `?date=${year}-${month}-${day}`;
-      }
+      const month = date.substring(0, 2);
+      const day = date.substring(3, 5);
+      const year = date.substring(date.length - 4);
+      appendedURL = `?date=${year}-${month}-${day}`;
     }
-    if (time.length > 0) {
-      let time2 = time;
-      if (!time2.includes(':')) {
-        time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
-      }
-      const splitTime = time2.split(':');
-      const yearInt = parseInt(year, 10);
-      const monthInt = parseInt(month, 10);
-      const dayInt = parseInt(day, 10);
-      let hourInt = parseInt(splitTime[0], 10);
-      const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
-      const amPm = splitTime[1].substring(splitTime[1].length - 2);
-      if (amPm === 'PM') {
-        if (hourInt !== 12) {
-          hourInt += 12;
-        }
-      }
-      if (hourInt === 12 && amPm === 'AM') {
-        hourInt = 0;
-      }
-      const newDate = new Date(yearInt, monthInt - 1, dayInt, hourInt, minuteInt, 0, 0);
-
-      const seconds = newDate.getTime() / 1000;
-      appendedURL += `?time=${seconds}`;
-    }
-    /* Fetch library data from API, store inside this.library_data */
+    const rangeDict = {};
+    const listOfRooms = [];
     await fetch(`http://studysmartserver-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/studyinfo${appendedURL}`)
       .then(response => response.json())
       .then((data) => {
-        temp = data;
+        for (let i = 0; i < data.Items.length; i += 1) {
+          const time = data.Items[i].time.split(' ')[0];
+          if (time in rangeDict) {
+            rangeDict[time].push(data.Items[i]);
+          } else {
+            rangeDict[time] = [data.Items[i]];
+          }
+          listOfRooms.push(data.Items[i]);
+        }
+        this.setState({
+          availableHill: rangeDict,
+          hillData: listOfRooms,
+          loading: false,
+        });
       });
-    /* Once the request is done, save library data to current state */
-    for (let k = 0; k < temp.Items.length; k += 1) {
-      temp.Items[k].area = 'Hill';
-    }
-    loadHillDataAction(temp.Items);
-    this.sortData();
   }
 
   async getLibraryStudyRooms() {
@@ -459,12 +438,14 @@ class StudyRoomsContainer extends Component {
 
   render() {
     const {
-      hillData, librariesData, availClassroomData, loading
+      hillData, librariesData, availClassroomData, loading, availableHill
     } = this.state;
     const { navigation } = this.props;
+
     return (
       <StudyRoomList
         hillDataFound={hillData}
+        available={availableHill}
         librariesDataFound={librariesData}
         availClassroomDataFound={availClassroomData}
         filterData={this.filterData}

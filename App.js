@@ -31,7 +31,6 @@ const StudyRoomStack = StackNavigator({
   ClassroomView: { screen: ClassroomView },
   BookingWebView: { screen: BookingWebView },
   ClassroomAvailabilityView: { screen: ClassroomAvailabilityView },
-
 },
 {
   initialRouteName: 'StudyRoomsContainer',
