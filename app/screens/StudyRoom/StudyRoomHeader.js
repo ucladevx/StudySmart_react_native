@@ -14,13 +14,13 @@ const monthPairs = {
   '06': 'June',
   '07': 'July',
   '08': 'Aug',
-  '09': 'Sept',
+  '09': 'Sept', 
   10: 'Oct',
   11: 'Nov',
   12: 'Dec',
 };
 
-const clockIcon = require('../../../assets/clock.png');
+const calendarIcon = require('../../../assets/icons8-calendar.png');
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
@@ -38,8 +38,8 @@ class StudyRoomHeader extends Component {
       <View style={currentLocation !== 'Hill' ? styles.topBar : styles.topShortBar}>
         <View style={styles.bar}>
           <TouchableOpacity style={styles.rightButtonAbs} onPress={() => handleModal()}>
-            {/* TODO: Change source icon for 'Hill' to be a calendar instead */}
-            <Image source={clockIcon} style={{ width: 25, height: 25 }} />
+            {}
+            <Image source={calendarIcon} style={{ width: 25, height: 25 }} />
           </TouchableOpacity>
           <View>
             <Text style={styles.searchText}>
