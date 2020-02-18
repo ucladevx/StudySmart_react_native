@@ -235,6 +235,35 @@ class StudyRoomsContainer extends Component {
       }
       minutesMidnight = (hourInt * 60) + minuteInt;
     }
+
+    const classroomsForDate = {};
+    const minuteIntervals = [0, 30];
+    for (let hr = 0; hr < 24; hr += 1) {
+      const roomsForHour = {};
+      minuteIntervals.forEach(async (min) => {
+        let first = [];
+        let second = [];
+
+        const minutesSinceMidnight = (hr * 60) + min;
+        await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
+          .then(response => response.json())
+          .then((data) => {
+            first = data;
+          });
+
+        await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
+          .then(response => response.json())
+          .then((data) => {
+            second = data;
+          });
+
+        roomsForHour[minuteIntervals[0]] = first.rows;
+        roomsForHour[minuteIntervals[1]] = second.rows;
+      });
+
+      classroomsForDate[hr] = roomsForHour;
+    }
+
     await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)
       .then(response => response.json())
       .then((data) => {
