@@ -237,52 +237,46 @@ class StudyRoomsContainer extends Component {
     }
 
     const classroomsForDate = {};
-    const minuteIntervals = [0, 30];
     let availableToday = 0;
+    const urls = [];
     for (let hr = 0; hr < 24; hr += 1) {
-      const roomsForHour = {};
+      let minutesSinceMidnight = (hr * 60) + 0;
+      urls.push(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`);
+      minutesSinceMidnight = (hr * 60) + 30;
+      urls.push(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`);
+    }
 
-      let first = [];
-      let second = [];
+    let allResponses = [];
+    const requests = urls.map(url => fetch(url));
+    await Promise.all(requests)
+      .then(responses => Promise.all(responses.map(data => data.json())))
+      .then((responses) => {
+        allResponses = responses;
+      });
 
-      let minutesSinceMidnight = (hr * 60) + minuteIntervals[0];
-      // TODO: Should definitely utilize Promise.all() for this
-      await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
-        .then(response => response.json())
-        .then((data) => {
-          first = data;
-        });
-
-      minutesSinceMidnight = (hr * 60) + minuteIntervals[1];
-      await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
-        .then(response => response.json())
-        .then((data) => {
-          second = data;
-        });
-
-      if (first.rows.length !== 0 || second.rows.length !== 0) {
-        // Flag that there is at least one room with availability for selected date
+    for (let i = 0; i < allResponses.length; i += 2) {
+      classroomsForDate[i / 2] = {};
+      classroomsForDate[i / 2][0] = allResponses[i].rows;
+      classroomsForDate[i / 2][30] = allResponses[i + 1].rows;
+      if (classroomsForDate[i / 2][0].length !== 0 || classroomsForDate[i / 2][30] !== 0) {
+        // Flag that we have at least one availability for today
         availableToday = 1;
       }
-
-      roomsForHour[minuteIntervals[0]] = first.rows;
-      roomsForHour[minuteIntervals[1]] = second.rows;
-      classroomsForDate[hr] = roomsForHour;
     }
     classroomsForDate.rowCount = availableToday;
 
-    await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)
-      .then(response => response.json())
-      .then((data) => {
-        temp = data;
-      });
+    // await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)
+    //   .then(response => response.json())
+    //   .then((data) => {
+    //     temp = data;
+    //   });
 
-    for (let k = 0; k < temp.rows.length; k += 1) {
-      temp.rows[k].weekDay = weekDay;
-      temp.rows[k].minutesMidnight = minutesMidnight;
-    }
+    // for (let k = 0; k < temp.rows.length; k += 1) {
+    //   temp.rows[k].weekDay = weekDay;
+    //   temp.rows[k].minutesMidnight = minutesMidnight;
+    // }
 
-    loadAvailClassroomDataAction(temp.rows);
+    // loadAvailClassroomDataAction(temp.rows);
     this.setState({
       availClassroomData: classroomsForDate,
     });
