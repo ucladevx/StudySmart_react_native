@@ -255,6 +255,10 @@ class StudyRoomsContainer extends Component {
       });
 
     for (let i = 0; i < allResponses.length; i += 2) {
+      // Promise returns from 0 to 48 since 24 hrs but 30 minute intervals
+      // thus response[0] is hour 0, min 0
+      // response [1] is hour 0, min 30
+      // which is why we need the i/2 for classroomsForDate
       classroomsForDate[i / 2] = {};
       classroomsForDate[i / 2][0] = allResponses[i].rows;
       classroomsForDate[i / 2][30] = allResponses[i + 1].rows;

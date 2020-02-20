@@ -35,7 +35,7 @@ class StudyRoomHeader extends Component {
     const day = date.substring(3, 5);
 
     return (
-      <View style={currentLocation !== 'Hill' ? styles.topBar : styles.topShortBar}>
+      <View style={currentLocation === 'Libraries' ? styles.topBar : styles.topShortBar}>
         <View style={styles.bar}>
           <TouchableOpacity style={styles.rightButtonAbs} onPress={() => handleModal()}>
             {/* TODO: Change source icon for 'Hill' to be a calendar instead */}
@@ -44,14 +44,14 @@ class StudyRoomHeader extends Component {
           <View>
             <Text style={styles.searchText}>
               {' '}
-              {date !== '' || time !== '' ? `${month} ${day} ${currentLocation !== 'Hill' ? time : ''}` : ''}
+              {date !== '' || time !== '' ? `${month} ${day} ${currentLocation === 'Libraries' ? time : ''}` : ''}
               {' '}
             </Text>
           </View>
         </View>
         {floatComponent}
         {
-          currentLocation !== 'Hill'
+          currentLocation === 'Libraries'
           && (
             <Search
               data={fakeVal} // this should be an API call or huge list eventually
