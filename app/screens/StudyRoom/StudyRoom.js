@@ -114,14 +114,17 @@ export default class StudyRoomList extends Component {
         );
         break;
       case 'Classrooms':
-        listData = availClassroomDataFound.rowCount > 0 ? (
-          <FlatList
-            data={availClassroomDataFound.rows}
-            extraData={availClassroomDataFound.rows}
-            renderItem={({ item }) => this.renderRowBldg(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.list}
-          />
+        listData = availClassroomDataFound && availClassroomDataFound.rowCount > 0 ? (
+          // <FlatList
+          //   data={availClassroomDataFound.rows}
+          //   extraData={availClassroomDataFound.rows}
+          //   renderItem={({ item }) => this.renderRowBldg(item)}
+          //   keyExtractor={(item, index) => index.toString()}
+          //   style={styles.list}
+          // />
+          <View>
+            <Text> Hello </Text>
+          </View>
         ) : (
           <View style={styles.empty}>
             <Text style={titleText}> No rooms available </Text>

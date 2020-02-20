@@ -238,31 +238,38 @@ class StudyRoomsContainer extends Component {
 
     const classroomsForDate = {};
     const minuteIntervals = [0, 30];
+    let availableToday = 0;
     for (let hr = 0; hr < 24; hr += 1) {
       const roomsForHour = {};
-      minuteIntervals.forEach(async (min) => {
-        let first = [];
-        let second = [];
 
-        const minutesSinceMidnight = (hr * 60) + min;
-        await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
-          .then(response => response.json())
-          .then((data) => {
-            first = data;
-          });
+      let first = [];
+      let second = [];
 
-        await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
-          .then(response => response.json())
-          .then((data) => {
-            second = data;
-          });
+      let minutesSinceMidnight = (hr * 60) + minuteIntervals[0];
+      // TODO: Should definitely utilize Promise.all() for this
+      await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
+        .then(response => response.json())
+        .then((data) => {
+          first = data;
+        });
 
-        roomsForHour[minuteIntervals[0]] = first.rows;
-        roomsForHour[minuteIntervals[1]] = second.rows;
-      });
+      minutesSinceMidnight = (hr * 60) + minuteIntervals[1];
+      await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`)
+        .then(response => response.json())
+        .then((data) => {
+          second = data;
+        });
 
+      if (first.rows.length !== 0 || second.rows.length !== 0) {
+        // Flag that there is at least one room with availability for selected date
+        availableToday = 1;
+      }
+
+      roomsForHour[minuteIntervals[0]] = first.rows;
+      roomsForHour[minuteIntervals[1]] = second.rows;
       classroomsForDate[hr] = roomsForHour;
     }
+    classroomsForDate.rowCount = availableToday;
 
     await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)
       .then(response => response.json())
@@ -274,9 +281,10 @@ class StudyRoomsContainer extends Component {
       temp.rows[k].weekDay = weekDay;
       temp.rows[k].minutesMidnight = minutesMidnight;
     }
+
     loadAvailClassroomDataAction(temp.rows);
     this.setState({
-      availClassroomData: temp,
+      availClassroomData: classroomsForDate,
     });
   }
 
@@ -395,7 +403,7 @@ class StudyRoomsContainer extends Component {
   filterData = (search) => {
     this.filterHill(search);
     this.filterLibraries(search);
-    this.filterClassrooms(search);
+    // this.filterClassrooms(search);
   }
 
   filterHill = (search) => {
