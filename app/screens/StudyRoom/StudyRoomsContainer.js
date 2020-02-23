@@ -212,29 +212,29 @@ class StudyRoomsContainer extends Component {
   }
 
   async getAvailableClassrooms() {
-    let temp;
-    let minutesMidnight;
+    // let temp;
+    // let minutesMidnight;
     const { date, time, loadAvailClassroomData: loadAvailClassroomDataAction } = this.props;
     const weekDay = new Date(date).getDay();
-    if (time.length > 0) {
-      let time2 = time;
-      if (!time2.includes(':')) {
-        time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
-      }
-      const splitTime = time2.split(':');
-      let hourInt = parseInt(splitTime[0], 10);
-      const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
-      const amPm = splitTime[1].substring(splitTime[1].length - 2);
-      if (amPm === 'PM') {
-        if (hourInt !== 12) {
-          hourInt += 12;
-        }
-      }
-      if (hourInt === 12 && amPm === 'AM') {
-        hourInt = 0;
-      }
-      minutesMidnight = (hourInt * 60) + minuteInt;
-    }
+    // if (time.length > 0) {
+    //   let time2 = time;
+    //   if (!time2.includes(':')) {
+    //     time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
+    //   }
+    //   const splitTime = time2.split(':');
+    //   let hourInt = parseInt(splitTime[0], 10);
+    //   const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
+    //   const amPm = splitTime[1].substring(splitTime[1].length - 2);
+    //   if (amPm === 'PM') {
+    //     if (hourInt !== 12) {
+    //       hourInt += 12;
+    //     }
+    //   }
+    //   if (hourInt === 12 && amPm === 'AM') {
+    //     hourInt = 0;
+    //   }
+    //   minutesMidnight = (hourInt * 60) + minuteInt;
+    // }
 
     const classroomsForDate = {};
     let availableToday = 0;
@@ -267,6 +267,7 @@ class StudyRoomsContainer extends Component {
         availableToday = 1;
       }
     }
+    classroomsForDate.day = weekDay;
     classroomsForDate.rowCount = availableToday;
 
     // await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)

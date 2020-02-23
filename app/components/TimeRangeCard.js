@@ -56,7 +56,7 @@ class TimeRangeCard extends Component {
 
   showExpandedClassroomsCell = (title) => {
     const { navigate } = this.props.navigation;
-    const { hour, half } = this.props;
+    const { hour, half, hourOffset, day } = this.props;
     const { collapsed } = this.state;
     if (!collapsed) {
       return (
@@ -64,8 +64,11 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={hour.length === 0}
             style={hour.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => navigate('ClassroomView', {
-              rooms: hour.sort((a, b) => (a.building > b.building) ? 1 : -1)
+            onPress={() => navigate('ClassroomBuildingList', {
+              rooms: hour,
+              hourOffset,
+              minuteOffset: 0,
+              day
             })}
           >
             <Text style={styles.text}>
@@ -76,8 +79,11 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={half.length === 0}
             style={half.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => navigate('ClassroomView', {
-              rooms: half.sort((a, b) => (a.building > b.building) ? 1 : -1)
+            onPress={() => navigate('ClassroomBuildingList', {
+              rooms: half,
+              hourOffset,
+              minuteOffset: 30,
+              day
             })}
           >
             <Text style={styles.text}>

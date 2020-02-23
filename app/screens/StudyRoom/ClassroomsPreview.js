@@ -39,7 +39,7 @@ class ClassroomsPreview extends Component {
   }
 
   renderRow(item) {
-    const { available } = this.props;
+    const { available, day } = this.props;
     const firstHour = available[item][0];
     const secondHour = available[item][30];
     const first = firstHour !== undefined ? firstHour : [];
@@ -55,6 +55,8 @@ class ClassroomsPreview extends Component {
           available={total}
           hour={first}
           half={second}
+          hourOffset={item}
+          day={day}
           forClassrooms
         />
       );

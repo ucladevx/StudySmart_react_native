@@ -75,8 +75,6 @@ export default class StudyRoomList extends Component {
 
   renderRow = item => <BookingCard item={item} />
 
-  renderRowBldg = item => <ClassroomBuildingCard item={item} />
-
   render() {
     const {
       visible, currentLocation
@@ -116,7 +114,7 @@ export default class StudyRoomList extends Component {
         break;
       case 'Classrooms':
         listData = availClassroomDataFound && availClassroomDataFound.rowCount > 0 ? (
-          <ClassroomsPreview available={availClassroomDataFound} />
+          <ClassroomsPreview available={availClassroomDataFound} day={availClassroomDataFound.day}/>
         ) : (
           <View style={styles.empty}>
             <Text style={titleText}> No rooms available </Text>
