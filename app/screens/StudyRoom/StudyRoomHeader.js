@@ -14,7 +14,7 @@ const monthPairs = {
   '06': 'June',
   '07': 'July',
   '08': 'Aug',
-  '09': 'Sept', 
+  '09': 'Sept',
   10: 'Oct',
   11: 'Nov',
   12: 'Dec',
@@ -30,7 +30,9 @@ class StudyRoomHeader extends Component {
   }
 
   render() {
-    const { date, time, handleModal, currentLocation, floatComponent } = this.props;
+    const { 
+      date, time, handleModal, currentLocation, floatComponent 
+    } = this.props;
     const month = monthPairs[date.substring(0, 2)];
     const day = date.substring(3, 5);
 
