@@ -51,7 +51,7 @@ class ClassroomsPreview extends Component {
     if (total.length > 0) {
       return (
         <TimeRangeCard
-          title={titles}
+          title={titles[item]}
           available={total}
           hour={first}
           half={second}
