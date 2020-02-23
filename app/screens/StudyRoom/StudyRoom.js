@@ -10,6 +10,7 @@ import ShadowButton from '../../components/ShadowButton';
 import BookingCard from '../../components/BookingCard';
 import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
 import StudyRoomsPreview from './StudyRoomsPreview';
+import ClassroomsPreview from './ClassroomsPreview';
 
 // const namePairs = {
 //   sproulstudy: 'Sproul Study Rooms',
@@ -114,17 +115,9 @@ export default class StudyRoomList extends Component {
         );
         break;
       case 'Classrooms':
+        console.log(availClassroomDataFound)
         listData = availClassroomDataFound && availClassroomDataFound.rowCount > 0 ? (
-          // <FlatList
-          //   data={availClassroomDataFound.rows}
-          //   extraData={availClassroomDataFound.rows}
-          //   renderItem={({ item }) => this.renderRowBldg(item)}
-          //   keyExtractor={(item, index) => index.toString()}
-          //   style={styles.list}
-          // />
-          <View>
-            <Text> Hello </Text>
-          </View>
+          <ClassroomsPreview available={availClassroomDataFound} />
         ) : (
           <View style={styles.empty}>
             <Text style={titleText}> No rooms available </Text>

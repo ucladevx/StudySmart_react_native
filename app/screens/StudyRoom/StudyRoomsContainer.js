@@ -262,7 +262,7 @@ class StudyRoomsContainer extends Component {
       classroomsForDate[i / 2] = {};
       classroomsForDate[i / 2][0] = allResponses[i].rows;
       classroomsForDate[i / 2][30] = allResponses[i + 1].rows;
-      if (classroomsForDate[i / 2][0].length !== 0 || classroomsForDate[i / 2][30] !== 0) {
+      if (classroomsForDate[i / 2][0].length !== 0 || classroomsForDate[i / 2][30].length !== 0) {
         // Flag that we have at least one availability for today
         availableToday = 1;
       }
