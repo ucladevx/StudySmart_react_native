@@ -110,7 +110,60 @@ class StudyRoomModal extends Component {
 
   render() {
     const { datePickerVisible, timePickerVisible } = this.state;
-    const { handleModal, date, time } = this.props;
+    const { handleModal, date, time, currentLocation} = this.props;
+    if (currentLocation == 'Hill')
+    {
+      return (
+        <Modal
+          style={styles.modal}
+          transparent
+          animationType="fade"
+        >
+          <View style={[styles.modalContainer, styles.boxWithShadow]}>
+            <Text style={styles.promptText}> Change Time </Text>
+            <Text style={styles.titleText}>
+              {date}
+            </Text>
+            <DateTimePicker
+              isVisible={datePickerVisible}
+              onConfirm={chosenDate => this.handleConfirm(chosenDate, 'date')}
+              onCancel={this.showDatePicker}
+              maximumDate={this.date}
+              minimumDate={this.minDate}
+            />
+            <TouchableOpacity
+              style={[styles.whiteButton, styles.boxWithShadow]}
+              onPress={this.showDatePicker}
+            >
+              <Text style={styles.titleText}>
+                Change
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.containerRow}>
+              <View style={styles.containerCol}>
+                <TouchableOpacity
+                  style={[styles.blueButton, styles.boxWithShadow]}
+                  onPress={() => handleModal()}
+                >
+                  <Text style={styles.titleTextBlue}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.containerCol}>
+                <TouchableOpacity
+                  style={[styles.blueButton, styles.boxWithShadow]}
+                  onPress={() => this.changeSearch()}
+                >
+                  <Text style={styles.titleTextBlue}>
+                    Ok
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>);
+    }
     return (
       <Modal
         style={styles.modal}

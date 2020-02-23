@@ -5,21 +5,24 @@ import {
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import FloatingSegment from '../../components/FloatingSegment';
 
-const namePairs = {
-  sproulstudy: 'Sproul Study Rooms',
-  sproulmusic: 'Sproul Music Rooms',
-  deneve: 'De Neve Meeting Rooms',
-  rieber: 'Rieber Study Rooms',
-  music: 'Rieber Music Rooms',
-  hedrick: 'The Study at Hedrick',
-  hedrickstudy: 'Hedrick Study Rooms',
-  hedrickmusic: 'Hedrick Music Rooms',
-  movement: 'Hedrick Movement Studio',
-};
-
 const durationPairs = {
   '1 hour': '60',
   '2 hours': '120',
+};
+
+const monthPairs = {
+  '01': 'Jan',
+  '02': 'Feb',
+  '03': 'March',
+  '04': 'April',
+  '05': 'May',
+  '06': 'June',
+  '07': 'July',
+  '08': 'Aug',
+  '09': 'Sept',
+  10: 'Oct',
+  11: 'Nov',
+  12: 'Dec',
 };
 
 export default class StudyRoomReserve extends Component {
@@ -60,7 +63,7 @@ export default class StudyRoomReserve extends Component {
   }
 
   renderList(item) {
-    const { duration } = this.state;
+    const { duration} = this.state;
     if (duration.length !== 0 && durationPairs[duration] !== item.duration) {
       return;
     }
@@ -100,10 +103,10 @@ export default class StudyRoomReserve extends Component {
   render() {
     const { rooms, duration, slide } = this.state;
     const { navigate } = this.props.navigation;
-    const config = {
-      velocityThreshold: 0.1,
-      directionalOffsetThreshold: 200
-    };
+    let date = 'No Rooms Available';
+    if (rooms.length > 0) {
+      date = `${monthPairs[rooms[0].date.substring(5, 7)]} ${rooms[0].date.substring(9)}`;
+    }
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>
@@ -112,7 +115,7 @@ export default class StudyRoomReserve extends Component {
           </TouchableOpacity>
           <Text style={styles.titleText}>
             {' '}
-            {namePairs[rooms.location]}
+            {date}
             {' '}
           </Text>
         </View>

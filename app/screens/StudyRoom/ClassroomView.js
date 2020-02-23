@@ -7,11 +7,11 @@ import Ionicon from 'react-native-vector-icons/Ionicons';
 export default class ClassroomView extends Component {
   constructor(props) {
     super(props);
+    const { navigation } = this.props;
     this.state = {
-      rooms: this.props.navigation.getParam('rooms', 'NA'),
-      building: this.props.navigation.getParam('building', 'NA'),
+      rooms: navigation.getParam('rooms', 'NA'),
+      building: navigation.getParam('building', 'NA'),
       // classtimes: this.props.navigation.getParam('classtimes', 'NA'),
-      duration: '1 hour',
       slide: false
     };
   }
@@ -31,11 +31,7 @@ export default class ClassroomView extends Component {
   // eslint-disable-next-line react/sort-comp
 
 
-  setDuration = (hour) => {
-    this.setState({
-      duration: hour
-    });
-
+  setDuration = () => {
     this.setState({
       slide: true
     });
@@ -96,13 +92,13 @@ export default class ClassroomView extends Component {
 
   render() {
     const {
-      building, rooms, duration, slide
+      building, rooms, slide
     } = this.state;
-    const { navigate } = this.props.navigation;
+    const { navigation } = this.props;
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>
-          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigate('StudyRoomsContainer')}>
+          <TouchableOpacity style={styles.leftButtonAbs} onPress={() => navigation.navigate('StudyRoomsContainer')}>
             <Ionicon name="ios-arrow-back" color="#108BF8" size={35} />
           </TouchableOpacity>
           <Text style={styles.titleText}>
