@@ -55,6 +55,7 @@ class ClassroomsPreview extends Component {
           available={total}
           hour={first}
           half={second}
+          forClassrooms
         />
       );
     }

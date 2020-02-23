@@ -115,7 +115,6 @@ export default class StudyRoomList extends Component {
         );
         break;
       case 'Classrooms':
-        console.log(availClassroomDataFound)
         listData = availClassroomDataFound && availClassroomDataFound.rowCount > 0 ? (
           <ClassroomsPreview available={availClassroomDataFound} />
         ) : (
