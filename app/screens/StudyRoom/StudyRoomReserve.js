@@ -121,7 +121,7 @@ export default class StudyRoomReserve extends Component {
     };
     date = "No Rooms Available";
     if(rooms.length > 0)  
-      date = monthPairs[rooms[0].date.substring(5, 7)] + rooms[0].date.substring(9);
+      date = monthPairs[rooms[0].date.substring(5, 7)] + " " + rooms[0].date.substring(9);
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.bar}>

@@ -20,7 +20,7 @@ const monthPairs = {
   12: 'Dec',
 };
 
-const calendarIcon = require('../../../assets/icons8-calendar.png');
+const calendarIcon = require('../../../assets/icons8-schedule-80.png');
 
 const fakeVal = [];
 class StudyRoomHeader extends Component {
