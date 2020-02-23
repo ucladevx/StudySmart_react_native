@@ -64,7 +64,7 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={hour.length === 0}
             style={hour.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => navigate('', {
+            onPress={() => navigate('ClassroomView', {
               rooms: hour.sort((a, b) => (a.building > b.building) ? 1 : -1)
             })}
           >
@@ -76,7 +76,7 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={half.length === 0}
             style={half.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => navigate('', {
+            onPress={() => navigate('ClassroomView', {
               rooms: half.sort((a, b) => (a.building > b.building) ? 1 : -1)
             })}
           >
