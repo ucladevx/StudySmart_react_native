@@ -131,7 +131,7 @@ export default class StudyRoomList extends Component {
         );
     }
 
-    const floatComponent = <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />;
+    const floatComponent = <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Classrooms']} />;
 
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
