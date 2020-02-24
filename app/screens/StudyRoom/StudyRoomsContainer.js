@@ -212,42 +212,78 @@ class StudyRoomsContainer extends Component {
   }
 
   async getAvailableClassrooms() {
-    let temp;
-    let minutesMidnight;
+    // let temp;
+    // let minutesMidnight;
     const { date, time, loadAvailClassroomData: loadAvailClassroomDataAction } = this.props;
     const weekDay = new Date(date).getDay();
-    if (time.length > 0) {
-      let time2 = time;
-      if (!time2.includes(':')) {
-        time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
-      }
-      const splitTime = time2.split(':');
-      let hourInt = parseInt(splitTime[0], 10);
-      const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
-      const amPm = splitTime[1].substring(splitTime[1].length - 2);
-      if (amPm === 'PM') {
-        if (hourInt !== 12) {
-          hourInt += 12;
-        }
-      }
-      if (hourInt === 12 && amPm === 'AM') {
-        hourInt = 0;
-      }
-      minutesMidnight = (hourInt * 60) + minuteInt;
+    // if (time.length > 0) {
+    //   let time2 = time;
+    //   if (!time2.includes(':')) {
+    //     time2 = `${time2.slice(0, 2)}:${time2.slice(2)}`;
+    //   }
+    //   const splitTime = time2.split(':');
+    //   let hourInt = parseInt(splitTime[0], 10);
+    //   const minuteInt = parseInt(splitTime[1].substring(0, 2), 10);
+    //   const amPm = splitTime[1].substring(splitTime[1].length - 2);
+    //   if (amPm === 'PM') {
+    //     if (hourInt !== 12) {
+    //       hourInt += 12;
+    //     }
+    //   }
+    //   if (hourInt === 12 && amPm === 'AM') {
+    //     hourInt = 0;
+    //   }
+    //   minutesMidnight = (hourInt * 60) + minuteInt;
+    // }
+
+    const classroomsForDate = {};
+    let availableToday = 0;
+    const urls = [];
+    for (let hr = 0; hr < 24; hr += 1) {
+      let minutesSinceMidnight = (hr * 60) + 0;
+      urls.push(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`);
+      minutesSinceMidnight = (hr * 60) + 30;
+      urls.push(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesSinceMidnight}`);
     }
-    await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)
-      .then(response => response.json())
-      .then((data) => {
-        temp = data;
+
+    let allResponses = [];
+    const requests = urls.map(url => fetch(url));
+    await Promise.all(requests)
+      .then(responses => Promise.all(responses.map(data => data.json())))
+      .then((responses) => {
+        allResponses = responses;
       });
 
-    for (let k = 0; k < temp.rows.length; k += 1) {
-      temp.rows[k].weekDay = weekDay;
-      temp.rows[k].minutesMidnight = minutesMidnight;
+    for (let i = 0; i < allResponses.length; i += 2) {
+      // Promise returns from 0 to 48 since 24 hrs but 30 minute intervals
+      // thus response[0] is hour 0, min 0
+      // response [1] is hour 0, min 30
+      // which is why we need the i/2 for classroomsForDate
+      classroomsForDate[i / 2] = {};
+      classroomsForDate[i / 2][0] = allResponses[i].rows;
+      classroomsForDate[i / 2][30] = allResponses[i + 1].rows;
+      if (classroomsForDate[i / 2][0].length !== 0 || classroomsForDate[i / 2][30].length !== 0) {
+        // Flag that we have at least one availability for today
+        availableToday = 1;
+      }
     }
-    loadAvailClassroomDataAction(temp.rows);
+    classroomsForDate.day = weekDay;
+    classroomsForDate.rowCount = availableToday;
+
+    // await fetch(`http://studysmarttest-env.bfmjpq3pm9.us-west-1.elasticbeanstalk.com/v2/num_rooms_free_at/${weekDay}/${minutesMidnight}`)
+    //   .then(response => response.json())
+    //   .then((data) => {
+    //     temp = data;
+    //   });
+
+    // for (let k = 0; k < temp.rows.length; k += 1) {
+    //   temp.rows[k].weekDay = weekDay;
+    //   temp.rows[k].minutesMidnight = minutesMidnight;
+    // }
+
+    // loadAvailClassroomDataAction(temp.rows);
     this.setState({
-      availClassroomData: temp,
+      availClassroomData: classroomsForDate,
     });
   }
 
@@ -366,7 +402,7 @@ class StudyRoomsContainer extends Component {
   filterData = (search) => {
     this.filterHill(search);
     this.filterLibraries(search);
-    this.filterClassrooms(search);
+    // this.filterClassrooms(search);
   }
 
   filterHill = (search) => {

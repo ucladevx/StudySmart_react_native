@@ -10,6 +10,7 @@ import ShadowButton from '../../components/ShadowButton';
 import BookingCard from '../../components/BookingCard';
 import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
 import StudyRoomsPreview from './StudyRoomsPreview';
+import ClassroomsPreview from './ClassroomsPreview';
 
 // const namePairs = {
 //   sproulstudy: 'Sproul Study Rooms',
@@ -74,8 +75,6 @@ export default class StudyRoomList extends Component {
 
   renderRow = item => <BookingCard item={item} />
 
-  renderRowBldg = item => <ClassroomBuildingCard item={item} />
-
   render() {
     const {
       visible, currentLocation
@@ -114,14 +113,8 @@ export default class StudyRoomList extends Component {
         );
         break;
       case 'Classrooms':
-        listData = availClassroomDataFound.rowCount > 0 ? (
-          <FlatList
-            data={availClassroomDataFound.rows}
-            extraData={availClassroomDataFound.rows}
-            renderItem={({ item }) => this.renderRowBldg(item)}
-            keyExtractor={(item, index) => index.toString()}
-            style={styles.list}
-          />
+        listData = availClassroomDataFound && availClassroomDataFound.rowCount > 0 ? (
+          <ClassroomsPreview available={availClassroomDataFound} day={availClassroomDataFound.day}/>
         ) : (
           <View style={styles.empty}>
             <Text style={titleText}> No rooms available </Text>
@@ -138,7 +131,7 @@ export default class StudyRoomList extends Component {
         );
     }
 
-    const floatComponent = <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Libraries', 'Classrooms']} />;
+    const floatComponent = <FloatingSegment setCategory={this.setLocation} selected={currentLocation} titles={['Hill', 'Classrooms']} />;
 
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

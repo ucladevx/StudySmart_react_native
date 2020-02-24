@@ -54,6 +54,49 @@ class TimeRangeCard extends Component {
     }));
   }
 
+  showExpandedClassroomsCell = (title) => {
+    const { navigate } = this.props.navigation;
+    const { hour, half, hourOffset, day } = this.props;
+    const { collapsed } = this.state;
+    if (!collapsed) {
+      return (
+        <View style={styles.row}>
+          <TouchableOpacity
+            disabled={hour.length === 0}
+            style={hour.length > 0 ? styles.button : styles.buttonDisabled}
+            onPress={() => navigate('ClassroomBuildingList', {
+              rooms: hour,
+              hourOffset,
+              minuteOffset: 0,
+              day
+            })}
+          >
+            <Text style={styles.text}>
+              {' '}
+              {intervals[title][0]}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={half.length === 0}
+            style={half.length > 0 ? styles.button : styles.buttonDisabled}
+            onPress={() => navigate('ClassroomBuildingList', {
+              rooms: half,
+              hourOffset,
+              minuteOffset: 30,
+              day
+            })}
+          >
+            <Text style={styles.text}>
+              {' '}
+              {intervals[title][1]}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    return null;
+  }
+
   showExpandedCell = (title) => {
     const { navigate } = this.props.navigation;
     const { hour, half } = this.props;
@@ -93,7 +136,7 @@ class TimeRangeCard extends Component {
   }
 
   render() {
-    const { title, available } = this.props;
+    const { title, available, forClassrooms } = this.props;
     const { collapsed } = this.state;
     return (
       <TouchableOpacity
@@ -108,7 +151,7 @@ class TimeRangeCard extends Component {
             {`${available.length} Available`}
             {' '}
           </Text>
-          {this.showExpandedCell(title)}
+          {forClassrooms ? this.showExpandedClassroomsCell(title) : this.showExpandedCell(title)}
         </View>
       </TouchableOpacity>
     );
