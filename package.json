@@ -12,6 +12,7 @@
     "react": "16.8.3",
     "react-native": "0.59.1",
     "react-native-elements": "^0.19.1",
+    "react-native-haptic": "^1.0.1",
     "react-native-maps": "^0.24.2",
     "react-native-modal-datetime-picker": "^6.0.0",
     "react-native-swipe-gestures": "^1.0.3",

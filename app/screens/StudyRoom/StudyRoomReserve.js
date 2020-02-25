@@ -3,6 +3,7 @@ import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, ActivityIndicator
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import ReactNativeHaptic from 'react-native-haptic';
 import FloatingSegment from '../../components/FloatingSegment';
 
 const durationPairs = {
@@ -59,6 +60,7 @@ export default class StudyRoomReserve extends Component {
 
 
   handleReserve = (room) => {
+    ReactNativeHaptic.generate('impactHeavy')
     this.props.navigation.navigate('BookingWebView', { url: room });
   }
 
@@ -105,7 +107,7 @@ export default class StudyRoomReserve extends Component {
     const { navigate } = this.props.navigation;
     let date = 'No Rooms Available';
     if (rooms.length > 0) {
-      date = `${monthPairs[rooms[0].date.substring(5, 7)]} ${rooms[0].date.substring(9)}`;
+      date = `${monthPairs[rooms[0].date.substring(5, 7)]} ${rooms[0].date.substring(8)}`;
     }
     return (
       <SafeAreaView style={styles.container}>

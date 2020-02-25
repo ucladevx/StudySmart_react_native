@@ -110,9 +110,10 @@ class StudyRoomModal extends Component {
 
   render() {
     const { datePickerVisible, timePickerVisible } = this.state;
-    const { handleModal, date, time, currentLocation} = this.props;
-    if (currentLocation == 'Hill')
-    {
+    const {
+      handleModal, date, time, currentLocation
+    } = this.props;
+    if (currentLocation === 'Hill' || currentLocation === 'Classrooms') {
       return (
         <Modal
           style={styles.modal}
@@ -120,7 +121,7 @@ class StudyRoomModal extends Component {
           animationType="fade"
         >
           <View style={[styles.modalContainer, styles.boxWithShadow]}>
-            <Text style={styles.promptText}> Change Time </Text>
+            <Text style={styles.promptText}> Change Date </Text>
             <Text style={styles.titleText}>
               {date}
             </Text>
@@ -162,7 +163,8 @@ class StudyRoomModal extends Component {
               </View>
             </View>
           </View>
-        </Modal>);
+        </Modal>
+      );
     }
     return (
       <Modal
@@ -247,8 +249,8 @@ const promptText = {
   color: 'black',
   width: '80%',
   textAlign: 'center',
-  marginBottom: 10,
-  marginTop: 10
+  marginBottom: 30,
+  marginTop: 20
 };
 const titleText = {
   fontFamily: 'System',
@@ -257,6 +259,7 @@ const titleText = {
   fontStyle: 'normal',
   letterSpacing: 1.92,
   color: 'black',
+  // marginTop: 10
 };
 
 const styles = StyleSheet.create({

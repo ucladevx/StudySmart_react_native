@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
   Text, View, StyleSheet, SafeAreaView, FlatList, ActivityIndicator,
-  TouchableWithoutFeedback, Keyboard,
+  TouchableWithoutFeedback, Keyboard, Image,
 } from 'react-native';
+import ReactNativeHaptic from 'react-native-haptic';
 import StudyRoomHeader from './StudyRoomHeader';
 import StudyRoomModal from './StudyRoomModal';
 import FloatingSegment from '../../components/FloatingSegment';
@@ -11,6 +12,8 @@ import BookingCard from '../../components/BookingCard';
 import ClassroomBuildingCard from '../../components/ClassroomBuildingCard';
 import StudyRoomsPreview from './StudyRoomsPreview';
 import ClassroomsPreview from './ClassroomsPreview';
+
+const calendarIconRed = require('../../../assets/icons8-schedule-80.png');
 
 // const namePairs = {
 //   sproulstudy: 'Sproul Study Rooms',
@@ -61,6 +64,7 @@ export default class StudyRoomList extends Component {
   }
 
   handleModal = () => {
+    ReactNativeHaptic.generate('impactHeavy');
     const { visible } = this.state;
     this.setState({
       visible: !visible
@@ -91,8 +95,9 @@ export default class StudyRoomList extends Component {
           <StudyRoomsPreview available={available} listOfRooms={hillDataFound} />
         ) : (
           <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-            <ShadowButton title="Change Time" select={this.handleModal} />
+            <Image source={calendarIconRed} style={{ width: 50, height: 50 }} />
+            <Text style={titleText}>Oops! Seems like there are no rooms available for this date.😭Please select a new one.</Text>
+            <ShadowButton title="Change Date" select={this.handleModal} />
           </View>
         );
         break;
@@ -107,8 +112,8 @@ export default class StudyRoomList extends Component {
           />
         ) : (
           <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-            <ShadowButton title="Change Time" select={this.handleModal} />
+            <Text style={titleText}>Oops! Seems like there are no rooms available for this date.😭Please select a new one.</Text>
+            <ShadowButton title="Change Date" select={this.handleModal} />
           </View>
         );
         break;
@@ -117,16 +122,17 @@ export default class StudyRoomList extends Component {
           <ClassroomsPreview available={availClassroomDataFound} day={availClassroomDataFound.day}/>
         ) : (
           <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-            <ShadowButton title="Change Time" select={this.handleModal} />
+            <Image source={calendarIconRed} style={{ width: 50, height: 50 }} />
+            <Text style={titleText}>Oops! Seems like there are no rooms available for this date.😭Please select a new one.</Text>
+            <ShadowButton title="Change Date" select={this.handleModal} />
           </View>
         );
         break;
       default:
         listData = (
           <View style={styles.empty}>
-            <Text style={titleText}> No rooms available </Text>
-            <ShadowButton title="Change Time" select={this.handleModal} />
+            <Text style={titleText}> Oops! Seems like there are no rooms available for this date.😭Please select a new one. </Text>
+            <ShadowButton title="Change Date" select={this.handleModal} />
           </View>
         );
     }

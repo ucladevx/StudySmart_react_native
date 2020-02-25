@@ -3,6 +3,7 @@ import {
   Text, View, TouchableOpacity, StyleSheet, FlatList, SafeAreaView, ActivityIndicator
 } from 'react-native';
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import ReactNativeHaptic from 'react-native-haptic';
 
 export default class ClassroomView extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ export default class ClassroomView extends Component {
   }
 
   handleAvailability = (room) => {
+    ReactNativeHaptic.generate('impact');
     this.getClasstimes(room);
   }
 

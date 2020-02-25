@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { withNavigation } from 'react-navigation';
+import ReactNativeHaptic from 'react-native-haptic';
 
 
 const hedrickstudy = require('../../assets/Studyrooms/hedrick.jpg');
@@ -24,6 +25,7 @@ class ClassroomBuildingCard extends Component {
 
   handleSelectBuilding = () => {
     this.getClassrooms();
+    ReactNativeHaptic.generate('impact');
   }
 
   async getClassrooms() {
