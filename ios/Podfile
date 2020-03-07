@@ -10,6 +10,8 @@ target 'SS' do
   target 'SS-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'react-native-haptic', :path => '../node_modules/react-native-haptic'
+
   end
 
   target 'SSTests' do

@@ -113,10 +113,10 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={hour.length === 0}
             style={hour.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => { navigate('StudyRoomReserve', {
+            onPress={() => { navigate('StudyBuildingList', {
               rooms: hour.sort((a, b) => (a.details > b.details) ? 1 : -1)
             });
-            ReactNativeHaptic.generate('impact');
+            //ReactNativeHaptic.generate('impact');
           }}
           >
             <Text style={styles.text}>
@@ -127,7 +127,7 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={half.length === 0}
             style={half.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => { navigate('StudyRoomReserve', {
+            onPress={() => { navigate('StudyBuildingList', {
               rooms: half.sort((a, b) => (a.details > b.details) ? 1 : -1)
             });
             ReactNativeHaptic.generate('impact');  

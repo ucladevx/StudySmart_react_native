@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -41,7 +40,6 @@
 		4638578F190F4A6E9518F906 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0679F4F975B4015B0CF11AB /* MaterialCommunityIcons.ttf */; };
 		47AD1A2CE54F46C7ADC805DC /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 396C50B2413947848F440712 /* Ionicons.ttf */; };
 		4CB9C35ADE554626B916211D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA182156FE854C4C96395294 /* FontAwesome5_Solid.ttf */; };
-		4CE6C05D240614DA00C79050 /* libReactNativeHaptic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CE6C05C2406137A00C79050 /* libReactNativeHaptic.a */; };
 		4D176451BD6A41B8B85B4198 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF486700A4B24010846A6C11 /* EvilIcons.ttf */; };
 		4FBB8079A62A4BDFAD61FDB5 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E31D1ED3B84D4EF4B910951D /* AntDesign.ttf */; };
 		5639A16D229E3A8B000E8D70 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 5639A16C229E3A8B000E8D70 /* assets */; };
@@ -277,13 +275,6 @@
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
 		};
-		4CE6C05B2406137A00C79050 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4CE6C0572406137A00C79050 /* ReactNativeHaptic.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 134814201AA4EA6300B7C361;
-			remoteInfo = ReactNativeHaptic;
-		};
 		565EB14E238E5C2F0017AA69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -413,7 +404,7 @@
 		478953D25871C5A32D571849 /* libPods-SS-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SS-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47FBB09F089847F780F4565E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		48EF4A58740D4617BDB98A0F /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
-		4CE6C0572406137A00C79050 /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
+		4CE6C0572406137A00C79050 /* Libraries */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Libraries; path = "../node_modules/react-native/Libraries"; sourceTree = "<group>"; };
 		5639A16A229E3A61000E8D70 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		5639A16C229E3A8B000E8D70 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
 		5B759529D6B7476689D29538 /* Pods-SS-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SS-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SS-tvOSTests/Pods-SS-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -456,7 +447,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CE6C05D240614DA00C79050 /* libReactNativeHaptic.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
@@ -633,14 +623,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4CE6C0582406137A00C79050 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4CE6C05C2406137A00C79050 /* libReactNativeHaptic.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,7 +644,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				4CE6C0572406137A00C79050 /* ReactNativeHaptic.xcodeproj */,
+				4CE6C0572406137A00C79050 /* Libraries */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -976,10 +958,6 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 4CE6C0582406137A00C79050 /* Products */;
-					ProjectRef = 4CE6C0572406137A00C79050 /* ReactNativeHaptic.xcodeproj */;
-				},
-				{
 					ProductGroup = 9FE86A3B21F6F11B00A54A7A /* Products */;
 					ProjectRef = 0DA7EA344EB1446C9E29AA00 /* RNGoogleSignin.xcodeproj */;
 				},
@@ -1193,13 +1171,6 @@
 			fileType = archive.ar;
 			path = libcxxreact.a;
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4CE6C05C2406137A00C79050 /* libReactNativeHaptic.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeHaptic.a;
-			remoteRef = 4CE6C05B2406137A00C79050 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		565EB14F238E5C2F0017AA69 /* libjsi.a */ = {
