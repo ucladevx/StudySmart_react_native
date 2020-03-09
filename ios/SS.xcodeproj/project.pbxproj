@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -39,6 +40,7 @@
 		383B5D56953E4C38B6EBCC95 /* libRNVectorIcons-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23D64F1BBC76428DBDC7DFA3 /* libRNVectorIcons-tvOS.a */; };
 		4638578F190F4A6E9518F906 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E0679F4F975B4015B0CF11AB /* MaterialCommunityIcons.ttf */; };
 		47AD1A2CE54F46C7ADC805DC /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 396C50B2413947848F440712 /* Ionicons.ttf */; };
+		4CAD53342415DACB005760A7 /* libReactNativeHaptic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CAD53312415DAB5005760A7 /* libReactNativeHaptic.a */; };
 		4CB9C35ADE554626B916211D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA182156FE854C4C96395294 /* FontAwesome5_Solid.ttf */; };
 		4D176451BD6A41B8B85B4198 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF486700A4B24010846A6C11 /* EvilIcons.ttf */; };
 		4FBB8079A62A4BDFAD61FDB5 /* AntDesign.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E31D1ED3B84D4EF4B910951D /* AntDesign.ttf */; };
@@ -275,6 +277,13 @@
 			remoteGlobalIDString = 3D3CD9321DE5FBEE00167DC4;
 			remoteInfo = "cxxreact-tvOS";
 		};
+		4CAD53302415DAB5005760A7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CAD53062415DAB5005760A7 /* ReactNativeHaptic.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = ReactNativeHaptic;
+		};
 		565EB14E238E5C2F0017AA69 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
@@ -404,6 +413,7 @@
 		478953D25871C5A32D571849 /* libPods-SS-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SS-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		47FBB09F089847F780F4565E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		48EF4A58740D4617BDB98A0F /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
+		4CAD53062415DAB5005760A7 /* ReactNativeHaptic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHaptic.xcodeproj; path = "../node_modules/react-native-haptic/ios/ReactNativeHaptic.xcodeproj"; sourceTree = "<group>"; };
 		4CE6C0572406137A00C79050 /* Libraries */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Libraries; path = "../node_modules/react-native/Libraries"; sourceTree = "<group>"; };
 		5639A16A229E3A61000E8D70 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		5639A16C229E3A8B000E8D70 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = assets; sourceTree = "<group>"; };
@@ -447,6 +457,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CAD53342415DACB005760A7 /* libReactNativeHaptic.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				11D1A2F320CAFA9E000508D9 /* libRCTAnimation.a in Frameworks */,
@@ -623,6 +634,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4CAD53072415DAB5005760A7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CAD53312415DAB5005760A7 /* libReactNativeHaptic.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,6 +663,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4CAD53062415DAB5005760A7 /* ReactNativeHaptic.xcodeproj */,
 				4CE6C0572406137A00C79050 /* Libraries */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -876,9 +896,6 @@
 						DevelopmentTeam = 7J77N7U8BT;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
-					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = TLUY6DGT96;
-					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 7J77N7U8BT;
@@ -956,6 +973,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 4CAD53072415DAB5005760A7 /* Products */;
+					ProjectRef = 4CAD53062415DAB5005760A7 /* ReactNativeHaptic.xcodeproj */;
 				},
 				{
 					ProductGroup = 9FE86A3B21F6F11B00A54A7A /* Products */;
@@ -1171,6 +1192,13 @@
 			fileType = archive.ar;
 			path = libcxxreact.a;
 			remoteRef = 3DAD3EAA1DF850E9000B6D8A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		4CAD53312415DAB5005760A7 /* libReactNativeHaptic.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeHaptic.a;
+			remoteRef = 4CAD53302415DAB5005760A7 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		565EB14F238E5C2F0017AA69 /* libjsi.a */ = {
@@ -1553,7 +1581,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = TLUY6DGT96;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",
@@ -1582,7 +1610,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 8;
-				DEVELOPMENT_TEAM = TLUY6DGT96;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-google-signin/ios/RNGoogleSignin",

@@ -18,7 +18,27 @@ const namePairs = {
   movement: 'Hedrick Movement Studio',
 };
 
-const hedrickstudy = require('../../assets/Studyrooms/hedrick.jpg');
+const hedrickstudyPath = require('../../assets/Studyrooms/hedrick.jpg');
+const hedrickmusicPath = require('../../assets/Studyrooms/hedrickmusic.jpg');
+const musicPath = require('../../assets/Studyrooms/music.jpg');
+const movementPath = require('../../assets/Studyrooms/movement.jpg');
+const hedrickPath = require('../../assets/Studyrooms/hedrickstudy.jpg');
+const rieberPath = require('../../assets/Studyrooms/rieber.jpg');
+const denevePath = require('../../assets/Studyrooms/deneve.jpg');
+const sproulmusicPath = require('../../assets/Studyrooms/sproulmusic.jpg');
+const sproulstudyPath = require('../../assets/Studyrooms/sproulstudy.jpg');
+
+const imagePairs = {
+  sproulstudy: sproulstudyPath,
+  sproulmusic: sproulmusicPath,
+  deneve: denevePath,
+  rieber: rieberPath,
+  music: musicPath,
+  hedrick: hedrickPath,
+  hedrickstudy: hedrickstudyPath,
+  hedrickmusic: hedrickmusicPath,
+  movement: movementPath,
+};
 
 
 class StudyBuildingCard extends Component {
@@ -36,7 +56,7 @@ class StudyBuildingCard extends Component {
 
   handleSelectBuilding = () => {
     this.getClassrooms();
-    //ReactNativeHaptic.generate('impact');
+    ReactNativeHaptic.generate('impact');
   }
 
   async getClassrooms() {
@@ -73,7 +93,7 @@ class StudyBuildingCard extends Component {
           >
             <View style={styles.imageIcon}>
               {/* <Image source={imagePairs[item.location]} style={styles.image} /> */}
-              <Image source={hedrickstudy} style={styles.image} />
+              <Image source={imagePairs[item.name]} style={styles.image} />
             </View>
             <View
               style={styles.containerCol}

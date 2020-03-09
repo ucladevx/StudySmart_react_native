@@ -60,7 +60,7 @@ export default class StudyRoomReserve extends Component {
 
 
   handleReserve = (room) => {
-    ReactNativeHaptic.generate('impactHeavy')
+    ReactNativeHaptic.generate('impactHeavy');
     this.props.navigation.navigate('BookingWebView', { url: room });
   }
 

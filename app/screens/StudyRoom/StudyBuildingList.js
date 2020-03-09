@@ -20,23 +20,25 @@ export default class StudyBuildingList extends Component {
     const day = this.props.navigation.getParam('day', 'NA');
 
     const minutesMidnight = hourOffset * 60 + minuteOffset;
-    available_bldg = {};
+    availableBldg = {};
     available.forEach((room) => {
-      if (room.name in available_bldg)
-        available_bldg[room.name].rooms.push(room);
-      else
-        available_bldg[room.name] = {name:room.name, rooms: [room]};
+      if(room.name in availableBldg) {
+        availableBldg[room.name].rooms.push(room);
+      }
+      else {
+        availableBldg[room.name] = {name: room.name, rooms: [room] };
+      }
     });
-    available_bldg_list = [];
-    Object.keys(available_bldg).forEach((bldg) => {
-      available_bldg_list.push(available_bldg[bldg]);
+    availableBldg_list = [];
+    Object.keys(availableBldg).forEach((bldg) => {
+      availableBldg_list.push(availableBldg[bldg]);
     });
     return (
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={styles.container}>
           <FlatList
-            data={available_bldg_list}
-            extraData={available_bldg_list}
+            data={availableBldg_list}
+            extraData={availableBldg_list}
             renderItem={({ item }) => this.renderRowBldg(item)}
             keyExtractor={(item, index) => index.toString()}
             style={styles.list}

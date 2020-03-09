@@ -72,7 +72,7 @@ class TimeRangeCard extends Component {
               minuteOffset: 0,
               day
             })
-            ReactNativeHaptic.generate('impactHeavy');
+            ReactNativeHaptic.generate('impact');
           }}
           >
             <Text style={styles.text}>
@@ -116,7 +116,7 @@ class TimeRangeCard extends Component {
             onPress={() => { navigate('StudyBuildingList', {
               rooms: hour.sort((a, b) => (a.details > b.details) ? 1 : -1)
             });
-            //ReactNativeHaptic.generate('impact');
+            ReactNativeHaptic.generate('impact');
           }}
           >
             <Text style={styles.text}>
