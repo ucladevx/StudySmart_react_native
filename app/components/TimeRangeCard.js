@@ -66,11 +66,12 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={hour.length === 0}
             style={hour.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => { navigate('ClassroomBuildingList', {
+            onPress={() => { navigate('BuildingList', {
               rooms: hour,
               hourOffset,
               minuteOffset: 0,
-              day
+              day,
+              classrooms: true
             })
             ReactNativeHaptic.generate('impact');
           }}
@@ -83,11 +84,12 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={half.length === 0}
             style={half.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => { navigate('ClassroomBuildingList', {
+            onPress={() => { navigate('BuildingList', {
               rooms: half,
               hourOffset,
               minuteOffset: 30,
-              day
+              day,
+              classrooms: true
             }) 
             ReactNativeHaptic.generate('impact');
           }}
@@ -113,8 +115,9 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={hour.length === 0}
             style={hour.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => { navigate('StudyBuildingList', {
-              rooms: hour.sort((a, b) => (a.details > b.details) ? 1 : -1)
+            onPress={() => { navigate('BuildingList', {
+              rooms: hour.sort((a, b) => (a.details > b.details) ? 1 : -1),
+              classrooms: false
             });
             ReactNativeHaptic.generate('impact');
           }}
@@ -127,8 +130,9 @@ class TimeRangeCard extends Component {
           <TouchableOpacity
             disabled={half.length === 0}
             style={half.length > 0 ? styles.button : styles.buttonDisabled}
-            onPress={() => { navigate('StudyBuildingList', {
-              rooms: half.sort((a, b) => (a.details > b.details) ? 1 : -1)
+            onPress={() => { navigate('BuildingList', {
+              rooms: half.sort((a, b) => (a.details > b.details) ? 1 : -1),
+              classrooms: false
             });
             ReactNativeHaptic.generate('impact');  
           }}
