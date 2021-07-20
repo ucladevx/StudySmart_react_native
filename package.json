@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "react": "16.8.3",
-    "react-native": "0.59.1",
+    "react-native": "0.62.3",
     "react-native-elements": "^0.19.1",
     "react-native-maps": "^0.24.2",
     "react-native-modal-datetime-picker": "^6.0.0",
